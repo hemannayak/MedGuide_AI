@@ -1,8 +1,11 @@
 from typing import Generator
 from sqlalchemy import create_engine, text
-from sqlalchemy.orm import DeclarativeBase, sessionmaker
+from sqlalchemy.orm import sessionmaker
 
 from app.core.config import settings
+from app.db.base_class import Base
+
+
 
 # Create SQLAlchemy engine
 engine = create_engine(
@@ -13,11 +16,6 @@ engine = create_engine(
 
 # Session factory for API requests
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-
-class Base(DeclarativeBase):
-    """Base class for future SQLAlchemy ORM models."""
-    pass
 
 
 def get_db() -> Generator:
