@@ -22,7 +22,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# API v1 Router
+from app.api.v1.router import api_router
+
+# API v1 Health Check & Sub-Routers
 api_v1_router = APIRouter(prefix=settings.API_V1_PREFIX)
 
 
@@ -39,8 +41,10 @@ def health_check():
     }
 
 
-# Register v1 router
+# Register v1 routers
 app.include_router(api_v1_router)
+app.include_router(api_router, prefix=settings.API_V1_PREFIX)
+
 
 
 @app.get("/", include_in_schema=False)
