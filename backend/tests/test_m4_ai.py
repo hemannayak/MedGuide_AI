@@ -1,4 +1,5 @@
 import os
+from typing import Any, Dict, List
 import pytest
 from sqlalchemy.orm import Session
 
@@ -60,8 +61,8 @@ def test_verbatim_pdf_extraction_and_page_retention():
 
 
 def test_official_pdf_ingestion_and_pgvector_persistence(db_session: Session):
-    """Ingest official MoHFW and ICMR PDF guidelines into pgvector."""
-    official_sources = [
+    """Ingest all 4 official medical PDF guidelines into pgvector."""
+    official_sources: List[Dict[str, Any]] = [
         {
             "doc_metadata": {
                 "document_id": "d4a4b5c6-7d8e-9f0a-1b2c-3d4e5f6a7b8c",
@@ -86,6 +87,30 @@ def test_official_pdf_ingestion_and_pgvector_persistence(db_session: Session):
             },
             "pdf_path": "docs/data/medical_guidelines/ICMR_STW_Paediatric_EPTB_2022.pdf",
         },
+        {
+            "doc_metadata": {
+                "document_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+                "title": "WHO Guidelines for Malaria",
+                "publisher": "World Health Organization",
+                "publication_date": "2025",
+                "source_url": "https://doi.org/10.2471/B09514",
+                "language": "en",
+                "provenance_status": "VERIFIED_OFFICIAL_DOCUMENT",
+            },
+            "pdf_path": "docs/data/medical_guidelines/WHO_Guidelines_for_Malaria_2025.pdf",
+        },
+        {
+            "doc_metadata": {
+                "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+                "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+                "publisher": "World Health Organization",
+                "publication_date": "2020",
+                "source_url": "https://www.who.int/publications/i/item/9789240002876",
+                "language": "en",
+                "provenance_status": "VERIFIED_OFFICIAL_DOCUMENT",
+            },
+            "pdf_path": "docs/data/medical_guidelines/WHO_PEN_Guidelines_2020.pdf",
+        },
     ]
 
     for item in official_sources:
@@ -98,8 +123,64 @@ def test_official_pdf_ingestion_and_pgvector_persistence(db_session: Session):
 
     docs_count = db_session.query(MedicalDocument).filter(MedicalDocument.review_status == "APPROVED").count()
     chunks_count = db_session.query(KnowledgeChunk).count()
-    assert docs_count >= 2
-    assert chunks_count >= 50
+    assert docs_count >= 4, f"Expected >= 4 approved documents, got {docs_count}"
+    assert chunks_count >= 500, f"Expected >= 500 chunks, got {chunks_count}"
+
+
+def test_corpus_completeness_four_documents(db_session: Session):
+    """Verify the final corpus contains exactly 4 official approved documents with full provenance metadata."""
+    db_session.rollback()
+
+    approved_docs = (
+        db_session.query(MedicalDocument)
+        .filter(MedicalDocument.review_status == "APPROVED")
+        .all()
+    )
+    assert len(approved_docs) == 4, (
+        f"Expected exactly 4 APPROVED MedicalDocuments, got {len(approved_docs)}. "
+        f"Titles: {[d.title for d in approved_docs]}"
+    )
+
+    expected_titles = {
+        "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+        "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "WHO Guidelines for Malaria",
+        "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+    }
+    actual_titles = {d.title for d in approved_docs}
+    assert actual_titles == expected_titles, (
+        f"Title mismatch.\nExpected: {expected_titles}\nActual: {actual_titles}"
+    )
+
+    for doc in approved_docs:
+        assert doc.publication_date is not None, (
+            f"MedicalDocument '{doc.title}' is missing publication_date"
+        )
+        assert doc.version is not None, (
+            f"MedicalDocument '{doc.title}' is missing version"
+        )
+        assert doc.source_reference is not None and doc.source_reference.startswith("http"), (
+            f"MedicalDocument '{doc.title}' has invalid source_reference: {doc.source_reference}"
+        )
+
+    # Verify all chunks have source_url in metadata
+    all_chunks = db_session.query(KnowledgeChunk).all()
+    assert len(all_chunks) > 0, "No chunks found in database"
+
+    chunks_missing_source = [
+        c for c in all_chunks
+        if not (c.metadata_ or {}).get("source_url")
+    ]
+    assert len(chunks_missing_source) == 0, (
+        f"{len(chunks_missing_source)} chunks are missing source_url in metadata"
+    )
+
+    # Verify all chunks have 384-dimensional embeddings
+    chunks_without_embedding = [c for c in all_chunks if c.embedding is None]
+    assert len(chunks_without_embedding) == 0, (
+        f"{len(chunks_without_embedding)} chunks have no embedding vector"
+    )
+
 
 
 def test_rag_retrieval_and_source_attribution(db_session: Session):
@@ -117,8 +198,9 @@ def test_rag_retrieval_and_source_attribution(db_session: Session):
     except Exception:
         from app.models.users import User
         user = db_session.query(User).filter(User.login_identifier == reg_req.login_identifier).first()
-
+    assert user is not None, "Test user not found in database"
     patient_profile = get_patient_profile_by_user(db_session, user)
+    assert patient_profile is not None, "Patient profile not found for test user"
 
     # Chat query for Tuberculosis clinical guidelines
     chat_req = AIChatRequest(
