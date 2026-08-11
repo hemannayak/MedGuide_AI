@@ -1,9 +1,9 @@
-# MedGuide AI — Master Medical Source Registry & Dataset Register (v4.0)
+# MedGuide AI — Master Medical Source Registry & Dataset Register (v4.1)
 
 **Project Title:** MedGuide AI: An AI-Powered Rural Healthcare Intelligence and Digital Care Platform  
 **Document:** Master Medical Source Registry & Dataset Register (`DS-01` through `DS-05`)  
-**Version:** 4.0  
-**Status:** **AUTHORITATIVE CORPUS FROZEN**  
+**Version:** 4.1  
+**Status:** **AUTHORITATIVE CORPUS UPDATED & VERIFIED**  
 
 ---
 
@@ -50,14 +50,14 @@ In strict compliance with **AGENTS.md Rule #8 (Medical Knowledge Rule)**, **Rule
 
 ---
 
-### Tier 3: Selected WHO International Guidelines
+### Tier 3: Official WHO International Guidelines
 
-| Source ID | Official Title | Publisher | Official Source URL | Target Medical Domain | Priority | Verification Status |
+| Source ID | Official Title | Publisher | Official Source URL / DOI | Target Medical Domain | Priority | Verification Status |
 |---|---|---|---|---|---|---|
-| **WHO-01** | WHO Guidelines for Primary Health Care in Low-Resource Settings | World Health Organization | https://www.who.int/publications/i/item/9789241548397 | Primary Care Baseline | 🟠 P1 | `VERIFIED_OFFICIAL_DOCUMENT` |
-| **WHO-02** | WHO Guideline for Pharmacological Treatment of Hypertension | World Health Organization | https://www.who.int/publications/b/59565 | Hypertension Baseline | 🟠 P1 | `VERIFIED_OFFICIAL_DOCUMENT` |
-| **WHO-03** | WHO Guideline on Management of Pneumonia and Diarrhoea in Children | World Health Organization | https://www.who.int/publications/i/item/9789240103412 | Pediatric Respiratory/GI | 🟠 P1 | `VERIFIED_OFFICIAL_DOCUMENT` |
-| **WHO-04** | WHO Guidelines for Malaria (Latest Edition) | World Health Organization | https://www.who.int/publications-detail-redirect/guidelines-for-malaria | Malaria Guidelines | 🟠 P1 | `VERIFIED_OFFICIAL_DOCUMENT` |
+| **WHO-01** | WHO Guidelines for Malaria (13 August 2025) | World Health Organization | https://doi.org/10.2471/B09514 | Malaria Diagnosis & Case Management | 🔴 P0 | `VERIFIED_OFFICIAL_DOCUMENT` |
+| **WHO-02** | WHO Guidelines for Primary Health Care in Low-Resource Settings | World Health Organization | https://www.who.int/publications/i/item/9789241548397 | Primary Care Baseline | 🟠 P1 | `VERIFIED_OFFICIAL_DOCUMENT` |
+| **WHO-03** | WHO Guideline for Pharmacological Treatment of Hypertension | World Health Organization | https://www.who.int/publications/b/59565 | Hypertension Baseline | 🟠 P1 | `VERIFIED_OFFICIAL_DOCUMENT` |
+| **WHO-04** | WHO Guideline on Management of Pneumonia and Diarrhoea in Children | World Health Organization | https://www.who.int/publications/i/item/9789240103412 | Pediatric Respiratory/GI | 🟠 P1 | `VERIFIED_OFFICIAL_DOCUMENT` |
 
 ---
 
@@ -74,9 +74,9 @@ In strict compliance with **AGENTS.md Rule #8 (Medical Knowledge Rule)**, **Rule
 
 Every chunk stored in PostgreSQL `knowledge_chunks` MUST satisfy:
 ```text
-Official Publisher → Authentic Document PDF → Source URL → SHA-256 Hash → Page/Section Metadata → Verbatim Extraction → Semantic Chunk → Multilingual Embedding → pgvector → Grounded Response → Source Attribution
+Official Publisher → Authentic Document PDF → Source URL / DOI → SHA-256 Hash → Page/Section Metadata → Verbatim Extraction → Semantic Chunk → Multilingual Embedding → pgvector → Grounded Response → Source Attribution
 ```
 
 ---
 
-> **Master Medical Source Registry & Dataset Register v4.0 is FROZEN.** Ready for commit & push!
+> **Master Medical Source Registry & Dataset Register v4.1 Updated with Official WHO 2025 Malaria Guidelines.**
