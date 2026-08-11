@@ -1,0 +1,4 @@
+# Pyrefly type-checker configuration
+# Tells Pyrefly to use the project's virtual environment for type resolution
+
+python_interpreter = ".venv/Scripts/python.exe"
