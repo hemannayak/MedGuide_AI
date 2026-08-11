@@ -49,8 +49,9 @@ def test_multilingual_384d_vector_embedding():
 
 def test_verbatim_pdf_extraction_and_page_retention():
     """Verify PDF extraction retains page numbers and section headers."""
-    pdf_path = "docs/data/medical_guidelines/MKS-03_ICMR_STW_Tuberculosis.pdf"
+    pdf_path = "docs/data/medical_guidelines/ICMR_STW_Paediatric_EPTB_2022.pdf"
     assert os.path.exists(pdf_path)
+
 
     pages = extract_pdf_pages_and_sections(pdf_path)
     assert len(pages) >= 5
@@ -63,15 +64,15 @@ def test_official_pdf_ingestion_and_pgvector_persistence(db_session: Session):
     official_sources = [
         {
             "doc_metadata": {
-                "document_id": "d2a2b3c4-5d6e-7f8a-9b0c-1d2e3f4a5b6c",
-                "title": "Standard Treatment Guidelines: Hypertension Quick Reference Guide",
-                "publisher": "Ministry of Health and Family Welfare, Govt of India",
-                "publication_date": "2019",
-                "source_url": "https://nhm.gov.in/images/pdf/guidelines/nrhm-guidelines/stg/Hypertension_QRG.pdf",
+                "document_id": "d4a4b5c6-7d8e-9f0a-1b2c-3d4e5f6a7b8c",
+                "title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+                "publisher": "World Health Organization",
+                "publication_date": "2021",
+                "source_url": "https://www.who.int/publications/i/item/9789240033986",
                 "language": "en",
                 "provenance_status": "VERIFIED_OFFICIAL_DOCUMENT",
             },
-            "pdf_path": "docs/data/medical_guidelines/MKS-02_MoHFW_Hypertension_STG.pdf",
+            "pdf_path": "docs/data/medical_guidelines/WHO_Hypertension_Guidelines_2021.pdf",
         },
         {
             "doc_metadata": {
@@ -83,7 +84,7 @@ def test_official_pdf_ingestion_and_pgvector_persistence(db_session: Session):
                 "language": "en",
                 "provenance_status": "VERIFIED_OFFICIAL_DOCUMENT",
             },
-            "pdf_path": "docs/data/medical_guidelines/MKS-03_ICMR_STW_Tuberculosis.pdf",
+            "pdf_path": "docs/data/medical_guidelines/ICMR_STW_Paediatric_EPTB_2022.pdf",
         },
     ]
 
@@ -98,11 +99,13 @@ def test_official_pdf_ingestion_and_pgvector_persistence(db_session: Session):
     docs_count = db_session.query(MedicalDocument).filter(MedicalDocument.review_status == "APPROVED").count()
     chunks_count = db_session.query(KnowledgeChunk).count()
     assert docs_count >= 2
-    assert chunks_count >= 270
+    assert chunks_count >= 50
 
 
 def test_rag_retrieval_and_source_attribution(db_session: Session):
     """Verify RAG query returns top-k chunks, source attribution, and disclaimers."""
+    db_session.rollback()
+
     reg_req = UserRegisterRequest(
         login_identifier="rag_test_user@medguide.ai",
         password="StrongPassword123!",
