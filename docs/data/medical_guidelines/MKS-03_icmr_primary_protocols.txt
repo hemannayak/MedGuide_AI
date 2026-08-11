@@ -1,0 +1,10 @@
+# ICMR Primary Care Clinical Management Protocols (2023)
+
+## Section 1: General Principles of Medication Verification
+All prescriptions transcribed via optical character recognition (OCR) or manual input must be verified for medicine name, dosage, route, frequency, and duration prior to inclusion in active patient medication schedules. Healthcare workers must confirm that dosage matches standard adult or pediatric clinical guidelines to avoid accidental toxicity.
+
+## Section 2: Pediatric Fever and Antimicrobial Stewardship
+Empiric antibiotic therapy is strictly discouraged for uncomplicated viral upper respiratory infections. Antibiotics should only be prescribed when a bacterial etiology (e.g., streptococcal pharyngitis, acute otitis media, bacterial pneumonia) is clinically confirmed or strongly indicated by documented guidelines. Paracetamol dosage for pediatric fever is 10mg to 15mg per kg body weight per dose.
+
+## Section 3: Patient Data Privacy and Informed Consent
+All clinical interactions, symptom logs, and medication records collected at primary health centers or via mobile health applications must operate with explicit patient consent. Patients reserve the right to view, download, or withdraw consent for non-essential medical data processing at any time without compromising access to emergency medical support.

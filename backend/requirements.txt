@@ -9,3 +9,5 @@ pgvector>=0.3.6
 alembic>=1.16.2
 passlib[bcrypt]>=1.7.4
 pyjwt>=2.8.0
+pypdf>=4.0.0
+sentence-transformers>=2.5.0
