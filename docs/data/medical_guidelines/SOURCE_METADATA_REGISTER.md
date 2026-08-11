@@ -1,9 +1,9 @@
-# MedGuide AI — Master Medical Source Registry & Dataset Register (v4.2)
+# MedGuide AI — Master Medical Source Registry & Dataset Register (v4.3)
 
 **Project Title:** MedGuide AI: An AI-Powered Rural Healthcare Intelligence and Digital Care Platform  
 **Document:** Master Medical Source Registry & Dataset Register (`DS-01` through `DS-05`)  
-**Version:** 4.2  
-**Status:** **AUTHORITATIVE CORPUS UPDATED & VERIFIED**  
+**Version:** 4.3  
+**Status:** **AUTHORITATIVE PDF CORPUS AUDITED & VERIFIED**  
 
 ---
 
@@ -21,7 +21,18 @@ In strict compliance with **AGENTS.md Rule #8 (Medical Knowledge Rule)**, **Rule
 
 ---
 
-# 2. Authoritative RAG Knowledge Corpus (Tier 1, Tier 2 & Tier 3)
+# 2. Verified Active Official PDF Guidelines (`docs/data/medical_guidelines/`)
+
+| File Name | Official Title | Publisher | Size / Page Count | SHA-256 Hash | Producer / Tool | License / Rights | Verification Status |
+|---|---|---|---|---|---|---|---|
+| **`ICMR_STW_Paediatric_EPTB_2022.pdf`** | Standard Treatment Workflows of India on Paediatric and Extrapulmonary Tuberculosis | ICMR / MoHFW Govt of India | 4,575,470 bytes / 32 pages | `95f06c22b936875baf358853e598e4425dfc667d1857fae8d64c9d3884490ad2` | Adobe PDF Library 16.03 | © ICMR 2022. Government of India Official STW. | `VERIFIED_OFFICIAL_DOCUMENT` |
+| **`WHO_Guidelines_for_Malaria_2025.pdf`** | WHO guidelines for malaria (13 August 2025) | World Health Organization | 2,508,570 bytes / 478 pages | `41c1cb923973ab0d5556d83951ec43374d200c60e4c21a196007dd3c9151ce72` | Prince 13.5 (MAGICapp) | CC BY-NC-SA 3.0 IGO. DOI: 10.2471/B09514 | `VERIFIED_OFFICIAL_DOCUMENT` |
+| **`WHO_Hypertension_Guidelines_2021.pdf`** | Guideline for the pharmacological treatment of hypertension in adults | World Health Organization | 843,539 bytes / 61 pages | `57f6376d5c9bc4ea6c44873625547c8a5443d5a6ad8c8c422733681563db05fb` | Adobe InDesign CS6 | CC BY-NC-SA 3.0 IGO. ISBN: 978-92-4-003398-6 | `VERIFIED_OFFICIAL_DOCUMENT` |
+| **`WHO_PEN_Guidelines_2020.pdf`** | Package of Essential Noncommunicable (PEN) Disease and Healthy Lifestyle Interventions | World Health Organization | 26,182,965 bytes / 644 pages | `25c2761500d7c839aa3622a96481542f53f3b56348cc429931cc4c963ef17b1d` | Adobe InDesign CS6 | CC BY-NC-SA 3.0 IGO. WHO PEN Primary Care Guidelines | `VERIFIED_OFFICIAL_DOCUMENT` |
+
+---
+
+# 3. Master Source Inventory (Tier 1, Tier 2 & Tier 3)
 
 ### Tier 1: Indian Government Sources (MoHFW & Central TB Division)
 
@@ -56,12 +67,12 @@ In strict compliance with **AGENTS.md Rule #8 (Medical Knowledge Rule)**, **Rule
 |---|---|---|---|---|---|---|
 | **WHO-01** | WHO Guidelines for Malaria (13 August 2025) | World Health Organization | https://doi.org/10.2471/B09514 | Malaria Diagnosis & Case Management | 🔴 P0 | `VERIFIED_OFFICIAL_DOCUMENT` |
 | **WHO-02** | WHO Guideline for the Pharmacological Treatment of Hypertension in Adults (2021) | World Health Organization | ISBN 978-92-4-003398-6 | Hypertension Thresholds & Combination Regimens | 🔴 P0 | `VERIFIED_OFFICIAL_DOCUMENT` |
-| **WHO-03** | WHO Guidelines for Primary Health Care in Low-Resource Settings | World Health Organization | https://www.who.int/publications/i/item/9789241548397 | Primary Care Baseline | 🟠 P1 | `VERIFIED_OFFICIAL_DOCUMENT` |
-| **WHO-04** | WHO Guideline on Management of Pneumonia and Diarrhoea in Children | World Health Organization | https://www.who.int/publications/i/item/9789240103412 | Pediatric Respiratory/GI | 🟠 P1 | `VERIFIED_OFFICIAL_DOCUMENT` |
+| **WHO-03** | WHO Package of Essential Noncommunicable (PEN) Disease Interventions (2020) | World Health Organization | ISBN 978-92-4-000287-6 | Primary Health Care Guidelines | 🔴 P0 | `VERIFIED_OFFICIAL_DOCUMENT` |
+| **WHO-04** | WHO Guidelines for Primary Health Care in Low-Resource Settings | World Health Organization | https://www.who.int/publications/i/item/9789241548397 | Primary Care Baseline | 🟠 P1 | `VERIFIED_OFFICIAL_DOCUMENT` |
 
 ---
 
-# 3. ML Evaluation Sets Register (Non-Medical Knowledge)
+# 4. ML Evaluation Sets Register (Non-Medical Knowledge)
 
 | Asset ID | Asset Name | Domain | Provider / Source | License | Purpose | Status |
 |---|---|---|---|---|---|---|
@@ -70,7 +81,7 @@ In strict compliance with **AGENTS.md Rule #8 (Medical Knowledge Rule)**, **Rule
 
 ---
 
-# 4. Provenance Chain Standard
+# 5. Provenance Chain Standard
 
 Every chunk stored in PostgreSQL `knowledge_chunks` MUST satisfy:
 ```text
@@ -79,4 +90,4 @@ Official Publisher → Authentic Document PDF → Source URL / DOI → SHA-256 H
 
 ---
 
-> **Master Medical Source Registry & Dataset Register v4.2 Updated with Official WHO 2021 Hypertension Guideline.**
+> **Master Medical Source Registry & Dataset Register v4.3 Updated & Verified.**
