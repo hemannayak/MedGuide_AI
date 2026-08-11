@@ -1,0 +1,43 @@
+# Environment
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Build & Next.js
+dist/
+build/
+.next/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Models (large files)
+ai/models/*.bin
+ai/models/*.pt
+ai/models/*.onnx
+
+# Coverage & Testing
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+
