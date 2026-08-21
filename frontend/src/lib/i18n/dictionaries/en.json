@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "howItWorks": "How It Works",
+    "safety": "Safety & AI",
+    "accessibility": "Accessibility",
+    "dashboard": "Dashboard",
+    "aiCompanion": "AI Companion",
+    "symptomChecker": "Symptom Checker",
+    "emergency": "Emergency (108/112)",
+    "login": "Sign In",
+    "register": "Register",
+    "logout": "Sign Out"
+  },
+  "landing": {
+    "heroTitle": "Accessible Rural Healthcare Intelligence & AI Companion",
+    "heroSubtitle": "Providing preliminary health guidance, symptom awareness, and medical knowledge grounding for rural and underserved communities in India.",
+    "getStarted": "Get Started Free",
+    "tryCompanion": "Ask AI Health Companion",
+    "symptomCheck": "Check Symptoms",
+    "disclaimerBanner": "MedGuide AI is a preliminary health guidance system. It does NOT replace qualified healthcare professionals or doctors."
+  },
+  "ai": {
+    "title": "AI Health Companion",
+    "subtitle": "Ask health questions in English, Hindi, or Telugu. Grounded in WHO & verified medical guidelines.",
+    "inputPlaceholder": "Describe your health query (e.g., 'What are early signs of dehydration in children?')...",
+    "send": "Send Query",
+    "listening": "Listening to voice input...",
+    "micTooltip": "Voice interaction entry point",
+    "sourcesTitle": "Verified Medical Sources",
+    "refusalNotice": "Guidance Notice: Unsafe or unverified query detected. Re-grounding in official medical guidelines."
+  },
+  "symptoms": {
+    "title": "Preliminary Symptom Checker",
+    "subtitle": "Describe your symptoms to receive preliminary risk awareness and recommended actions.",
+    "descriptionLabel": "What symptoms are you experiencing?",
+    "durationLabel": "Duration in days",
+    "severityLabel": "Severity scale (1 = mild, 10 = severe)",
+    "submit": "Submit for Guidance",
+    "resultTitle": "Triage & Risk Awareness Result"
+  },
+  "emergency": {
+    "badge": "EMERGENCY ESCALATION",
+    "title": "Urgent Medical Assistance Required",
+    "subtitle": "Your reported symptoms match emergency red-flag criteria.",
+    "callAmbulance": "Call Ambulance (108 / 112)",
+    "findClinic": "Find Nearest Health Center"
+  }
+}

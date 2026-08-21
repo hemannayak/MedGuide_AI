@@ -1,0 +1,285 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   MEDGUIDE AI | PREMIUM DESIGN SYSTEM 3.0
+   Palette: Medical Teal (#0F766E) + Warm Cream (#F6F1E8) + Deep Ink (#161A24)
+   Principle: Rich visual system. Simple user experience. Zero unnecessary complexity.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+:root {
+  /* ── Canvas & Surface ──────────────────────────────────────────────────── */
+  --bg-canvas:        #FCFCFA;
+  --surface:          #FFFFFF;
+  --surface-raised:   #F6F1E8;
+
+  /* ── Ink & Text ────────────────────────────────────────────────────────── */
+  --ink:              #161A24;
+  --ink-secondary:    #334155;
+  --muted:            #667085;
+  --muted-light:      #94A3B8;
+
+  /* ── Brand Accent: Medical Teal ────────────────────────────────────────── */
+  --accent:           #161A24;
+  --accent-hover:     #1E293B;
+  --accent-teal:      #0F766E;
+  --accent-teal-soft: #E8F5F2;
+  --accent-blue:      #4169E1;
+
+  /* ── Warm Cream Atmosphere ─────────────────────────────────────────────── */
+  --cream:            #F6F1E8;
+  --border:           rgba(15, 23, 42, 0.08);
+  --border-light:     rgba(15, 23, 42, 0.04);
+
+  /* ── Status Colours ────────────────────────────────────────────────────── */
+  --routine:          #3F8F68;
+  --routine-bg:       #E8F5F2;
+  --routine-border:   #A7D8C8;
+
+  --urgent:           #C98A22;
+  --urgent-bg:        #FFFBEB;
+  --urgent-border:    #FDE68A;
+
+  --emergency:        #B42318;
+  --emergency-bg:     #FEF2F2;
+  --emergency-border: #FCA5A5;
+
+  --focus-ring:       #0F766E;
+
+  /* ── Typography ────────────────────────────────────────────────────────── */
+  --font-italiana:    var(--font-italiana), 'Italiana', Georgia, serif;
+  --font-serif:       'Instrument Serif', 'DM Serif Display', Georgia, serif;
+  --font-sans:        'Inter', 'Geist', system-ui, -apple-system, sans-serif;
+  --font-hindi:       'Noto Sans Devanagari', sans-serif;
+  --font-telugu:      'Noto Sans Telugu', sans-serif;
+
+  /* ── Radii ─────────────────────────────────────────────────────────────── */
+  --radius-sm:        10px;
+  --radius-md:        14px;
+  --radius-lg:        20px;
+  --radius-xl:        24px;
+  --radius-pill:      9999px;
+
+  /* ── Shadows ───────────────────────────────────────────────────────────── */
+  --shadow-soft:      0 2px 8px -2px rgba(15, 23, 42, 0.04), 0 1px 3px -1px rgba(15, 23, 42, 0.02);
+  --shadow-card:      0 8px 30px -4px rgba(15, 23, 42, 0.05), 0 2px 8px -2px rgba(15, 23, 42, 0.02);
+  --shadow-floating:  0 16px 40px -8px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+
+  /* ── Spacing ───────────────────────────────────────────────────────────── */
+  --section-gap:      clamp(3.5rem, 7vw, 6rem);
+  --container-pad:    clamp(1.25rem, 4vw, 2.5rem);
+}
+
+/* ── Base Styles ───────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* ── Editorial Serif Utilities ────────────────────────────────────────────── */
+.montserrat-bold {
+  font-family: "Montserrat", sans-serif !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
+}
+
+.italiana-regular {
+  font-family: "Italiana", sans-serif !important;
+  font-weight: 700 !important;
+  font-style: normal !important;
+}
+
+.font-italiana {
+  font-family: "Italiana", sans-serif !important;
+  font-weight: 700 !important;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.text-hero-display {
+  font-family: var(--font-serif);
+  font-size: clamp(2.25rem, 5.5vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.text-section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  font-weight: 400;
+  line-height: 1.12;
+  color: var(--ink);
+}
+
+.text-gradient-teal {
+  background: linear-gradient(135deg, #161A24 0%, #0F766E 50%, #4169E1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Legacy class alias */
+.text-gradient-amber,
+.text-gradient-indigo {
+  background: linear-gradient(135deg, #161A24 0%, #0F766E 50%, #4169E1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Language Scripts ──────────────────────────────────────────────────────── */
+:lang(hi), [lang="hi"] {
+  font-family: var(--font-hindi);
+  line-height: 1.75;
+}
+
+:lang(te), [lang="te"] {
+  font-family: var(--font-telugu);
+  line-height: 1.85;
+}
+
+/* ── Touch & Accessibility Targets ───────────────────────────────────────── */
+button,
+a.btn-touch,
+input[type="button"],
+input[type="submit"] {
+  min-height: 48px;
+  min-width: 48px;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Layout Containers ─────────────────────────────────────────────────────── */
+.section-container {
+  max-width: 78rem;
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+.section-gap {
+  padding-block: var(--section-gap);
+}
+
+/* ── Ambient Background Lighting (Cream→Teal atmospheric glow) ─────────── */
+.ambient-bg-glow {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(232, 245, 242, 0.9) 0%, rgba(246, 241, 232, 0.5) 40%, rgba(252, 252, 250, 0.3) 70%, transparent 100%);
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.85;
+}
+
+/* ── Pill Buttons ─────────────────────────────────────────────────────────── */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  border-radius: var(--radius-pill);
+  min-height: 48px;
+  padding-inline: 1.75rem;
+  font-family: "Italiana", sans-serif !important;
+  font-size: 1.0625rem;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-pill:hover {
+  transform: translateY(-1.5px);
+}
+
+.btn-pill-primary {
+  background-color: var(--accent);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px -2px rgba(22, 26, 36, 0.25);
+}
+
+.btn-pill-primary:hover {
+  background-color: var(--accent-hover);
+  box-shadow: 0 8px 20px -2px rgba(22, 26, 36, 0.35);
+}
+
+.btn-pill-secondary {
+  background-color: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-pill-secondary:hover {
+  border-color: rgba(22, 26, 36, 0.2);
+  box-shadow: var(--shadow-card);
+}
+
+/* ── Premium Card Containers ───────────────────────────────────────────────── */
+.card-premium {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.card-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-floating);
+  border-color: rgba(22, 26, 36, 0.2);
+}
+
+/* ── Loading Dots Animation ────────────────────────────────────────────────── */
+.loading-dots span {
+  display: inline-block;
+  animation: dot-bounce 1.4s infinite ease-in-out;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent-teal);
+  margin: 0 2px;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+.loading-dots span:nth-child(3) { animation-delay: 0s; }
+
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+  40%           { transform: scale(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
