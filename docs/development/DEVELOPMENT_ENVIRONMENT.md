@@ -1,178 +1,604 @@
 # MedGuide AI — Development Environment Specification
 
-**Project:** MedGuide AI  
-**Document:** Development Environment Specification  
-**Version:** 1.0  
-**Status:** Pre-Implementation Baseline
+**Project:** MedGuide AI
+
+**Document:** Development Environment Specification
+
+**Version:** 2.0
+
+**Status:** Approved Development Baseline
+
+**Primary Development Machine:** Laptop A
+
+**Supporting Development Machine:** Laptop B
+
+**Primary Target:** Local-first, reproducible, real-time healthcare-support platform
 
 ---
 
 # 1. Purpose
 
-This document defines the development environment required to build, test, run, and maintain MedGuide AI.
+This document defines the development environment, hardware allocation, software runtimes, AI execution strategy, database configuration, development workflow, testing environment, security rules, and milestone execution process for MedGuide AI.
 
-It establishes:
+The environment is designed around the following project constraints:
 
-- Development machines
-- Operating system requirements
-- Runtime versions
-- Package managers
-- Repository structure
-- Environment variables
-- Local database setup
-- AI development environment
-- Testing environment
-- Git workflow
-- Development commands
-- Environment separation
-- Reproducibility requirements
-
-This document must remain consistent with:
-
-- `AGENTS.md`
-- `docs/PROJECT_SPECIFICATION.md`
-- `docs/requirements/SRS.md`
-- `docs/requirements/PRE_DEVELOPMENT_DECISIONS.md`
-- `docs/architecture/SYSTEM_ARCHITECTURE.md`
-- `docs/architecture/TECHNOLOGY_STACK.md`
-- `docs/database/DATABASE_DESIGN.md`
-- `docs/database/ERD.md`
-- `docs/api/API_SPECIFICATION.md`
-- `docs/ai/AI_RAG_ARCHITECTURE.md`
-- `docs/ai/MODEL_SELECTION_AND_EVALUATION.md`
-- `docs/ai/MODEL_REGISTRY.md`
+1. The project must remain locally runnable wherever practically possible.
+2. Free and open-source resources should be preferred.
+3. External services must remain replaceable.
+4. The system must support an offline-first architecture.
+5. Safety-critical decisions must not depend exclusively on an LLM.
+6. AI models must be evaluated before the final production model is selected.
+7. Online AI providers must not become mandatory dependencies for the offline system.
+8. Development must remain reproducible across machines.
+9. All datasets, models, APIs, and external resources must have documented provenance.
+10. Development must proceed milestone-by-milestone from M1 through M18.
 
 ---
 
-# 2. Primary Development Machine
+# 2. Development Machine Architecture
 
-The primary development machine is:
+MedGuide AI uses a two-machine development strategy.
 
-| Component | Specification |
-|---|---|
-| CPU | Intel Core Ultra 7 255U |
-| RAM | 16 GB |
-| Graphics | Intel Integrated Graphics |
-| Storage | 512 GB-class SSD |
-| OS | Windows 11 Home 64-bit |
-| NPU | Intel AI Boost |
-| Architecture | x64 |
+```text
+                         MEDGUIDE AI DEVELOPMENT
+                                  │
+                    ┌─────────────┴─────────────┐
+                    │                           │
+                    ▼                           ▼
+               LAPTOP A                    LAPTOP B
+              MAIN / CORE                SUPPORT / SECONDARY
+                    │                           │
+        ┌───────────┼───────────┐               │
+        │           │           │               │
+        ▼           ▼           ▼               ▼
+      Backend     Database     Local AI       Frontend /
+      FastAPI     PostgreSQL   Ollama          UI / Testing
+                   pgvector
+        │           │           │
+        └───────────┼───────────┘
+                    │
+                    ▼
+             Shared Git Repository
+                    │
+                    ▼
+             College GPU / Colab
+             Heavy Experiments
+```
 
-This machine is sufficient for:
+Laptop A is the **primary integration and core-development machine**.
 
-- Frontend development
-- Backend development
-- PostgreSQL
-- RAG development
-- API development
-- Testing
-- OCR experimentation
-- Embedding experimentation
-- Small/local AI experiments
-
-Large-model experimentation may use institutional GPU resources or free external compute.
+Laptop B may be used for parallel frontend work, experimentation, documentation, testing, and other development tasks without becoming a required dependency.
 
 ---
 
-# 3. Institutional GPU
+# 3. Laptop A — Primary Development Machine
 
-College GPU infrastructure may be used for:
+## 3.1 Hardware
 
-- AI experimentation
-- Model benchmarking
-- Fine-tuning where justified
-- Large-model inference
-- Model optimization
-
-Current specifications:
-
-```text
-GPU: TBD
-VRAM: TBD
-RAM: TBD
-CPU: TBD
-OS: TBD
-CUDA: TBD
-```
-
-These values must not be guessed.
-
-The absence of this information does not block application development.
+| Parameter        | Specification                  |
+| ---------------- | ------------------------------ |
+| CPU              | Intel Core Ultra 7 255U        |
+| Architecture     | x64                            |
+| RAM              | 16 GB                          |
+| Storage          | 512 GB SSD                     |
+| Graphics         | Intel Integrated Graphics      |
+| NPU              | Intel AI Boost NPU             |
+| Operating System | Windows 11 Home 64-bit         |
+| Primary Role     | Core development + integration |
 
 ---
 
-# 4. Operating System
+## 3.2 Laptop A Responsibilities
 
-Primary development OS:
+Laptop A is responsible for the main working implementation of:
 
-```text
-Windows 11 64-bit
-```
+* FastAPI backend
+* PostgreSQL
+* pgvector
+* Alembic migrations
+* Authentication
+* Consent
+* Patient profiles
+* Symptom processing
+* Deterministic triage
+* AI Gateway
+* RAG
+* Local LLM testing
+* Ollama
+* Prescription OCR experimentation
+* Local speech experimentation
+* Medication system
+* Healthcare-worker APIs
+* Offline synchronization
+* Integration testing
+* Backend/frontend integration
+* End-to-end testing
 
-The application itself should remain portable to Linux-based deployment environments.
-
-Development-specific Windows configuration must not become a production dependency.
-
----
-
-# 5. Required Core Software
-
-The development environment requires:
-
-```text
-Git
-Python
-Node.js
-npm
-PostgreSQL
-Visual Studio Code or equivalent IDE
-```
-
-Additional tools should only be installed when required.
-
----
-
-# 6. Python Runtime
-
-Backend and AI development use Python.
-
-Target Python version:
-
-```text
-Python 3.12.x
-```
-
-Status:
-
-`CONFIRMED`
-
-The exact patch version used by the project must be recorded.
-
-Verify:
-
-```bash
-python --version
-```
-
-Expected format:
-
-```text
-Python 3.12.x
-```
+Laptop A is therefore the machine on which the complete system should eventually be capable of running locally for demonstration and evaluation, subject to hardware limitations of individual AI models.
 
 ---
 
-# 7. Python Environment
+# 4. Laptop B — Supporting Development Machine
 
-The backend must use an isolated virtual environment.
+Laptop B is a secondary development environment.
 
-Recommended:
+Its exact hardware specifications should be documented separately if required.
+
+Primary responsibilities may include:
+
+* Frontend development
+* UI/UX implementation
+* React/Next.js development
+* Responsive testing
+* Documentation
+* API testing
+* Lightweight AI experiments
+* Evaluation scripts
+* Test execution
+* Git-based parallel development
+
+Laptop B must not contain the only copy of any important project resource.
+
+All important project changes must be committed to the shared Git repository.
+
+---
+
+# 5. External / Institutional Compute
+
+Large experiments should not force the local development machine to run models that exceed its practical limits.
+
+Available external compute may include:
+
+* College GPU infrastructure
+* Google Colab
+* Other approved free compute resources
+
+These environments may be used for:
+
+* Large-model benchmarking
+* Model comparison
+* Embedding experiments
+* Speech model evaluation
+* OCR experiments
+* Batch evaluation
+* Dataset preprocessing
+* Research experiments
+
+External compute must not silently become a mandatory runtime dependency for the core application.
+
+---
+
+# 6. Core Technology Stack
+
+## 6.1 Frontend
+
+* Next.js
+* React
+* TypeScript
+* Tailwind CSS
+* PWA capabilities
+* IndexedDB for local data/cache where required
+
+---
+
+## 6.2 Backend
+
+* Python 3.12.x
+* FastAPI
+* Uvicorn
+* Pydantic
+* SQLAlchemy
+* Alembic
+* Pytest
+
+---
+
+## 6.3 Database
+
+* PostgreSQL
+* pgvector
+* SQLAlchemy
+* Alembic
+
+Database schema changes must be implemented through migrations.
+
+Manual production-schema modifications are prohibited.
+
+---
+
+## 6.4 AI/ML
+
+The AI layer is divided into independent components:
 
 ```text
-backend/.venv/
+AI Gateway
+    │
+    ├── LLM
+    │
+    ├── RAG
+    │
+    ├── STT
+    │
+    ├── TTS
+    │
+    ├── OCR
+    │
+    ├── Symptom Extraction
+    │
+    └── Safety / Triage
 ```
 
-The virtual environment must not be committed to Git.
+Each component must have an abstraction boundary.
+
+---
+
+# 7. LLM Runtime — Ollama
+
+## 7.1 Role of Ollama
+
+Ollama is the **local LLM runtime** for MedGuide AI.
+
+It is responsible for running the selected local language model.
+
+Ollama is NOT:
+
+* The RAG database
+* The speech system
+* The OCR system
+* The triage engine
+* The safety engine
+* The source of medical truth
+
+Ollama provides the runtime for the LLM used for tasks such as:
+
+* Grounded response generation
+* Explanation
+* Summarization
+* Conversational interaction
+* Multilingual response generation
+* Structured natural-language generation
+
+---
+
+## 7.2 Local Model Selection
+
+The final LLM must not be permanently selected before evaluation.
+
+Candidate models may include:
+
+* Qwen family
+* Gemma family
+* Other suitable multilingual open-source models
+
+The Phase 1 model evaluation should prioritize:
+
+1. English performance
+2. Hindi performance
+3. Telugu performance
+4. Code-mixed language understanding
+5. RAG grounding
+6. Medical safety
+7. Refusal behavior
+8. Instruction following
+9. CPU latency
+10. RAM consumption
+11. Quantized inference feasibility
+
+The final model should be selected based on measured results rather than model popularity.
+
+---
+
+# 8. Sarvam Integration Strategy
+
+Sarvam is an **online external AI provider** used primarily for Indian-language and document-processing capabilities where it provides a meaningful quality advantage.
+
+Sarvam is not the primary LLM runtime.
+
+The architecture is:
+
+```text
+                    AI GATEWAY
+                        │
+        ┌───────────────┼────────────────┐
+        │               │                │
+        ▼               ▼                ▼
+       LLM             Speech            OCR
+        │               │                │
+     Ollama        Sarvam / Local   Sarvam / Local
+```
+
+---
+
+## 8.1 Sarvam STT
+
+When internet connectivity is available, Sarvam may be used for:
+
+* Speech-to-text
+* Indian-language speech recognition
+* Hindi speech
+* Telugu speech
+* English speech where appropriate
+* Code-mixed speech evaluation
+
+The provider must be accessed through an STT provider interface.
+
+Example:
+
+```text
+STTProvider
+    ├── SarvamSTTProvider
+    └── LocalSTTProvider
+```
+
+---
+
+## 8.2 Sarvam TTS
+
+Sarvam may be used for online:
+
+* Hindi TTS
+* Telugu TTS
+* English TTS
+* Natural Indian-language voice output
+
+The architecture must allow:
+
+```text
+TTSProvider
+    ├── SarvamTTSProvider
+    └── LocalTTSProvider
+```
+
+Sarvam's voice quality should be empirically evaluated before being treated as the preferred online provider.
+
+---
+
+## 8.3 Sarvam OCR
+
+Where technically and practically appropriate, Sarvam may be evaluated for:
+
+* Prescription OCR
+* Indian-language document recognition
+* Document text extraction
+
+The architecture must also provide a local OCR path.
+
+```text
+OCRProvider
+    ├── SarvamOCRProvider
+    └── LocalOCRProvider
+```
+
+Potential local OCR technologies include:
+
+* PaddleOCR
+* Tesseract
+* Other evaluated open-source OCR models
+
+---
+
+# 9. Online vs Offline AI Strategy
+
+Online and offline capabilities must be explicitly separated.
+
+## 9.1 Online
+
+When internet connectivity is available:
+
+```text
+User
+ │
+ ▼
+MedGuide
+ │
+ ├── Ollama Local LLM
+ │
+ ├── Local RAG
+ │
+ ├── Sarvam STT
+ │
+ ├── Sarvam TTS
+ │
+ └── Sarvam OCR
+```
+
+Online provider selection may improve language, voice, or document-processing quality.
+
+---
+
+## 9.2 Offline
+
+When internet connectivity is unavailable:
+
+```text
+User
+ │
+ ▼
+MedGuide Offline Layer
+ │
+ ├── Local LLM via Ollama
+ ├── Local RAG / Cached Knowledge
+ ├── Local STT
+ ├── Local TTS
+ ├── Local OCR
+ ├── Deterministic Triage
+ ├── Medication Reminders
+ └── Local Sync Queue
+```
+
+The exact local STT, TTS, and OCR models must be selected through evaluation.
+
+---
+
+## 9.3 Important Rule
+
+> **Sarvam must improve the online experience without becoming the definition of MedGuide AI's offline capability.**
+
+If Sarvam is unavailable because there is no network:
+
+* The application must not crash.
+* The user must receive an appropriate offline state.
+* Local alternatives should be used where feasible.
+* Safety-critical deterministic functionality must remain available.
+
+---
+
+# 10. AI Gateway
+
+All AI providers must be accessed through an abstraction layer.
+
+Recommended interfaces:
+
+```python
+class LLMProvider:
+    ...
+
+class STTProvider:
+    ...
+
+class TTSProvider:
+    ...
+
+class OCRProvider:
+    ...
+
+class EmbeddingProvider:
+    ...
+```
+
+Example architecture:
+
+```text
+Application
+     │
+     ▼
+AI Gateway
+     │
+     ├── LLMProvider
+     │      └── Ollama
+     │
+     ├── STTProvider
+     │      ├── Sarvam
+     │      └── Local STT
+     │
+     ├── TTSProvider
+     │      ├── Sarvam
+     │      └── Local TTS
+     │
+     └── OCRProvider
+            ├── Sarvam
+            └── Local OCR
+```
+
+Application code must not directly depend on provider-specific implementation details.
+
+---
+
+# 11. RAG Development Environment
+
+The RAG system runs primarily using:
+
+* PostgreSQL
+* pgvector
+* Embedding model
+* Approved medical knowledge corpus
+
+Pipeline:
+
+```text
+Approved Medical Sources
+        ↓
+Validation
+        ↓
+Cleaning
+        ↓
+Chunking
+        ↓
+Embedding
+        ↓
+pgvector
+        ↓
+User Query
+        ↓
+Query Embedding
+        ↓
+Similarity Search
+        ↓
+Evidence Gate
+        ↓
+Ollama LLM
+        ↓
+Grounded Response
+```
+
+---
+
+# 12. Medical Knowledge Resource Requirement
+
+Before implementing M9 fully, the required medical knowledge resources must be identified and acquired.
+
+The project must maintain:
+
+```text
+data/
+└── knowledge_base/
+    ├── raw/
+    ├── processed/
+    ├── manifests/
+    └── evaluation/
+```
+
+Each source must record:
+
+* Source name
+* Publisher
+* URL
+* License
+* Version
+* Publication date
+* Language
+* Topic
+* Processing status
+* Last reviewed date
+
+No unverified medical document should be silently added to the production RAG corpus.
+
+---
+
+# 13. Dataset Acquisition Rule
+
+Required datasets/resources must be tracked before the corresponding implementation/evaluation milestone.
+
+Examples:
+
+| Resource                          | Required By |
+| --------------------------------- | ----------- |
+| Medical RAG corpus                | M9          |
+| Symptom/triage evaluation dataset | M6–M7 / M17 |
+| Prescription OCR dataset          | M11 / M17   |
+| Medicine extraction dataset       | M11 / M17   |
+| English speech data               | M14 / M17   |
+| Hindi speech data                 | M14 / M17   |
+| Telugu speech data                | M14 / M17   |
+| TTS evaluation material           | M14 / M17   |
+| Multilingual text evaluation set  | M14 / M17   |
+| Offline workflow test data        | M15 / M17   |
+| Synthetic patient data            | M16         |
+
+Every dataset must have documented provenance.
+
+---
+
+# 14. Python Environment
+
+Backend and AI services use Python 3.12.x.
+
+Recommended environment:
+
+```text
+backend/
+└── .venv/
+```
 
 Create:
 
@@ -180,37 +606,19 @@ Create:
 python -m venv .venv
 ```
 
-Activate on Windows PowerShell:
+Activate on Windows:
 
-```powershell
-.\.venv\Scripts\Activate.ps1
+```bash
+.venv\Scripts\activate
 ```
+
+Install dependencies using the project's dependency specification.
 
 ---
 
-# 8. Python Dependency Management
+# 15. Core Python Dependencies
 
-Backend dependencies must be explicitly recorded.
-
-Initial baseline:
-
-```text
-backend/requirements.txt
-```
-
-Development dependencies may be separated if required:
-
-```text
-backend/requirements-dev.txt
-```
-
-No dependency should be installed only locally without being recorded.
-
----
-
-# 9. Backend Core Dependencies
-
-The initial backend dependency categories are:
+Expected categories include:
 
 ```text
 FastAPI
@@ -218,123 +626,62 @@ Uvicorn
 Pydantic
 SQLAlchemy
 Alembic
-PostgreSQL driver
-JWT/authentication libraries
+psycopg
+Pytest
+JWT library
 Password hashing library
-PyTest
+HTTP client
+NumPy
+Pandas
+PyTorch
+Transformers
+Sentence Transformers
 ```
 
-Exact package versions will be pinned during environment setup.
+AI-specific dependencies should be added only when required by the selected implementation.
+
+Avoid unnecessary packages that increase deployment size or security surface.
 
 ---
 
-# 10. Node.js Runtime
+# 16. Node.js Environment
 
-Frontend development uses Node.js.
+Frontend development uses:
 
-Target:
+* Node.js LTS
+* npm
+* `package-lock.json`
 
-```text
-Node.js LTS
-```
-
-The exact major version must be pinned after environment initialization.
-
-Verify:
-
-```bash
-node --version
-npm --version
-```
-
----
-
-# 11. Frontend Dependency Management
-
-The frontend will use:
-
-```text
-npm
-```
-
-The lockfile must be committed:
-
-```text
-package-lock.json
-```
-
-Dependencies must be installed using the lockfile for reproducible builds.
-
-Preferred installation:
-
-```bash
-npm ci
-```
-
----
-
-# 12. Frontend Core Dependencies
-
-Initial categories:
+Expected frontend stack:
 
 ```text
 Next.js
 React
 TypeScript
 Tailwind CSS
-PWA-related tooling
-API client utilities
-Form validation
-UI components where required
+PWA tooling
 ```
 
-Additional libraries must be introduced only when justified.
+Dependencies must be installed from the committed lockfile.
 
 ---
 
-# 13. Database
+# 17. Database Environment
 
-Development database:
+## Development Database
 
 ```text
+Database:
 PostgreSQL
-```
 
-Required extension:
+Database Name:
+medguide_ai_dev
 
-```text
+Extension:
 pgvector
 ```
 
-The database must be available locally during backend development.
-
----
-
-# 14. Local Database
-
-Recommended development database:
-
-```text
-medguide_ai_dev
-```
-
-Example configuration:
-
-```text
-Host: localhost
-Port: 5432
-Database: medguide_ai_dev
-User: <development-user>
-Password: <development-password>
-```
-
-Actual credentials must never be committed to Git.
-
----
-
-# 15. Database Environment Variable
-
-The backend should use:
+Connection is configured through:
 
 ```text
 DATABASE_URL
@@ -343,69 +690,116 @@ DATABASE_URL
 Example structure:
 
 ```text
-postgresql+psycopg://USER:PASSWORD@HOST:PORT/DATABASE
+postgresql://<user>:<password>@localhost:<port>/medguide_ai_dev
 ```
 
-The actual credential must exist only in the local environment.
+Credentials must never be committed to Git.
 
 ---
 
-# 16. Database Migrations
+# 18. Database Migration Rules
 
-All schema changes must use:
+Alembic is the authoritative migration mechanism.
 
-```text
-Alembic
+Typical workflow:
+
+```bash
+alembic revision --autogenerate -m "description"
+alembic upgrade head
 ```
 
-Workflow:
+Rules:
 
-```text
-SQLAlchemy Model
-      ↓
-Migration
-      ↓
-Database
-```
-
-Developers must not manually modify the database schema as a substitute for migrations.
+1. Never manually modify the development database schema as a substitute for migrations.
+2. Every schema change must have a migration.
+3. Migration files must be committed.
+4. Migrations must be tested on a clean database before major releases.
 
 ---
 
-# 17. Initial Migration
+# 19. Environment Variables
 
-The initial migration will be generated only after:
+A `.env.example` file must document required configuration.
 
-* SQLAlchemy models are implemented.
-* Relationships are verified.
-* Constraints are verified.
-* ERD consistency is checked.
+Examples:
 
-Do not generate an initial migration from incomplete models.
+```text
+DATABASE_URL=
+JWT_SECRET=
+OLLAMA_BASE_URL=
+OLLAMA_MODEL=
+
+SARVAM_API_KEY=
+
+STORAGE_PATH=
+
+APP_ENV=
+API_BASE_URL=
+FRONTEND_URL=
+```
+
+Rules:
+
+* Never commit `.env`.
+* Never commit API keys.
+* Never place secrets directly in source code.
+* Use environment variables.
+* External provider keys must be optional where the corresponding feature has a local fallback.
 
 ---
 
-# 18. Repository Structure
+# 20. Repository Structure
 
-The repository baseline is:
+Recommended repository structure:
 
 ```text
-medguide-ai/
+MedGuide_AI/
 │
 ├── AGENTS.md
-├── README.md
-├── .gitignore
-├── .env.example
 │
 ├── frontend/
+│   ├── src/
+│   ├── public/
+│   └── package.json
 │
 ├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   ├── core/
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   ├── services/
+│   │   ├── db/
+│   │   └── main.py
+│   │
+│   ├── alembic/
+│   ├── tests/
+│   └── requirements.txt
 │
 ├── ai/
+│   ├── llm/
+│   ├── embeddings/
+│   ├── rag/
+│   ├── ocr/
+│   ├── speech/
+│   ├── symptom_extraction/
+│   ├── triage/
+│   ├── prompts/
+│   └── evaluation/
 │
 ├── data/
+│   ├── raw/
+│   ├── processed/
+│   ├── knowledge_base/
+│   └── evaluation/
 │
 ├── tests/
+│   ├── backend/
+│   ├── frontend/
+│   ├── ai/
+│   ├── integration/
+│   ├── security/
+│   └── offline/
 │
 ├── scripts/
 │
@@ -414,821 +808,935 @@ medguide-ai/
 
 ---
 
-# 19. Frontend Structure
+# 21. Security Rules
 
-The frontend should evolve toward:
+The following must never be committed:
 
-```text
-frontend/
-│
-├── app/
-├── components/
-├── features/
-├── lib/
-├── hooks/
-├── services/
-├── types/
-├── public/
-└── tests/
-```
+* Real patient data
+* Real prescriptions
+* Real health records
+* Private audio recordings
+* Private transcripts
+* API keys
+* `.env`
+* JWT secrets
+* Database passwords
+* Production credentials
+* Raw production database dumps
 
-Exact organization must follow the frontend architecture once implementation begins.
+Development and evaluation should use:
 
----
-
-# 20. Backend Structure
-
-The backend should evolve toward:
-
-```text
-backend/
-│
-├── app/
-│   ├── main.py
-│   ├── core/
-│   ├── api/
-│   ├── models/
-│   ├── schemas/
-│   ├── services/
-│   ├── repositories/
-│   ├── ai/
-│   ├── db/
-│   └── workers/
-│
-├── migrations/
-├── tests/
-├── requirements.txt
-└── .env.example
-```
-
-The structure must preserve separation between:
-
-```text
-API
-Business Logic
-Database
-AI
-Infrastructure
-```
+* Synthetic data
+* Public datasets
+* De-identified data
+* Explicitly authorized data
 
 ---
 
-# 21. AI Structure
+# 22. AI Data Privacy Rules
 
-The AI directory should evolve toward:
+When using an external online provider:
 
 ```text
-ai/
-│
-├── llm/
-├── embeddings/
-├── rag/
-├── ocr/
-├── speech/
-├── symptom_extraction/
-├── triage/
-├── prompts/
-├── evaluation/
-└── experiments/
+Patient Input
+      ↓
+Data Minimization
+      ↓
+Provider Eligibility Check
+      ↓
+External Provider
 ```
 
-Experimental code must remain separate from production services.
+Only the minimum information required for the operation should be sent.
+
+Sensitive information that does not need to leave the local system must remain local.
+
+The project must document which information is sent to external providers.
 
 ---
 
-# 22. Data Structure
+# 23. Offline Development Testing
 
-The data directory should evolve toward:
+Offline mode must be tested deliberately.
+
+Testing scenarios:
+
+### Scenario 1 — Full Internet
 
 ```text
-data/
-│
-├── raw/
-├── processed/
-├── knowledge_base/
-├── evaluation/
-└── README.md
+Sarvam available
+Ollama available
+Database available
 ```
 
----
-
-# 23. Data Rules
-
-Never commit:
-
-* Real patient records
-* Personal health information
-* API credentials
-* Private prescriptions
-* Unauthorized datasets
-* Production database dumps
-
-The repository should contain only approved development data.
-
----
-
-# 24. Tests Structure
-
-The project should use:
+### Scenario 2 — No Internet
 
 ```text
-tests/
-│
-├── backend/
-├── frontend/
-├── ai/
-├── integration/
-├── security/
-└── fixtures/
+Sarvam unavailable
+Local LLM available
+Local services available
 ```
 
-Testing must cover both normal and safety-critical behavior.
-
----
-
-# 25. Environment Files
-
-The repository must contain:
+### Scenario 3 — Partial Provider Failure
 
 ```text
-.env.example
+Sarvam unavailable
+Ollama available
 ```
 
-but never actual secrets.
-
-Example:
+Expected behavior:
 
 ```text
-DATABASE_URL=
-JWT_SECRET=
-AI_PROVIDER_API_KEY=
-AI_MODEL=
-```
-
-Values are placeholders only.
-
----
-
-# 26. Environment Separation
-
-The project must distinguish:
-
-```text
-Development
-Testing
-Production
-```
-
-Conceptually:
-
-```text
-.env.development
-.env.test
-.env.production
-```
-
-Actual environment-file strategy depends on deployment infrastructure.
-
-Production secrets must never be stored in Git.
-
----
-
-# 27. Git Ignore
-
-The `.gitignore` must exclude at minimum:
-
-```text
-.env
-.env.*
-!.env.example
-
-.venv/
-__pycache__/
-*.pyc
-
-node_modules/
-.next/
-
-coverage/
-.pytest_cache/
-
-*.log
-
-model weights
-large datasets
-temporary files
-OS-specific files
-IDE-specific files
-```
-
-The exact `.gitignore` must be reviewed before the first commit.
-
----
-
-# 28. Git Branching
-
-Baseline:
-
-```text
-main
-│
-├── feature/*
-├── fix/*
-└── experiment/*
-```
-
-`main` should remain stable.
-
-Experimental AI work should use:
-
-```text
-experiment/*
-```
-
-where appropriate.
-
----
-
-# 29. Commit Rules
-
-Commits should be:
-
-* Small
-* Focused
-* Descriptive
-* Related to one logical change
-
-Examples:
-
-```text
-feat: initialize FastAPI backend
-feat: add database configuration
-feat: add user model
-fix: correct consent validation
-test: add authentication tests
-docs: update API specification
-```
-
-Do not create meaningless commits such as:
-
-```text
-update
-changes
-final
-working
-test123
-```
-
----
-
-# 30. Documentation Synchronization
-
-When implementation changes a documented contract:
-
-```text
-Code Change
-    ↓
-Check Documentation
-    ↓
-Update Relevant Document
-    ↓
-Run Tests
-    ↓
-Commit
-```
-
-Documentation must not intentionally describe behavior that the code does not implement.
-
----
-
-# 31. API Development Rule
-
-The API specification is the contract.
-
-Before implementing an endpoint:
-
-```text
-API_SPECIFICATION.md
+Application remains operational
         ↓
-Endpoint
+Provider failure detected
         ↓
-Request Schema
+Local alternative attempted
         ↓
-Response Schema
-        ↓
-Authentication
-        ↓
-Authorization
-        ↓
-Implementation
-        ↓
-Tests
+If unavailable:
+Safe limitation message
 ```
 
-If implementation requires a new endpoint or changes an existing contract, update the API specification first.
+### Scenario 4 — Backend unavailable
+
+Core locally cached functionality must degrade gracefully.
 
 ---
 
-# 32. Database Development Rule
+# 24. Preliminary Symptom Checker Environment
 
-Before creating a model:
+The Preliminary Symptom Checker is the primary patient-facing entry point after sign-in.
+
+It must be developed with low digital literacy in mind.
+
+Core design principles:
+
+* Large touch targets
+* Minimal typing
+* Clear language
+* Native-language labels
+* Voice input
+* Simple symptom selection
+* Duration selection
+* Severity selection
+* Clear progress indicator
+* Clear ROUTINE / URGENT / EMERGENCY states
+* Emergency guidance visible immediately when required
+
+Processing:
 
 ```text
-ERD.md
-   ↓
-DATABASE_DESIGN.md
-   ↓
-SQLAlchemy Model
-   ↓
-Migration
-   ↓
-Tests
+Patient Input
+      ↓
+Symptom Structuring
+      ↓
+Deterministic Red-Flag Rules
+      ↓
+Risk Classification
+      ↓
+ROUTINE / URGENT / EMERGENCY
 ```
 
-Do not invent new entities without checking the existing database specification.
+The LLM must not be the sole triage authority.
 
 ---
 
-# 33. AI Development Rule
+# 25. Development Startup
 
-Before implementing an AI component:
-
-```text
-AI_RAG_ARCHITECTURE.md
-        ↓
-MODEL_REGISTRY.md
-        ↓
-Approved/Tentative model
-        ↓
-AI Interface
-        ↓
-Implementation
-        ↓
-Evaluation
-```
-
-Unapproved models may be used only in explicitly marked experiments.
-
----
-
-# 34. AI Provider Abstraction
-
-The backend must not directly couple application logic to a specific LLM provider.
-
-Conceptually:
-
-```text
-Application
-    ↓
-AI Gateway
-    ↓
-Provider Interface
-    ↓
-Specific Provider
-```
-
-This allows model/provider replacement without rewriting application features.
-
----
-
-# 35. Local Development Commands
-
-The project should eventually provide simple commands for:
-
-### Backend
+## Backend
 
 ```bash
+cd backend
+.venv\Scripts\activate
 uvicorn app.main:app --reload
 ```
 
-### Frontend
-
-```bash
-npm run dev
-```
-
-### Tests
-
-```bash
-pytest
-```
-
-### Database migrations
-
-```bash
-alembic upgrade head
-```
-
-Exact commands may be adjusted during implementation.
-
----
-
-# 36. Local Development Startup
-
-The expected local system:
+Expected development API:
 
 ```text
-PostgreSQL
-    ↓
-Backend
-    ↓
-AI Services
-    ↓
-Frontend
+http://localhost:8000
 ```
 
-Recommended startup order:
-
-```text
-1. PostgreSQL
-2. Backend
-3. AI dependencies/services
-4. Frontend
-```
-
----
-
-# 37. Health Checks
-
-The backend should expose an appropriate health endpoint.
-
-Example:
+Health check:
 
 ```text
 GET /api/v1/health
 ```
 
-The health check should distinguish application availability from dependency availability where appropriate.
-
 ---
 
-# 38. AI Health Checks
+## Frontend
 
-AI providers/services should have appropriate availability checks.
-
-The system must handle:
-
-```text
-AI unavailable
-RAG unavailable
-OCR unavailable
-STT unavailable
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
-without crashing unrelated application functionality.
-
----
-
-# 39. Failure Isolation
-
-Failure of an AI component must not automatically cause failure of the entire application.
-
-Example:
+Expected development interface:
 
 ```text
-OCR unavailable
-      ↓
-Prescription feature unavailable
-      ↓
-Medication reminder still works
-      ↓
-Patient profile still works
+http://localhost:3000
 ```
 
 ---
 
-# 40. Development Logging
+## Ollama
 
-Development logs may be verbose.
+Ollama must be running locally when local LLM functionality is being tested.
 
-Production logs must avoid unnecessary sensitive health information.
-
-Never log:
-
-```text
-Passwords
-JWT secrets
-API keys
-Full patient medical records
-Sensitive prescription contents
-```
+The application should communicate with Ollama through the AI Gateway rather than directly from feature modules.
 
 ---
 
-# 41. Local AI Models
+# 26. Development Ports
 
-Local model files should not normally be stored directly inside Git.
+Recommended development ports:
 
-Recommended:
+| Service    |  Port |
+| ---------- | ----: |
+| Next.js    |  3000 |
+| FastAPI    |  8000 |
+| PostgreSQL |  5432 |
+| Ollama     | 11434 |
 
-```text
-Model Identifier
-+
-Download Instructions
-+
-Configuration
-```
-
-Large model files should remain outside the source repository.
+Ports may be changed if required, but the active configuration must be documented.
 
 ---
 
-# 42. AI Experiment Reproducibility
+# 27. API-First Development Rule
 
-Every AI experiment should record:
+Before implementing a backend feature:
+
+```text
+Requirement
+    ↓
+Use Case
+    ↓
+API Contract
+    ↓
+Schema
+    ↓
+Database
+    ↓
+Implementation
+    ↓
+Tests
+```
+
+API specifications must be maintained in the relevant API documentation.
+
+Frontend implementation must not invent backend response structures independently.
+
+---
+
+# 28. AI Development Rule
+
+Before implementing an AI feature:
+
+```text
+Requirement
+    ↓
+Data Requirement
+    ↓
+Model / Provider Candidates
+    ↓
+Evaluation Plan
+    ↓
+Implementation
+    ↓
+Safety Test
+    ↓
+Performance Test
+```
+
+No model should be selected solely because it is popular or easy to install.
+
+---
+
+# 29. Model Evaluation Environment
+
+Each candidate model must be evaluated using a controlled test set.
+
+Record:
 
 ```text
 Model
 Version
-Dataset
-Dataset Version
-Prompt
+Quantization
 Prompt Version
-Configuration
+Temperature
+Context Length
+Embedding Model
+Knowledge Base Version
+Dataset Version
 Hardware
-Software Version
-Metrics
-Results
+Inference Time
+RAM Usage
+Output Quality
+Safety Result
+Language Result
 ```
 
-This follows:
+For Phase 1 LLM evaluation, compare at minimum:
 
-`MODEL_SELECTION_AND_EVALUATION.md`
+* English
+* Hindi
+* Telugu
+* Code-mixed prompts
+* RAG grounding
+* Refusal behavior
+* Safety behavior
 
 ---
 
-# 43. Free Resource Policy
+# 30. Git Strategy
 
-The project targets:
+Branches:
 
 ```text
-₹0
+main
+feature/*
+fix/*
+experiment/*
+docs/*
 ```
 
-for student development wherever technically feasible.
+Recommended commit format:
 
-Preferred order:
+```text
+feat:
+fix:
+docs:
+test:
+refactor:
+chore:
+experiment:
+```
+
+Every significant milestone completion should produce:
+
+1. Code changes
+2. Tests
+3. Documentation update
+4. Git commit
+
+---
+
+# 31. Development Workflow
+
+Every milestone follows:
+
+```text
+1. Read specification
+        ↓
+2. Confirm dependencies/data
+        ↓
+3. Implement
+        ↓
+4. Test
+        ↓
+5. Review
+        ↓
+6. Update documentation
+        ↓
+7. Commit
+        ↓
+8. Move to next milestone
+```
+
+A milestone should not be marked complete merely because the code compiles.
+
+---
+
+# 32. Failure Isolation
+
+Failure of one AI provider must not crash unrelated application features.
+
+Example:
+
+```text
+Sarvam STT fails
+       ↓
+Local STT attempted
+       ↓
+If unavailable
+       ↓
+Text input remains available
+```
+
+Similarly:
+
+```text
+OCR unavailable
+       ↓
+Prescription image remains stored safely
+       ↓
+User receives clear processing status
+       ↓
+Other patient features continue working
+```
+
+The same principle applies to:
+
+* TTS
+* STT
+* OCR
+* LLM
+* RAG
+* Synchronization
+
+---
+
+# 33. Testing Strategy
+
+Testing layers:
+
+```text
+Unit Tests
+    ↓
+API Tests
+    ↓
+Database Tests
+    ↓
+AI Component Tests
+    ↓
+Security Tests
+    ↓
+Offline Tests
+    ↓
+Integration Tests
+    ↓
+End-to-End Tests
+    ↓
+Evaluation
+```
+
+Commands:
+
+```bash
+pytest
+```
+
+Frontend:
+
+```bash
+npm run lint
+npm run build
+```
+
+---
+
+# 34. Offline Test Categories
+
+Offline tests must cover:
+
+* Application loading
+* Cached profile
+* Cached health information
+* Symptom recording
+* Deterministic triage
+* Medication schedule
+* Medication reminders
+* Local STT
+* Local TTS
+* Local OCR
+* Local LLM where hardware permits
+* Sync queue creation
+* Sync retry
+* Duplicate operation handling
+* Conflict resolution
+
+---
+
+# 35. Security Testing
+
+Security tests must include:
+
+* Authentication bypass
+* RBAC violations
+* Unauthorized patient access
+* Prescription access control
+* File upload validation
+* API authentication
+* Prompt injection
+* RAG poisoning
+* Sensitive logging
+* Sync authorization
+* Secret exposure
+
+---
+
+# 36. Milestone Execution Plan
+
+MedGuide AI follows the M1–M18 sequence.
+
+```text
+M1  Backend Foundation
+ ↓
+M2  Database Models + Migrations
+ ↓
+M3  Authentication + RBAC
+ ↓
+M4  Consent Management
+ ↓
+M5  Patient Profile
+ ↓
+M6  Symptom Records
+ ↓
+M7  Deterministic Triage
+ ↓
+M8  AI Gateway
+ ↓
+M9  RAG
+ ↓
+M10 AI Health Companion
+ ↓
+M11 Prescription OCR
+ ↓
+M12 Medication + Adherence
+ ↓
+M13 Healthcare Worker Dashboard
+ ↓
+M14 Speech + Multilingual
+ ↓
+M15 Offline/PWA + Synchronization
+ ↓
+M16 Full Integration Testing
+ ↓
+M17 AI Safety + Performance Evaluation
+ ↓
+M18 Deployment + Operations
+```
+
+---
+
+# 37. Milestone Resource Dependencies
+
+| Milestone | Required Environment / Resources                                    |
+| --------- | ------------------------------------------------------------------- |
+| M1        | Python, FastAPI, PostgreSQL                                         |
+| M2        | PostgreSQL, pgvector, Alembic                                       |
+| M3        | JWT, password hashing, test framework                               |
+| M4        | Consent schemas + audit logging                                     |
+| M5        | Patient data models                                                 |
+| M6        | Symptom data/evaluation resources                                   |
+| M7        | Validated red-flag rules + evaluation data                          |
+| M8        | AI Gateway + provider interfaces                                    |
+| M9        | Medical RAG corpus + embedding model                                |
+| M10       | Ollama + evaluated LLM + RAG                                        |
+| M11       | Prescription OCR datasets + OCR providers                           |
+| M12       | Medication/timeline models                                          |
+| M13       | Healthcare-worker workflows                                         |
+| M14       | EN/HI/TE speech resources + Sarvam credentials + local alternatives |
+| M15       | PWA + IndexedDB + local AI alternatives                             |
+| M16       | Synthetic patient data + complete test suite                        |
+| M17       | Evaluation datasets + benchmark environment                         |
+| M18       | Docker + deployment infrastructure                                  |
+
+---
+
+# 38. M14 Speech and Multilingual Development Environment
+
+M14 should evaluate:
+
+```text
+                    Speech Input
+                         │
+              ┌──────────┴──────────┐
+              │                     │
+         Online Mode            Offline Mode
+              │                     │
+         Sarvam STT            Local STT
+              │                     │
+              └──────────┬──────────┘
+                         ↓
+                    Transcript
+                         ↓
+                    AI Gateway
+                         ↓
+                    Ollama LLM
+                         ↓
+              ┌──────────┴──────────┐
+              │                     │
+         Online Mode            Offline Mode
+              │                     │
+         Sarvam TTS             Local TTS
+```
+
+Languages:
+
+* English
+* Hindi
+* Telugu
+
+No language should be declared fully supported until it passes the required evaluation.
+
+---
+
+# 39. M15 Offline Development Environment
+
+M15 must establish the minimum offline-capable stack:
+
+```text
+Next.js PWA
+     │
+IndexedDB
+     │
+Local Safety Rules
+     │
+Local Scheduler
+     │
+Local AI Services
+     │
+Sync Queue
+     │
+PostgreSQL Server
+```
+
+Offline capability must be tested under simulated connectivity loss rather than assumed from browser caching alone.
+
+---
+
+# 40. M16 Integration Environment
+
+M16 combines:
+
+```text
+Frontend
+   +
+FastAPI
+   +
+PostgreSQL
+   +
+pgvector
+   +
+Ollama
+   +
+RAG
+   +
+OCR
+   +
+STT
+   +
+TTS
+   +
+Offline
+   +
+Sync
+```
+
+Required end-to-end workflows include:
+
+### Patient
+
+```text
+Register
+ ↓
+Consent
+ ↓
+Profile
+ ↓
+Symptom Check
+ ↓
+Triage
+ ↓
+AI Guidance
+ ↓
+Prescription
+ ↓
+OCR
+ ↓
+Verification
+ ↓
+Medication
+ ↓
+Timeline
+```
+
+### Healthcare Worker
+
+```text
+Login
+ ↓
+Patient List
+ ↓
+Patient Review
+ ↓
+Alerts
+ ↓
+Summary
+ ↓
+Follow-Up
+```
+
+---
+
+# 41. M17 Evaluation Environment
+
+M17 must produce measurable results for:
+
+## LLM
+
+* Language quality
+* RAG grounding
+* Hallucination rate
+* Safety
+* Refusal behavior
+* Latency
+* Memory usage
+
+## RAG
+
+* Recall@K
+* Citation correctness
+* Groundedness
+* Retrieval latency
+
+## Triage
+
+* Sensitivity
+* Specificity
+* False-negative rate
+
+## OCR
+
+* Character Error Rate
+* Word Error Rate
+* Medicine extraction accuracy
+
+## Speech
+
+* Word Error Rate
+* Language-wise accuracy
+* Code-mixed performance
+* Latency
+
+## Offline
+
+* Task completion rate
+* Sync reliability
+* Conflict rate
+* Offline feature availability
+
+No result should be entered into documentation before actual measurement.
+
+---
+
+# 42. M18 Deployment Environment
+
+Deployment should use:
+
+* Docker
+* Environment-specific configuration
+* Secret management
+* PostgreSQL backups
+* Logging
+* Health checks
+* Monitoring
+* CI/CD
+* Versioned releases
+
+Production configuration must remain separate from local development configuration.
+
+---
+
+# 43. Backup and Recovery
+
+Database backups should be generated using PostgreSQL-supported mechanisms such as:
+
+```bash
+pg_dump
+```
+
+The project must maintain:
+
+* Backup procedure
+* Restore procedure
+* Knowledge-base reconstruction procedure
+* Database migration procedure
+
+At least one restore test should be performed before final evaluation.
+
+---
+
+# 44. Observability
+
+The system should expose basic operational information:
+
+```text
+Application Health
+API Latency
+Error Rate
+Database Health
+AI Latency
+RAG Retrieval
+OCR Failures
+STT Failures
+TTS Failures
+Sync Queue
+Provider Availability
+```
+
+Logs must not unnecessarily expose patient-sensitive information.
+
+---
+
+# 45. Cost and Dependency Policy
+
+The project follows:
 
 ```text
 Open Source
-   ↓
+    ↓
 Local Resources
-   ↓
-College Infrastructure
-   ↓
-Free External Compute
-   ↓
-Free API Tier
+    ↓
+College Compute
+    ↓
+Free External Services
+    ↓
+Paid Services only if explicitly approved
 ```
 
-Paid infrastructure must not be introduced without an explicit project decision.
+Sarvam usage must therefore be treated as an **optional online provider dependency**, not as the foundation of the entire system.
+
+The system should remain architecturally functional if Sarvam credentials are absent.
 
 ---
 
-# 44. College GPU Usage
+# 46. Definition of Environment Readiness
 
-When available, the college GPU may be used for:
+The development environment is considered ready when:
 
-* AI benchmarking
-* Model experiments
-* Fine-tuning
-* Quantization
-* Large-model inference
-
-The GPU environment must not become a hidden production dependency.
+* Backend runs locally.
+* Frontend runs locally.
+* PostgreSQL runs locally.
+* pgvector is enabled.
+* Alembic migrations work.
+* Authentication can be tested.
+* Ollama runs successfully.
+* At least one candidate local LLM can be evaluated.
+* AI Gateway interfaces exist.
+* Sarvam adapter can be configured when credentials are available.
+* Local STT/OCR/TTS alternatives are identified or under evaluation.
+* Test framework works.
+* `.env.example` is complete.
+* No secrets are committed.
+* Dataset/resource tracking exists.
+* Offline test environment can be simulated.
+* Git workflow is functional.
 
 ---
 
-# 45. Reproducibility on Another Machine
+# 47. Environment Completion Rule
 
-A new developer should be able to:
+The development environment must not be considered complete simply because all software has been installed.
+
+It is complete only when the project can demonstrate:
 
 ```text
-Clone Repository
-      ↓
-Install Dependencies
-      ↓
-Configure .env
-      ↓
-Create Database
-      ↓
-Run Migrations
-      ↓
-Start Backend
-      ↓
-Start Frontend
-      ↓
-Run Tests
+Frontend
+    ↓
+FastAPI
+    ↓
+PostgreSQL
+    ↓
+AI Gateway
+    ↓
+Ollama
+    ↓
+RAG
+    ↓
+Safety/Triage
 ```
 
-without manually reconstructing undocumented setup steps.
-
----
-
-# 46. Setup Documentation
-
-The root `README.md` must eventually contain:
-
-* Prerequisites
-* Installation
-* Environment setup
-* Database setup
-* Backend setup
-* Frontend setup
-* Running the project
-* Running tests
-* AI setup
-* Troubleshooting
-
-The README should reference detailed documentation rather than duplicating every technical specification.
-
----
-
-# 47. IDE / Coding Agent Rules
-
-AI coding agents must:
-
-1. Read `AGENTS.md` before modifying code.
-2. Check relevant specification documents.
-3. Inspect existing implementation before creating new files.
-4. Avoid duplicating existing functionality.
-5. Never invent API contracts.
-6. Never invent database fields.
-7. Never change architecture silently.
-8. Never replace approved technologies without authorization.
-9. Keep healthcare safety constraints active.
-10. Run relevant tests after implementation.
-11. Report failures honestly.
-12. Never fabricate successful test results.
-
----
-
-# 48. Implementation Boundary
-
-The project is now transitioning from:
+and, where available:
 
 ```text
-Planning
+Sarvam
+ ├── STT
+ ├── TTS
+ └── OCR
 ```
 
-to:
-
-```text
-Implementation
-```
-
-However, AI models remain independently evaluable.
-
-Therefore:
-
-```text
-Application Development
-        +
-AI Model Evaluation
-```
-
-will proceed as parallel workstreams.
+with appropriate local alternatives for offline operation.
 
 ---
 
-# 49. First Implementation Milestone
+# 48. Final Development Principle
 
-The first implementation milestone is:
+MedGuide AI follows a **local-first, provider-agnostic, safety-first architecture**.
 
-> **Establish a runnable backend + database foundation without implementing healthcare AI behavior.**
-
-It must include:
+The intended relationship between components is:
 
 ```text
-FastAPI application
-Environment configuration
-PostgreSQL connection
-SQLAlchemy
-Alembic
-Health endpoint
-Basic project configuration
-Automated backend test
+                  MEDGUIDE AI
+                       │
+                  APPLICATION
+                       │
+                   AI GATEWAY
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+       LLM           SPEECH          OCR
+        │              │              │
+     Ollama       Sarvam / Local  Sarvam / Local
+        │
+   Evaluated Model
+        │
+        ▼
+       RAG
+        │
+        ▼
+ Deterministic Safety
 ```
 
-It must NOT yet include:
+The most important architectural rule is:
 
-* LLM integration
-* Medical diagnosis
-* Prescription interpretation
-* Production triage
-* Real patient workflows
+> **Ollama provides the local LLM runtime; Sarvam provides selected online language/document services; RAG provides grounded knowledge; deterministic rules provide safety-critical decisions; and the AI Gateway keeps all providers replaceable.**
 
 ---
 
-# 50. First Milestone Success Criteria
+# 49. Development Sequence
 
-The milestone is complete only when:
-
-```text
-Backend starts successfully
-        ↓
-Database connects successfully
-        ↓
-Alembic works
-        ↓
-Health endpoint responds
-        ↓
-Basic automated test passes
-        ↓
-No secrets committed
-        ↓
-Documentation matches implementation
-```
-
----
-
-# 51. Next Milestones
-
-After Milestone 1:
-
-```text
-M1 — Backend Foundation
-        ↓
-M2 — Database Models + Migrations
-        ↓
-M3 — Authentication + RBAC
-        ↓
-M4 — Consent Management
-        ↓
-M5 — Patient Profile
-        ↓
-M6 — Symptom Records
-        ↓
-M7 — Deterministic Triage
-        ↓
-M8 — AI Gateway
-        ↓
-M9 — RAG
-        ↓
-M10 — AI Chat
-        ↓
-M11 — Prescription OCR
-        ↓
-M12 — Medication System
-        ↓
-M13 — Healthcare Worker Dashboard
-        ↓
-M14 — Speech + Multilingual
-        ↓
-M15 — Offline/PWA + Sync
-        ↓
-M16 — Full Integration Testing
-        ↓
-M17 — AI Evaluation
-        ↓
-M18 — Deployment
-```
-
----
-
-# 52. Development Golden Rule
-
-> **Implement one controlled milestone at a time.**
-
-Do not ask an AI coding agent to implement the entire MedGuide AI platform in one operation.
-
-Every milestone must:
+The project will proceed strictly as:
 
 ```text
 Read Requirements
-      ↓
-Implement
-      ↓
-Test
-      ↓
-Review
-      ↓
-Update Documentation
-      ↓
-Commit
+       ↓
+Confirm Decision Register
+       ↓
+Confirm Environment
+       ↓
+Acquire Required Data / Resources
+       ↓
+Architecture
+       ↓
+M1
+       ↓
+M2
+       ↓
+...
+       ↓
+M18
 ```
+
+No milestone should silently introduce a new architectural dependency without updating the relevant documentation.
 
 ---
 
-# 53. Current Status
+# 50. Final Rule
 
-```text
-Repository Foundation             ✅
-Requirements                       ✅
-Architecture                       ✅
-Database Design                    ✅
-API Contract                       ✅
-AI/RAG Architecture                ✅
-Model Evaluation Framework         ✅
-Model Registry                     ✅
-Candidate Research                 ✅
-Technology Stack                   ✅
-Development Environment            ✅ THIS DOCUMENT
-Implementation                     ⏳ NEXT
-```
+> **Laptop A is the primary integration and core-development environment.**
 
----
+> **Ollama is the local LLM runtime, not the entire AI system.**
 
-# 54. Final Rule
+> **Sarvam is an online provider for selected STT/TTS/OCR and Indian-language capabilities, not the local LLM.**
 
-> **No production feature should be implemented until its requirement, architecture, API/data contract, safety implications, and test strategy are understood.**
+> **Offline capability requires local alternatives and must be experimentally verified.**
+
+> **Deterministic safety logic remains independent of the LLM and external AI providers.**
+
+> **All AI models, datasets, providers, and external resources must be evaluated and documented before their performance is claimed.**
+
+> **Every milestone must end with implementation, testing, documentation, and traceability updates.**

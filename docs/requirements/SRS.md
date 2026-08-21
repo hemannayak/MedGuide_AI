@@ -1,12 +1,13 @@
-# MedGuide AI — Software Requirements Specification
+# MedGuide AI — Software Requirements Specification (SRS)
 
-**Project:** MedGuide AI
-**Full Title:** MedGuide AI: An AI-Powered Rural Healthcare Intelligence and Digital Care Platform
-**Version:** 1.0
-**Document Status:** Baseline Specification
-**Primary Domain:** Healthcare, Artificial Intelligence, NLP, Speech Processing, OCR, Digital Health
-**Primary SDG:** SDG 3 — Good Health and Well-Being
-**Primary Target:** SDG 3.8 — Universal health coverage
+**Document Version:** 2.0  
+**Project:** MedGuide AI  
+**Project Title:** AI-Powered Rural Healthcare Intelligence and Digital Care Platform  
+**Domain:** Healthcare / Artificial Intelligence / NLP / Speech Processing / OCR / Digital Health  
+**Primary SDG:** SDG 3 — Good Health and Well-Being  
+**Primary SDG Target:** Target 3.8 — Universal health coverage  
+**Status:** Development Specification  
+**Last Updated:** August 2026
 
 ---
 
@@ -14,1219 +15,1436 @@
 
 ## 1.1 Purpose
 
-This Software Requirements Specification (SRS) defines the functional, non-functional, technical, safety, security, data, and usability requirements for **MedGuide AI**.
+This Software Requirements Specification defines the functional, non-functional, safety, AI, data, security, and integration requirements for MedGuide AI.
 
-The document serves as the primary reference for development, testing, evaluation, and future modification of the system.
+MedGuide AI is designed as a multilingual, low-resource healthcare-support platform for rural and underserved communities.
 
-All implementation decisions should remain consistent with this specification unless the requirement is formally revised.
+The system provides a first layer of digital healthcare assistance through:
 
----
+- Preliminary symptom understanding
+- Deterministic safety triage
+- Grounded health information retrieval
+- Conversational AI assistance
+- Multilingual text interaction
+- Voice interaction
+- Prescription OCR
+- Medication organization
+- Medication reminders and adherence tracking
+- Health timeline
+- Healthcare-worker support
+- Offline-first capabilities
 
-# 2. System Overview
+The system is intended to assist users in understanding health information and identifying when professional care may be required.
 
-MedGuide AI is an AI-powered digital healthcare platform designed to provide a first layer of preliminary healthcare support for rural and underserved communities.
-
-The system addresses challenges including:
-
-* Limited availability of healthcare professionals
-* Geographical barriers
-* Inadequate healthcare infrastructure
-* Language barriers
-* Low digital literacy
-* Limited or unreliable internet connectivity
-* Difficulty understanding prescriptions
-* Medication adherence challenges
-* Lack of continuity in health information
-
-The platform combines AI-assisted health interaction with structured healthcare information and healthcare-worker involvement.
-
-MedGuide AI is an **assistive healthcare system**, not an autonomous medical decision-making system.
+It does not replace qualified healthcare professionals and must not independently diagnose diseases or prescribe treatment.
 
 ---
 
-# 3. Problem Statement
+# 2. Product Vision
 
-Rural and underserved communities often experience difficulty accessing timely and reliable primary healthcare because of limited healthcare professionals, geographical distance, infrastructure limitations, language barriers, low digital literacy, and poor connectivity.
+MedGuide AI aims to make reliable healthcare information easier to access and understand for users who may face:
 
-Existing digital healthcare and telemedicine systems may provide access to healthcare professionals but can provide limited support for multilingual interaction, preliminary health guidance, prescription understanding, medication adherence, continuity of care, and low-connectivity environments.
+- Limited access to healthcare professionals
+- Long travel distances to healthcare facilities
+- Language barriers
+- Low digital literacy
+- Limited health literacy
+- Poor or intermittent internet connectivity
+- Difficulty understanding medical terminology
+- Difficulty understanding prescriptions and medication schedules
 
-MedGuide AI aims to provide an accessible digital first layer of healthcare support while maintaining appropriate escalation to qualified healthcare professionals.
+The platform follows the principle:
 
----
+> **Assist → Inform → Identify Risk → Escalate**
 
-# 4. Objectives
+It does not follow:
 
-The system shall aim to:
-
-1. Improve access to preliminary primary healthcare information.
-2. Provide multilingual and accessible healthcare interaction.
-3. Support text and voice-based health queries.
-4. Provide grounded healthcare information using Retrieval-Augmented Generation.
-5. Assist users in understanding reported symptoms.
-6. Identify predefined red-flag conditions requiring escalation.
-7. Assist users in understanding prescription information.
-8. Support medication scheduling and adherence.
-9. Maintain a structured health timeline.
-10. Help authorized healthcare workers review patient information.
-11. Support healthcare continuity through follow-ups.
-12. Provide selected functionality under limited connectivity.
-13. Protect sensitive healthcare information.
-14. Demonstrate measurable AI and software-engineering performance.
+> **Diagnose → Prescribe → Replace Doctor**
 
 ---
 
-# 5. Scope
+# 3. Scope
 
-## 5.1 In Scope
+## 3.1 In Scope
 
 The MVP includes:
 
 ### Patient
 
-* Registration
-* Authentication
-* Consent management
-* Patient profile
-* AI health companion
-* Text-based interaction
-* Symptom input
-* Preliminary health guidance
-* Red-flag detection
-* Escalation guidance
-* RAG-based healthcare information
-* Prescription image upload
-* Prescription OCR
-* Medicine information extraction
-* Medication scheduling
-* Medication reminders
-* Medication adherence tracking
-* Health timeline
+- Registration and authentication
+- Consent management
+- Patient profile
+- Language preference
+- Preliminary Symptom Checker
+- Structured symptom collection
+- Deterministic triage
+- Emergency escalation
+- RAG-grounded health guidance
+- AI health companion
+- Text interaction
+- Voice interaction
+- Prescription upload
+- Prescription OCR
+- Medication information extraction
+- Human verification of extracted medication information
+- Medication schedules
+- Medication reminders
+- Medication adherence
+- Health timeline
+- Offline access to defined core functionality
 
 ### Healthcare Worker
 
-* Secure authentication
-* Patient list
-* Patient profile
-* Patient-reported symptoms
-* Patient health timeline
-* Medication information
-* AI-generated patient summaries
-* Alerts
-* Follow-up management
+- Secure authentication
+- Patient list
+- Authorized patient profile access
+- Symptom history
+- Medication information
+- Safety alerts
+- AI-generated patient summaries
+- Follow-up management
 
-### Cross-cutting capabilities
+### AI / Technical
 
-* Multilingual interaction
-* Voice interaction
-* Offline-first functionality
-* Role-based access control
-* Security and privacy controls
-* Audit logging
-
----
-
-# 6. Out of Scope
-
-The following are not part of the initial MVP:
-
-* Autonomous diagnosis
-* Autonomous treatment decisions
-* Autonomous prescription generation
-* Full EHR/FHIR interoperability
-* Medical-device integration
-* Disease outbreak prediction
-* Drug-stock prediction
-* WhatsApp integration
-* IVR integration
-* Large-scale public-health analytics
-* Insurance management
-* Hospital billing
-* Payment processing
-* Real-world clinical deployment
-
-These may be considered as future extensions.
+- RAG
+- Local LLM inference
+- Replaceable model architecture
+- Multilingual processing
+- Speech processing
+- OCR
+- Deterministic safety engine
+- AI safety validation
+- Source/citation provenance
+- Evaluation framework
 
 ---
 
-# 7. Stakeholders
+# 4. Primary User Journey
 
-## 7.1 Patients
+The primary patient experience after authentication is intentionally designed around the Preliminary Symptom Checker rather than immediately presenting a generic chatbot.
 
-Individuals in rural and underserved communities who require accessible preliminary healthcare information and support.
+```text
+Login
+  ↓
+Consent
+  ↓
+Language / Profile
+  ↓
+Preliminary Symptom Checker
+  ↓
+Describe Symptoms
+  ↓
+Structured Symptom Understanding
+  ↓
+Deterministic Safety Triage
+  │
+  ├── EMERGENCY
+  │      ↓
+  │   Immediate escalation
+  │   108 / 112
+  │
+  ├── URGENT
+  │      ↓
+  │   Prompt professional evaluation
+  │
+  └── ROUTINE
+         ↓
+      RAG-grounded guidance
+         ↓
+      AI Companion
+         ↓
+      Sources + safety guidance
+```
 
-## 7.2 Healthcare Workers
-
-Authorized healthcare personnel who review patient information, alerts, summaries, and follow-up requirements.
-
-## 7.3 Local Clinics
-
-Potential healthcare organizations that may use the healthcare-worker interface.
-
-## 7.4 Project Team
-
-Developers, AI/ML researchers, designers, testers, and project supervisors responsible for developing and evaluating the platform.
-
-## 7.5 Future Stakeholders
-
-* NGOs
-* Public-health organizations
-* Health administrators
-* Healthcare institutions
+The interface must remain simple enough for rural and low-digital-literacy users.
 
 ---
 
-# 8. User Roles
+# 5. User Roles
 
-The initial system shall contain three primary roles.
+## 5.1 Patient
 
-## 8.1 Patient
+The patient can:
 
-A patient can:
-
-* Create an account
-* Manage their profile
+* Register
+* Log in
 * Provide consent
-* Submit symptoms
-* Interact with the AI health companion
+* Manage their profile
+* Select a preferred language
+* Enter symptoms
+* Use voice input
+* Receive preliminary guidance
+* View triage results
+* Receive emergency escalation guidance
+* Ask health-related questions
 * Upload prescriptions
-* View extracted medication information
-* Manage medication schedules
+* Review extracted medication information
+* Confirm medication information
+* Create schedules
 * Receive reminders
-* View adherence information
+* Track adherence
 * View their health timeline
-* Receive escalation guidance
 
-## 8.2 Healthcare Worker
+---
 
-An authorized healthcare worker can:
+## 5.2 Healthcare Worker
+
+The healthcare worker can:
 
 * Authenticate securely
 * View authorized patients
-* Review patient information
-* Review reported symptoms
-* Review health timelines
+* Review patient profiles
+* View symptom records
 * Review medication information
-* View AI-generated summaries
-* Receive relevant alerts
-* Record follow-ups
+* View safety alerts
+* Review AI-generated summaries
+* Manage follow-ups
 
-## 8.3 Administrator
-
-An administrator may perform approved system-level administrative operations.
-
-Administrative privileges must not provide unrestricted access to sensitive patient data unless explicitly required and authorized.
+Healthcare workers must only access information for which they have appropriate authorization.
 
 ---
 
-# 9. Functional Requirements
+## 5.3 Administrator
+
+Administrators can access approved system-level functions including:
+
+* System monitoring
+* Pipeline activity
+* Approved configuration
+* Audit information
+* Operational diagnostics
+
+Administrative access must not automatically provide unrestricted access to patient health information.
+
+---
+
+# 6. Functional Requirements
 
 ## FR-01 — User Registration
 
-The system shall allow eligible users to create accounts.
+The system shall allow a new user to create an account.
 
-The registration process shall validate required information and prevent invalid or duplicate accounts.
+The registration process shall collect, where applicable:
+
+* Name
+* Email or phone
+* Password
+* User role
+* Preferred language
+
+The system shall validate required fields and securely store credentials.
 
 ---
 
 ## FR-02 — Authentication
 
-The system shall provide secure authentication for patients and healthcare workers.
+The system shall provide secure login using:
 
-Authentication mechanisms shall protect credentials and sessions.
+* Email or phone
+* Password
+
+Authentication shall use secure password hashing and token-based session management.
 
 ---
 
 ## FR-03 — Role-Based Access Control
 
-The system shall enforce permissions based on user roles.
+The system shall enforce role-based access for:
 
-A patient shall only access authorized personal information.
+* PATIENT
+* HEALTHCARE_WORKER
+* ADMIN
 
-A healthcare worker shall only access patients and information for which they are authorized.
-
----
-
-## FR-04 — Consent Management
-
-The system shall allow patients to provide and manage consent for applicable healthcare-data processing and healthcare-worker access.
-
-Consent records shall be stored with appropriate timestamps and status information.
+Users shall not access resources outside their authorization scope.
 
 ---
 
-## FR-05 — Patient Profile
+# 7. Consent Requirements
 
-The system shall maintain a structured patient profile containing only information required by the approved functionality.
+## FR-04 — Explicit Consent
+
+The system shall obtain explicit patient consent before enabling protected healthcare workflows.
+
+Consent shall include appropriate information regarding:
+
+* Data usage
+* Healthcare-support limitations
+* Privacy
+* AI-assisted processing
 
 ---
 
-## FR-06 — AI Health Companion
+## FR-05 — Consent Management
 
-The system shall provide a conversational interface through which users can submit health-related questions.
+The system shall support:
 
-The system shall provide preliminary, informational guidance using approved medical knowledge sources.
+* Consent recording
+* Consent status retrieval
+* Consent withdrawal
+* Consent audit history
 
-The system shall communicate appropriate limitations where required.
+Healthcare workflows requiring consent shall not proceed when valid consent is unavailable.
 
 ---
 
-## FR-07 — Symptom Input
+# 8. Patient Profile
 
-Users shall be able to report symptoms using supported input methods.
+## FR-06 — Profile Management
 
-The system shall attempt to extract structured information such as:
+The system shall allow patients to manage relevant profile information including:
+
+* Age
+* Gender
+* Preferred language
+* Allergies
+* Relevant medical history
+* Emergency contact
+* Village/town information
+
+Only necessary information shall be collected.
+
+---
+
+# 9. Preliminary Symptom Checker
+
+## FR-07 — Primary Symptom Workflow
+
+The Preliminary Symptom Checker shall be the primary healthcare-support workflow presented to patients after sign-in/onboarding.
+
+The system shall provide a simple guided interface rather than requiring users to understand medical terminology.
+
+---
+
+## FR-08 — Symptom Input
+
+The system shall allow symptom information to be entered through:
+
+* Simple text
+* Structured symptom selections
+* Voice input where supported
+
+The system should support natural descriptions such as:
+
+> "I have fever since two days."
+
+rather than requiring medical terminology.
+
+---
+
+## FR-09 — Structured Symptom Understanding
+
+The system shall extract or structure relevant information such as:
 
 * Symptom
 * Duration
 * Severity
 * Associated symptoms
-* Relevant contextual information
+* Relevant risk indicators
 
-The system shall not assume information that the user has not provided.
-
----
-
-## FR-08 — Symptom Guidance
-
-The system shall process reported symptoms and provide preliminary guidance based on approved medical knowledge and defined system logic.
-
-The system shall not present preliminary guidance as a definitive diagnosis.
+The system shall preserve the original user input.
 
 ---
 
-## FR-09 — Red-Flag Detection
+# 10. Deterministic Safety and Triage
 
-The system shall identify predefined red-flag indicators based on documented and validated healthcare guidance.
+## FR-10 — Red-Flag Detection
 
-When an applicable red flag is identified, the system shall provide an appropriate escalation recommendation.
+The system shall evaluate reported symptoms using deterministic, testable safety rules.
 
----
-
-## FR-10 — Healthcare Escalation
-
-The system shall provide escalation guidance when the reported information indicates that professional or emergency attention may be required.
-
-The system shall prioritize safety over conversational convenience.
+Safety-critical triage shall not depend solely on an LLM.
 
 ---
 
-## FR-11 — Retrieval-Augmented Generation
+## FR-11 — Risk Classification
 
-The AI health companion shall use a curated medical knowledge base and retrieval mechanism for applicable healthcare queries.
+The triage engine shall classify cases into:
 
-The system shall retrieve relevant information before generating grounded responses.
-
-Knowledge sources shall maintain appropriate metadata.
-
----
-
-## FR-12 — Medical Knowledge Management
-
-The system shall maintain structured medical knowledge documents and associated metadata.
-
-Metadata should include, where available:
-
-* Source
-* Publisher
-* Title
-* Date
-* Version
-* Topic
-* Language
-* Usage/license information
+* ROUTINE
+* URGENT
+* EMERGENCY
 
 ---
 
-## FR-13 — Prescription Upload
+## FR-12 — Emergency Escalation
 
-Patients shall be able to upload prescription images through the supported interface.
+When emergency red flags are detected, the system shall:
 
-The system shall validate supported file types and reasonable image constraints.
-
----
-
-## FR-14 — Prescription OCR
-
-The system shall process prescription images using OCR technology.
-
-The system shall extract text where possible.
-
-OCR results shall not automatically be considered clinically correct.
+1. Stop normal AI guidance flow.
+2. Display an emergency warning.
+3. Recommend immediate professional/emergency care.
+4. Provide appropriate emergency contact information including **108 / 112**.
+5. Prevent the LLM from downgrading the emergency classification.
 
 ---
 
-## FR-15 — Medicine Information Extraction
+## FR-13 — Urgent Cases
 
-The system shall attempt to identify relevant information from OCR output, including where available:
-
-* Medicine name
-* Dosage
-* Frequency
-* Duration
-* Instructions
-
-Uncertain information shall be flagged for verification rather than silently modified.
+For urgent cases, the system shall recommend prompt evaluation by an appropriate healthcare professional or healthcare facility.
 
 ---
 
-## FR-16 — Medication Management
+## FR-14 — Routine Cases
 
-Patients shall be able to maintain medication schedules derived from verified prescription information or manually entered information.
+For routine cases, the system may proceed to grounded health information and preliminary guidance.
 
----
-
-## FR-17 — Medication Reminders
-
-The system shall provide medication reminders according to configured schedules.
+The system shall clearly communicate that the guidance is not a medical diagnosis.
 
 ---
 
-## FR-18 — Medication Adherence
+# 11. AI Gateway
 
-The system shall allow users to record whether scheduled medication was taken.
+## FR-15 — Model Abstraction
 
-The system may use this information to present adherence summaries.
+The system shall provide an AI Gateway layer between application logic and AI providers.
 
----
-
-## FR-19 — Health Timeline
-
-The system shall maintain a chronological view of relevant patient-recorded healthcare information.
-
-Possible timeline events include:
-
-* Symptoms
-* AI interactions
-* Prescriptions
-* Medications
-* Adherence records
-* Follow-ups
-* Alerts
+The application shall not depend directly on one specific LLM implementation.
 
 ---
 
-## FR-20 — Healthcare Worker Dashboard
+## FR-16 — Replaceable Local LLM
 
-The system shall provide an interface for authorized healthcare workers.
+The system shall support local LLM inference through a runtime such as **Ollama**.
 
-The dashboard shall support:
+Ollama is treated as the local inference/runtime layer.
 
-* Patient discovery within authorization boundaries
-* Patient summaries
-* Symptom review
-* Medication review
-* Alerts
-* Follow-ups
+The underlying model shall remain replaceable and evaluable.
 
----
+Potential models may include different open-source models depending on:
 
-## FR-21 — AI-Generated Patient Summary
+* Language performance
+* Medical grounding
+* Safety
+* Instruction following
+* Latency
+* Memory requirements
+* CPU/GPU requirements
+* Offline feasibility
 
-The system may generate structured summaries of patient-reported information for healthcare workers.
-
-Summaries must clearly distinguish patient-reported information from AI-generated interpretation.
-
----
-
-## FR-22 — Follow-Up Management
-
-Authorized healthcare workers shall be able to record follow-up requirements and relevant follow-up information.
+No model shall be considered permanently selected without evaluation.
 
 ---
 
-## FR-23 — Alerts
+## FR-17 — LLM Responsibilities
 
-The system shall generate appropriate alerts for defined events, including applicable red-flag situations and follow-up requirements.
+The LLM may be used for:
 
----
+* Natural-language generation
+* Explanation
+* Summarization
+* Conversational interaction
+* Multilingual response generation
 
-## FR-24 — Multilingual Interaction
-
-The system shall support multiple selected languages.
-
-The initial language set shall be finalized based on:
-
-* Target users
-* Dataset availability
-* Model capabilities
-* Evaluation feasibility
-
-The system shall not claim support for a language without adequate testing.
+The LLM shall not independently determine emergency classification.
 
 ---
 
-## FR-25 — Voice Interaction
+# 12. Retrieval-Augmented Generation
 
-The system shall support voice-based interaction through a suitable speech-to-text pipeline.
+## FR-18 — Medical Knowledge Retrieval
 
-Speech recognition performance shall be evaluated for the selected languages.
-
----
-
-## FR-26 — Offline Functionality
-
-The system shall provide selected functionality when internet connectivity is unavailable.
-
-Offline capabilities may include:
-
-* Cached information
-* Medication schedules
-* Reminders
-* Basic rules
-* Health timeline access
-* Queued operations
-
-Advanced cloud-based AI functionality may require connectivity.
-
----
-
-## FR-27 — Synchronization
-
-The system shall synchronize queued offline operations when connectivity becomes available.
-
-The synchronization process shall consider:
-
-* Retry
-* Duplicate prevention
-* Conflicts
-* Failed operations
-
----
-
-## FR-28 — Healthcare Resource Discovery
-
-If included in the MVP implementation, the system shall allow users to identify nearby healthcare resources using approved geographic data sources.
-
-This feature shall not replace emergency services or professional advice.
-
----
-
-# 10. Non-Functional Requirements
-
-## NFR-01 — Security
-
-The system shall protect authentication credentials, sessions, APIs, and sensitive healthcare information.
-
----
-
-## NFR-02 — Privacy
-
-The system shall minimize collection and storage of personally identifiable and healthcare information.
-
-Development shall preferably use synthetic or appropriately licensed/de-identified data.
-
----
-
-## NFR-03 — Reliability
-
-The system shall handle expected failures gracefully and avoid silent data loss.
-
----
-
-## NFR-04 — Usability
-
-The interface shall be simple enough for users with limited digital literacy.
-
-The system should use:
-
-* Clear language
-* Simple navigation
-* Large interaction elements
-* Icons where useful
-* Minimal unnecessary complexity
-
----
-
-## NFR-05 — Accessibility
-
-The interface should consider:
-
-* Readability
-* Touch accessibility
-* Appropriate contrast
-* Keyboard accessibility where applicable
-* Voice interaction
-* Multilingual presentation
-
----
-
-## NFR-06 — Performance
-
-The system shall provide acceptable response times for normal application operations.
-
-AI response latency shall be measured separately from standard API operations.
-
----
-
-## NFR-07 — Scalability
-
-The architecture should allow future expansion of:
-
-* Users
-* Languages
-* Medical documents
-* AI models
-* Healthcare workers
-* Healthcare facilities
-
-without requiring complete architectural redesign.
-
----
-
-## NFR-08 — Maintainability
-
-The system shall use modular architecture with clearly separated:
-
-* Frontend
-* Backend
-* AI services
-* Data access
-* Authentication
-* Healthcare logic
-* OCR
-* Speech processing
-
----
-
-## NFR-09 — Portability
-
-The application should remain locally runnable using documented development instructions.
-
-The architecture should minimize unnecessary vendor lock-in.
-
----
-
-## NFR-10 — Cost
-
-The project shall prioritize free and open-source resources.
-
-Paid services shall not become mandatory without explicit approval.
-
----
-
-# 11. AI and Healthcare Safety Requirements
-
-## SAF-01
-
-The system shall not claim to replace a qualified healthcare professional.
-
-## SAF-02
-
-The system shall not provide definitive diagnosis.
-
-## SAF-03
-
-The system shall not autonomously prescribe or modify medication.
-
-## SAF-04
-
-Safety-critical triage decisions shall use documented and testable logic.
-
-## SAF-05
-
-Medical AI responses should be grounded in approved knowledge sources wherever applicable.
-
-## SAF-06
-
-The system shall communicate uncertainty when appropriate.
-
-## SAF-07
-
-The system shall provide escalation guidance when predefined risk conditions are identified.
-
-## SAF-08
-
-The system shall not fabricate medical sources or clinical recommendations.
-
-## SAF-09
-
-AI-generated summaries must remain distinguishable from verified patient information.
-
-## SAF-10
-
-AI components shall undergo safety-oriented testing before being considered complete.
-
----
-
-# 12. Data Requirements
-
-## 12.1 Medical Knowledge Data
+The system shall retrieve relevant information from an approved medical knowledge base.
 
 Potential sources include:
 
-* WHO resources
+* WHO guidelines
 * Government health resources
-* Relevant health ministry resources
-* Approved clinical guidelines
-* Appropriately licensed medical FAQs
-
-Every source must be evaluated for authority and permitted usage.
+* Approved public-health resources
+* Other verified medical documents
 
 ---
 
-## 12.2 Symptom Data
+## FR-19 — RAG Pipeline
 
-The system may require:
+The RAG pipeline shall include:
 
-* Symptom terminology
-* Associated symptoms
-* Severity
+```text
+Medical Documents
+      ↓
+Cleaning
+      ↓
+Chunking
+      ↓
+Embedding
+      ↓
+Vector Storage
+      ↓
+Query Embedding
+      ↓
+Similarity Search
+      ↓
+Evidence Filtering
+      ↓
+LLM Context
+      ↓
+Grounded Response
+```
+
+---
+
+## FR-20 — Evidence Sufficiency
+
+The system shall evaluate retrieval confidence before allowing the LLM to generate grounded medical guidance.
+
+The currently calibrated threshold of **0.55** shall be treated as an initial operational configuration, not a universal medical threshold.
+
+The threshold may be changed following further evaluation.
+
+---
+
+## FR-21 — Refusal
+
+If sufficient evidence is unavailable, the system shall provide a safe refusal/disclosure rather than inventing information.
+
+---
+
+## FR-22 — Source Provenance
+
+Where applicable, responses shall expose source information including:
+
+* Source title
+* Publisher
+* Section
+* Page
+* Document identifier
+* Source URL
+
+The system shall not allow the LLM to fabricate source metadata.
+
+---
+
+# 13. Multilingual Support
+
+## FR-23 — Phase-1 Languages
+
+The initial multilingual implementation shall support:
+
+* English
+* Hindi
+* Telugu
+
+---
+
+## FR-24 — Native Script Support
+
+The interface and generated responses shall support native scripts where applicable:
+
+* English
+* हिंदी
+* తెలుగు
+
+The system should also tolerate reasonable code-mixed language input where technically supported.
+
+---
+
+## FR-25 — Language Consistency
+
+The system shall attempt to respond in the user's selected/requested language.
+
+Safety-critical templates such as emergency and refusal messages shall be controlled through deterministic application logic where possible.
+
+---
+
+# 14. Voice Interaction
+
+## FR-26 — Speech-to-Text
+
+The system shall support speech-to-text for supported languages.
+
+Potential providers/models include:
+
+* Local/open-source speech models
+* Whisper or evaluated alternatives
+* Sarvam AI as an optional online provider
+
+The provider shall be accessed through the AI Gateway rather than tightly coupling the application to one service.
+
+---
+
+## FR-27 — Text-to-Speech
+
+The system shall support optional text-to-speech for supported languages.
+
+Potential providers include:
+
+* Local/open-source TTS
+* Sarvam AI online TTS
+* Other evaluated providers
+
+---
+
+## FR-28 — Voice Failure Handling
+
+If speech recognition fails, the system shall allow the user to:
+
+* Retry
+* Edit the transcript
+* Use text input instead
+
+The user shall never be forced to use voice interaction.
+
+---
+
+# 15. Sarvam AI Integration
+
+## FR-29 — Optional Online AI Services
+
+Sarvam AI may be integrated as an optional online provider for:
+
+* Indian-language STT
+* Indian-language TTS
+* OCR/document processing where appropriate
+
+Sarvam AI shall not become an unavoidable architectural dependency.
+
+---
+
+## FR-30 — Provider Abstraction
+
+The AI Gateway shall allow the system to switch between:
+
+```text
+Local Provider
+     │
+     ├── Open-source STT
+     ├── Open-source TTS
+     └── Local OCR
+
+Online Provider
+     │
+     └── Sarvam AI
+```
+
+The final provider/model selection shall be based on empirical evaluation.
+
+---
+
+# 16. Prescription OCR
+
+## FR-31 — Prescription Upload
+
+The patient shall be able to upload a prescription image.
+
+---
+
+## FR-32 — OCR Processing
+
+The system shall preprocess the image and extract text using an OCR engine.
+
+Potential implementations include:
+
+* Tesseract
+* PaddleOCR
+* Other evaluated OCR solutions
+* Sarvam AI OCR where appropriate
+
+---
+
+## FR-33 — Medication Extraction
+
+The system shall attempt to identify:
+
+* Medicine name
+* Strength
+* Dosage
+* Frequency
 * Duration
-* Risk factors
-* Red flags
-* Recommended action
-* Source/reference
+* Relevant instructions
 
 ---
 
-## 12.3 Prescription Data
+## FR-34 — Human Verification
 
-For development and evaluation:
+OCR and medication extraction shall never automatically become a confirmed medication schedule.
 
-* Synthetic prescriptions
-* Appropriately licensed public datasets
-* Properly de-identified data where permitted
-
-Real patient prescriptions shall not be collected casually.
+The user or authorized healthcare worker must review and confirm extracted information before scheduling medication reminders.
 
 ---
 
-## 12.4 Speech Data
+# 17. Medication Management
 
-Speech datasets shall contain, where applicable:
+## FR-35 — Medication Records
 
-* Audio
-* Transcript
-* Language
-* Speaker metadata where permitted
-
-Selected languages will be finalized before implementation.
+The system shall maintain confirmed medication records.
 
 ---
 
-## 12.5 Application Data
+## FR-36 — Medication Scheduling
 
-Application data may include:
+Users shall be able to create medication schedules containing:
 
-* User profiles
-* Consent
-* Symptoms
-* Conversations
-* Prescriptions
-* Medications
-* Medication schedules
-* Adherence
-* Timeline events
-* Alerts
+* Medicine
+* Dose
+* Frequency
+* Time
+* Duration
+
+---
+
+## FR-37 — Reminders
+
+The system shall provide medication reminders.
+
+Where technically possible, basic reminders shall remain available offline.
+
+---
+
+## FR-38 — Adherence
+
+The system shall allow users to record whether a scheduled medication was taken.
+
+---
+
+# 18. Health Timeline
+
+## FR-39 — Timeline
+
+The system shall provide a chronological health timeline containing relevant authorized events such as:
+
+* Symptom records
+* Triage results
+* Confirmed medication records
+* Medication adherence
 * Follow-ups
 
-Only required information should be stored.
+---
+
+# 19. Healthcare Worker Dashboard
+
+## FR-40 — Patient List
+
+Authorized healthcare workers shall be able to view their permitted patient list.
 
 ---
 
-# 13. AI Model Requirements
+## FR-41 — Patient Summary
 
-## 13.1 Language Model
+Healthcare workers shall be able to view authorized summaries containing relevant:
 
-The LLM shall support:
+* Patient information
+* Recent symptoms
+* Triage results
+* Medication information
+* Safety alerts
+* Follow-ups
 
+---
+
+## FR-42 — Follow-Up
+
+Healthcare workers shall be able to record and manage follow-up actions.
+
+---
+
+# 20. Offline-First Requirements
+
+## FR-43 — Offline Core Functionality
+
+The application shall support defined core features during intermittent connectivity.
+
+Offline-capable features may include:
+
+* Cached profile information
+* Previously loaded health information
+* Health timeline
+* Medication schedules
+* Medication reminders
+* Basic deterministic safety rules
+* Locally stored pending operations
+
+---
+
+## FR-44 — Offline Queue
+
+Operations performed while offline shall be placed into a local synchronization queue where applicable.
+
+---
+
+## FR-45 — Synchronization
+
+When connectivity returns, queued operations shall be synchronized with the backend.
+
+---
+
+## FR-46 — Conflict Handling
+
+The system shall detect and safely handle synchronization conflicts.
+
+The system shall avoid silently overwriting newer patient information.
+
+---
+
+## FR-47 — Local AI Evaluation
+
+Local AI capabilities such as:
+
+* Local LLM
+* Local STT
+* Local OCR
+* Local TTS
+
+shall be considered offline candidates.
+
+Their inclusion in the final offline workflow shall depend on:
+
+* Hardware capability
+* Model size
+* Latency
+* Accuracy
+* Memory requirements
+* Evaluation results
+
+---
+
+# 21. Security Requirements
+
+## SEC-01 — Authentication
+
+All protected healthcare resources shall require authentication.
+
+---
+
+## SEC-02 — Authorization
+
+The system shall enforce role-based and resource-level authorization.
+
+---
+
+## SEC-03 — Password Security
+
+Passwords shall be securely hashed.
+
+Plain-text passwords must never be stored.
+
+---
+
+## SEC-04 — Token Security
+
+Authentication tokens shall be handled securely.
+
+---
+
+## SEC-05 — Consent Enforcement
+
+Healthcare data workflows requiring consent shall verify consent status.
+
+---
+
+## SEC-06 — Data Minimization
+
+Only information required for the intended functionality shall be collected.
+
+---
+
+## SEC-07 — Audit Logging
+
+Security-sensitive and healthcare-data access events shall be logged appropriately.
+
+Logs must avoid unnecessary exposure of sensitive patient information.
+
+---
+
+## SEC-08 — Secrets
+
+API keys, database credentials, JWT secrets, and other sensitive configuration shall be stored through environment-based secret management.
+
+---
+
+## SEC-09 — AI Prompt Injection
+
+The system shall defend against attempts to override:
+
+* System safety rules
+* RAG grounding constraints
+* Role boundaries
+* Emergency handling
+* Data-access restrictions
+
+---
+
+# 22. AI Safety Requirements
+
+## AI-SAF-01
+
+Emergency classification must be deterministic and independent of LLM output.
+
+## AI-SAF-02
+
+The LLM must not be allowed to downgrade an emergency classification.
+
+## AI-SAF-03
+
+The LLM must not invent medical sources.
+
+## AI-SAF-04
+
+Responses must be grounded in retrieved evidence when medical guidance is provided.
+
+## AI-SAF-05
+
+The system must refuse or safely disclose when sufficient evidence is unavailable.
+
+## AI-SAF-06
+
+The system must not independently prescribe medication.
+
+## AI-SAF-07
+
+Prescription OCR results must require human verification.
+
+## AI-SAF-08
+
+Safety-critical emergency and refusal messages should use deterministic localized templates where practical.
+
+## AI-SAF-09
+
+Prompt-injection attempts must not override system safety constraints.
+
+---
+
+# 23. Non-Functional Requirements
+
+## NFR-01 — Usability
+
+The interface shall be understandable to users with limited digital literacy.
+
+The design shall prioritize:
+
+* Simple navigation
+* Clear language
+* Large controls
+* Obvious next actions
+* Minimal unnecessary steps
+* Voice as an accessibility option
+
+---
+
+## NFR-02 — Accessibility
+
+Interactive controls should provide minimum touch targets of approximately 48 × 48 pixels.
+
+The system should support:
+
+* High contrast
+* Keyboard navigation where applicable
+* Screen-reader semantics
+* Visible focus states
+* Reduced-motion preferences
+* Native-language text rendering
+
+---
+
+## NFR-03 — Responsiveness
+
+The patient-facing interface shall support:
+
+* Mobile
+* Tablet
+* Desktop
+
+Mobile usability is the primary consideration.
+
+---
+
+## NFR-04 — Performance
+
+The system shall measure:
+
+* API latency
+* RAG retrieval latency
+* LLM generation latency
+* STT latency
+* TTS latency
+* OCR latency
+* End-to-end response latency
+
+No performance claim shall be considered final without measurement.
+
+---
+
+## NFR-05 — Reliability
+
+The system shall provide graceful handling for:
+
+* Network failure
+* AI provider failure
+* OCR failure
+* Speech recognition failure
+* Database failure
+* Invalid input
+* Authentication expiry
+
+---
+
+## NFR-06 — Maintainability
+
+AI providers and models shall be replaceable without requiring major changes to application-level business logic.
+
+---
+
+## NFR-07 — Reproducibility
+
+The project shall document:
+
+* Dependencies
+* Models
+* Versions
+* Configuration
+* Datasets
+* Evaluation procedures
+* Experimental results
+
+---
+
+# 24. Technology Requirements
+
+## Frontend
+
+* Next.js
+* React
+* TypeScript
+* Tailwind CSS
+
+## Backend
+
+* Python
+* FastAPI
+
+## Database
+
+* PostgreSQL
+* pgvector
+
+## AI / ML
+
+* PyTorch
+* Hugging Face ecosystem
+* Sentence Transformers
+* Evaluated open-source LLM
+* Ollama for local LLM runtime
+
+## OCR
+
+* Tesseract
+* PaddleOCR
+* Evaluated alternatives
+* Optional Sarvam AI OCR
+
+## Speech
+
+* Whisper / evaluated open-source alternatives
+* Optional Sarvam AI STT/TTS
+
+## Testing
+
+* Pytest
+* API testing tools
+* Frontend testing tools
+* Automated evaluation scripts
+
+## Development
+
+* Git
+* GitHub
+* Docker
+* VS Code / compatible IDE
+* Google Colab where useful for experiments
+
+---
+
+# 25. Data Requirements
+
+## 25.1 Medical Knowledge Corpus
+
+The project shall maintain an authoritative medical knowledge corpus containing appropriate:
+
+* WHO documents
+* Government health guidelines
+* Approved primary-care resources
+* Other verified medical sources
+
+Each knowledge document should maintain provenance metadata.
+
+---
+
+## 25.2 RAG Evaluation Data
+
+The evaluation dataset shall include:
+
+* Relevant healthcare queries
+* Out-of-scope queries
+* Multilingual queries
+* Adversarial/prompt-injection queries
+* Emergency queries
+* Code-mixed queries where applicable
+
+---
+
+## 25.3 Speech Dataset
+
+Speech evaluation data should contain:
+
+* Audio
+* Ground-truth transcript
+* Language
+* Relevant medical vocabulary where available
+
+Evaluation shall include English, Hindi and Telugu.
+
+---
+
+## 25.4 OCR Dataset
+
+OCR evaluation data should contain:
+
+* Prescription images
+* Ground-truth transcription
+* Medicine names
+* Dosage
+* Frequency
+* Duration
+
+---
+
+## 25.5 Application Data
+
+Development shall primarily use:
+
+* Synthetic patient data
+* Controlled test records
+* User-provided data only where appropriate and authorized
+
+---
+
+# 26. AI Evaluation Requirements
+
+The system shall evaluate candidate models rather than assuming one model is optimal.
+
+Potential LLM candidates may be compared using:
+
+* Medical grounding
+* Hindi performance
+* Telugu performance
+* English performance
+* Code-mixed understanding
 * Instruction following
-* Relevant languages
-* Contextual conversation
-* RAG-based generation
-* Reasonable local/cloud deployment constraints
+* Refusal behavior
+* Prompt-injection resistance
+* Citation behavior
+* Latency
+* Memory consumption
+* CPU/GPU requirements
 
-The exact model shall be selected through evaluation.
-
----
-
-## 13.2 Embedding Model
-
-The embedding model shall support semantic retrieval for the selected medical knowledge corpus.
-
-Evaluation shall consider retrieval quality and language support.
+The current Qwen3:4B model may remain a local baseline while alternatives are evaluated.
 
 ---
 
-## 13.3 Speech Model
+# 27. Evaluation Metrics
 
-The speech model shall support the selected target languages.
+The project shall measure, where applicable:
 
-Evaluation shall include Word Error Rate and relevant medical vocabulary performance.
+### RAG
 
----
+* Recall@K
+* Retrieval precision
+* Relevant retrieval rate
+* Irrelevant retrieval rate
+* False refusal rate
+* Out-of-scope refusal accuracy
+* Grounding accuracy
 
-## 13.4 OCR Model
+### LLM
 
-The OCR system shall be evaluated using representative prescription images.
+* Response safety
+* Instruction adherence
+* Multilingual quality
+* Hallucination rate
+* Citation validity
+* Prompt-injection resistance
+* Latency
 
-Evaluation shall include:
+### Triage
 
-* Text extraction accuracy
+* Sensitivity
+* Specificity
+* False-negative rate
+* False-positive rate
+
+### OCR
+
 * Character Error Rate
 * Word Error Rate
 * Medicine extraction accuracy
 
----
-
-# 14. RAG Requirements
-
-The RAG system shall provide:
-
-1. Document ingestion
-2. Document cleaning
-3. Chunking
-4. Metadata management
-5. Embedding generation
-6. Vector storage
-7. Query embedding
-8. Similarity retrieval
-9. Context construction
-10. Grounded response generation
-11. Retrieval evaluation
-
-The system should support traceability between generated responses and the underlying knowledge sources where appropriate.
-
----
-
-# 15. Security Requirements
-
-The system shall implement:
-
-* Secure authentication
-* Password hashing
-* Role-based authorization
-* Secure API access
-* Environment-based secrets
-* HTTPS in deployed environments
-* Input validation
-* Output validation where appropriate
-* Privacy-conscious logging
-* Audit records for relevant sensitive operations
-
-Secrets must never be committed to version control.
-
----
-
-# 16. Offline Requirements
-
-The offline-first architecture shall distinguish between:
-
-### Local/Offline
-
-* Cached patient information
-* Health timeline
-* Medication schedules
-* Reminders
-* Basic symptom rules
-* Queued operations
-
-### Network-dependent
-
-* Large language model inference where local inference is unavailable
-* Cloud RAG
-* Advanced processing
-* Cloud synchronization
-* Healthcare-worker remote access
-
-The system shall not falsely represent online-only functionality as offline functionality.
-
----
-
-# 17. External API Requirements
-
-External APIs shall be introduced only where they provide a clear requirement-level benefit.
-
-Potential categories include:
-
-* Maps/geolocation
-* Geocoding
-* Speech services
-* Notification services
-
-Before adopting any external API, verify:
-
-* Availability
-* Cost
-* Free-tier limitations
-* API limits
-* License
-* Privacy implications
-* Local/open-source alternatives
-
----
-
-# 18. System Constraints
-
-The project has the following constraints:
-
-1. Development should use free resources wherever possible.
-2. The system is being developed as a student major project.
-3. No assumption should be made that paid infrastructure is available.
-4. Healthcare information must be handled cautiously.
-5. Real patient data should not be required for the MVP.
-6. The system should support low-resource environments.
-7. Internet connectivity may be intermittent.
-8. AI models may have hardware and latency limitations.
-9. Medical claims must be grounded and traceable.
-10. The project must remain feasible within the available academic timeline.
-
----
-
-# 19. Assumptions
-
-The following assumptions are provisional and must be validated during development:
-
-* Target users have access to a smartphone or supported browser where applicable.
-* Some users may have intermittent connectivity.
-* Healthcare workers can access the system through a web interface.
-* Appropriate medical knowledge sources can be identified.
-* Suitable open-source AI models are available for the selected languages and tasks.
-* Synthetic/public/de-identified datasets can support development and evaluation.
-* The MVP does not require real-world clinical deployment.
-
----
-
-# 20. Key Use Cases
-
-## UC-01 — Patient asks a health question
-
-```text
-Patient
-  ↓
-Enter question
-  ↓
-System processes query
-  ↓
-Retrieve relevant medical information
-  ↓
-Generate grounded response
-  ↓
-Safety validation
-  ↓
-Response / escalation
-```
-
----
-
-## UC-02 — Patient reports symptoms
-
-```text
-Patient
-  ↓
-Reports symptoms
-  ↓
-System extracts structured symptoms
-  ↓
-Safety/red-flag evaluation
-  ↓
-Risk category
-  ↓
-Preliminary guidance
-  ↓
-Escalation where required
-```
-
----
-
-## UC-03 — Patient uploads prescription
-
-```text
-Patient
-  ↓
-Upload image
-  ↓
-Image validation
-  ↓
-OCR
-  ↓
-Text extraction
-  ↓
-Medicine information extraction
-  ↓
-Confidence/verification
-  ↓
-Structured prescription
-```
-
----
-
-## UC-04 — Patient manages medication
-
-```text
-Prescription / Manual Entry
-  ↓
-Medication schedule
-  ↓
-Reminder
-  ↓
-Patient records adherence
-  ↓
-Timeline updated
-```
-
----
-
-## UC-05 — Healthcare worker reviews patient
-
-```text
-Healthcare Worker
-  ↓
-Login
-  ↓
-Authorized patient list
-  ↓
-Select patient
-  ↓
-Review symptoms
-  ↓
-Review timeline
-  ↓
-Review medications
-  ↓
-Review AI summary
-  ↓
-Follow-up
-```
-
----
-
-## UC-06 — User interacts through voice
-
-```text
-User Speech
-  ↓
-Speech-to-Text
-  ↓
-Language / Intent Processing
-  ↓
-Healthcare AI Pipeline
-  ↓
-Response
-```
-
----
-
-## UC-07 — User operates during poor connectivity
-
-```text
-User Action
-  ↓
-Offline-capable feature
-  ↓
-Local storage / cache
-  ↓
-Operation queued
-  ↓
-Connectivity restored
-  ↓
-Synchronization
-```
-
----
-
-# 21. MVP Acceptance Criteria
-
-The MVP shall not be considered complete until the following are demonstrated.
-
-### Authentication
-
-* Patient can register and authenticate.
-* Healthcare worker can authenticate.
-* Role-based access works correctly.
-
-### AI Companion
-
-* User can submit a health query.
-* System processes the query.
-* Relevant medical knowledge can be retrieved.
-* Response is grounded where applicable.
-* Safety limitations are respected.
-
-### Symptom Module
-
-* User can report symptoms.
-* Symptoms can be structured.
-* Defined red flags can be detected.
-* Appropriate escalation can be generated.
-
-### Prescription Module
-
-* User can upload an appropriate image.
-* OCR processes the image.
-* Extracted information can be reviewed.
-* Uncertain information is not silently treated as correct.
-
-### Medication
-
-* Medication schedules can be created.
-* Reminders work.
-* Adherence can be recorded.
-
-### Health Timeline
-
-* Relevant patient events are displayed chronologically.
-
-### Healthcare Worker
-
-* Authorized workers can access permitted patients.
-* Patient information can be reviewed.
-* Alerts and follow-ups are supported.
-
-### Multilingual/Voice
-
-* Selected target languages work within evaluated capabilities.
-* Voice input can be converted to text with measurable performance.
+### Speech
+
+* Word Error Rate
+* Language identification accuracy
+* Medical-term recognition
+* End-to-end latency
 
 ### Offline
 
-* Defined offline functionality works without active connectivity.
-* Queued data can synchronize when connectivity returns.
+* Offline task completion rate
+* Sync success rate
+* Conflict rate
+* Recovery behavior
 
-### Security
-
-* Unauthorized access is prevented.
-* Secrets are not exposed.
-* Sensitive information is handled appropriately.
+No evaluation result may be claimed before experimental measurement.
 
 ---
 
-# 22. Evaluation Requirements
+# 28. Offline and Online Architecture
 
-The system shall be evaluated quantitatively and/or qualitatively.
-
-Potential metrics include:
-
-| Component           | Metrics                                 |
-| ------------------- | --------------------------------------- |
-| RAG                 | Recall@K, retrieval accuracy, grounding |
-| LLM                 | Safety, factuality, response quality    |
-| Symptom extraction  | Precision, Recall, F1                   |
-| Triage              | Sensitivity, Specificity                |
-| OCR                 | CER, WER                                |
-| Medicine extraction | Precision, Recall                       |
-| Speech              | WER                                     |
-| Multilingual        | Language-wise performance               |
-| Offline             | Task completion, sync reliability       |
-| Software            | Latency, reliability                    |
-| UX                  | Usability evaluation                    |
-
-Results must be experimentally measured.
-
----
-
-# 23. Project Success Criteria
-
-The project will be considered successful when it demonstrates:
-
-1. A functioning patient-facing healthcare-support platform.
-2. A functioning healthcare-worker interface.
-3. Grounded AI responses.
-4. Defined and testable symptom-risk escalation.
-5. Prescription OCR.
-6. Medication scheduling and reminders.
-7. Health timeline.
-8. Multilingual interaction.
-9. Voice interaction.
-10. Demonstrable offline-first functionality.
-11. Secure role-based access.
-12. Measurable AI/software evaluation.
-13. Reproducible development using free resources.
-14. Complete technical documentation.
-15. Clear identification of limitations and future work.
-
----
-
-# 24. Limitations
-
-The project must explicitly acknowledge that:
-
-* AI-generated healthcare information may contain errors.
-* OCR may incorrectly interpret prescriptions.
-* Speech recognition may perform differently across languages and speakers.
-* Offline AI capabilities may be limited by device hardware.
-* The system is not a substitute for professional medical care.
-* Real-world clinical effectiveness cannot be claimed without appropriate clinical validation.
-* Dataset limitations may affect model performance.
-* Free infrastructure may impose computational and deployment constraints.
-
----
-
-# 25. Future Extensions
-
-Potential future work includes:
-
-* EHR/FHIR integration
-* Medical-device integration
-* WhatsApp/IVR interfaces
-* Expanded language support
-* Drug-stock monitoring
-* Public-health analytics
-* Outbreak analysis
-* Advanced local/on-device models
-* Clinic-level deployment
-* Larger-scale user studies
-* Clinical validation
-
-Future extensions must not compromise the safety and scope of the core system.
-
----
-
-# 26. Requirement Traceability
-
-Every implemented feature should map to:
-
-**Requirement → Design → Implementation → Test → Evaluation**
-
-Example:
+MedGuide AI shall support a hybrid architecture.
 
 ```text
-FR-09
-Red-Flag Detection
-      ↓
-Triage Architecture
-      ↓
-Triage Service
-      ↓
-Triage Tests
-      ↓
-Sensitivity / Specificity Evaluation
+                    MEDGUIDE AI
+                         │
+                    AI GATEWAY
+                         │
+          ┌──────────────┼──────────────┐
+          │              │              │
+       LOCAL          ONLINE         FALLBACK
+       PATH           PROVIDERS        PATH
+          │              │              │
+       Ollama         Sarvam AI       Other
+       Local LLM      STT/TTS/OCR     evaluated
+       Local STT
+       Local OCR
+          │
+          └──────────────┬──────────────┘
+                         ↓
+                MedGuide Safety Layer
+                         ↓
+                Application Response
 ```
 
-This traceability should be maintained throughout development.
+The online provider must never be the only path for core application functionality where an offline alternative has been defined.
 
 ---
 
-# 27. Requirement Change Policy
+# 29. High-Level System Architecture
 
-Changes to this SRS must be deliberate.
-
-A proposed change that affects:
-
-* Scope
-* MVP
-* Safety
-* Architecture
-* Database
-* AI models
-* Data requirements
-* Security
-* Cost
-
-must be reviewed before implementation.
-
-The SRS should be updated when an approved requirement changes.
+```text
+                   Patient PWA
+                       │
+                       ▼
+                 FastAPI Backend
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+       Auth          Health        AI Gateway
+        │              │              │
+        │              │       ┌──────┼────────┐
+        │              │       │      │        │
+        │              │      RAG   Local    Online
+        │              │             LLM     Providers
+        │              │            Ollama   Sarvam/etc.
+        │              │
+        │              ├── Triage
+        │              ├── OCR
+        │              ├── Medication
+        │              ├── Timeline
+        │              └── Alerts
+        │
+        ▼
+ PostgreSQL + pgvector
+        │
+        ▼
+ Healthcare Worker
+```
 
 ---
 
-# 28. Final System Principle
+# 30. RAG Safety Pipeline
 
-MedGuide AI shall follow the principle:
+```text
+User Query
+    ↓
+Input Sanitization
+    ↓
+Language Handling
+    ↓
+Deterministic Emergency Check
+    │
+    ├── Emergency → Immediate Escalation
+    │
+    └── Continue
+          ↓
+     Query Embedding
+          ↓
+     pgvector Search
+          ↓
+     Evidence Sufficiency Gate
+          │
+          ├── Insufficient → Safe Refusal
+          │
+          └── Sufficient
+                 ↓
+            LLM Generation
+                 ↓
+          Output Validation
+                 ↓
+       Citation Attachment
+                 ↓
+       Localized Response
+```
 
-> **Assist → Inform → Identify Risk → Escalate → Support Continuity of Care**
+---
 
-It shall not follow:
+# 31. System States
 
-> **Diagnose → Prescribe → Replace Healthcare Professionals**
+The application shall support appropriate UI and backend handling for:
 
-This principle governs the design, implementation, testing, and evaluation of the entire system.
+* Loading
+* Success
+* Error
+* Empty state
+* No search results
+* Offline
+* Sync pending
+* Sync failure
+* Session expired
+* Unauthorized
+* Emergency
+* Urgent
+* Routine
+* Insufficient evidence
+* AI provider unavailable
+* Speech failure
+* OCR failure
+
+---
+
+# 32. Development Milestones
+
+The system shall follow the M1–M18 development roadmap:
+
+```text
+M1  — Backend Foundation
+M2  — Database Models + Migrations
+M3  — Authentication + RBAC
+M4  — Consent Management
+M5  — Patient Profile
+M6  — Symptom Records
+M7  — Deterministic Safety & Triage
+M8  — AI Gateway
+M9  — Retrieval-Augmented Generation
+M10 — AI Health Companion
+M11 — Prescription OCR
+M12 — Medication Management & Adherence
+M13 — Healthcare Worker Dashboard
+M14 — Speech + Multilingual Processing
+M15 — Offline/PWA + Synchronization
+M16 — Full Integration Testing
+M17 — AI Safety & Performance Evaluation
+M18 — Deployment & Operations
+```
+
+---
+
+# 33. Definition of Done
+
+The MVP shall not be considered complete merely because the UI or individual APIs compile.
+
+The system must demonstrate:
+
+* Working authentication
+* Working consent enforcement
+* Working patient profile
+* Working Preliminary Symptom Checker
+* Deterministic emergency/urgent/routine classification
+* Emergency escalation
+* Grounded RAG responses
+* Source provenance
+* Safe refusal behavior
+* Local LLM execution
+* Evaluated model selection
+* English/Hindi/Telugu support
+* Voice interaction
+* Prescription OCR
+* Human verification of medication extraction
+* Medication scheduling
+* Medication reminders
+* Medication adherence
+* Health timeline
+* Healthcare-worker workflow
+* Offline-first functionality
+* Synchronization
+* Security controls
+* Automated tests
+* AI evaluation
+* Performance measurements
+* Reproducible documentation
+
+---
+
+# 34. Constraints and Limitations
+
+MedGuide AI is a healthcare-support system and shall operate within strict limitations.
+
+The system shall not:
+
+* Claim to diagnose a patient
+* Independently prescribe medication
+* Replace a doctor or healthcare worker
+* Override deterministic emergency classification
+* Generate unsupported medical claims
+* Fabricate citations
+* Treat OCR extraction as confirmed medication information
+* Present experimental model performance as established clinical accuracy
+
+The system shall clearly communicate these limitations to users.
+
+---
+
+# 35. Research and Future Scope
+
+Potential future extensions include:
+
+* Additional Indian languages
+* Expanded healthcare-resource discovery
+* FHIR interoperability
+* Public-health analytics
+* Additional local AI models
+* Improved offline speech processing
+* Additional OCR capabilities
+* Healthcare facility integration
+* Larger-scale field evaluation
+
+These features are not required for the initial MVP unless explicitly brought into scope.
+
+---
+
+# 36. Success Criteria
+
+MedGuide AI will be considered technically successful when it demonstrates:
+
+1. A functional patient-facing healthcare-support application.
+2. A simple and usable Preliminary Symptom Checker.
+3. Reliable deterministic safety escalation.
+4. Grounded healthcare information retrieval.
+5. Replaceable local LLM inference.
+6. Measured multilingual performance in English, Hindi and Telugu.
+7. Functional voice interaction.
+8. Functional prescription OCR with human verification.
+9. Medication scheduling and adherence tracking.
+10. Healthcare-worker support.
+11. Demonstrable offline-first operation.
+12. Reliable synchronization after connectivity restoration.
+13. Secure role-based access.
+14. Measurable AI, OCR, speech and system performance.
+15. Reproducible development and evaluation.
+16. Clear documentation of datasets, models, architecture, limitations and results.
+
+---
+
+# 37. Final Product Principle
+
+> **MedGuide AI is not an AI doctor.**
+>
+> It is a multilingual digital healthcare-support layer designed to help people:
+>
+> **Understand their symptoms → identify potential risk → access reliable information → take the appropriate next step → reach professional care when needed.**
+
+The system should make healthcare information easier to understand without pretending that AI can replace the healthcare system.

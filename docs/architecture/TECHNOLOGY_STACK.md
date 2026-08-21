@@ -1,393 +1,672 @@
-# MedGuide AI — Technology Stack
+# MedGuide AI — Technology Stack Specification
 
-**Project:** MedGuide AI  
-**Document:** Technology Stack  
-**Version:** 1.0  
-**Status:** Baseline — Pre-Implementation  
-**Purpose:** Define the technologies, frameworks, libraries, infrastructure and development tools used to implement MedGuide AI.
-
----
-
-# 1. Purpose
-
-This document defines the approved baseline technology stack for MedGuide AI.
-
-It establishes:
-
-- Frontend technologies
-- Backend technologies
-- Database technologies
-- AI/ML technologies
-- RAG infrastructure
-- Authentication and authorization
-- Offline/PWA technologies
-- API technologies
-- Testing technologies
-- Development tools
-- Deployment strategy
-- AI model strategy
-- Free-resource constraints
-- Technology decision status
-
-This document must remain consistent with:
-
-- `AGENTS.md`
-- `docs/PROJECT_SPECIFICATION.md`
-- `docs/requirements/SRS.md`
-- `docs/requirements/USE_CASES.md`
-- `docs/requirements/PRE_DEVELOPMENT_DECISIONS.md`
-- `docs/requirements/TRACEABILITY_MATRIX.md`
-- `docs/architecture/SYSTEM_ARCHITECTURE.md`
-- `docs/database/DATABASE_DESIGN.md`
-- `docs/database/ERD.md`
-- `docs/api/API_SPECIFICATION.md`
-- `docs/ai/AI_RAG_ARCHITECTURE.md`
-- `docs/ai/MODEL_SELECTION_AND_EVALUATION.md`
-- `docs/ai/MODEL_REGISTRY.md`
-- `docs/ai/CANDIDATE_RESEARCH_AND_SHORTLIST.md`
+**Document:** `docs/architecture/TECHNOLOGY_STACK.md`  
+**Version:** 2.0  
+**Status:** **Development Baseline — Approved**  
+**Last Updated:** August 2026
 
 ---
 
-# 2. Technology Decision Status
+## 1. Purpose
 
-Every technology decision uses one of the following states:
+This document defines the technology stack for MedGuide AI and establishes the boundaries between:
 
-| Status | Meaning |
-|---|---|
-| `CONFIRMED` | Decision is finalized and implementation may proceed |
-| `TENTATIVE` | Strong candidate, but final validation/evaluation is pending |
-| `TBD` | Decision depends on information or evaluation not yet available |
-| `REJECTED` | Explicitly rejected |
-| `DEPRECATED` | Previously used but no longer recommended |
+* Frontend application
+* Backend services
+* Database and vector retrieval
+* Local AI inference
+* Online AI services
+* Offline/local fallbacks
+* Deterministic healthcare safety logic
+* Development, testing, and deployment infrastructure
 
-A technology marked `TBD` must not be treated as finalized.
+The stack follows these principles:
 
----
-
-# 3. Core Technology Principles
-
-MedGuide AI follows these principles:
-
-1. Prefer free and open-source technologies.
-2. Avoid unnecessary paid services.
-3. Avoid vendor lock-in.
-4. Prefer mature and well-supported technologies.
-5. Prefer technologies suitable for student development.
-6. Prefer technologies that can be reproduced by another developer.
-7. Keep AI providers behind an abstraction layer.
-8. Keep healthcare data under application-controlled access.
-9. Do not expose AI providers directly to the frontend.
-10. Do not introduce technologies without a project requirement.
-11. Do not introduce microservices unnecessarily.
-12. Keep the MVP implementable within the available student resources.
-13. Preserve the ability to replace individual AI models.
-14. Keep GPU-dependent decisions separate from core application development.
+1. **Open-source first**
+2. **₹0-cost development wherever practically possible**
+3. **Local-first for core AI reasoning where feasible**
+4. **Online services only where they provide a meaningful capability advantage**
+5. **Provider-agnostic AI Gateway**
+6. **No direct frontend dependency on AI providers**
+7. **Deterministic safety logic must remain independent of the LLM**
+8. **Offline functionality must remain useful even when AI/cloud services are unavailable**
+9. **EN + HI + TE are the Phase 1 languages**
+10. **Models are selected through evaluation rather than assumption**
 
 ---
 
-# 4. High-Level Technology Stack
+# 2. Technology Architecture Overview
 
 ```text
                          MEDGUIDE AI
                               │
              ┌────────────────┼────────────────┐
              │                │                │
-             ↓                ↓                ↓
-         FRONTEND          BACKEND            AI
+             ▼                ▼                ▼
+        FRONTEND          BACKEND          AI GATEWAY
              │                │                │
-          Next.js           FastAPI        AI Gateway
-          TypeScript        Python             │
-          Tailwind          Pydantic           ├── LLM
-          PWA               SQLAlchemy         ├── RAG
-             │             Alembic             ├── OCR
-             │                │                ├── STT
-             │                │                └── Triage
-             │                │
-             └────────────────┼────────────────┘
-                              ↓
-                         PostgreSQL
+      Next.js / TS        FastAPI        ┌─────┼──────────────┐
+      Tailwind / PWA      Python         │     │              │
+      IndexedDB           SQLAlchemy     ▼     ▼              ▼
+      Service Worker      Alembic      LLM   RAG        Speech / OCR
+             │                │          │     │              │
+             │                │          ▼     ▼              ▼
+             │                │       Ollama pgvector      Providers
+             │                │          │                    │
+             │                │          │             ┌──────┴──────┐
+             │                │          │             │             │
+             │                │          │          Sarvam AI      Local
+             │                │          │          (Online)      Fallback
+             │                │          │
+             └────────────────┼──────────┘
                               │
-                           pgvector
+                              ▼
+                    PostgreSQL + pgvector
 ```
 
 ---
 
-# 5. Frontend Stack
+# 3. Core Technology Stack
 
-## 5.1 Framework
-
-**Technology:** Next.js
-
-**Status:** `CONFIRMED`
-
-Purpose:
-
-* Web application
-* Patient interface
-* Healthcare-worker interface
-* Authentication screens
-* Dashboard interfaces
-* PWA support
-* API integration
-
----
-
-## 5.2 Programming Language
-
-**Technology:** TypeScript
-
-**Status:** `CONFIRMED`
-
-Reason:
-
-* Static typing
-* Better maintainability
-* Improved developer tooling
-* Suitable for large frontend applications
-* Strong Next.js ecosystem
-
----
-
-## 5.3 UI Styling
-
-**Technology:** Tailwind CSS
-
-**Status:** `CONFIRMED`
-
-Purpose:
-
-* Responsive UI
-* Consistent design system
-* Rapid component development
-* Mobile-first interface
+| Layer             | Technology                              | Status        | Purpose                                      |
+| ----------------- | --------------------------------------- | ------------- | -------------------------------------------- |
+| Frontend          | Next.js                                 | **CONFIRMED** | Web application                              |
+| Frontend Language | TypeScript                              | **CONFIRMED** | Type-safe frontend development               |
+| UI                | Tailwind CSS                            | **CONFIRMED** | Design system and responsive styling         |
+| PWA               | Service Worker                          | **CONFIRMED** | Offline caching and application availability |
+| Offline Storage   | IndexedDB                               | **CONFIRMED** | Local data/cache and synchronization queue   |
+| Backend           | Python 3.12.x                           | **CONFIRMED** | Backend and AI orchestration                 |
+| API Framework     | FastAPI                                 | **CONFIRMED** | REST API                                     |
+| Validation        | Pydantic                                | **CONFIRMED** | Request/response validation                  |
+| ORM               | SQLAlchemy                              | **CONFIRMED** | Database access                              |
+| Migrations        | Alembic                                 | **CONFIRMED** | Database schema migrations                   |
+| Database          | PostgreSQL                              | **CONFIRMED** | Primary relational database                  |
+| Vector Database   | pgvector                                | **CONFIRMED** | Medical knowledge retrieval                  |
+| Authentication    | JWT                                     | **CONFIRMED** | Authentication                               |
+| Authorization     | Server-side RBAC                        | **CONFIRMED** | Role isolation                               |
+| AI Gateway        | Custom abstraction layer                | **CONFIRMED** | Provider/model independence                  |
+| Local LLM Runtime | Ollama                                  | **CONFIRMED** | Local LLM execution                          |
+| LLM Model         | Evaluated open-source model             | **TENTATIVE** | Medical response generation                  |
+| RAG               | pgvector + embeddings                   | **CONFIRMED** | Evidence retrieval                           |
+| Embeddings        | Sentence Transformers / evaluated model | **TENTATIVE** | Vector representations                       |
+| STT               | Sarvam AI + evaluated local fallback    | **TENTATIVE** | Speech-to-text                               |
+| TTS               | Sarvam AI + evaluated local fallback    | **TENTATIVE** | Indian-language speech synthesis             |
+| OCR               | Sarvam AI + evaluated local fallback    | **TENTATIVE** | Prescription text extraction                 |
+| Triage            | Deterministic rules engine              | **CONFIRMED** | Safety-critical risk classification          |
+| Testing           | Pytest                                  | **CONFIRMED** | Backend/AI testing                           |
+| Frontend Testing  | Existing Next.js testing stack          | **TENTATIVE** | UI validation                                |
+| Version Control   | Git + GitHub                            | **CONFIRMED** | Source control                               |
+| Containers        | Docker                                  | **CONFIRMED** | Reproducible deployment                      |
+| CI                | GitHub Actions                          | **CONFIRMED** | Automated verification                       |
 
 ---
 
-## 5.4 Frontend Architecture
+# 4. Frontend Technology
 
-The frontend should use:
+## 4.1 Next.js
 
-```text
-Next.js
-├── App Router
-├── TypeScript
-├── Reusable Components
-├── Feature-based organization
-├── API Client Layer
-├── Authentication State
-├── Offline Storage
-└── PWA Layer
-```
+**Status:** CONFIRMED
 
----
+Next.js is used for the patient-facing and healthcare-worker-facing web application.
 
-# 6. PWA Stack
+Primary responsibilities:
 
-## 6.1 Progressive Web Application
+* Public website
+* Authentication UI
+* Patient application
+* Healthcare-worker dashboard
+* Admin interfaces
+* PWA functionality
+* Responsive/mobile-first experience
+* API client integration
 
-**Technology:** PWA
+The frontend must communicate with backend APIs rather than directly accessing:
 
-**Status:** `CONFIRMED`
-
-Purpose:
-
-* Installable web application
-* Mobile-friendly access
-* Offline functionality
-* Cached application resources
-* Connectivity-aware behavior
+* PostgreSQL
+* pgvector
+* Ollama
+* Sarvam AI
+* Internal AI services
 
 ---
 
-## 6.2 Service Worker
+## 4.2 TypeScript
 
-**Technology:** Service Worker
+**Status:** CONFIRMED
 
-**Status:** `CONFIRMED`
+TypeScript provides:
 
-Responsibilities:
-
-* Cache application resources
-* Support offline application loading
-* Manage appropriate background operations
-* Support PWA behavior
-
-The service worker must not bypass application security controls.
+* Typed API contracts
+* Typed application state
+* Safer component development
+* Consistent frontend/backend response handling
+* Reduced runtime errors
 
 ---
 
-## 6.3 Client-Side Offline Storage
+## 4.3 Tailwind CSS
 
-**Technology:** IndexedDB
+**Status:** CONFIRMED
 
-**Status:** `CONFIRMED`
+Tailwind is used for the MedGuide design system.
 
-Purpose:
+The design system prioritizes:
 
-* Offline patient-side data
-* Pending actions
-* Sync queue
-* Temporary application state
+* High readability
+* Large touch targets
+* Responsive layouts
+* High contrast
+* Minimal cognitive load
+* English/Hindi/Telugu typography
+* Mobile-first interaction
 
-Sensitive data stored locally must be minimized and protected appropriately.
-
----
-
-# 7. Backend Stack
-
-## 7.1 Programming Language
-
-**Technology:** Python
-
-**Status:** `CONFIRMED`
-
-Reason:
-
-* Strong AI/ML ecosystem
-* Strong healthcare-data processing ecosystem
-* FastAPI compatibility
-* PostgreSQL support
-* Easy integration with Python AI libraries
+Premium visual components may use open-source component primitives, but they must remain consistent with the MedGuide design system rather than becoming unrelated visual modules.
 
 ---
 
-## 7.2 Backend Framework
+# 5. Progressive Web App & Offline Stack
 
-**Technology:** FastAPI
+## 5.1 PWA
 
-**Status:** `CONFIRMED`
+**Status:** CONFIRMED
 
-Responsibilities:
+MedGuide AI will use PWA capabilities to support low-connectivity environments.
 
-* REST API
-* Authentication endpoints
-* Patient endpoints
-* Healthcare-worker endpoints
+The PWA layer is responsible for:
+
+* Application shell caching
+* Offline UI availability
+* Cached resources
+* Offline indicators
+* Deferred synchronization
+* Installability
+
+---
+
+## 5.2 IndexedDB
+
+**Status:** CONFIRMED
+
+IndexedDB provides client-side storage for information that must remain available during connectivity interruptions.
+
+Potential offline data:
+
+* Medication schedules
+* Reminder information
+* Cached health guidance
+* Recent timeline information
+* Pending symptom records
+* Pending adherence events
+* Synchronization queue
+
+Sensitive information stored locally must follow the project's security and privacy requirements.
+
+---
+
+# 6. Backend Technology
+
+## 6.1 Python
+
+**Status:** CONFIRMED
+
+Python 3.12.x is the primary backend and AI-development language.
+
+It is used for:
+
+* FastAPI
 * AI Gateway
-* RAG endpoints
-* OCR endpoints
-* Speech endpoints
-* Synchronization endpoints
+* RAG
+* Embeddings
+* OCR orchestration
+* Speech orchestration
+* Symptom extraction
+* Triage
+* Evaluation
+* Data processing
 
 ---
 
-## 7.3 API Validation
+## 6.2 FastAPI
 
-**Technology:** Pydantic
+**Status:** CONFIRMED
 
-**Status:** `CONFIRMED`
+FastAPI provides the `/api/v1` backend interface.
 
-Purpose:
+Responsibilities include:
 
-* Request validation
-* Response validation
-* Configuration validation
-* Structured AI output validation
+* Authentication
+* Patient profiles
+* Consent
+* Symptoms
+* Triage
+* AI chat
+* Speech
+* OCR
+* Medications
+* Timeline
+* Healthcare-worker workflows
+* Synchronization
+* Administrative operations
 
 ---
 
-# 8. Database Stack
+## 6.3 SQLAlchemy + Alembic
 
-## 8.1 Relational Database
+**Status:** CONFIRMED
 
-**Technology:** PostgreSQL
+SQLAlchemy provides database access.
 
-**Status:** `CONFIRMED`
+Alembic provides controlled schema evolution.
 
-PostgreSQL will store:
+**Rule:**
+
+> Database schema changes must be implemented through migrations rather than uncontrolled manual production schema modifications.
+
+---
+
+# 7. PostgreSQL & pgvector
+
+## 7.1 PostgreSQL
+
+**Status:** CONFIRMED
+
+PostgreSQL is the primary application database.
+
+It stores structured entities such as:
 
 * Users
-* Patients
-* Healthcare workers
-* Consents
+* Patient profiles
+* Consent
 * Symptoms
+* Triage results
+* Conversations/health extracts
 * Prescriptions
 * Medications
 * Medication schedules
-* Medication adherence
-* Health timelines
-* Knowledge documents
-* Knowledge chunks
-* Audit records
+* Adherence events
+* Health timeline
+* Alerts
+* Follow-ups
+* Healthcare-worker relationships
+* Audit events
 
 ---
 
-## 8.2 Vector Extension
+## 7.2 pgvector
 
-**Technology:** pgvector
+**Status:** CONFIRMED
 
-**Status:** `CONFIRMED`
+`pgvector` provides vector similarity search for the medical knowledge base.
 
-Purpose:
+It stores:
 
-* Store embeddings
-* Perform vector similarity search
-* Support RAG retrieval
+```text
+Knowledge Document
+      ↓
+Knowledge Chunk
+      ↓
+Embedding
+      ↓
+pgvector
+```
 
-The initial architecture will use PostgreSQL + pgvector rather than introducing a separate vector database.
+During a user query:
 
----
-
-# 9. ORM
-
-**Technology:** SQLAlchemy
-
-**Status:** `CONFIRMED`
-
-Purpose:
-
-* Database abstraction
-* ORM models
-* Relationships
-* Query construction
-* Transaction management
-
----
-
-# 10. Database Migration
-
-**Technology:** Alembic
-
-**Status:** `CONFIRMED`
-
-Purpose:
-
-* Schema versioning
-* Database migrations
-* Reproducible database setup
-* Controlled schema evolution
-
-Database changes must be implemented through migrations rather than manually modifying production schemas.
+```text
+User Question
+     ↓
+Query Embedding
+     ↓
+pgvector Similarity Search
+     ↓
+Relevant Evidence
+     ↓
+Evidence Sufficiency Gate
+     ↓
+LLM
+```
 
 ---
 
-# 11. Authentication
+# 8. AI Gateway
 
-## 11.1 Authentication Method
+**Status:** CONFIRMED
 
-**Technology:** JWT-based authentication
+The **AI Gateway is one of the most important architectural boundaries in MedGuide AI.**
 
-**Status:** `CONFIRMED`
+Application code must not directly depend on Ollama, Sarvam, or any individual model/provider.
 
-Purpose:
+Instead:
 
-* User authentication
-* Session/API authorization
-* Protected API access
+```text
+Frontend
+   ↓
+FastAPI
+   ↓
+AI Gateway
+   ├── LLM Provider
+   ├── Embedding Provider
+   ├── STT Provider
+   ├── TTS Provider
+   └── OCR Provider
+```
 
-JWT implementation must follow the security requirements defined in the SRS.
+This allows providers and models to be replaced without rewriting the application.
 
 ---
 
-# 12. Authorization
+# 9. Ollama — Local LLM Runtime
 
-## 12.1 Role-Based Access Control
+**Status:** CONFIRMED
 
-**Technology:** Application-level RBAC
+Ollama is used specifically as the **local runtime for LLM inference**.
 
-**Status:** `CONFIRMED`
+It is **not**:
 
-Initial roles:
+* The medical knowledge base
+* The RAG system
+* The triage engine
+* The speech system
+* The OCR system
+* The source of medical truth
+
+Its role is:
+
+```text
+Retrieved Medical Evidence
+          +
+Structured Patient Context
+          ↓
+       Ollama
+          ↓
+  Local LLM Inference
+          ↓
+Natural-language response
+```
+
+The exact LLM model remains subject to benchmarking.
+
+Candidate models may include:
+
+* Qwen family
+* Gemma family
+* Sarvam/open Indic models where technically appropriate
+* Other open-source models identified during evaluation
+
+The final model must be selected using measurable evaluation rather than model reputation alone.
+
+---
+
+# 10. Why the LLM Is Separate from Triage
+
+The LLM must **not** be the final authority for emergency classification.
+
+Architecture:
+
+```text
+Patient Symptoms
+      │
+      ├───────────────► Deterministic Triage Engine
+      │                         │
+      │                         ▼
+      │                  Risk Classification
+      │
+      └───────────────► AI Gateway → LLM
+                                │
+                                ▼
+                         Explanation / Guidance
+```
+
+The deterministic safety engine controls:
+
+* Red-flag detection
+* Emergency classification
+* Escalation recommendation
+* Safety-critical thresholds
+
+The LLM is responsible for:
+
+* Explanation
+* Conversational interaction
+* Simplification
+* Summarization
+* Multilingual response generation
+
+---
+
+# 11. Sarvam AI Integration
+
+**Status:** ONLINE PROVIDER — EVALUATION / INTEGRATION
+
+Sarvam AI is **not being used as the primary MedGuide LLM runtime**.
+
+Its role is primarily Indian-language and multimodal services where its capabilities provide practical value.
+
+### Planned Service Boundary
+
+| Capability    | Primary Online Candidate | Local/Offline Fallback                        |
+| ------------- | ------------------------ | --------------------------------------------- |
+| STT           | **Sarvam AI**            | Evaluated open-source speech model            |
+| TTS           | **Sarvam AI**            | Evaluated local TTS                           |
+| OCR           | **Sarvam AI**            | PaddleOCR / Tesseract / evaluated alternative |
+| LLM reasoning | **Ollama/local model**   | Another local model if required               |
+
+Therefore:
+
+```text
+                 AI GATEWAY
+                     │
+        ┌────────────┼─────────────┐
+        │            │             │
+        ▼            ▼             ▼
+      LLM           Speech         OCR
+        │            │             │
+     Ollama       Sarvam AI      Sarvam AI
+        │            │             │
+        │       ┌────┴────┐         │
+        │       │         │         │
+        │      STT        TTS       │
+        │                             
+        └──── Local fallback ─────────┘
+```
+
+When connectivity is unavailable, the system should use evaluated local alternatives where feasible.
+
+---
+
+# 12. Speech-to-Text
+
+**Status:** TENTATIVE / EVALUATION
+
+Phase 1 languages:
+
+* English
+* Hindi
+* Telugu
+
+The architecture supports:
+
+```text
+User Voice
+    ↓
+AI Gateway
+    ↓
+Online?
+ ┌──┴──────┐
+Yes        No
+ │          │
+ ▼          ▼
+Sarvam    Local STT
+ │          │
+ └────┬─────┘
+      ▼
+Transcript
+      ↓
+Language Detection / Validation
+      ↓
+Symptom Processing / LLM
+```
+
+Evaluation must include:
+
+* Word Error Rate
+* Language-wise performance
+* Medical vocabulary accuracy
+* Code-mixed speech
+* Rural/accent variation where suitable data is available
+* Latency
+* Offline feasibility
+
+---
+
+# 13. Text-to-Speech
+
+**Status:** TENTATIVE / EVALUATION
+
+Sarvam AI is the preferred online candidate for Indian-language TTS because natural spoken output is particularly important for users with lower literacy or limited comfort with text interfaces.
+
+Target languages:
+
+* English
+* Hindi
+* Telugu
+
+Architecture:
+
+```text
+Generated Response
+       ↓
+AI Gateway
+       ↓
+Sarvam TTS / Local TTS
+       ↓
+Audio
+       ↓
+Patient
+```
+
+Evaluation should consider:
+
+* Pronunciation
+* Naturalness
+* Medical terminology
+* Language quality
+* Intelligibility
+* Latency
+* Audio size
+* Offline alternative availability
+
+---
+
+# 14. Prescription OCR
+
+**Status:** TENTATIVE / EVALUATION
+
+The OCR subsystem processes prescription images.
+
+Architecture:
+
+```text
+Prescription Image
+       ↓
+Validation
+       ↓
+Image Preprocessing
+       ↓
+OCR Provider
+ ┌─────┴──────────┐
+ ▼                ▼
+Sarvam           Local OCR
+                  │
+       PaddleOCR / Tesseract
+       / evaluated model
+ └───────┬────────┘
+         ▼
+Extracted Text
+         ↓
+Medicine Information Extraction
+         ↓
+Confidence Assessment
+         ↓
+Patient Verification
+         ↓
+Medication Schedule
+```
+
+OCR must **never silently convert uncertain extraction into an active medication schedule**.
+
+---
+
+# 15. Embedding & RAG Technology
+
+**Status:** CONFIRMED ARCHITECTURE / MODEL TENTATIVE
+
+The RAG subsystem uses:
+
+* Approved medical documents
+* Chunking
+* Embeddings
+* PostgreSQL
+* pgvector
+* Similarity retrieval
+* Evidence sufficiency gate
+* LLM generation
+
+Candidate embedding technologies include Sentence Transformers and other evaluated open-source multilingual embedding models.
+
+The final embedding model must be evaluated for:
+
+* English
+* Hindi
+* Telugu
+* Medical terminology
+* Cross-language retrieval
+
+---
+
+# 16. Deterministic Symptom & Triage Engine
+
+**Status:** CONFIRMED
+
+The triage engine is deliberately independent of the LLM.
+
+It evaluates structured symptom information against documented safety rules.
+
+Example:
+
+```text
+Symptoms
+   ↓
+Symptom Extraction
+   ↓
+Structured Symptoms
+   ↓
+Deterministic Rules
+   ↓
+┌──────────┬────────┬───────────┐
+│ ROUTINE  │ URGENT │ EMERGENCY │
+└──────────┴────────┴───────────┘
+```
+
+The engine must be:
+
+* Testable
+* Versioned
+* Auditable
+* Deterministic
+* Independent of model temperature/output variation
+
+---
+
+# 17. Security Stack
+
+### Authentication
+
+**JWT**
+
+### Authorization
+
+Server-side RBAC:
 
 ```text
 PATIENT
@@ -395,1217 +674,302 @@ HEALTHCARE_WORKER
 ADMIN
 ```
 
-Authorization must be enforced by the backend.
+### Security requirements
 
-The frontend must never be considered the security boundary.
-
----
-
-# 13. Password Security
-
-Passwords must never be stored in plaintext.
-
-Use a modern password hashing mechanism supported by the backend security stack.
-
-Exact library/configuration:
-
-**TBD — Security Implementation Phase**
+* Password hashing
+* Token validation
+* RBAC enforcement
+* Consent verification
+* Input validation
+* File validation
+* Rate limiting
+* Secure environment variables
+* Audit logging
+* Privacy-conscious error logging
+* Restricted patient-data access
 
 ---
 
-# 14. Consent Management
+# 18. Development & Testing Stack
 
-Consent will be implemented as an application/domain feature rather than delegated to an AI model.
-
-Responsibilities include:
-
-* Recording consent
-* Consent status
-* Consent scope
-* Consent timestamps
-* Revocation where applicable
-* Auditability
-
-AI must never control consent decisions.
-
----
-
-# 15. AI Stack
-
-The AI subsystem consists of:
-
-```text
-AI Gateway
-│
-├── LLM
-├── RAG
-│   ├── Embedding Model
-│   ├── Knowledge Base
-│   └── pgvector
-│
-├── OCR
-├── Speech-to-Text
-├── Symptom Extraction
-├── Triage Engine
-└── Optional Translation
-```
+| Purpose              | Technology                      |
+| -------------------- | ------------------------------- |
+| Source control       | Git                             |
+| Repository           | GitHub                          |
+| Backend testing      | Pytest                          |
+| API testing          | Postman / Thunder Client        |
+| Frontend development | Next.js                         |
+| AI experiments       | Python / Jupyter / Google Colab |
+| Local LLM            | Ollama                          |
+| Database             | PostgreSQL + pgvector           |
+| Containers           | Docker                          |
+| CI                   | GitHub Actions                  |
 
 ---
 
-# 16. AI Gateway
-
-**Technology:** Custom FastAPI AI Gateway module
-
-**Status:** `CONFIRMED`
-
-Purpose:
-
-* Centralize AI requests
-* Hide provider implementations
-* Validate requests
-* Select models
-* Construct prompts
-* Retrieve RAG context
-* Apply safety checks
-* Handle failures
-* Record AI metadata
-
-Frontend applications must communicate with the AI Gateway through backend APIs.
-
----
-
-# 17. LLM
-
-**Status:** `TENTATIVE — EVALUATION REQUIRED`
-
-Candidate models currently include:
-
-* Llama-family instruction models
-* Gemma-family instruction models
-* Qwen-family instruction models
-
-The final model will be selected through the process defined in:
-
-`docs/ai/MODEL_SELECTION_AND_EVALUATION.md`
-
-The exact model/version must not be hardcoded into the architecture until evaluation is complete.
-
----
-
-# 18. LLM Deployment Strategy
+# 19. Deployment Architecture
 
 The system should support:
 
 ```text
-Local inference
-        OR
-Hosted inference
-        OR
-Hybrid inference
+Development
+     ↓
+Testing
+     ↓
+Staging
+     ↓
+Evaluation
+     ↓
+Production
 ```
 
-The final approach is:
-
-**TBD — Model + Infrastructure Evaluation**
-
-The application must remain independent of a specific provider.
-
----
-
-# 19. Embedding Model
-
-**Status:** `TENTATIVE — EVALUATION REQUIRED`
-
-Current candidates include:
-
-* `all-MiniLM-L6-v2`
-* `paraphrase-multilingual-MiniLM-L12-v2`
-
-Important:
-
-`all-MiniLM-L6-v2` is treated as an English baseline.
-
-Because the MVP targets:
+Containerization:
 
 ```text
-English
-Telugu
-Hindi
+Docker
+ ├── Frontend
+ ├── Backend
+ ├── PostgreSQL
+ └── Supporting services
 ```
 
-a multilingual embedding model must be evaluated before production selection.
+AI services may remain separately managed depending on hardware and deployment constraints.
 
 ---
 
-# 20. RAG
+# 20. Offline Technology Strategy
 
-**Status:** `CONFIRMED`
+Offline functionality is a **system-level capability**, not simply "running the entire application without internet."
 
-RAG is a core component of MedGuide AI.
+### Must remain available offline where technically feasible
 
-Architecture:
+* Application shell
+* Cached UI
+* Patient profile subset
+* Medication schedules
+* Reminders
+* Cached health information
+* Symptom recording
+* Basic deterministic safety rules
+* Offline event creation
+* Synchronization queue
+
+### May require connectivity
+
+* Sarvam STT
+* Sarvam TTS
+* Sarvam OCR
+* Cloud synchronization
+* Healthcare-worker synchronization
+* Large/remote AI services
+
+### Local AI
+
+Ollama enables local LLM inference where the selected model and hardware permit it.
+
+Therefore, offline AI capability is dependent on:
+
+* Model size
+* Quantization
+* CPU/RAM performance
+* Inference latency
+* Selected model quality
+
+It must be experimentally evaluated rather than assumed.
+
+---
+
+# 21. Provider Abstraction Strategy
+
+The application should never contain logic such as:
 
 ```text
-User Query
-    ↓
-Query Embedding
-    ↓
-pgvector Search
-    ↓
-Relevant Knowledge Chunks
-    ↓
-Context Filtering
-    ↓
-Prompt Construction
-    ↓
-LLM
-    ↓
-Grounded Response
+if Sarvam:
+    ...
+elif Ollama:
+    ...
 ```
 
----
+throughout business logic.
 
-# 21. RAG Knowledge Base
-
-The knowledge base will contain approved medical information.
-
-Preferred sources include:
-
-* WHO guidance
-* Government health authorities
-* Official public-health documents
-* Approved medical guidance
-* Other verified sources where appropriate
-
-Random internet content must not automatically become trusted medical knowledge.
-
----
-
-# 22. RAG Chunking
-
-Initial baseline:
+Instead:
 
 ```text
-Chunk size: 500 tokens
-Overlap: 50 tokens
-```
-
-**Status:** `TENTATIVE`
-
-These values must be validated through retrieval experiments.
-
----
-
-# 23. RAG Similarity Threshold
-
-Initial baseline:
-
-```text
-Similarity threshold: 0.70
-```
-
-**Status:** `TENTATIVE`
-
-The final threshold must be determined using the retrieval evaluation dataset.
-
-It must not be treated as a universally valid medical threshold.
-
----
-
-# 24. OCR
-
-**Status:** `TENTATIVE — EVALUATION REQUIRED`
-
-Candidate technologies:
-
-* PaddleOCR
-* Tesseract OCR
-
-Primary purpose:
-
-```text
-Prescription Image
-        ↓
-OCR
-        ↓
-Text
-        ↓
-Medicine / dosage extraction
-        ↓
-Verification
-```
-
-OCR output must not automatically be treated as verified prescription information.
-
----
-
-# 25. Speech-to-Text
-
-**Status:** `TENTATIVE — EVALUATION REQUIRED`
-
-Candidate:
-
-* Whisper-family models
-
-Purpose:
-
-```text
-Voice
- ↓
-Speech-to-Text
- ↓
-Transcript
- ↓
-NLP / AI Pipeline
-```
-
-Required languages and code-mixed performance must be evaluated.
-
----
-
-# 26. Symptom Extraction
-
-**Status:** `TENTATIVE — EVALUATION REQUIRED`
-
-Candidate approaches:
-
-```text
-LLM structured extraction
-Rules + NLP
-NER model
-Hybrid approach
-```
-
-The selected approach must produce structured symptom information.
-
-It must not independently diagnose the patient.
-
----
-
-# 27. Triage
-
-**Status:** `CONFIRMED — RULE-BASED BASELINE`
-
-Initial implementation:
-
-```text
-Structured Symptoms
-        ↓
-Validated Safety Rules
-        ↓
-Risk Classification
-        ↓
-Escalation
-```
-
-The LLM must not independently control emergency decisions.
-
-Medical rules must be based on appropriate authoritative guidance and reviewed before production use.
-
----
-
-# 28. Translation
-
-**Status:** `TENTATIVE — EVALUATION REQUIRED`
-
-The project will evaluate:
-
-```text
-Direct multilingual LLM
-        vs
-Translation → AI → Translation
-```
-
-The final approach depends on:
-
-* Accuracy
-* Medical terminology
-* Telugu performance
-* Hindi performance
-* Latency
-* Resource requirements
-
----
-
-# 29. Notifications
-
-The application requires:
-
-* Medication reminders
-* Important alerts
-* Healthcare-worker notifications
-* Relevant follow-up notifications
-
-Technology:
-
-**PWA notification mechanisms**
-
-**Status:** `CONFIRMED`
-
-External SMS/WhatsApp services are not part of the required core MVP unless later approved.
-
----
-
-# 30. Offline Architecture
-
-The application follows an offline-first approach for appropriate functionality.
-
-```text
-Frontend
-   ↓
-Service Worker
-   ↓
-IndexedDB
-   ↓
-Local Pending Queue
-   ↓
-Connectivity Restored
-   ↓
-Backend Sync API
-```
-
----
-
-# 31. Synchronization
-
-**Technology:** Custom synchronization mechanism
-
-**Status:** `CONFIRMED`
-
-The backend API uses idempotency mechanisms for safe synchronization.
-
-Core principles:
-
-* Idempotent operations
-* Conflict detection
-* Retry support
-* Server validation
-* Auditability
-
----
-
-# 32. API Architecture
-
-The system uses REST APIs.
-
-Base path:
-
-```text
-/api/v1/
-```
-
-The API contract is defined in:
-
-`docs/api/API_SPECIFICATION.md`
-
-The implementation must not introduce undocumented production endpoints without updating the API specification.
-
----
-
-# 33. API Documentation
-
-FastAPI's generated OpenAPI documentation will be used during development.
-
-The API contract remains controlled by:
-
-`API_SPECIFICATION.md`
-
-Generated documentation must not replace the manually maintained API specification.
-
----
-
-# 34. Testing Stack
-
-## Backend
-
-**PyTest**
-
-Status: `CONFIRMED`
-
-Used for:
-
-* Unit tests
-* API tests
-* Safety-rule tests
-* Database tests
-* AI gateway tests
-* Synchronization tests
-
----
-
-## Frontend
-
-Use the selected JavaScript/TypeScript testing framework appropriate for the Next.js stack.
-
-Exact framework:
-
-**TBD — Implementation Phase**
-
----
-
-# 35. AI Evaluation
-
-AI evaluation will use separate controlled datasets.
-
-Evaluation areas:
-
-```text
-LLM
-RAG
-OCR
-Speech
-Multilingual
-Symptom Extraction
-Triage
-```
-
-Metrics are defined in:
-
-`docs/ai/MODEL_SELECTION_AND_EVALUATION.md`
-
----
-
-# 36. Development Environment
-
-## Primary Development Machine
-
-```text
-CPU:
-Intel Core Ultra 7 255U
-
-RAM:
-16 GB
-
-Graphics:
-Intel Integrated Graphics
-
-Storage:
-512 GB-class SSD
-
-OS:
-Windows 11 64-bit
-```
-
-This machine is the primary development environment.
-
----
-
-# 37. Institutional GPU
-
-The project may use college GPU infrastructure for:
-
-* Model experimentation
-* Benchmarking
-* Fine-tuning where justified
-* Large-model inference
-* AI research experiments
-* Model optimization
-
-Current status:
-
-```text
-GPU:
-TBD
-
-VRAM:
-TBD
-
-System RAM:
-TBD
-
-OS:
-TBD
-```
-
-The absence of this information does not block application development.
-
-GPU-dependent model decisions remain open until specifications are verified.
-
----
-
-# 38. External Compute
-
-Google Colab or other genuinely free compute resources may be used for:
-
-* AI experiments
-* Model benchmarking
-* Training/fine-tuning where feasible
-* Evaluation
-
-Availability and resource limits must be verified at the time of use.
-
-The application must not depend on temporary free compute availability for normal operation.
-
----
-
-# 39. Local AI Resource Policy
-
-The project should prioritize:
-
-* CPU-compatible models
-* Efficient models
-* Quantized models where appropriate
-* Small models for edge/offline scenarios
-
-Large models may be evaluated using institutional or external GPU resources.
-
----
-
-# 40. Deployment Architecture
-
-The final deployment architecture is:
-
-```text
-                    USERS
-                      │
-                      ↓
-                Web / PWA
-                      │
-                      ↓
-                Backend API
-                      │
-          ┌───────────┼───────────┐
-          ↓           ↓           ↓
-      PostgreSQL     RAG       AI Gateway
-          │           │           │
-          │        pgvector       ↓
-          │                   AI Models
-          │
-          └───────────┬───────────┘
-                      ↓
-                 Application
-```
-
-Exact hosting providers remain:
-
-**TBD — Deployment Phase**
-
----
-
-# 41. Frontend Deployment
-
-The frontend should use a free hosting platform where suitable.
-
-Candidate:
-
-```text
-Vercel
-```
-
-Status:
-
-`TENTATIVE`
-
-The final decision depends on:
-
-* PWA requirements
-* Build limits
-* Environment variables
-* API architecture
-* Free-tier suitability
-
----
-
-# 42. Backend Deployment
-
-The backend should use a free/low-cost hosting option suitable for FastAPI.
-
-Status:
-
-`TBD`
-
-The final provider must be selected after evaluating:
-
-* Free-tier limits
-* Sleep behavior
-* RAM
-* CPU
-* Request limits
-* Deployment reliability
-* Database connectivity
-
----
-
-# 43. Database Deployment
-
-PostgreSQL must support:
-
-* Relational data
-* pgvector
-* Required storage
-* Backup/export capability
-* Secure connection
-
-Status:
-
-`TBD — Deployment Phase`
-
-Local PostgreSQL remains the development baseline.
-
----
-
-# 44. Containerization
-
-Docker may be used where it simplifies:
-
-* Local setup
-* PostgreSQL
-* Backend deployment
-* Reproducibility
-
-Status:
-
-`TENTATIVE`
-
-Docker must not be introduced merely for architectural complexity.
-
----
-
-# 45. Version Control
-
-**Technology:** Git
-
-**Status:** `CONFIRMED`
-
-Repository:
-
-**GitHub**
-
-**Status:** `CONFIRMED`
-
-All production source code and project documentation should be version-controlled.
-
----
-
-# 46. Branching Strategy
-
-The project should use a simple branching model suitable for a student project:
-
-```text
-main
-  │
-  ├── feature/*
-  ├── fix/*
-  └── experiment/*
-```
-
-AI experiments should not directly destabilize the production branch.
-
----
-
-# 47. Environment Configuration
-
-Environment-specific values must be stored outside source code.
-
-Examples:
-
-```text
-DATABASE_URL
-JWT_SECRET
-AI_PROVIDER_KEY
-AI_MODEL
-VECTOR_DATABASE_URL
-```
-
-Secrets must never be committed to Git.
-
----
-
-# 48. `.env` Policy
-
-Use:
-
-```text
-.env
-.env.local
-```
-
-where appropriate.
-
-Provide:
-
-```text
-.env.example
-```
-
-containing variable names but no real secrets.
-
----
-
-# 49. Logging
-
-The backend should implement structured application logging.
-
-Logs may include:
-
-* Request ID
-* Endpoint
-* Status
-* Execution time
-* Error category
-
-Sensitive health information must not be unnecessarily written to logs.
-
----
-
-# 50. Audit Logging
-
-Healthcare-sensitive actions must be auditable.
-
-Examples:
-
-```text
-Authentication
-Consent changes
-Patient record access
-Healthcare-worker access
-Prescription verification
-AI-related critical events
-Administrative changes
-```
-
-Audit architecture is defined in the database specification.
-
----
-
-# 51. Security Stack
-
-Security must include:
-
-```text
-HTTPS
-JWT authentication
-RBAC
-Password hashing
-Input validation
-CORS configuration
-Rate limiting
-Secure headers
-Database access control
-Audit logging
-Secret management
-```
-
-Exact implementation libraries may be finalized during backend development.
-
----
-
-# 52. Privacy Principle
-
-The system follows:
-
-> **Collect the minimum information required to provide the requested functionality.**
-
-AI models must not receive unnecessary patient information.
-
----
-
-# 53. AI Provider Abstraction
-
-The AI layer must support provider replacement.
-
-Conceptually:
-
-```text
+Application
+     ↓
 AI Gateway
-    │
-    ├── Provider A
-    ├── Provider B
-    └── Local Model
-```
-
-The rest of the application should not depend directly on a specific provider.
-
----
-
-# 54. Cost Strategy
-
-Target development cost:
-
-```text
-₹0
-```
-
-The project should prioritize:
-
-* Open-source software
-* Free APIs where appropriate
-* Local development
-* College infrastructure
-* Free compute
-* Free database tiers
-* Free deployment tiers
-
-Free-tier limitations must always be verified before relying on them.
-
----
-
-# 55. Technology Introduction Rule
-
-A new technology may be added only when:
-
-1. A documented requirement needs it.
-2. Existing technologies cannot reasonably satisfy the requirement.
-3. The addition does not violate project constraints.
-4. The architectural impact is understood.
-5. Documentation is updated.
-
----
-
-# 56. Technology Replacement Rule
-
-A confirmed technology should not be replaced casually.
-
-Replacement requires:
-
-```text
-Problem Identified
-        ↓
-Alternative Evaluated
-        ↓
-Impact Analysis
-        ↓
-Decision
-        ↓
-Architecture Update
-        ↓
+     ↓
+Provider Interface
+     ↓
 Implementation
 ```
 
-Major replacements require an ADR.
-
----
-
-# 57. Current Technology Decision Matrix
-
-| Area                  | Technology                     | Status      |
-| --------------------- | ------------------------------ | ----------- |
-| Frontend              | Next.js                        | `CONFIRMED` |
-| Frontend Language     | TypeScript                     | `CONFIRMED` |
-| Styling               | Tailwind CSS                   | `CONFIRMED` |
-| Web App               | PWA                            | `CONFIRMED` |
-| Offline Storage       | IndexedDB                      | `CONFIRMED` |
-| Backend               | Python + FastAPI               | `CONFIRMED` |
-| Validation            | Pydantic                       | `CONFIRMED` |
-| ORM                   | SQLAlchemy                     | `CONFIRMED` |
-| Migrations            | Alembic                        | `CONFIRMED` |
-| Database              | PostgreSQL                     | `CONFIRMED` |
-| Vector Search         | pgvector                       | `CONFIRMED` |
-| Authentication        | JWT                            | `CONFIRMED` |
-| Authorization         | RBAC                           | `CONFIRMED` |
-| API                   | REST                           | `CONFIRMED` |
-| AI Gateway            | FastAPI module                 | `CONFIRMED` |
-| RAG                   | Required                       | `CONFIRMED` |
-| LLM                   | Candidate evaluation           | `TENTATIVE` |
-| Embeddings            | Candidate evaluation           | `TENTATIVE` |
-| OCR                   | PaddleOCR/Tesseract evaluation | `TENTATIVE` |
-| STT                   | Whisper-family evaluation      | `TENTATIVE` |
-| Symptom Extraction    | Evaluation                     | `TENTATIVE` |
-| Triage                | Deterministic rules            | `CONFIRMED` |
-| Translation           | Evaluation                     | `TENTATIVE` |
-| Reranker              | Not initially required         | `TENTATIVE` |
-| Backend Testing       | PyTest                         | `CONFIRMED` |
-| Version Control       | Git                            | `CONFIRMED` |
-| Repository            | GitHub                         | `CONFIRMED` |
-| Containerization      | Docker                         | `TENTATIVE` |
-| Frontend Hosting      | TBD                            | `TBD`       |
-| Backend Hosting       | TBD                            | `TBD`       |
-| Database Hosting      | TBD                            | `TBD`       |
-| Production AI Hosting | TBD                            | `TBD`       |
-| College GPU           | TBD                            | `TBD`       |
-
----
-
-# 58. Technology Freeze Boundary
-
-The following are considered stable enough to begin implementation:
-
-```text
-Next.js
-TypeScript
-Tailwind CSS
-PWA
-IndexedDB
-Python
-FastAPI
-Pydantic
-SQLAlchemy
-Alembic
-PostgreSQL
-pgvector
-JWT
-RBAC
-REST API
-Git/GitHub
-PyTest
-AI Gateway architecture
-RAG architecture
-Rule-based triage baseline
-```
-
-The following remain intentionally open:
-
-```text
-Final LLM
-Final embedding model
-Final OCR engine
-Final STT model
-Final translation method
-Fine-tuning strategy
-GPU-specific AI strategy
-Production AI hosting
-Production backend hosting
-Production database hosting
-```
-
----
-
-# 59. Implementation Rule
-
-Development may begin using the confirmed stack.
-
-Development must not require the unresolved AI decisions to be finalized.
-
-For example:
-
-```text
-Backend
-    ↓
-AI Gateway Interface
-    ↓
-LLM Provider Interface
-    ↓
-Mock / Test Provider
-```
-
-This allows backend development to continue while AI model evaluation is underway.
-
----
-
-# 60. AI Interface Abstraction
-
-The backend should define interfaces/abstractions conceptually similar to:
+Example:
 
 ```text
 LLMProvider
-EmbeddingProvider
+ ├── OllamaLLMProvider
+ └── FutureLLMProvider
+
+STTProvider
+ ├── SarvamSTTProvider
+ └── LocalSTTProvider
+
+TTSProvider
+ ├── SarvamTTSProvider
+ └── LocalTTSProvider
+
 OCRProvider
-SpeechProvider
+ ├── SarvamOCRProvider
+ └── LocalOCRProvider
 ```
 
-The implementation can then replace:
-
-```text
-Mock Provider
-      ↓
-Experimental Model
-      ↓
-Approved Model
-```
-
-without rewriting the entire application.
+This architecture allows future replacement without major application changes.
 
 ---
 
-# 61. Development Sequence
+# 22. Technology Selection Rules
 
-The technology stack supports the following implementation order:
+A technology may become **CONFIRMED** only when:
 
-```text
-Repository
-    ↓
-Backend Foundation
-    ↓
-Database
-    ↓
-Migrations
-    ↓
-Authentication
-    ↓
-RBAC
-    ↓
-Consent
-    ↓
-Patient Module
-    ↓
-Healthcare Worker Module
-    ↓
-Symptom Module
-    ↓
-Triage Rules
-    ↓
-AI Gateway
-    ↓
-RAG
-    ↓
-LLM Integration
-    ↓
-OCR
-    ↓
-Medication
-    ↓
-Speech
-    ↓
-Offline/PWA
-    ↓
-Synchronization
-    ↓
-Testing
-    ↓
-Evaluation
-    ↓
-Deployment
-```
+1. It satisfies the functional requirement.
+2. It fits the project's hardware constraints.
+3. It is compatible with the offline strategy where applicable.
+4. It has acceptable performance.
+5. It can be evaluated reproducibly.
+6. Its licensing/cost is acceptable.
+7. It does not compromise healthcare safety requirements.
+
+For AI models, benchmark results must be recorded before final selection.
 
 ---
 
-# 62. GPU Update Procedure
+# 23. Model Evaluation Requirements
 
-When the college GPU information becomes available:
+The final model stack must be evaluated against:
 
-```text
-GPU Specification
-        ↓
-Update this document
-        ↓
-Review LLM candidates
-        ↓
-Review local inference
-        ↓
-Review fine-tuning feasibility
-        ↓
-Update MODEL_REGISTRY.md
-        ↓
-Create/update ADR if required
-```
+### LLM
 
-No other architecture should be changed unless the GPU information reveals a genuine requirement.
+* Medical RAG grounding
+* Hallucination rate
+* Instruction following
+* English quality
+* Hindi quality
+* Telugu quality
+* Code-mixed input
+* Response latency
+* CPU/RAM requirements
 
----
+### STT
 
-# 63. Final Technology Principle
+* WER
+* Medical vocabulary accuracy
+* English/Hindi/Telugu performance
+* Code-switching
+* Latency
 
-The MedGuide AI technology stack follows:
+### TTS
 
-```text
-REQUIREMENT
-    ↓
-ARCHITECTURE
-    ↓
-TECHNOLOGY
-    ↓
-IMPLEMENTATION
-    ↓
-TESTING
-    ↓
-EVALUATION
-    ↓
-VALIDATION
-```
+* Intelligibility
+* Naturalness
+* Pronunciation
+* Language quality
+* Medical terminology
 
-Not:
+### OCR
 
-```text
-POPULAR TECHNOLOGY
-    ↓
-FIND A USE FOR IT
-```
+* CER
+* WER
+* Medicine extraction accuracy
+* Dosage extraction accuracy
+* Confidence calibration
 
 ---
 
-# 64. Golden Rules
+# 24. Final Technology Decision Matrix
 
-1. Do not introduce technologies without a requirement.
-2. Do not hardcode an unapproved AI model.
-3. Do not assume free-tier availability.
-4. Do not assume GPU availability.
-5. Do not expose AI providers directly to the frontend.
-6. Do not give the LLM unrestricted database access.
-7. Do not use AI for deterministic application logic unnecessarily.
-8. Do not use an LLM as the sole triage mechanism.
-9. Do not treat OCR output as verified prescription information.
-10. Do not store secrets in source control.
-11. Do not store unnecessary patient information.
-12. Do not introduce microservices unless justified.
-13. Do not replace confirmed technologies without documented evaluation.
-14. Keep AI models replaceable through provider abstractions.
-15. Keep experimental AI code separate from production functionality.
-16. Keep the project within the free-resource constraint wherever technically feasible.
-17. Update architecture documentation when implementation decisions change.
-18. Never claim a model is accurate or safe without evaluation evidence.
-19. Never fabricate benchmarks, licenses, capabilities, or resource requirements.
-20. The college GPU specification will be incorporated when available and must not be guessed.
+| Component         | Technology / Provider               | Status        |
+| ----------------- | ----------------------------------- | ------------- |
+| Frontend          | Next.js + TypeScript                | **CONFIRMED** |
+| UI                | Tailwind CSS                        | **CONFIRMED** |
+| PWA               | Service Worker                      | **CONFIRMED** |
+| Offline storage   | IndexedDB                           | **CONFIRMED** |
+| Backend           | Python + FastAPI                    | **CONFIRMED** |
+| Validation        | Pydantic                            | **CONFIRMED** |
+| ORM               | SQLAlchemy                          | **CONFIRMED** |
+| Migrations        | Alembic                             | **CONFIRMED** |
+| Database          | PostgreSQL                          | **CONFIRMED** |
+| Vector search     | pgvector                            | **CONFIRMED** |
+| Authentication    | JWT                                 | **CONFIRMED** |
+| RBAC              | Server-side                         | **CONFIRMED** |
+| AI Gateway        | Custom abstraction                  | **CONFIRMED** |
+| Local LLM runtime | Ollama                              | **CONFIRMED** |
+| LLM model         | Evaluated open-source model         | **TENTATIVE** |
+| RAG               | pgvector + embeddings               | **CONFIRMED** |
+| Embeddings        | Evaluated multilingual model        | **TENTATIVE** |
+| Online STT        | Sarvam AI                           | **TENTATIVE** |
+| Local STT         | Evaluated open-source model         | **TENTATIVE** |
+| Online TTS        | Sarvam AI                           | **TENTATIVE** |
+| Local TTS         | Evaluated open-source model         | **TENTATIVE** |
+| Online OCR        | Sarvam AI                           | **TENTATIVE** |
+| Local OCR         | PaddleOCR/Tesseract/evaluated model | **TENTATIVE** |
+| Triage            | Deterministic rules                 | **CONFIRMED** |
+| Testing           | Pytest                              | **CONFIRMED** |
+| Version control   | Git + GitHub                        | **CONFIRMED** |
+| Containerization  | Docker                              | **CONFIRMED** |
+| CI                | GitHub Actions                      | **CONFIRMED** |
 
 ---
 
-# 65. Final Baseline
+# 25. Final Architectural Principle
 
-The implementation baseline is:
+The MedGuide AI technology stack follows this separation:
 
 ```text
-FRONTEND
-Next.js + TypeScript + Tailwind + PWA + IndexedDB
-
-BACKEND
-Python + FastAPI + Pydantic
-
-DATABASE
-PostgreSQL + pgvector
-
-ORM
-SQLAlchemy
-
-MIGRATIONS
-Alembic
-
-AUTH
-JWT + RBAC
-
-AI
-AI Gateway
-    ├── LLM              → TBD
-    ├── Embeddings       → TBD
-    ├── RAG              → pgvector
-    ├── OCR              → TBD
-    ├── Speech           → TBD
-    ├── Symptom Extract  → TBD
-    └── Triage           → Rules
-
-TESTING
-PyTest + frontend testing framework TBD
-
-VERSION CONTROL
-Git + GitHub
-
-COMPUTE
-Developer Laptop
-+
-College GPU when available
-+
-Free external compute when necessary
-
-DEPLOYMENT
-Free/sustainable infrastructure → TBD
+                    MEDGUIDE AI
+                         │
+                    AI GATEWAY
+                         │
+       ┌─────────────────┼─────────────────┐
+       │                 │                 │
+       ▼                 ▼                 ▼
+   REASONING          SPEECH             OCR
+       │                 │                 │
+    Ollama            Sarvam            Sarvam
+       │                 │                 │
+       │             Online-first       Online-first
+       │                 │                 │
+       │          Local fallback   Local fallback
+       │
+       ▼
+   RAG Evidence
+       │
+       ▼
+Deterministic Safety
+       │
+       ▼
+Safe Patient Guidance
 ```
+
+**Core rule:**
+
+> **Ollama provides local LLM inference. Sarvam AI provides selected online speech/OCR capabilities. RAG provides medical evidence. The deterministic triage engine provides safety decisions. The AI Gateway keeps all providers replaceable.**
+
+No individual AI model or external provider should become the architectural foundation of the entire system.
 
 ---
 
-# 66. Technology Stack Completion Criteria
+## 26. Development Baseline
 
-This document is considered complete for the pre-implementation phase when:
+This technology stack is now the baseline for **M1–M18**.
 
-* Core frontend stack is confirmed.
-* Core backend stack is confirmed.
-* Database stack is confirmed.
-* Authentication architecture is confirmed.
-* Offline architecture is confirmed.
-* AI Gateway is confirmed.
-* RAG architecture is confirmed.
-* Triage baseline is confirmed.
-* AI model candidates are documented.
-* Unresolved AI decisions are explicitly marked.
-* GPU-dependent decisions are explicitly marked.
-* Deployment decisions that require further evaluation are marked.
-* Free-resource constraints are documented.
-* Technology introduction/replacement rules are documented.
-* Implementation sequence is documented.
+Any future technology/model change must update:
+
+1. `TECHNOLOGY_STACK.md`
+2. `SYSTEM_ARCHITECTURE.md`
+3. Relevant API specifications
+4. AI/model documentation
+5. Evaluation records
+6. Traceability documentation where requirements are affected
+
+**Model selection remains empirical. Architecture is fixed; individual model/provider implementations remain replaceable.**
