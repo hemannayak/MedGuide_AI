@@ -7,12 +7,48 @@ from sqlalchemy.orm import Session
 
 from app.models.knowledge import KnowledgeChunk, MedicalDocument
 
-# Multilingual embedding model singleton
+import logging
+import numpy as np
+
+logger = logging.getLogger(__name__)
+
+# Multilingual embedding model singletons
 _embedding_model = None
+_onnx_session = None
+_onnx_tokenizer = None
+
+
+def _load_onnx_embedding_engine():
+    """Load ONNX runtime session and Tokenizer for paraphrase-multilingual-MiniLM-L12-v2."""
+    global _onnx_session, _onnx_tokenizer
+    if _onnx_session is not None and _onnx_tokenizer is not None:
+        return _onnx_session, _onnx_tokenizer
+
+    try:
+        import onnxruntime as ort
+        from tokenizers import Tokenizer
+        from huggingface_hub import hf_hub_download
+
+        onnx_path = hf_hub_download(
+            repo_id="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+            filename="onnx/model.onnx",
+        )
+        tok_path = hf_hub_download(
+            repo_id="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+            filename="tokenizer.json",
+        )
+
+        _onnx_session = ort.InferenceSession(onnx_path, providers=["CPUExecutionProvider"])
+        _onnx_tokenizer = Tokenizer.from_file(tok_path)
+        logger.info("[KnowledgeService] Loaded ONNX embedding engine (MiniLM-L12-v2)")
+        return _onnx_session, _onnx_tokenizer
+    except Exception as e:
+        logger.warning(f"[KnowledgeService] ONNX embedding engine load failed: {e}")
+        return None, None
 
 
 def get_embedding_model():
-    """Lazy load SentenceTransformer multilingual embedding model."""
+    """Lazy load SentenceTransformer multilingual embedding model as secondary backend."""
     global _embedding_model
     if _embedding_model is None:
         try:
@@ -24,19 +60,43 @@ def get_embedding_model():
 
 
 def generate_embedding(text: str) -> List[float]:
-    """Generate 384-dimensional vector embedding for input text."""
+    """
+    Generate 384-dimensional vector embedding for input text.
+    Primary backend: ONNX Runtime (fast, portable, PyTorch-independent).
+    Secondary backend: SentenceTransformer.
+    """
+    # Primary: ONNX engine
+    session, tokenizer = _load_onnx_embedding_engine()
+    if session is not None and tokenizer is not None:
+        encoded = tokenizer.encode(text)
+        input_ids = np.array([encoded.ids], dtype=np.int64)
+        attention_mask = np.array([encoded.attention_mask], dtype=np.int64)
+
+        input_names = [i.name for i in session.get_inputs()]
+        inputs = {"input_ids": input_ids, "attention_mask": attention_mask}
+        if "token_type_ids" in input_names:
+            inputs["token_type_ids"] = np.zeros_like(input_ids, dtype=np.int64)
+
+        outputs = session.run(None, inputs)
+        token_embeddings = np.asarray(outputs[0], dtype=np.float32)
+
+        # Mean pooling
+        input_mask_expanded = np.expand_dims(attention_mask, -1).astype(np.float32)
+        sum_embeddings = np.sum(token_embeddings * input_mask_expanded, axis=1)
+        sum_mask = np.clip(np.sum(input_mask_expanded, axis=1), a_min=1e-9, a_max=None)
+        pooled = sum_embeddings / sum_mask
+        return [float(x) for x in pooled[0]]
+
+    # Secondary: SentenceTransformer
     model = get_embedding_model()
     if model is not None:
         embedding = model.encode(text, convert_to_numpy=True).tolist()
         return [float(x) for x in embedding]
-    
-    # Deterministic fallback vector (384-dimensional) if model loading fails
-    import hashlib
-    h = hashlib.sha256(text.encode("utf-8")).digest()
-    v = [(b / 255.0) * 2 - 1 for b in h]
-    # Repeat to reach 384 dimensions
-    v384 = (v * 12)[:384]
-    return v384
+
+    # If both semantic engines fail, fail closed with explicit error
+    logger.error("[KnowledgeService] CRITICAL: Semantic embedding engine unavailable")
+    raise RuntimeError("Semantic embedding model unavailable. Refusing silent hash fallback.")
+
 
 
 def extract_pdf_pages_and_sections(pdf_path: str) -> List[Dict[str, Any]]:

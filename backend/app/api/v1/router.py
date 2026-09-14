@@ -9,6 +9,7 @@ from app.api.v1.endpoints import (
     healthcare_workers,
     medications,
     patients,
+    speech,
     symptoms,
     timeline,
 )
@@ -19,6 +20,7 @@ api_router.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 api_router.include_router(patients.router, prefix="/patients", tags=["Patient Profiles"])
 api_router.include_router(symptoms.router, prefix="/symptoms", tags=["Symptoms & Triage"])
 api_router.include_router(ai.router, prefix="/ai", tags=["AI Companion & RAG"])
+api_router.include_router(speech.router, prefix="/speech", tags=["Speech & Voice"])
 api_router.include_router(medications.router, prefix="/medications", tags=["Medications & Adherence"])
 api_router.include_router(timeline.router, prefix="/timeline", tags=["Health Timeline"])
 api_router.include_router(alerts.router, prefix="/alerts", tags=["Safety Alerts"])

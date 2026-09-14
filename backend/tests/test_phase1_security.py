@@ -238,6 +238,7 @@ def test_auth_audit_logging(db_session: Session):
         .first()
     )
     assert fail_audit is not None
+    assert fail_audit.metadata_ is not None
     assert fail_audit.metadata_["login_identifier"] == user.login_identifier
 
     # 2. Test Login Success
@@ -254,6 +255,7 @@ def test_auth_audit_logging(db_session: Session):
         .first()
     )
     assert succ_audit is not None
+    assert succ_audit.metadata_ is not None
     assert succ_audit.metadata_["role"] == "PATIENT"
 
 

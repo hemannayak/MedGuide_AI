@@ -1,0 +1,1742 @@
+{
+  "metrics": {
+    "english": {
+      "recall_1": 100.0,
+      "recall_3": 100.0,
+      "recall_5": 100.0,
+      "mrr": 1.0,
+      "mean_top_similarity": 0.7879
+    },
+    "hindi": {
+      "recall_1": 100.0,
+      "recall_3": 100.0,
+      "recall_5": 100.0,
+      "mrr": 1.0,
+      "mean_top_similarity": 0.737
+    },
+    "telugu": {
+      "recall_1": 40.0,
+      "recall_3": 40.0,
+      "recall_5": 50.0,
+      "mrr": 0.42,
+      "mean_top_similarity": 0.5274
+    }
+  },
+  "detailed_retrievals": {
+    "en": [
+      {
+        "id": "HTN-1",
+        "query": "What are the first-line pharmacological treatments for hypertension in adults?",
+        "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+        "top_similarity": 0.94451401178309,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "f05808dc-6de7-4889-8e93-20a743df052f",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 1,
+            "content": "Guideline for the pharmacological treatment of hypertension in adults",
+            "similarity": 0.94451401178309
+          },
+          {
+            "chunk_id": "408c1601-ef28-4fe0-b072-960aa11271c9",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 0,
+            "content": "Guideline for the pharmacological treatment of hypertension in adults",
+            "similarity": 0.94451401178309
+          },
+          {
+            "chunk_id": "580789c8-62a0-4fc6-8856-520487b4e627",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 33,
+            "content": "GUIDELINE FOR THE PHARMACOLOGICAL TREATMENT OF HYPERTENSION IN ADULTS WHO suggests pharmacological antihypertensive treatment of individuals without cardiovascular disease but with high cardiovascular risk, diabetes mellitus, or chronic kidney disease, and systolic blood pressure of 130–139 mmHg. Conditional recommendation, moderate- to high-certainty evidence 2. RECOMMENDATION ON LABORATORY TESTING When starting pharmacological therapy for hypertension, WHO suggests obtaining tests to screen fo",
+            "similarity": 0.8193205729994291
+          },
+          {
+            "chunk_id": "96ffdda7-ed44-4d4d-afab-992ddada93c4",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 31,
+            "content": "TIATION OF PHARMACOLOGICAL TREATMENT WHO recommends initiation of pharmacological antihypertensive treatment of individuals with a confirmed diagnosis of hypertension and systolic blood pressure of ≥140 mmHg or diastolic blood pressure of ≥90 mmHg. Strong recommendation, moderate- to high-certainty evidence WHO recommends pharmacological antihypertensive treatment of individuals with existing cardiovascular disease and systolic blood pressure of 130–139 mmHg. Strong recommendation, moderate- to",
+            "similarity": 0.8185017688152373
+          },
+          {
+            "chunk_id": "343e2e56-b5e0-4c55-935d-e5c20a774cd9",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 49,
+            "content": "arch and adoption of combination therapies and single-pill combinations, are all additional reasons for new guidance. The Guideline for the pharmacological treatment of hypertension in adults will be the first global guideline in the past two decades on the topic and will have specific relevance to low- and middle-income countries (LMICs). The guideline provides new recommendations on the threshold for the initiation of pharmacological treatment for hypertension, recommendations on intervals for",
+            "similarity": 0.7979789625836838
+          }
+        ],
+        "latency_ms": 3311.318874359131
+      },
+      {
+        "id": "HTN-2",
+        "query": "At what blood pressure threshold should pharmacological treatment be initiated in adults?",
+        "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+        "top_similarity": 0.8355212619124247,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "776fceb2-e8eb-4e22-9826-1fc3d593eb84",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 81,
+            "content": "3 Recommendations 3.1 Blood pressure threshold for initiation of pharmacological treatment 1. RECOMMENDA TION ON BLOOD PRESSURE THRESHOLD FOR INITIATION OF PHARMACOLOGICAL TREATMENT WHO recommends initiation of pharmacological antihypertensive treatment of individuals with a confirmed diagnosis of hypertension and systolic blood pressure of ≥140 mmHg or diastolic blood pressure of ≥90 mmHg. Strong recommendation, moderate- to high-certainty evidence WHO recommends pharmacological antihypertensiv",
+            "similarity": 0.8355212619124247
+          },
+          {
+            "chunk_id": "2d5ac70e-6c9b-4b46-8ebe-67a5daac7b7d",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 353,
+            "content": "GUIDELINE FOR THE PHARMACOLOGICAL TREATMENT OF HYPERTENSION IN ADULTS Annex 4: PICO questions The eleven questions in population, intervention, comparison, and outcomes (PICO) format used to guide the systematic reviews. In addition, relevant subgroups (s) were identified. 1 At what level of blood pressure should pharmacological therapy be started to prevent cardiovascular events? P Adult men and women I Specific systolic and diastolic blood pressure thresholds:* systolic (mmHg): ≥120, ≥130, ≥14",
+            "similarity": 0.7906808709997877
+          },
+          {
+            "chunk_id": "e184943b-a2eb-4e25-a963-1006872d2042",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 159,
+            "content": "GUIDELINE FOR THE PHARMACOLOGICAL TREATMENT OF HYPERTENSION IN ADULTS 3.6 Target blood pressure 6. RECOMMENDA TION ON TARGET BLOOD PRESSURES WHO recommends a target blood pressure treatment goal of <140/90 mmHg in all patients with hypertension without comorbidities. Strong recommendation, moderate-certainty evidence WHO recommends a target systolic blood pressure treatment goal of <130 mmHg in patients with hypertension and known cardiovascular disease (CVD). Strong recommendation, moderate-cer",
+            "similarity": 0.7805553697159539
+          },
+          {
+            "chunk_id": "408c1601-ef28-4fe0-b072-960aa11271c9",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 0,
+            "content": "Guideline for the pharmacological treatment of hypertension in adults",
+            "similarity": 0.7740485819888525
+          },
+          {
+            "chunk_id": "f05808dc-6de7-4889-8e93-20a743df052f",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 1,
+            "content": "Guideline for the pharmacological treatment of hypertension in adults",
+            "similarity": 0.7740485819888525
+          }
+        ],
+        "latency_ms": 49.41248893737793
+      },
+      {
+        "id": "MAL-1",
+        "query": "What is the recommended treatment for uncomplicated P. falciparum malaria?",
+        "expected_doc": "WHO Guidelines for Malaria",
+        "top_similarity": 0.8578800648697427,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "5138d4d9-b20e-4e9f-bd09-9d74c53396a0",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 1907,
+            "content": "ll forms of uncomplicated malaria. • Adequate treatment of undiagnosed P. falciparum in mixed infections. HighCertainty of the evidence Overall certainty of evidence for all critical outcomes: high. WHO guidelines for malaria - 13 August 2025 - World Health Organization (WHO) 193 of 478",
+            "similarity": 0.8578800648697427
+          },
+          {
+            "chunk_id": "782d297a-8cec-4ee7-b6cb-c9ce4dc07e97",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 1675,
+            "content": "adults with uncomplicated P. falciparum malaria should be treated with one of the following ACTs*: • artemether-lumefantrine (AL) • artesunate-amodiaquine (AS+AQ) • artesunate-mefloquine (ASMQ) • dihydroartemisinin-piperaquine (DHAP) • artesunate + sulfadoxine-pyrimethamine (AS+SP) • artesunate-pyronaridine (ASPY) (2022) *Artesunate + sulfadoxine-pyrimethamine and artesunate-pyronaridine are not recommended for use in the first trimester of pregnancy. For details of treatment using ACTs in the f",
+            "similarity": 0.8319017481057243
+          },
+          {
+            "chunk_id": "42243c77-8e5c-4c38-9691-8069697c2a8e",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 3948,
+            "content": "Clinical question/ PICO Population: Adults and children with uncomplicated P. falciparum malaria (malaria-endemic settings) Intervention: Artemisinin + naphthoquine; 1-day course Comparator: Dihydroartemisinin + piperaquine; 3-day course WHO guidelines for malaria - 13 August 2025 - World Health Organization (WHO) 426 of 478",
+            "similarity": 0.8052815489268732
+          },
+          {
+            "chunk_id": "beb6ac51-e544-40d2-bdb9-e023fa336091",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 3984,
+            "content": "References 219. Pryce J, Taylor M, Fox T, Hine P. Pyronaridine-artesunate for treating uncomplicated Plasmodium falciparum malaria. Cochrane Database Syst Rev 2022;6(6) Pubmed Journal Outcome Timeframe Study results and measurements Comparator AS-AQ Intervention ASPY Certainty of the evidence (Quality of evidence) Summary 1. Systematic review [219] with included studies: Sagara 2018 (Sotuba, Mali), Sagara 2018 (Mafrinyah, Guinea), Sagara 2018 (Djoliba, Mali), Sagara 2018 (Kolle, Mali), Sagara 20",
+            "similarity": 0.7939463625554802
+          },
+          {
+            "chunk_id": "3784becd-e150-4a44-af31-7d0a50e75554",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 3939,
+            "content": "s.. Clinical question/ PICO Population: Adults and children with uncomplicated P. falciparum malaria (malaria-endemic settings) Intervention: Artemisinin + naphthoquine; 1-day course Comparator: Artemether + lumefantrine twice daily for 3 days WHO guidelines for malaria - 13 August 2025 - World Health Organization (WHO) 424 of 478",
+            "similarity": 0.7891283001324315
+          }
+        ],
+        "latency_ms": 57.203054428100586
+      },
+      {
+        "id": "MAL-2",
+        "query": "What is the recommended medicine for the initial treatment of severe malaria?",
+        "expected_doc": "WHO Guidelines for Malaria",
+        "top_similarity": 0.8329915176459365,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "7248315e-dd8e-4b84-be89-f1486e83cdf5",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 2067,
+            "content": "al treatment be given promptly in the initial treatment of severe malaria. This should be followed by a full dose of effective ACT orally. Two classes of medicine are available for parenteral treatment of severe malaria: artemisinin derivatives (artesunate or artemether) and the cinchona alkaloids (quinine and quinidine). Parenteral artesunate is the treatment of choice for all severe malaria. The largest randomized clinical trials ever conducted on severe falciparum malaria showed a substantial",
+            "similarity": 0.8329915176459365
+          },
+          {
+            "chunk_id": "0f5d3be6-65b6-464c-be17-3d1a3f3c4600",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 1624,
+            "content": "uld maximize the likelihood of rapid clinical and parasitological cure and minimize transmission from the treated infection. To achieve this, dosage regimens should be based on the patient’s weight and should provide effective concentrations of antimalarial drugs for a sufficient time to eliminate the infection in all target populations. Please refer to Malaria case management: operations manual [197]. 5.1 Diagnosing malaria Suspected malaria The signs and symptoms of malaria are non-specific. M",
+            "similarity": 0.8168014742668952
+          },
+          {
+            "chunk_id": "a8471369-51a2-4e9d-b9ae-cbf1f899867f",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 2643,
+            "content": "imalarial drug or drugs to people with suspected malaria without testing or before the results of blood examinations are available treatment, preventive Intermittent administration of a full therapeutic course of an antimalarial either alone or in combination to prevent malarial illness by maintaining therapeutic drug levels in the blood throughout the period of greatest risk treatment, radical Treatment to achieve complete cure. This applies only to vivax and ovale infections and consists of th",
+            "similarity": 0.8151040205408707
+          },
+          {
+            "chunk_id": "5ca5a5e2-c9f0-49bc-af4b-67479f2542c5",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 1623,
+            "content": "and future antimalarial medicines, all episodes of malaria should be treated with at least two effective antimalarial medicines with different mechanisms of action (combination therapy). 4. Appropriate weight-based dosing To prolong their useful therapeutic life and ensure that all patients have an equal chance of being cured, the quality of antimalarial drugs must be ensured, and antimalarial drugs must be given at optimal dosages. Treatment should maximize the likelihood of rapid clinical and",
+            "similarity": 0.7981735242523837
+          },
+          {
+            "chunk_id": "d11ccd1c-78fd-4dfe-87f1-7aed357d253c",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 1668,
+            "content": "prophylactic anticonvulsants are beneficial in otherwise uncomplicated malaria, and they are not recommended. 5.2.1.1 Artemisinin-based combination therapy WHO guidelines for malaria - 13 August 2025 - World Health Organization (WHO) 167 of 478",
+            "similarity": 0.7884100549228432
+          }
+        ],
+        "latency_ms": 37.920236587524414
+      },
+      {
+        "id": "TB-1",
+        "query": "What is the standard treatment duration for paediatric pulmonary tuberculosis?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "top_similarity": 0.691233212435209,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "fd54d74f-dc18-4f79-81a5-c4861ec120f8",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 2,
+            "content": "of India Special Edition on Paediatric and Extrapulmonary Tuberculosis",
+            "similarity": 0.691233212435209
+          },
+          {
+            "chunk_id": "b85319e8-5cf5-413b-ac94-af3a28547abd",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 37,
+            "content": "-20 mg/kg (maximum dose 600mg/day) 30-40 mg/kg (maximum 2000mg/day) 15-25 mg/kg (maximum 1500mg/day) TYPE OF PATIENTS Microbiologically conﬁrmed RS Pulmonary TB 2HRZE + 4HRE TB TREATMENT REGIMENS Clinically diagnosed Pulmonary TB Drug sensitive previously treated TB (recurrent, failure, treatment after default)* *DR TB algorithm-DST WEIGHT BAND Number of tablets (dispersible FDCs) HRZ 50/75/15 Continuation phase E 100 HR 50/75 E 100 4-7 kg 8-11 kg 12-15 kg 16-24 kg 25-29 kg 30-39 kg 1 2 3 4 3 +",
+            "similarity": 0.675731779174754
+          },
+          {
+            "chunk_id": "1b155c62-8249-4a88-a0fe-d46fc139f212",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 190,
+            "content": "Urinary Tuberculosis • LUTS (frequency, urgency and nocturia) with dysuria and/or haematuria for at least 2 weeks • Not responding to a 3–7 day course of antibiotics Fever Standard Treatment Workﬂow (STW) for the Management of GENITOURINARY TUBERCULOSIS ICD-A18.10 PRESENTING SYMPTOMS TREATMENT INVESTIGATION References 1. National TB Elimination Programme, Central TB Division. Training modules for Programme Managers & Medical Oﬃcers. Ministry of Health & Family Welfare, Government of India https:",
+            "similarity": 0.6713608792949569
+          },
+          {
+            "chunk_id": "6e627639-318b-4563-aa39-6724611ad09d",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 10,
+            "content": "Standard Treatment Workﬂow (STW) for the Management of PAEDIATRIC ABDOMINAL TUBERCULOSIS ICD-10-A18.31 EXAMINATION FINDINGS PERITONEAL TB NODAL TB • Pain abdomen • Fever • Palpable abdominal lump INTESTINAL TB VISCERAL TB (LIVER, SPLEEN, PANCREAS)• Abdominal pain, distension • Fever • Weight loss TREATMENT • Start treatment & follow-up as per NTEP • ATT for 6 months (2HRZE + 4HRE) • Pyridoxine supplementation- 10 mg/day • Steroids- not useful & not recommended • Supportive treatment- Management",
+            "similarity": 0.6678119832081374
+          },
+          {
+            "chunk_id": "ebaf80ca-45cc-42e5-a628-3b01d330ec64",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 173,
+            "content": "culitis & Erythema nodosum TYPES OF CLINICAL DISEASE Verrucous TB Verrucous TBScrofuloderma ScrofulodermaLupus Vulgaris Lupus Vulgaris INVESTIGATION DIAGNOSTIC ALGORITHM ABBREVIATION TREATMENT • Similar to Pulmonary TB as per NTEP • DR -TB to be kept in mind • No role of steroids, oral or topical, in management of CT FOLLOW UP • 1st follow-up after 4-6 weeks; majority improves • If no response after 8 weeks • Alternate diagnosis/DR-TB; refer to higher centre Suspected TB case based on presence o",
+            "similarity": 0.6572361851101789
+          }
+        ],
+        "latency_ms": 32.72533416748047
+      },
+      {
+        "id": "TB-2",
+        "query": "Should children with tuberculosis meningitis receive adjuvant corticosteroids?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "top_similarity": 0.6568365837607684,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "9a95cad3-8d02-44ee-9134-88cc4e26d2fe",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 90,
+            "content": "Adult Extrapulmonary Tuberculosis",
+            "similarity": 0.6568365837607684
+          },
+          {
+            "chunk_id": "b3b63003-c04a-4be8-8e67-fef3328f31ef",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 113,
+            "content": ": National TB Elimination Programme PCR: Polymerase Chain Reaction TB: Tuberculosis Treatment : As per NTEP Guidelines BCG LYMPHADENITIS • Age is usually < 2 years • Axillary and/or supraclavicular LN on same side as BCG vaccination (usually given on left) • No systemic symptoms in immunocompetent children • Treatment: • Wait & watch if small • If large & suppurative, repeated aspiration or rarely incision & drainage is required NAAT/AFB smear positivity can not differentiate between BCG & MTB F",
+            "similarity": 0.6284597284673231
+          },
+          {
+            "chunk_id": "fd54d74f-dc18-4f79-81a5-c4861ec120f8",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 2,
+            "content": "of India Special Edition on Paediatric and Extrapulmonary Tuberculosis",
+            "similarity": 0.6235122255771669
+          },
+          {
+            "chunk_id": "1202ac28-2a06-4f4b-ba93-3b9961197fa8",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 5,
+            "content": "Department of Health Research Ministry of Health and Family Welfare, Government of India • INTRODUCTION • SPECIALITIES COVERED IN THIS EDITION Paediatric Tuberculosis Paediatric Abdominal Tuberculosis Paediatric Intrathoracic Tuberculosis Paediatric Lymph node Tuberculosis Paediatric Osteoarticular Tuberculosis Paediatric Tubercular Meningitis Adult Extrapulmonary Tuberculosis Adult Abdominal Tuberculosis Adult Lymph Node Tuberculosis Adult Musculoskeletal Tuberculosis Adult Pericardial Tubercul",
+            "similarity": 0.5955149253773689
+          },
+          {
+            "chunk_id": "c581d38e-2d70-48a7-b04f-e6e80e478c3e",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 85,
+            "content": ": › Basal exudates › Hydrocephalus › Infarct › Tuberculoma Criterion 2- 2 or more risk factors for TBM • HIV infection • Severe acute malnutrition • Recent contact with infectious TB Criterion 3 • Evidence of TB elsewhere AFB seen/CSF NAAT +ve (Microbiologically conﬁrmed TBM) Start treatment 2 or more criteria met Continue investigations & management for partially treated bacterial meningitis IF NOT BETTER • Repeat LP after 48-72 hours • Expand search for TB elsewhere • Consider MRI contrast if",
+            "similarity": 0.5903185068181415
+          }
+        ],
+        "latency_ms": 33.132076263427734
+      },
+      {
+        "id": "TB-3",
+        "query": "How is gastric aspirate collected for paediatric tuberculosis diagnosis?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "top_similarity": 0.6776938231559888,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "fd54d74f-dc18-4f79-81a5-c4861ec120f8",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 2,
+            "content": "of India Special Edition on Paediatric and Extrapulmonary Tuberculosis",
+            "similarity": 0.6776938231559888
+          },
+          {
+            "chunk_id": "577a8bbc-a6a3-4507-8206-d67d5843ecf0",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 0,
+            "content": "Department of Health Research Ministry of Health and Family Welfare, Government of India PARTNER Central TB Division Ministry of Health and Family Welfare Government of India SPECIAL EDITION ON PAEDIATRIC AND EXTRAPULMONARY TUBERCULOSIS",
+            "similarity": 0.6153302129745245
+          },
+          {
+            "chunk_id": "a75c4ae9-d712-43db-a9cc-5ce89eedcd9a",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 221,
+            "content": "iﬁcation Tests-Xpert MTB/RIF/TrueNat PHC: Primary health Centre TB: Tuberculosis IRL: Intermediate Reference laboratory",
+            "similarity": 0.5874595270902415
+          },
+          {
+            "chunk_id": "9a95cad3-8d02-44ee-9134-88cc4e26d2fe",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 90,
+            "content": "Adult Extrapulmonary Tuberculosis",
+            "similarity": 0.5864694778238222
+          },
+          {
+            "chunk_id": "5520538c-00f3-441b-8148-f1b8b1db8a04",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 216,
+            "content": "N OF SAMPLES MICROBIOLOGICAL GUIDANCE FOR COMMON TYPES OF EXTRAPULMONARY TUBERCULOSIS Diagnostic algorithm of NTEP to be followed in the Microbiology labs • Sample: Tissue, pus, synovial ﬂuid • Sample amount: Biopsy: Specimen material 1 cm x 1 cm biopsies. Any caseous area should be sampled. Add 0.5-2 ml sterile saline to biopsy depending on its size to avoid drying of tissue specimen • Optimum ﬂuid/pus: 2-3ml. • Swabs are sub-optimal samples Processing: • Preferably immediately. If not possible",
+            "similarity": 0.5738623058678433
+          }
+        ],
+        "latency_ms": 95.02720832824707
+      },
+      {
+        "id": "PEN-1",
+        "query": "How is acute asthma exacerbation treated in primary health care centers?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "top_similarity": 0.7039815043436805,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "9915b85a-5915-4065-8d2d-63e7f75e5c01",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1065,
+            "content": "managing COPD and asthma Module 3.6",
+            "similarity": 0.7039815043436805
+          },
+          {
+            "chunk_id": "c7801f89-07ab-480f-9936-0804bc0ecbfa",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1104,
+            "content": "362 Managing COPD and asthma Activity 8. Managing acute exacerbation of bronchial asthma: 20 minutes Step 1. While the above-mentioned management protocol is suitable for stable asthma, in case of frequent exacerbations the approach will be different. Step 2. Refer to the workbook for the protocol and discuss it in groups. WHO PEN protocol 3.1 Management of exacerbation of asthma ASSESS Assess severity Severe: ¤ Inability to complete sentences in one breath ¤ Respiratory rate more than 25 breath",
+            "similarity": 0.6740315175180075
+          },
+          {
+            "chunk_id": "d064ac70-6d67-44ee-b959-8463ffccf964",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1128,
+            "content": "367 Managing COPD and asthma Step 2. Invite a volunteer to present the case study. Case study 1 A 25-year-old female with known asthma for 10 years is on inhaler treatment. ¤ She has a history of a running nose and sneezing with blocked nose for 12 years. ¤ She takes one puff of the inhaler twice daily. ¤ Despite that she continues to wheeze and cough. ¤ She reported to the emergency twice during the past one month. ¤ The cough increases at night and she has disturbed sleep almost daily. ¤ She h",
+            "similarity": 0.6597811116458105
+          },
+          {
+            "chunk_id": "9d7f478f-7c1d-4847-af3e-f3e30b66ad54",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 175,
+            "content": ", asthma, and chronic obstructive pulmonary disease [COPD]) can be integrated in primary care settings using cost-effective interventions. An integrated approach is particularly important for low-resource settings so that limited resources are used efficiently. Bringing about the paradigm shift from a vertical to an integrated approach involves the selection of a set of core interventions that can be integrated with the PHC services. Integration of NCDs into PHC in low-resource settings is an ar",
+            "similarity": 0.6575915609709071
+          },
+          {
+            "chunk_id": "53b1275e-a5a3-4f7a-8442-06d5fb11d346",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 697,
+            "content": "208 Understanding the health impacts of household air pollution at the primary health care level",
+            "similarity": 0.6362379832160519
+          }
+        ],
+        "latency_ms": 31.692028045654297
+      },
+      {
+        "id": "PEN-2",
+        "query": "How is total cardiovascular risk assessed in primary care using WHO charts?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "top_similarity": 0.798708947637194,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "f785da4c-82aa-402e-a593-45bc3a34485b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 714,
+            "content": "218 Prevention and management of cardiovascular diseases in primary health care Figure 1: WHO/ISH risk prediction chart for SEAR D. 10-year risk of a fatal or non-fatal cardiovascular event by gender, age, systolic blood pressure, total blood cholesterol, smoking status and presence or absence of diabetes mellitus. This chart can only be used for countries of the WHO Region of South-East Asia, sub-region D, in settings where blood cholesterol can be measured (see Table 1).",
+            "similarity": 0.798708947637194
+          },
+          {
+            "chunk_id": "8e900412-f958-4000-8ebc-8db924a27728",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 744,
+            "content": "226 Prevention and management of cardiovascular diseases in primary health care bACkgRound inFoRmAtion1 Frequently asked questions on use of country-specific WHO CVD risk charts 1. What are CVD risk prediction charts? The risk of an individual having a heart attack or a stroke depends on risk factors such as age, sex, smoking status and levels of blood pressure, blood cholesterol and blood glucose. The risk prediction charts provide a simple way of calculating the approximate combined risk due t",
+            "similarity": 0.735720665834736
+          },
+          {
+            "chunk_id": "736a1ced-ef09-4211-9953-bd84247ac0b1",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 762,
+            "content": "232 Prevention and management of cardiovascular diseases in primary health care",
+            "similarity": 0.689339744043174
+          },
+          {
+            "chunk_id": "c1ff0b39-d072-42b5-aa40-6f6f2437cf2a",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 704,
+            "content": "215 Prevention and management of cardiovascular diseases in primary health care intRoduCtion A large proportion of people with high cardiovascular risk remains undiagnosed. Those diagnosed have insufficient access to treatment. When a diagnosis is made, it is frequently at a late stage of the disease, when people become symptomatic and are admitted to hospitals with acute myocardial infarction, stroke or other complications, and when costly high-technology interventions are required for treatmen",
+            "similarity": 0.6838571536565512
+          },
+          {
+            "chunk_id": "5d855f12-1b5e-4391-82df-999c2629daf8",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 760,
+            "content": "230 Prevention and management of cardiovascular diseases in primary health care",
+            "similarity": 0.679975121759507
+          }
+        ],
+        "latency_ms": 34.661054611206055
+      },
+      {
+        "id": "PEN-3",
+        "query": "What are the lifestyle and pharmacological interventions for type 2 diabetes in primary care?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "top_similarity": 0.8794161309767079,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "6c8c6657-8b53-4122-98e1-dc117c37c29f",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 912,
+            "content": "288 Management of type 2 diabetes in the primary health care level",
+            "similarity": 0.8794161309767079
+          },
+          {
+            "chunk_id": "53dcb2d6-78ec-4ded-abe7-5332b03dce49",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 909,
+            "content": "285 Management of type 2 diabetes in the primary health care level",
+            "similarity": 0.8779235669387216
+          },
+          {
+            "chunk_id": "0bf8dec5-70a6-4b77-9f35-9ac4bc492a13",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 911,
+            "content": "287 Management of type 2 diabetes in the primary health care level",
+            "similarity": 0.8745110170645687
+          },
+          {
+            "chunk_id": "b492f754-497a-4d8e-949a-b060b1784dbf",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 910,
+            "content": "286 Management of type 2 diabetes in the primary health care level",
+            "similarity": 0.8727579131537943
+          },
+          {
+            "chunk_id": "cc352f7a-d43e-4bd1-822c-62188facefef",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 913,
+            "content": "289 Management of type 2 diabetes in the primary health care level",
+            "similarity": 0.8710390045356874
+          }
+        ],
+        "latency_ms": 52.658796310424805
+      }
+    ],
+    "hi": [
+      {
+        "id": "HTN-1",
+        "query": "वयस्कों में उच्च रक्तचाप (हाई बीपी) के इलाज के लिए प्राथमिक दवाएं कौन सी हैं?",
+        "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+        "top_similarity": 0.7547285914745736,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "f05808dc-6de7-4889-8e93-20a743df052f",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 1,
+            "content": "Guideline for the pharmacological treatment of hypertension in adults",
+            "similarity": 0.7547285914745736
+          },
+          {
+            "chunk_id": "408c1601-ef28-4fe0-b072-960aa11271c9",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 0,
+            "content": "Guideline for the pharmacological treatment of hypertension in adults",
+            "similarity": 0.7547285914745736
+          },
+          {
+            "chunk_id": "e184943b-a2eb-4e25-a963-1006872d2042",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 159,
+            "content": "GUIDELINE FOR THE PHARMACOLOGICAL TREATMENT OF HYPERTENSION IN ADULTS 3.6 Target blood pressure 6. RECOMMENDA TION ON TARGET BLOOD PRESSURES WHO recommends a target blood pressure treatment goal of <140/90 mmHg in all patients with hypertension without comorbidities. Strong recommendation, moderate-certainty evidence WHO recommends a target systolic blood pressure treatment goal of <130 mmHg in patients with hypertension and known cardiovascular disease (CVD). Strong recommendation, moderate-cer",
+            "similarity": 0.7341662051030721
+          },
+          {
+            "chunk_id": "580789c8-62a0-4fc6-8856-520487b4e627",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 33,
+            "content": "GUIDELINE FOR THE PHARMACOLOGICAL TREATMENT OF HYPERTENSION IN ADULTS WHO suggests pharmacological antihypertensive treatment of individuals without cardiovascular disease but with high cardiovascular risk, diabetes mellitus, or chronic kidney disease, and systolic blood pressure of 130–139 mmHg. Conditional recommendation, moderate- to high-certainty evidence 2. RECOMMENDATION ON LABORATORY TESTING When starting pharmacological therapy for hypertension, WHO suggests obtaining tests to screen fo",
+            "similarity": 0.7322263939347262
+          },
+          {
+            "chunk_id": "dd15f6f1-db6e-40ce-b11d-c01dd4bdc2cf",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 82,
+            "content": "nce WHO recommends pharmacological antihypertensive treatment of individuals with existing cardiovascular disease and systolic blood pressure of 130–139 mmHg. Strong recommendation, moderate- to high-certainty evidence WHO suggests pharmacological antihypertensive treatment of individuals without cardiovascular disease but with high cardiovascular risk, diabetes mellitus, or chronic kidney disease, and systolic blood pressure of 130–139 mmHg. Conditional recommendation, moderate- to high-certain",
+            "similarity": 0.7223261394889819
+          }
+        ],
+        "latency_ms": 36.34333610534668
+      },
+      {
+        "id": "HTN-2",
+        "query": "वयस्कों में किस रक्तचाप स्तर पर दवाओं द्वारा उपचार शुरू किया जाना चाहिए?",
+        "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+        "top_similarity": 0.7527511845525219,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "2d5ac70e-6c9b-4b46-8ebe-67a5daac7b7d",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 353,
+            "content": "GUIDELINE FOR THE PHARMACOLOGICAL TREATMENT OF HYPERTENSION IN ADULTS Annex 4: PICO questions The eleven questions in population, intervention, comparison, and outcomes (PICO) format used to guide the systematic reviews. In addition, relevant subgroups (s) were identified. 1 At what level of blood pressure should pharmacological therapy be started to prevent cardiovascular events? P Adult men and women I Specific systolic and diastolic blood pressure thresholds:* systolic (mmHg): ≥120, ≥130, ≥14",
+            "similarity": 0.7527511845525219
+          },
+          {
+            "chunk_id": "580789c8-62a0-4fc6-8856-520487b4e627",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 33,
+            "content": "GUIDELINE FOR THE PHARMACOLOGICAL TREATMENT OF HYPERTENSION IN ADULTS WHO suggests pharmacological antihypertensive treatment of individuals without cardiovascular disease but with high cardiovascular risk, diabetes mellitus, or chronic kidney disease, and systolic blood pressure of 130–139 mmHg. Conditional recommendation, moderate- to high-certainty evidence 2. RECOMMENDATION ON LABORATORY TESTING When starting pharmacological therapy for hypertension, WHO suggests obtaining tests to screen fo",
+            "similarity": 0.744549590663243
+          },
+          {
+            "chunk_id": "dd15f6f1-db6e-40ce-b11d-c01dd4bdc2cf",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 82,
+            "content": "nce WHO recommends pharmacological antihypertensive treatment of individuals with existing cardiovascular disease and systolic blood pressure of 130–139 mmHg. Strong recommendation, moderate- to high-certainty evidence WHO suggests pharmacological antihypertensive treatment of individuals without cardiovascular disease but with high cardiovascular risk, diabetes mellitus, or chronic kidney disease, and systolic blood pressure of 130–139 mmHg. Conditional recommendation, moderate- to high-certain",
+            "similarity": 0.7229213363266195
+          },
+          {
+            "chunk_id": "408c1601-ef28-4fe0-b072-960aa11271c9",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 0,
+            "content": "Guideline for the pharmacological treatment of hypertension in adults",
+            "similarity": 0.7226584863662495
+          },
+          {
+            "chunk_id": "f05808dc-6de7-4889-8e93-20a743df052f",
+            "doc_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "chunk_index": 1,
+            "content": "Guideline for the pharmacological treatment of hypertension in adults",
+            "similarity": 0.7226584863662495
+          }
+        ],
+        "latency_ms": 47.51276969909668
+      },
+      {
+        "id": "MAL-1",
+        "query": "फाल्सीपेरम मलेरिया के बुखार के लिए डब्ल्यूएचओ द्वारा अनुशंसित उपचार क्या है?",
+        "expected_doc": "WHO Guidelines for Malaria",
+        "top_similarity": 0.8257553216253963,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "51240fb6-738b-4c9c-93af-7121f12dd871",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 4214,
+            "content": "infection among the group targeted by the intervention. WHO guidelines for malaria - 13 August 2025 - World Health Organization (WHO) 465 of 478",
+            "similarity": 0.8257553216253963
+          },
+          {
+            "chunk_id": "0f5d3be6-65b6-464c-be17-3d1a3f3c4600",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 1624,
+            "content": "uld maximize the likelihood of rapid clinical and parasitological cure and minimize transmission from the treated infection. To achieve this, dosage regimens should be based on the patient’s weight and should provide effective concentrations of antimalarial drugs for a sufficient time to eliminate the infection in all target populations. Please refer to Malaria case management: operations manual [197]. 5.1 Diagnosing malaria Suspected malaria The signs and symptoms of malaria are non-specific. M",
+            "similarity": 0.812917361092224
+          },
+          {
+            "chunk_id": "c6d4920f-1f81-431d-a004-50776006fff5",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 3896,
+            "content": "guidelines for malaria - 13 August 2025 - World Health Organization (WHO) 418 of 478",
+            "similarity": 0.8080822707282351
+          },
+          {
+            "chunk_id": "3657034d-a8ca-47b9-ad58-8f8eb62f0c18",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 4139,
+            "content": "PICO Population: Adults with severe malaria (malaria-endemic areas) Intervention: Artesunate Comparator: Quinine WHO guidelines for malaria - 13 August 2025 - World Health Organization (WHO) 455 of 478",
+            "similarity": 0.8022164180268633
+          },
+          {
+            "chunk_id": "a8471369-51a2-4e9d-b9ae-cbf1f899867f",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 2643,
+            "content": "imalarial drug or drugs to people with suspected malaria without testing or before the results of blood examinations are available treatment, preventive Intermittent administration of a full therapeutic course of an antimalarial either alone or in combination to prevent malarial illness by maintaining therapeutic drug levels in the blood throughout the period of greatest risk treatment, radical Treatment to achieve complete cure. This applies only to vivax and ovale infections and consists of th",
+            "similarity": 0.8000491537713954
+          }
+        ],
+        "latency_ms": 53.7261962890625
+      },
+      {
+        "id": "MAL-2",
+        "query": "गंभीर मलेरिया के प्रारंभिक उपचार के लिए कौन सी दवा की सिफारिश की जाती है?",
+        "expected_doc": "WHO Guidelines for Malaria",
+        "top_similarity": 0.8400467464485064,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "0f5d3be6-65b6-464c-be17-3d1a3f3c4600",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 1624,
+            "content": "uld maximize the likelihood of rapid clinical and parasitological cure and minimize transmission from the treated infection. To achieve this, dosage regimens should be based on the patient’s weight and should provide effective concentrations of antimalarial drugs for a sufficient time to eliminate the infection in all target populations. Please refer to Malaria case management: operations manual [197]. 5.1 Diagnosing malaria Suspected malaria The signs and symptoms of malaria are non-specific. M",
+            "similarity": 0.8400467464485064
+          },
+          {
+            "chunk_id": "a8471369-51a2-4e9d-b9ae-cbf1f899867f",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 2643,
+            "content": "imalarial drug or drugs to people with suspected malaria without testing or before the results of blood examinations are available treatment, preventive Intermittent administration of a full therapeutic course of an antimalarial either alone or in combination to prevent malarial illness by maintaining therapeutic drug levels in the blood throughout the period of greatest risk treatment, radical Treatment to achieve complete cure. This applies only to vivax and ovale infections and consists of th",
+            "similarity": 0.838824768994274
+          },
+          {
+            "chunk_id": "7248315e-dd8e-4b84-be89-f1486e83cdf5",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 2067,
+            "content": "al treatment be given promptly in the initial treatment of severe malaria. This should be followed by a full dose of effective ACT orally. Two classes of medicine are available for parenteral treatment of severe malaria: artemisinin derivatives (artesunate or artemether) and the cinchona alkaloids (quinine and quinidine). Parenteral artesunate is the treatment of choice for all severe malaria. The largest randomized clinical trials ever conducted on severe falciparum malaria showed a substantial",
+            "similarity": 0.8371134323999226
+          },
+          {
+            "chunk_id": "5ca5a5e2-c9f0-49bc-af4b-67479f2542c5",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 1623,
+            "content": "and future antimalarial medicines, all episodes of malaria should be treated with at least two effective antimalarial medicines with different mechanisms of action (combination therapy). 4. Appropriate weight-based dosing To prolong their useful therapeutic life and ensure that all patients have an equal chance of being cured, the quality of antimalarial drugs must be ensured, and antimalarial drugs must be given at optimal dosages. Treatment should maximize the likelihood of rapid clinical and",
+            "similarity": 0.8217024670418696
+          },
+          {
+            "chunk_id": "d11ccd1c-78fd-4dfe-87f1-7aed357d253c",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 1668,
+            "content": "prophylactic anticonvulsants are beneficial in otherwise uncomplicated malaria, and they are not recommended. 5.2.1.1 Artemisinin-based combination therapy WHO guidelines for malaria - 13 August 2025 - World Health Organization (WHO) 167 of 478",
+            "similarity": 0.8184818887335524
+          }
+        ],
+        "latency_ms": 32.599687576293945
+      },
+      {
+        "id": "TB-1",
+        "query": "बच्चों में फेफड़ों की टीबी का इलाज कितने समय तक चलना चाहिए?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "top_similarity": 0.7509336206879326,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "b3b63003-c04a-4be8-8e67-fef3328f31ef",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 113,
+            "content": ": National TB Elimination Programme PCR: Polymerase Chain Reaction TB: Tuberculosis Treatment : As per NTEP Guidelines BCG LYMPHADENITIS • Age is usually < 2 years • Axillary and/or supraclavicular LN on same side as BCG vaccination (usually given on left) • No systemic symptoms in immunocompetent children • Treatment: • Wait & watch if small • If large & suppurative, repeated aspiration or rarely incision & drainage is required NAAT/AFB smear positivity can not differentiate between BCG & MTB F",
+            "similarity": 0.7509336206879326
+          },
+          {
+            "chunk_id": "9a95cad3-8d02-44ee-9134-88cc4e26d2fe",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 90,
+            "content": "Adult Extrapulmonary Tuberculosis",
+            "similarity": 0.6720760529726234
+          },
+          {
+            "chunk_id": "2bfc6cb9-e667-45c1-8813-d7fa65b2cf3e",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 273,
+            "content": "STANDARD TREATMENT WORKFLOWS of India Department of Health Research Ministry of Health and Family Welfare, Government of India PARTNER Central TB Division Ministry of Health and Family Welfare Government of India SPECIAL EDITION ON PAEDIATRIC AND EXTRAPULMONARY TUBERCULOSIS 2022",
+            "similarity": 0.6562124736325875
+          },
+          {
+            "chunk_id": "1b155c62-8249-4a88-a0fe-d46fc139f212",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 190,
+            "content": "Urinary Tuberculosis • LUTS (frequency, urgency and nocturia) with dysuria and/or haematuria for at least 2 weeks • Not responding to a 3–7 day course of antibiotics Fever Standard Treatment Workﬂow (STW) for the Management of GENITOURINARY TUBERCULOSIS ICD-A18.10 PRESENTING SYMPTOMS TREATMENT INVESTIGATION References 1. National TB Elimination Programme, Central TB Division. Training modules for Programme Managers & Medical Oﬃcers. Ministry of Health & Family Welfare, Government of India https:",
+            "similarity": 0.6545897047063443
+          },
+          {
+            "chunk_id": "577a8bbc-a6a3-4507-8206-d67d5843ecf0",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 0,
+            "content": "Department of Health Research Ministry of Health and Family Welfare, Government of India PARTNER Central TB Division Ministry of Health and Family Welfare Government of India SPECIAL EDITION ON PAEDIATRIC AND EXTRAPULMONARY TUBERCULOSIS",
+            "similarity": 0.6486025659289125
+          }
+        ],
+        "latency_ms": 31.029462814331055
+      },
+      {
+        "id": "TB-2",
+        "query": "क्या टीबी मेनिनजाइटिस से पीड़ित बच्चों को कॉर्टिकोस्टेरॉइड्स दवा दी जानी चाहिए?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "top_similarity": 0.6903609747453319,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "b3b63003-c04a-4be8-8e67-fef3328f31ef",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 113,
+            "content": ": National TB Elimination Programme PCR: Polymerase Chain Reaction TB: Tuberculosis Treatment : As per NTEP Guidelines BCG LYMPHADENITIS • Age is usually < 2 years • Axillary and/or supraclavicular LN on same side as BCG vaccination (usually given on left) • No systemic symptoms in immunocompetent children • Treatment: • Wait & watch if small • If large & suppurative, repeated aspiration or rarely incision & drainage is required NAAT/AFB smear positivity can not differentiate between BCG & MTB F",
+            "similarity": 0.6903609747453319
+          },
+          {
+            "chunk_id": "4bd01955-5dd1-43ad-8313-f222adf8c0e0",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 138,
+            "content": "022. 3. Nahid P, Dorman SE, Alipanah N, et al. Oﬃcial American Thoracic Society/Centers for Disease Control and Prevention/Infectious Diseases Society of America Clinical Practice Guidelines: Treatment of Drug-Susceptible Tuberculosis. Clin Infect Dis. 2016 Oct 1;63(7):e147-e195. doi: 10.1093/cid/ciw376. Epub 2016 Aug 10.",
+            "similarity": 0.6385552487178038
+          },
+          {
+            "chunk_id": "9a95cad3-8d02-44ee-9134-88cc4e26d2fe",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 90,
+            "content": "Adult Extrapulmonary Tuberculosis",
+            "similarity": 0.6254917573708191
+          },
+          {
+            "chunk_id": "065de7d1-7ae5-4c43-8d59-821196fa1090",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 233,
+            "content": "iderations for intra-ocular TB PAEDIATRIC TB TREATMENT /bullet.case ATT : 2 months of RHEZ + 7 months of RH depending on clinical response & side effects to treatment /bullet.case Add pyridoxine 10 mg/day /bullet.case Corticosteroids : Topical steroids eye drops for severe/anterior chamber inflammation /bullet.case For treatment in children refer to paediatrician /bullet.case Systemic corticosteroids for severe inflammation in consultation with Uveitits expert Special considerations for paediatr",
+            "similarity": 0.6137536586256679
+          },
+          {
+            "chunk_id": "577a8bbc-a6a3-4507-8206-d67d5843ecf0",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 0,
+            "content": "Department of Health Research Ministry of Health and Family Welfare, Government of India PARTNER Central TB Division Ministry of Health and Family Welfare Government of India SPECIAL EDITION ON PAEDIATRIC AND EXTRAPULMONARY TUBERCULOSIS",
+            "similarity": 0.6038706782447492
+          }
+        ],
+        "latency_ms": 35.06827354431152
+      },
+      {
+        "id": "TB-3",
+        "query": "बच्चों में टीबी के निदान के लिए गैस्ट्रिक एस्पिरेट कैसे एकत्र किया जाता है?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "top_similarity": 0.6015922621179435,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "a75c4ae9-d712-43db-a9cc-5ce89eedcd9a",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 221,
+            "content": "iﬁcation Tests-Xpert MTB/RIF/TrueNat PHC: Primary health Centre TB: Tuberculosis IRL: Intermediate Reference laboratory",
+            "similarity": 0.6015922621179435
+          },
+          {
+            "chunk_id": "577a8bbc-a6a3-4507-8206-d67d5843ecf0",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 0,
+            "content": "Department of Health Research Ministry of Health and Family Welfare, Government of India PARTNER Central TB Division Ministry of Health and Family Welfare Government of India SPECIAL EDITION ON PAEDIATRIC AND EXTRAPULMONARY TUBERCULOSIS",
+            "similarity": 0.5843914389072399
+          },
+          {
+            "chunk_id": "b3b63003-c04a-4be8-8e67-fef3328f31ef",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 113,
+            "content": ": National TB Elimination Programme PCR: Polymerase Chain Reaction TB: Tuberculosis Treatment : As per NTEP Guidelines BCG LYMPHADENITIS • Age is usually < 2 years • Axillary and/or supraclavicular LN on same side as BCG vaccination (usually given on left) • No systemic symptoms in immunocompetent children • Treatment: • Wait & watch if small • If large & suppurative, repeated aspiration or rarely incision & drainage is required NAAT/AFB smear positivity can not differentiate between BCG & MTB F",
+            "similarity": 0.5793746498952592
+          },
+          {
+            "chunk_id": "f5d7abfd-8d1e-407d-9169-1e328f822c22",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 71,
+            "content": "INFORMATION • In case of synovial fluid or cold abscess aspiration (against gravity), send samples for confirmation of TB in following 3 ways › Two dry slide for demonstration of AFB (ZN staining) › Two samples in formalin for histopathological examination › Two samples in saline for culture* followed by DST and/or NAAT • Confirmed cases to undergo HIV/blood sugar testing/parent counselling *MGIT/LJ (if MGIT not available) Surgical Indications in Potts Spine • Progressive neurological deficit •",
+            "similarity": 0.5743117923639562
+          },
+          {
+            "chunk_id": "9a95cad3-8d02-44ee-9134-88cc4e26d2fe",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 90,
+            "content": "Adult Extrapulmonary Tuberculosis",
+            "similarity": 0.57135036133002
+          }
+        ],
+        "latency_ms": 47.37067222595215
+      },
+      {
+        "id": "PEN-1",
+        "query": "प्राथमिक स्वास्थ्य केंद्र में अस्थमा के तीव्र दौरे का उपचार कैसे किया जाता है?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "top_similarity": 0.7338446831486855,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "9915b85a-5915-4065-8d2d-63e7f75e5c01",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1065,
+            "content": "managing COPD and asthma Module 3.6",
+            "similarity": 0.7338446831486855
+          },
+          {
+            "chunk_id": "d064ac70-6d67-44ee-b959-8463ffccf964",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1128,
+            "content": "367 Managing COPD and asthma Step 2. Invite a volunteer to present the case study. Case study 1 A 25-year-old female with known asthma for 10 years is on inhaler treatment. ¤ She has a history of a running nose and sneezing with blocked nose for 12 years. ¤ She takes one puff of the inhaler twice daily. ¤ Despite that she continues to wheeze and cough. ¤ She reported to the emergency twice during the past one month. ¤ The cough increases at night and she has disturbed sleep almost daily. ¤ She h",
+            "similarity": 0.6975467685986364
+          },
+          {
+            "chunk_id": "c7801f89-07ab-480f-9936-0804bc0ecbfa",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1104,
+            "content": "362 Managing COPD and asthma Activity 8. Managing acute exacerbation of bronchial asthma: 20 minutes Step 1. While the above-mentioned management protocol is suitable for stable asthma, in case of frequent exacerbations the approach will be different. Step 2. Refer to the workbook for the protocol and discuss it in groups. WHO PEN protocol 3.1 Management of exacerbation of asthma ASSESS Assess severity Severe: ¤ Inability to complete sentences in one breath ¤ Respiratory rate more than 25 breath",
+            "similarity": 0.6811210936169082
+          },
+          {
+            "chunk_id": "244b624f-28c6-4596-a303-1b56938c5a50",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 65,
+            "content": "COS). ¤ Management of COPD and asthma in adults and children. ¤ Use of peak expiratory flowmeter. ¤ Use of metered-dose inhalers and other aerosol delivery equipment (nebulizers). ¤ Self-care in COPD and asthma. Assessment and referral of women with suspected cervical cancer at primary health care level. ¤ Participants are able to differentiate signs and symptoms that are similar to cervical cancer and refer women with suspected cancer for early diagnosis and provide follow-up care and palliativ",
+            "similarity": 0.6717602071480508
+          },
+          {
+            "chunk_id": "408e5ec8-e71d-4b83-ba79-45e4ff807090",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1095,
+            "content": "360 Managing COPD and asthma Management of COPD ASSESS Assess severity Moderate – if breathless with normal activity Severe – if breathless at rest Measure PEFR and oxygen saturation TREAT ¤ Inhaled salbutamol, two puffs as required, up to 4 times daily; ¤ If symptoms are still troublesome, consider low-dose oral theophylline; ¤ If ipratropium inhalers are available, they can be used instead of, or added to, salbutamol, but they are more expensive. ADVICE COPD – Advice to patients and families ¤",
+            "similarity": 0.6663447680589053
+          }
+        ],
+        "latency_ms": 29.998779296875
+      },
+      {
+        "id": "PEN-2",
+        "query": "प्राथमिक स्वास्थ्य देखभाल में हृदय रोग जोखिम का आकलन कैसे किया जाता है?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "top_similarity": 0.7871989203069406,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "c1ff0b39-d072-42b5-aa40-6f6f2437cf2a",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 704,
+            "content": "215 Prevention and management of cardiovascular diseases in primary health care intRoduCtion A large proportion of people with high cardiovascular risk remains undiagnosed. Those diagnosed have insufficient access to treatment. When a diagnosis is made, it is frequently at a late stage of the disease, when people become symptomatic and are admitted to hospitals with acute myocardial infarction, stroke or other complications, and when costly high-technology interventions are required for treatmen",
+            "similarity": 0.7871989203069406
+          },
+          {
+            "chunk_id": "736a1ced-ef09-4211-9953-bd84247ac0b1",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 762,
+            "content": "232 Prevention and management of cardiovascular diseases in primary health care",
+            "similarity": 0.7748016259011901
+          },
+          {
+            "chunk_id": "5d855f12-1b5e-4391-82df-999c2629daf8",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 760,
+            "content": "230 Prevention and management of cardiovascular diseases in primary health care",
+            "similarity": 0.7679143919560681
+          },
+          {
+            "chunk_id": "4de3a0dd-d7dd-478f-9098-17b01c33a837",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 761,
+            "content": "231 Prevention and management of cardiovascular diseases in primary health care",
+            "similarity": 0.766346456523784
+          },
+          {
+            "chunk_id": "5c6a7944-9c0c-4315-9e35-223636af0e71",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 759,
+            "content": "229 Prevention and management of cardiovascular diseases in primary health care",
+            "similarity": 0.7655463834618697
+          }
+        ],
+        "latency_ms": 33.83326530456543
+      },
+      {
+        "id": "PEN-3",
+        "query": "प्राथमिक स्तर पर टाइप 2 मधुमेह (डायबिटीज) के प्रबंधन के उपाय क्या हैं?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "top_similarity": 0.6327415548143376,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "648c37ab-cc5c-4c70-bdf2-b434f903f5f8",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 842,
+            "content": "management of type 2 diabetes in the primary health care level Module 3.3",
+            "similarity": 0.6327415548143376
+          },
+          {
+            "chunk_id": "9b198f73-69ee-4d72-a1eb-242f81214fe2",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 497,
+            "content": "d as a healthy settings intervention.",
+            "similarity": 0.6277096256847623
+          },
+          {
+            "chunk_id": "53dcb2d6-78ec-4ded-abe7-5332b03dce49",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 909,
+            "content": "285 Management of type 2 diabetes in the primary health care level",
+            "similarity": 0.623506005538537
+          },
+          {
+            "chunk_id": "cc352f7a-d43e-4bd1-822c-62188facefef",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 913,
+            "content": "289 Management of type 2 diabetes in the primary health care level",
+            "similarity": 0.6184311908495591
+          },
+          {
+            "chunk_id": "9de25876-d838-454e-9a04-ecfd7744abe7",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 914,
+            "content": "290 Management of type 2 diabetes in the primary health care level",
+            "similarity": 0.6179298781568958
+          }
+        ],
+        "latency_ms": 53.766727447509766
+      }
+    ],
+    "te": [
+      {
+        "id": "HTN-1",
+        "query": "పెద్దవారిలో హై బీపీ నియంత్రణకు ప్రాథమికంగా ఏ మందులు సూచిస్తారు?",
+        "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+        "top_similarity": 0.5004707723049197,
+        "rank_first_match": null,
+        "results": [
+          {
+            "chunk_id": "bfdf22e3-d73e-4640-88c2-6917fababd0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1735,
+            "content": "____ Mobile number ______________________ Diagnosis _______________ Date of registration: ¯¯-¯¯-¯¯¯¯ Date of initiating treatment: ¯¯-¯¯-¯¯¯¯ Medicines 1. _______________ 2. ______________3. ____________",
+            "similarity": 0.5004707723049197
+          },
+          {
+            "chunk_id": "3eed622f-7fd7-44c4-a27c-9d70c22a919c",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 11,
+            "content": "........................................................................................................................................................................ 29 2.1 Guideline translations ....................................................................................................................................................................... 31 3. Introduction...................................................................................................................",
+            "similarity": 0.47944419157093265
+          },
+          {
+            "chunk_id": "c9c7dd72-75fc-4988-b9ba-207a18d19a7b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1741,
+            "content": "____________________ Died from: ¯ CVD ¯ non-CVD ¯ unknown Date of death:",
+            "similarity": 0.4277161263424676
+          },
+          {
+            "chunk_id": "d03c63f9-95c3-4b2c-9760-a1434b32cb0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1738,
+            "content": "__________________ Patient’s phone no.: ¯¯¯¯¯¯¯¯¯¯¯¯¯ Family/neighbour: Name:____________________ Phone no.: ¯¯¯¯¯¯¯¯¯¯¯¯¯ HYPERTENSION: ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No DIABETES: ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No DIABETES & HYPERTENSION ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No COPD ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No ASTHMA ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No E: Treatment initiated Date treatment started: ¯¯-¯¯-¯¯¯¯",
+            "similarity": 0.4105163136776657
+          },
+          {
+            "chunk_id": "543796cb-3fcc-4907-8093-65ceedf128ef",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 20,
+            "content": "................................................................................................................................................................ 163 5.1 Diagnosing malaria ........................................................................................................................................................................ 163 5.2 Treating malaria ......................................................................................................................",
+            "similarity": 0.4022938598612201
+          }
+        ],
+        "latency_ms": 36.52167320251465
+      },
+      {
+        "id": "HTN-2",
+        "query": "పెద్దవారిలో ఏ రక్తపోటు స్థాయి వద్ద ఔషధ చికిత్స ప్రారంభించాలి?",
+        "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+        "top_similarity": 0.5366289405740784,
+        "rank_first_match": null,
+        "results": [
+          {
+            "chunk_id": "bfdf22e3-d73e-4640-88c2-6917fababd0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1735,
+            "content": "____ Mobile number ______________________ Diagnosis _______________ Date of registration: ¯¯-¯¯-¯¯¯¯ Date of initiating treatment: ¯¯-¯¯-¯¯¯¯ Medicines 1. _______________ 2. ______________3. ____________",
+            "similarity": 0.5366289405740784
+          },
+          {
+            "chunk_id": "3eed622f-7fd7-44c4-a27c-9d70c22a919c",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 11,
+            "content": "........................................................................................................................................................................ 29 2.1 Guideline translations ....................................................................................................................................................................... 31 3. Introduction...................................................................................................................",
+            "similarity": 0.47237269206658794
+          },
+          {
+            "chunk_id": "c9c7dd72-75fc-4988-b9ba-207a18d19a7b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1741,
+            "content": "____________________ Died from: ¯ CVD ¯ non-CVD ¯ unknown Date of death:",
+            "similarity": 0.4547309098896575
+          },
+          {
+            "chunk_id": "d03c63f9-95c3-4b2c-9760-a1434b32cb0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1738,
+            "content": "__________________ Patient’s phone no.: ¯¯¯¯¯¯¯¯¯¯¯¯¯ Family/neighbour: Name:____________________ Phone no.: ¯¯¯¯¯¯¯¯¯¯¯¯¯ HYPERTENSION: ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No DIABETES: ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No DIABETES & HYPERTENSION ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No COPD ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No ASTHMA ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No E: Treatment initiated Date treatment started: ¯¯-¯¯-¯¯¯¯",
+            "similarity": 0.4356295425323149
+          },
+          {
+            "chunk_id": "259f7042-d1a9-4ff6-ba58-343e739df450",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1739,
+            "content": "tment initiated Date treatment started: ¯¯-¯¯-¯¯¯¯ Aspirin: ¯ Yes ¯ No Medication: ________________ Dose ___________ Medication: ________________ Dose ___________ Medication: ________________ Dose ___________ Medication: ________________ Dose ___________ Medication: ________________ Dose ___________ B: CVD risk factors F: Treatment outcomes Current smoker: ¯ Yes ¯ No Current Smokeless tobacco user: ¯ Yes ¯ No Alcohol use: ¯ daily ¯ some days ¯ none Prior heart attack: ¯ Yes ¯ No In last three ye",
+            "similarity": 0.41960626879671514
+          }
+        ],
+        "latency_ms": 43.790578842163086
+      },
+      {
+        "id": "MAL-1",
+        "query": "ఫాల్సిపారమ్ మలేరియా జ్వరానికి సిఫార్సు చేయబడిన చికిత్స ఏమిటి?",
+        "expected_doc": "WHO Guidelines for Malaria",
+        "top_similarity": 0.5571160046972685,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "543796cb-3fcc-4907-8093-65ceedf128ef",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 20,
+            "content": "................................................................................................................................................................ 163 5.1 Diagnosing malaria ........................................................................................................................................................................ 163 5.2 Treating malaria ......................................................................................................................",
+            "similarity": 0.5571160046972685
+          },
+          {
+            "chunk_id": "bfdf22e3-d73e-4640-88c2-6917fababd0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1735,
+            "content": "____ Mobile number ______________________ Diagnosis _______________ Date of registration: ¯¯-¯¯-¯¯¯¯ Date of initiating treatment: ¯¯-¯¯-¯¯¯¯ Medicines 1. _______________ 2. ______________3. ____________",
+            "similarity": 0.5199183635992433
+          },
+          {
+            "chunk_id": "9927b7de-0bf9-4daf-8c7f-f48b2dada3d0",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 22,
+            "content": "...167 5.2.1.1.1 Duration of treatment.......................................................................................................................................172 5.2.1.1.2 Dosing of ACTs................................................................................................................................................173 5.2.1.2 Recurrent falciparum malaria...................................................................................................................",
+            "similarity": 0.4954582877449646
+          },
+          {
+            "chunk_id": "3eed622f-7fd7-44c4-a27c-9d70c22a919c",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 11,
+            "content": "........................................................................................................................................................................ 29 2.1 Guideline translations ....................................................................................................................................................................... 31 3. Introduction...................................................................................................................",
+            "similarity": 0.4784244530733608
+          },
+          {
+            "chunk_id": "f8451b60-f2a7-4f79-9dac-191e9fc1e9c9",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 38,
+            "content": ".......................278 10.3 Recommendation for malaria vaccines.........................................................................................................................................282 10.4 Recommendations for treatment................................................................................................................................................... 285 10.5 Recommendations for interventions in the final phase of elimination and prevention of re-establishmen",
+            "similarity": 0.4701915013579643
+          }
+        ],
+        "latency_ms": 53.106069564819336
+      },
+      {
+        "id": "MAL-2",
+        "query": "తీవ్రమైన మలేరియా అత్యవసర చికిత్సకు సిఫార్సు చేయబడిన ఔషధం ఏమిటి?",
+        "expected_doc": "WHO Guidelines for Malaria",
+        "top_similarity": 0.5488809428202625,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "543796cb-3fcc-4907-8093-65ceedf128ef",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 20,
+            "content": "................................................................................................................................................................ 163 5.1 Diagnosing malaria ........................................................................................................................................................................ 163 5.2 Treating malaria ......................................................................................................................",
+            "similarity": 0.5488809428202625
+          },
+          {
+            "chunk_id": "bfdf22e3-d73e-4640-88c2-6917fababd0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1735,
+            "content": "____ Mobile number ______________________ Diagnosis _______________ Date of registration: ¯¯-¯¯-¯¯¯¯ Date of initiating treatment: ¯¯-¯¯-¯¯¯¯ Medicines 1. _______________ 2. ______________3. ____________",
+            "similarity": 0.5106409870250364
+          },
+          {
+            "chunk_id": "9927b7de-0bf9-4daf-8c7f-f48b2dada3d0",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 22,
+            "content": "...167 5.2.1.1.1 Duration of treatment.......................................................................................................................................172 5.2.1.1.2 Dosing of ACTs................................................................................................................................................173 5.2.1.2 Recurrent falciparum malaria...................................................................................................................",
+            "similarity": 0.48227439467827016
+          },
+          {
+            "chunk_id": "3eed622f-7fd7-44c4-a27c-9d70c22a919c",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 11,
+            "content": "........................................................................................................................................................................ 29 2.1 Guideline translations ....................................................................................................................................................................... 31 3. Introduction...................................................................................................................",
+            "similarity": 0.48036166550251713
+          },
+          {
+            "chunk_id": "579b4c38-2904-4453-acdc-b31ecbdfc6c3",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 21,
+            "content": ".......................................................................................................... 166 5.2.1 Treating uncomplicated malaria ...........................................................................................................................................166 5.2.1.1 Artemisinin-based combination therapy.....................................................................................................................167 5.2.1.1.1 Duration of treatment............",
+            "similarity": 0.45956832764341815
+          }
+        ],
+        "latency_ms": 34.635305404663086
+      },
+      {
+        "id": "TB-1",
+        "query": "పిల్లలలో ఊపిరితిత్తుల క్షయ (టీబీ) వ్యాధి చికిత్స కాల వ్యవధి ఎంత?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "top_similarity": 0.5203037800547752,
+        "rank_first_match": null,
+        "results": [
+          {
+            "chunk_id": "bfdf22e3-d73e-4640-88c2-6917fababd0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1735,
+            "content": "____ Mobile number ______________________ Diagnosis _______________ Date of registration: ¯¯-¯¯-¯¯¯¯ Date of initiating treatment: ¯¯-¯¯-¯¯¯¯ Medicines 1. _______________ 2. ______________3. ____________",
+            "similarity": 0.5203037800547752
+          },
+          {
+            "chunk_id": "3eed622f-7fd7-44c4-a27c-9d70c22a919c",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 11,
+            "content": "........................................................................................................................................................................ 29 2.1 Guideline translations ....................................................................................................................................................................... 31 3. Introduction...................................................................................................................",
+            "similarity": 0.49402205291041756
+          },
+          {
+            "chunk_id": "c9c7dd72-75fc-4988-b9ba-207a18d19a7b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1741,
+            "content": "____________________ Died from: ¯ CVD ¯ non-CVD ¯ unknown Date of death:",
+            "similarity": 0.45637841631200615
+          },
+          {
+            "chunk_id": "d03c63f9-95c3-4b2c-9760-a1434b32cb0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1738,
+            "content": "__________________ Patient’s phone no.: ¯¯¯¯¯¯¯¯¯¯¯¯¯ Family/neighbour: Name:____________________ Phone no.: ¯¯¯¯¯¯¯¯¯¯¯¯¯ HYPERTENSION: ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No DIABETES: ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No DIABETES & HYPERTENSION ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No COPD ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No ASTHMA ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No E: Treatment initiated Date treatment started: ¯¯-¯¯-¯¯¯¯",
+            "similarity": 0.43539608858003087
+          },
+          {
+            "chunk_id": "543796cb-3fcc-4907-8093-65ceedf128ef",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 20,
+            "content": "................................................................................................................................................................ 163 5.1 Diagnosing malaria ........................................................................................................................................................................ 163 5.2 Treating malaria ......................................................................................................................",
+            "similarity": 0.4115233926224018
+          }
+        ],
+        "latency_ms": 34.885406494140625
+      },
+      {
+        "id": "TB-2",
+        "query": "టీబీ మెనింజైటిస్ ఉన్న పిల్లలకు కార్టికోస్టెరాయిడ్స్ మందులు ఇవ్వవచ్చా?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "top_similarity": 0.4853058188165109,
+        "rank_first_match": null,
+        "results": [
+          {
+            "chunk_id": "3eed622f-7fd7-44c4-a27c-9d70c22a919c",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 11,
+            "content": "........................................................................................................................................................................ 29 2.1 Guideline translations ....................................................................................................................................................................... 31 3. Introduction...................................................................................................................",
+            "similarity": 0.4853058188165109
+          },
+          {
+            "chunk_id": "bfdf22e3-d73e-4640-88c2-6917fababd0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1735,
+            "content": "____ Mobile number ______________________ Diagnosis _______________ Date of registration: ¯¯-¯¯-¯¯¯¯ Date of initiating treatment: ¯¯-¯¯-¯¯¯¯ Medicines 1. _______________ 2. ______________3. ____________",
+            "similarity": 0.4814736519575964
+          },
+          {
+            "chunk_id": "c9c7dd72-75fc-4988-b9ba-207a18d19a7b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1741,
+            "content": "____________________ Died from: ¯ CVD ¯ non-CVD ¯ unknown Date of death:",
+            "similarity": 0.40985051387405913
+          },
+          {
+            "chunk_id": "d03c63f9-95c3-4b2c-9760-a1434b32cb0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1738,
+            "content": "__________________ Patient’s phone no.: ¯¯¯¯¯¯¯¯¯¯¯¯¯ Family/neighbour: Name:____________________ Phone no.: ¯¯¯¯¯¯¯¯¯¯¯¯¯ HYPERTENSION: ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No DIABETES: ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No DIABETES & HYPERTENSION ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No COPD ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No ASTHMA ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No E: Treatment initiated Date treatment started: ¯¯-¯¯-¯¯¯¯",
+            "similarity": 0.39403673169952014
+          },
+          {
+            "chunk_id": "543796cb-3fcc-4907-8093-65ceedf128ef",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 20,
+            "content": "................................................................................................................................................................ 163 5.1 Diagnosing malaria ........................................................................................................................................................................ 163 5.2 Treating malaria ......................................................................................................................",
+            "similarity": 0.3905313680110034
+          }
+        ],
+        "latency_ms": 31.531572341918945
+      },
+      {
+        "id": "TB-3",
+        "query": "పిల్లలలో టీబీ నిర్ధారణ కొరకు గ్యాస్ట్రిక్ ఆస్పిరేట్ ఎలా సేకరిస్తారు?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "top_similarity": 0.5322233950213618,
+        "rank_first_match": null,
+        "results": [
+          {
+            "chunk_id": "bfdf22e3-d73e-4640-88c2-6917fababd0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1735,
+            "content": "____ Mobile number ______________________ Diagnosis _______________ Date of registration: ¯¯-¯¯-¯¯¯¯ Date of initiating treatment: ¯¯-¯¯-¯¯¯¯ Medicines 1. _______________ 2. ______________3. ____________",
+            "similarity": 0.5322233950213618
+          },
+          {
+            "chunk_id": "d03c63f9-95c3-4b2c-9760-a1434b32cb0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1738,
+            "content": "__________________ Patient’s phone no.: ¯¯¯¯¯¯¯¯¯¯¯¯¯ Family/neighbour: Name:____________________ Phone no.: ¯¯¯¯¯¯¯¯¯¯¯¯¯ HYPERTENSION: ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No DIABETES: ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No DIABETES & HYPERTENSION ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No COPD ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No ASTHMA ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No E: Treatment initiated Date treatment started: ¯¯-¯¯-¯¯¯¯",
+            "similarity": 0.46322239751848904
+          },
+          {
+            "chunk_id": "3eed622f-7fd7-44c4-a27c-9d70c22a919c",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 11,
+            "content": "........................................................................................................................................................................ 29 2.1 Guideline translations ....................................................................................................................................................................... 31 3. Introduction...................................................................................................................",
+            "similarity": 0.45418272342929433
+          },
+          {
+            "chunk_id": "db8ec2ef-81f1-4705-bfbc-9716e7d7ea12",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1643,
+            "content": "f the data collector: ………………………………………………… E. Designation: …………………………………… F. Signature: ……………………………………………………..………..............G. Date: …………………………………………….. *Pres=prescription ♣ Drinking alcohol to the state of drunk/unable to walk due to intoxication",
+            "similarity": 0.44254847743423853
+          },
+          {
+            "chunk_id": "259f7042-d1a9-4ff6-ba58-343e739df450",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1739,
+            "content": "tment initiated Date treatment started: ¯¯-¯¯-¯¯¯¯ Aspirin: ¯ Yes ¯ No Medication: ________________ Dose ___________ Medication: ________________ Dose ___________ Medication: ________________ Dose ___________ Medication: ________________ Dose ___________ Medication: ________________ Dose ___________ B: CVD risk factors F: Treatment outcomes Current smoker: ¯ Yes ¯ No Current Smokeless tobacco user: ¯ Yes ¯ No Alcohol use: ¯ daily ¯ some days ¯ none Prior heart attack: ¯ Yes ¯ No In last three ye",
+            "similarity": 0.4184420818239485
+          }
+        ],
+        "latency_ms": 35.05587577819824
+      },
+      {
+        "id": "PEN-1",
+        "query": "ప్రాథమిక ఆరోగ్య కేంద్రంలో ఆస్తమా తీవ్రమైనప్పుడు ఏ చికిత్స చేయాలి?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "top_similarity": 0.49495216832978794,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "bfdf22e3-d73e-4640-88c2-6917fababd0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1735,
+            "content": "____ Mobile number ______________________ Diagnosis _______________ Date of registration: ¯¯-¯¯-¯¯¯¯ Date of initiating treatment: ¯¯-¯¯-¯¯¯¯ Medicines 1. _______________ 2. ______________3. ____________",
+            "similarity": 0.49495216832978794
+          },
+          {
+            "chunk_id": "3eed622f-7fd7-44c4-a27c-9d70c22a919c",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 11,
+            "content": "........................................................................................................................................................................ 29 2.1 Guideline translations ....................................................................................................................................................................... 31 3. Introduction...................................................................................................................",
+            "similarity": 0.4706433837038919
+          },
+          {
+            "chunk_id": "c9c7dd72-75fc-4988-b9ba-207a18d19a7b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1741,
+            "content": "____________________ Died from: ¯ CVD ¯ non-CVD ¯ unknown Date of death:",
+            "similarity": 0.41089699014490644
+          },
+          {
+            "chunk_id": "543796cb-3fcc-4907-8093-65ceedf128ef",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 20,
+            "content": "................................................................................................................................................................ 163 5.1 Diagnosing malaria ........................................................................................................................................................................ 163 5.2 Treating malaria ......................................................................................................................",
+            "similarity": 0.39778827137968964
+          },
+          {
+            "chunk_id": "d03c63f9-95c3-4b2c-9760-a1434b32cb0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1738,
+            "content": "__________________ Patient’s phone no.: ¯¯¯¯¯¯¯¯¯¯¯¯¯ Family/neighbour: Name:____________________ Phone no.: ¯¯¯¯¯¯¯¯¯¯¯¯¯ HYPERTENSION: ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No DIABETES: ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No DIABETES & HYPERTENSION ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No COPD ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No ASTHMA ¯ Yes: treatment initiated ¯ Yes: on treatment ¯ No E: Treatment initiated Date treatment started: ¯¯-¯¯-¯¯¯¯",
+            "similarity": 0.38691840153084356
+          }
+        ],
+        "latency_ms": 35.364627838134766
+      },
+      {
+        "id": "PEN-2",
+        "query": "ప్రాథమిక వైద్యంలో గుండె జబ్బుల ముప్పును ఎలా అంచనా వేస్తారు?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "top_similarity": 0.5321320006272328,
+        "rank_first_match": 1,
+        "results": [
+          {
+            "chunk_id": "bfdf22e3-d73e-4640-88c2-6917fababd0b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1735,
+            "content": "____ Mobile number ______________________ Diagnosis _______________ Date of registration: ¯¯-¯¯-¯¯¯¯ Date of initiating treatment: ¯¯-¯¯-¯¯¯¯ Medicines 1. _______________ 2. ______________3. ____________",
+            "similarity": 0.5321320006272328
+          },
+          {
+            "chunk_id": "3eed622f-7fd7-44c4-a27c-9d70c22a919c",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 11,
+            "content": "........................................................................................................................................................................ 29 2.1 Guideline translations ....................................................................................................................................................................... 31 3. Introduction...................................................................................................................",
+            "similarity": 0.46257106491851896
+          },
+          {
+            "chunk_id": "c9c7dd72-75fc-4988-b9ba-207a18d19a7b",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1741,
+            "content": "____________________ Died from: ¯ CVD ¯ non-CVD ¯ unknown Date of death:",
+            "similarity": 0.4329188364697232
+          },
+          {
+            "chunk_id": "543796cb-3fcc-4907-8093-65ceedf128ef",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 20,
+            "content": "................................................................................................................................................................ 163 5.1 Diagnosing malaria ........................................................................................................................................................................ 163 5.2 Treating malaria ......................................................................................................................",
+            "similarity": 0.4322945186688423
+          },
+          {
+            "chunk_id": "f6ab7ded-81c7-4239-b775-20d8019d2364",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 1737,
+            "content": "606 Monitoring systems Patient treatment card A: Patient identification information D: Diagnosis Patient ID number: ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ Full name: Gender: ¯ Male ¯ Female ¯ Other Age: ¯¯ DOB: ¯¯-¯¯-¯¯¯¯ Address: House number/name ______________________ Street name: _____________________________ Area/colony: ______________________________ Village/town: _____________________________ District name _____________________________ Post code: ________________________________ Patient’s phone no.: ¯¯¯¯¯¯¯¯¯¯",
+            "similarity": 0.41261616531926504
+          }
+        ],
+        "latency_ms": 37.95433044433594
+      },
+      {
+        "id": "PEN-3",
+        "query": "ప్రాథమిక ఆరోగ్య కేంద్రంలో టైప్ 2 డయాబెటిస్ నియంత్రణకు ఏ చర్యలు సూచిస్తారు?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "top_similarity": 0.5658308112331413,
+        "rank_first_match": 5,
+        "results": [
+          {
+            "chunk_id": "9eb37ee2-3ced-418d-a217-da0b82a45174",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 9,
+            "content": "rimary, secondary and tertiary level health care system • To improve implementation of the National TB Elimination Programme guide lines by doctors working in peripheral health care and also guide the National Programme to put resources optimally for the management of these conditions Graphic Designers DESIGN TEAMEDITORIAL BOARD ICMR STW TEAM ICMR TB UNIT EXPERT GROUPS COMMITTEES EDITORIAL COMMITTEE",
+            "similarity": 0.5658308112331413
+          },
+          {
+            "chunk_id": "521a9f34-d356-4c47-b5f9-30590c324fbb",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 2290,
+            "content": "cine used as first-line treatment, where possible c) have a superior safety and tolerability profile; d) provide a longer duration of post-treatment prophylaxis with component medicines that have closely matched pharmacology to reduce the risk of new infections encountering only a single drug; e) have a positive public reputation and acceptability and f) be available and low-cost. Programmes in areas with P. falciparum may consider including a single, low-dose of primaquine in TDA programmes in",
+            "similarity": 0.5587565478159229
+          },
+          {
+            "chunk_id": "2bfc6cb9-e667-45c1-8813-d7fa65b2cf3e",
+            "doc_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "chunk_index": 273,
+            "content": "STANDARD TREATMENT WORKFLOWS of India Department of Health Research Ministry of Health and Family Welfare, Government of India PARTNER Central TB Division Ministry of Health and Family Welfare Government of India SPECIAL EDITION ON PAEDIATRIC AND EXTRAPULMONARY TUBERCULOSIS 2022",
+            "similarity": 0.5388708814514181
+          },
+          {
+            "chunk_id": "c9bdc5ac-42da-484e-b54b-38787644e446",
+            "doc_title": "WHO Guidelines for Malaria",
+            "chunk_index": 2483,
+            "content": "the impact of intervention measures and progress in reducing the disease burden and help countries to decide whether adjustments or combinations of interventions are required to further reduce transmission; ◦ detect and respond to epidemics in a timely way; ◦ provide relevant information for certification of elimination; and ◦ monitor whether the re-establishment of transmission has occurred and, if so, guide the response. • Surveillance systems are increasingly supported by digital platforms, i",
+            "similarity": 0.5356803124901628
+          },
+          {
+            "chunk_id": "0d4f02fd-9b6e-4f88-9f5d-f1df4c8ad46f",
+            "doc_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "chunk_index": 26,
+            "content": "gion, where the approach provides real opportunities to prevent and control a growing threat to public health – noncommunicable diseases (NCDs). Following the UN General Assembly’s 2011 declaration to do exactly that, unprecedented Regionwide efforts have been made to implement the PHC approach. In 2016, for example, at the Sixty-ninth session of WHO South- East Asia’s Regional Committee, the Colombo Declaration on Strengthening Health Systems was issued. The Declaration – endorsed and adopted b",
+            "similarity": 0.5307943694242121
+          }
+        ],
+        "latency_ms": 47.68514633178711
+      }
+    ]
+  },
+  "translation_ablation": {
+    "hindi": [
+      {
+        "id": "HTN-1",
+        "orig_query": "वयस्कों में उच्च रक्तचाप (हाई बीपी) के इलाज के लिए प्राथमिक दवाएं कौन सी हैं?",
+        "trans_query": "What are the primary medications for the treatment of high blood pressure in adults?",
+        "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+        "orig_rank": 1,
+        "trans_rank": 1,
+        "orig_sim": 0.7547285914745736,
+        "trans_sim": 0.8600367942835238
+      },
+      {
+        "id": "HTN-2",
+        "orig_query": "वयस्कों में किस रक्तचाप स्तर पर दवाओं द्वारा उपचार शुरू किया जाना चाहिए?",
+        "trans_query": "At what blood pressure level should drug treatment be started in adults?",
+        "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+        "orig_rank": 1,
+        "trans_rank": 1,
+        "orig_sim": 0.7527511845525219,
+        "trans_sim": 0.7894952642469534
+      },
+      {
+        "id": "MAL-1",
+        "orig_query": "फाल्सीपेरम मलेरिया के बुखार के लिए डब्ल्यूएचओ द्वारा अनुशंसित उपचार क्या है?",
+        "trans_query": "What is the WHO recommended treatment for falciparum malaria fever?",
+        "expected_doc": "WHO Guidelines for Malaria",
+        "orig_rank": 1,
+        "trans_rank": 1,
+        "orig_sim": 0.8257553216253963,
+        "trans_sim": 0.790490321128499
+      },
+      {
+        "id": "MAL-2",
+        "orig_query": "गंभीर मलेरिया के प्रारंभिक उपचार के लिए कौन सी दवा की सिफारिश की जाती है?",
+        "trans_query": "Which medicine is recommended for the initial treatment of severe malaria?",
+        "expected_doc": "WHO Guidelines for Malaria",
+        "orig_rank": 1,
+        "trans_rank": 1,
+        "orig_sim": 0.8400467464485064,
+        "trans_sim": 0.8458751507458021
+      },
+      {
+        "id": "TB-1",
+        "orig_query": "बच्चों में फेफड़ों की टीबी का इलाज कितने समय तक चलना चाहिए?",
+        "trans_query": "How long should pulmonary TB treatment last in children?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "orig_rank": 1,
+        "trans_rank": 1,
+        "orig_sim": 0.7509336206879326,
+        "trans_sim": 0.7666372467255931
+      },
+      {
+        "id": "TB-2",
+        "orig_query": "क्या टीबी मेनिनजाइटिस से पीड़ित बच्चों को कॉर्टिकोस्टेरॉइड्स दवा दी जानी चाहिए?",
+        "trans_query": "Should children suffering from TB meningitis be given corticosteroid medicines?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "orig_rank": 1,
+        "trans_rank": 1,
+        "orig_sim": 0.6903609747453319,
+        "trans_sim": 0.6688128335979903
+      },
+      {
+        "id": "TB-3",
+        "orig_query": "बच्चों में टीबी के निदान के लिए गैस्ट्रिक एस्पिरेट कैसे एकत्र किया जाता है?",
+        "trans_query": "How is gastric aspirate collected for diagnosis of TB in children?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "orig_rank": 1,
+        "trans_rank": 1,
+        "orig_sim": 0.6015922621179435,
+        "trans_sim": 0.6241026441405297
+      },
+      {
+        "id": "PEN-1",
+        "orig_query": "प्राथमिक स्वास्थ्य केंद्र में अस्थमा के तीव्र दौरे का उपचार कैसे किया जाता है?",
+        "trans_query": "How is an acute asthma attack treated in a primary health center?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "orig_rank": 1,
+        "trans_rank": 1,
+        "orig_sim": 0.7338446831486855,
+        "trans_sim": 0.6819274580943657
+      },
+      {
+        "id": "PEN-2",
+        "orig_query": "प्राथमिक स्वास्थ्य देखभाल में हृदय रोग जोखिम का आकलन कैसे किया जाता है?",
+        "trans_query": "How is cardiovascular risk assessed in primary healthcare?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "orig_rank": 1,
+        "trans_rank": 1,
+        "orig_sim": 0.7871989203069406,
+        "trans_sim": 0.7971622093462997
+      },
+      {
+        "id": "PEN-3",
+        "orig_query": "प्राथमिक स्तर पर टाइप 2 मधुमेह (डायबिटीज) के प्रबंधन के उपाय क्या हैं?",
+        "trans_query": "What are the measures for management of type 2 diabetes at the primary level?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "orig_rank": 1,
+        "trans_rank": 1,
+        "orig_sim": 0.6327415548143376,
+        "trans_sim": 0.9062409310065904
+      }
+    ],
+    "telugu": [
+      {
+        "id": "HTN-1",
+        "orig_query": "పెద్దవారిలో హై బీపీ నియంత్రణకు ప్రాథమికంగా ఏ మందులు సూచిస్తారు?",
+        "trans_query": "Which medications are primarily prescribed to control high BP in adults?",
+        "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+        "orig_rank": null,
+        "trans_rank": 2,
+        "orig_sim": 0.5004707723049197,
+        "trans_sim": 0.6881294457416813
+      },
+      {
+        "id": "HTN-2",
+        "orig_query": "పెద్దవారిలో ఏ రక్తపోటు స్థాయి వద్ద ఔషధ చికిత్స ప్రారంభించాలి?",
+        "trans_query": "At what blood pressure level should drug treatment be started in adults?",
+        "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+        "orig_rank": null,
+        "trans_rank": 1,
+        "orig_sim": 0.5366289405740784,
+        "trans_sim": 0.7894952642469534
+      },
+      {
+        "id": "MAL-1",
+        "orig_query": "ఫాల్సిపారమ్ మలేరియా జ్వరానికి సిఫార్సు చేయబడిన చికిత్స ఏమిటి?",
+        "trans_query": "What is the recommended treatment for falciparum malaria fever?",
+        "expected_doc": "WHO Guidelines for Malaria",
+        "orig_rank": 1,
+        "trans_rank": 1,
+        "orig_sim": 0.5571160046972685,
+        "trans_sim": 0.7749670877724905
+      },
+      {
+        "id": "MAL-2",
+        "orig_query": "తీవ్రమైన మలేరియా అత్యవసర చికిత్సకు సిఫార్సు చేయబడిన ఔషధం ఏమిటి?",
+        "trans_query": "What is the recommended medicine for emergency treatment of severe malaria?",
+        "expected_doc": "WHO Guidelines for Malaria",
+        "orig_rank": 1,
+        "trans_rank": 1,
+        "orig_sim": 0.5488809428202625,
+        "trans_sim": 0.8117079256787881
+      },
+      {
+        "id": "TB-1",
+        "orig_query": "పిల్లలలో ఊపిరితిత్తుల క్షయ (టీబీ) వ్యాధి చికిత్స కాల వ్యవధి ఎంత?",
+        "trans_query": "What is the duration of treatment for pulmonary tuberculosis (TB) in children?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "orig_rank": null,
+        "trans_rank": 1,
+        "orig_sim": 0.5203037800547752,
+        "trans_sim": 0.7675522819109883
+      },
+      {
+        "id": "TB-2",
+        "orig_query": "టీబీ మెనింజైటిస్ ఉన్న పిల్లలకు కార్టికోస్టెరాయిడ్స్ మందులు ఇవ్వవచ్చా?",
+        "trans_query": "Can corticosteroid medicines be given to children with TB meningitis?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "orig_rank": null,
+        "trans_rank": 1,
+        "orig_sim": 0.4853058188165109,
+        "trans_sim": 0.6580038254061198
+      },
+      {
+        "id": "TB-3",
+        "orig_query": "పిల్లలలో టీబీ నిర్ధారణ కొరకు గ్యాస్ట్రిక్ ఆస్పిరేట్ ఎలా సేకరిస్తారు?",
+        "trans_query": "How is gastric aspirate collected for diagnosis of TB in children?",
+        "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "orig_rank": null,
+        "trans_rank": 1,
+        "orig_sim": 0.5322233950213618,
+        "trans_sim": 0.6241026441405297
+      },
+      {
+        "id": "PEN-1",
+        "orig_query": "ప్రాథమిక ఆరోగ్య కేంద్రంలో ఆస్తమా తీవ్రమైనప్పుడు ఏ చికిత్స చేయాలి?",
+        "trans_query": "What treatment should be given when asthma becomes severe at a primary health center?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "orig_rank": 1,
+        "trans_rank": 1,
+        "orig_sim": 0.49495216832978794,
+        "trans_sim": 0.6804861697471516
+      },
+      {
+        "id": "PEN-2",
+        "orig_query": "ప్రాథమిక వైద్యంలో గుండె జబ్బుల ముప్పును ఎలా అంచనా వేస్తారు?",
+        "trans_query": "How is heart disease risk assessed in primary healthcare?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "orig_rank": 1,
+        "trans_rank": 1,
+        "orig_sim": 0.5321320006272328,
+        "trans_sim": 0.7918174592648037
+      },
+      {
+        "id": "PEN-3",
+        "orig_query": "ప్రాథమిక ఆరోగ్య కేంద్రంలో టైప్ 2 డయాబెటిస్ నియంత్రణకు ఏ చర్యలు సూచిస్తారు?",
+        "trans_query": "What measures are recommended to control type 2 diabetes at a primary health center?",
+        "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "orig_rank": 5,
+        "trans_rank": 1,
+        "orig_sim": 0.5658308112331413,
+        "trans_sim": 0.8872514759562733
+      }
+    ]
+  },
+  "failures": [
+    {
+      "lang": "Telugu",
+      "id": "HTN-1",
+      "query": "పెద్దవారిలో హై బీపీ నియంత్రణకు ప్రాథమికంగా ఏ మందులు సూచిస్తారు?",
+      "expected": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+      "top_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "rank": null,
+      "top_sim": 0.5004707723049197,
+      "classification": "B. Correct topic, secondary document (Topic overlap between WHO PEN & Specific Guideline)"
+    },
+    {
+      "lang": "Telugu",
+      "id": "HTN-2",
+      "query": "పెద్దవారిలో ఏ రక్తపోటు స్థాయి వద్ద ఔషధ చికిత్స ప్రారంభించాలి?",
+      "expected": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+      "top_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "rank": null,
+      "top_sim": 0.5366289405740784,
+      "classification": "B. Correct topic, secondary document (Topic overlap between WHO PEN & Specific Guideline)"
+    },
+    {
+      "lang": "Telugu",
+      "id": "TB-1",
+      "query": "పిల్లలలో ఊపిరితిత్తుల క్షయ (టీబీ) వ్యాధి చికిత్స కాల వ్యవధి ఎంత?",
+      "expected": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "top_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "rank": null,
+      "top_sim": 0.5203037800547752,
+      "classification": "E. Cross-lingual representation gap (Multilingual vector alignment drift)"
+    },
+    {
+      "lang": "Telugu",
+      "id": "TB-2",
+      "query": "టీబీ మెనింజైటిస్ ఉన్న పిల్లలకు కార్టికోస్టెరాయిడ్స్ మందులు ఇవ్వవచ్చా?",
+      "expected": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "top_doc": "WHO Guidelines for Malaria",
+      "rank": null,
+      "top_sim": 0.4853058188165109,
+      "classification": "E. Cross-lingual representation gap (Multilingual vector alignment drift)"
+    },
+    {
+      "lang": "Telugu",
+      "id": "TB-3",
+      "query": "పిల్లలలో టీబీ నిర్ధారణ కొరకు గ్యాస్ట్రిక్ ఆస్పిరేట్ ఎలా సేకరిస్తారు?",
+      "expected": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "top_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "rank": null,
+      "top_sim": 0.5322233950213618,
+      "classification": "E. Cross-lingual representation gap (Multilingual vector alignment drift)"
+    },
+    {
+      "lang": "Telugu",
+      "id": "PEN-3",
+      "query": "ప్రాథమిక ఆరోగ్య కేంద్రంలో టైప్ 2 డయాబెటిస్ నియంత్రణకు ఏ చర్యలు సూచిస్తారు?",
+      "expected": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "top_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "rank": 5,
+      "top_sim": 0.5658308112331413,
+      "classification": "A. Correct source in top-k, but rank > 1"
+    }
+  ],
+  "qwen_evaluations": [
+    {
+      "language": "en",
+      "query": "What are the first-line pharmacological treatments for hypertension in adults?",
+      "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+      "retrieved_top_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+      "generation_time_s": 20.37,
+      "response": "{\n  \"answer\": \"The first-line pharmacological treatments for hypertension in adults include: 1) ACE inhibitors (e.g., lisinopril), 2) Angiotensin II receptor blockers (ARBs) (e.g., losartan), 3) Calcium channel blockers (CCBs) (e.g., amlodipine), and 4) Thiazide diuretics (e.g., hydrochlorothiazide). Specific choice depends on patient factors such as comorbidities, race, and renal function.\",\n  \"safety_disclaimer\": \"This information is for general educational purposes only and does not constitute medical advice. Always consult a healthcare provider for personalized treatment decisions. The listed medications may require individualized adjustments based on patient-specific factors such as comorbidities, renal function, and drug interactions. Self-medication is unsafe and may lead to adverse effects.\",\n  \"citations\": [\n    \"Guideline for the Pharmacological Treatment of Hypertension in Adults (Source 1)\",\n    \"Guideline for the Pharmacological Treatment of Hypertension in Adults (Source 2)\"\n  ]\n}"
+    },
+    {
+      "language": "hi",
+      "query": "फाल्सीपेरम मलेरिया के बुखार के लिए डब्ल्यूएचओ द्वारा अनुशंसित उपचार क्या है?",
+      "expected_doc": "WHO Guidelines for Malaria",
+      "retrieved_top_doc": "WHO Guidelines for Malaria",
+      "generation_time_s": 15.86,
+      "response": "{\n  \"answer\": \"WHO guidelines for malaria recommend that for fever in suspected malaria cases, the treatment should be based on the patient's weight and provide effective concentrations of antimalarial drugs to ensure rapid clinical and parasitological cure while minimizing transmission. The specific antimalarial drugs and dosages should be determined according to the patient's weight as per the WHO Malaria Case Management guidelines.\",\n  \"safety_disclaimer\": \"This information is for general knowledge only and not a substitute for professional medical advice. Always consult a healthcare provider for diagnosis and treatment. Self-treatment with antimalarials without proper medical guidance may lead to adverse effects or treatment failure.\",\n  \"citations\": [\n    \"WHO Guidelines for Malaria (2025) - Section on Malaria Case Management: operations manual\"\n  ]\n}"
+    },
+    {
+      "language": "te",
+      "query": "పెద్దవారిలో హై బీపీ నియంత్రణకు ప్రాథమికంగా ఏ మందులు సూచిస్తారు?",
+      "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+      "retrieved_top_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "generation_time_s": 23.94,
+      "response": "{\n  \"task\": \"Answer the patient query in Telugu (as per the query language) based on the verified medical context provided in TE (Telugu) format. The answer must strictly follow the verified medical context without adding external knowledge. Never prescribe independent medications or claim definitive diagnosis. Return JSON with keys: answer, safety_disclaimer, citations.\",\n  \"verified_medical_context\": [\n    {\n      \"source\": \"Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care\",\n      \"excerpt\": \"____ Mobile number ______________________ Diagnosis _______________ Date of registration: ¯¯-¯¯-¯¯¯¯ Date of initiating treatment: ¯¯-¯¯-¯¯¯¯ Medicines 1. _______________ 2. ______________3. ____________\"\n    },\n    {\n      \"description\": \"WHO Guidelines for Malaria\",\n      \"excerpt\": \"........................................................................................................................................................................ 29 2.1 Guideline translations ....................................................................................................................................................................... 31 3. Introduction...............\"\n    }\n  ]"
+    }
+  ],
+  "triage_verification": [
+    {
+      "tag": "EN-Emergency",
+      "input": "I have chest pain and shortness of breath",
+      "expected_level": "EMERGENCY",
+      "actual_level": "EMERGENCY",
+      "red_flags": [
+        "Emergency indicator: 'chest pain' detected",
+        "Emergency indicator: 'shortness of breath' detected"
+      ],
+      "action": "CRITICAL: Immediate medical emergency evaluation required. Please seek immediate emergency medical care or call local emergency services.",
+      "latency_us": 16.7,
+      "isolated_from_llm": true
+    },
+    {
+      "tag": "HI-Emergency",
+      "input": "मेरे सीने में दर्द हो रहा है और सांस लेने में तकलीफ है",
+      "expected_level": "EMERGENCY",
+      "actual_level": "EMERGENCY",
+      "red_flags": [
+        "Emergency indicator: 'सीने में दर्द' detected",
+        "Emergency indicator: 'सांस लेने में तकलीफ' detected"
+      ],
+      "action": "CRITICAL: Immediate medical emergency evaluation required. Please seek immediate emergency medical care or call local emergency services.",
+      "latency_us": 2233.9,
+      "isolated_from_llm": true
+    },
+    {
+      "tag": "TE-Emergency",
+      "input": "నాకు ఛాతి నొప్పి మరియు శ్వాస తీసుకోవడం కష్టం గా ఉంది",
+      "expected_level": "EMERGENCY",
+      "actual_level": "EMERGENCY",
+      "red_flags": [
+        "Emergency indicator: 'ఛాతి నొప్పి' detected",
+        "Emergency indicator: 'శ్వాస తీసుకోవడం కష్టం' detected"
+      ],
+      "action": "CRITICAL: Immediate medical emergency evaluation required. Please seek immediate emergency medical care or call local emergency services.",
+      "latency_us": 23.6,
+      "isolated_from_llm": true
+    },
+    {
+      "tag": "EN-Routine",
+      "input": "I have mild sore throat and slight cough for 1 day",
+      "expected_level": "ROUTINE",
+      "actual_level": "ROUTINE",
+      "red_flags": [],
+      "action": "ROUTINE: Your reported symptoms do not match emergency red-flag criteria. Maintain hydration, rest, and monitor your symptoms. Consult a healthcare worker if symptoms persist or worsen.",
+      "latency_us": 9.2,
+      "isolated_from_llm": true
+    }
+  ],
+  "latency_profile": {
+    "en": {
+      "embedding_ms": 3311.32,
+      "qwen_gen_s": 20.37
+    },
+    "hi": {
+      "embedding_ms": 36.34,
+      "qwen_gen_s": 15.86
+    },
+    "te": {
+      "embedding_ms": 36.52,
+      "qwen_gen_s": 23.94
+    }
+  }
+}

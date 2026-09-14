@@ -1,0 +1,331 @@
+{
+  "benchmark_timestamp": "2026-09-14 17:25:47",
+  "overall_metrics": {
+    "total_queries": 21,
+    "recall_1": 100.0,
+    "recall_3": 100.0,
+    "recall_5": 100.0,
+    "mrr": 1.0,
+    "mean_top_similarity": 0.7259,
+    "mean_latency_ms": 173.85,
+    "translation_invocations": 21
+  },
+  "category_metrics": {
+    "Disease Information": {
+      "count": 2,
+      "recall_1": 100.0,
+      "mrr": 1.0,
+      "mean_sim": 0.7425
+    },
+    "Symptoms": {
+      "count": 2,
+      "recall_1": 100.0,
+      "mrr": 1.0,
+      "mean_sim": 0.7413
+    },
+    "Treatment / General Management": {
+      "count": 3,
+      "recall_1": 100.0,
+      "mrr": 1.0,
+      "mean_sim": 0.8037
+    },
+    "Duration": {
+      "count": 2,
+      "recall_1": 100.0,
+      "mrr": 1.0,
+      "mean_sim": 0.7825
+    },
+    "Risk Factors": {
+      "count": 2,
+      "recall_1": 100.0,
+      "mrr": 1.0,
+      "mean_sim": 0.6834
+    },
+    "Prevention": {
+      "count": 2,
+      "recall_1": 100.0,
+      "mrr": 1.0,
+      "mean_sim": 0.8143
+    },
+    "Emergency-Related Wording": {
+      "count": 2,
+      "recall_1": 100.0,
+      "mrr": 1.0,
+      "mean_sim": 0.7091
+    },
+    "Colloquial / Rural Phrasing": {
+      "count": 3,
+      "recall_1": 100.0,
+      "mrr": 1.0,
+      "mean_sim": 0.616
+    },
+    "Telugu-English Mixed": {
+      "count": 3,
+      "recall_1": 100.0,
+      "mrr": 1.0,
+      "mean_sim": 0.6795
+    }
+  },
+  "query_records": [
+    {
+      "id": "TE-INFO-1",
+      "category": "Disease Information",
+      "query": "ఫాల్సిపారమ్ మలేరియా ఎలా వ్యాపిస్తుంది మరియు దాని తీవ్రత ఏమిటి?",
+      "expected_doc": "WHO Guidelines for Malaria",
+      "rank": 1,
+      "top_similarity": 0.7682,
+      "top_title": "WHO Guidelines for Malaria",
+      "latency_ms": 2038.68,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-INFO-2",
+      "category": "Disease Information",
+      "query": "చిన్నపిల్లలలో ప్రాథమిక పల్మనరీ క్షయవ్యాధి ఎలా నిర్ధారిస్తారు?",
+      "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "rank": 1,
+      "top_similarity": 0.7167,
+      "top_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "latency_ms": 87.52,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-SYMP-1",
+      "category": "Symptoms",
+      "query": "తీవ్రమైన మలేరియా జ్వరంలో కనిపించే ముఖ్య లక్షణాలు ఏమిటి?",
+      "expected_doc": "WHO Guidelines for Malaria",
+      "rank": 1,
+      "top_similarity": 0.7788,
+      "top_title": "WHO Guidelines for Malaria",
+      "latency_ms": 75.5,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-SYMP-2",
+      "category": "Symptoms",
+      "query": "ఆస్తమా అటాక్ వచ్చినప్పుడు రోగిలో ఎలాంటి శ్వాస ఇబ్బందులు ఉంటాయి?",
+      "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "rank": 1,
+      "top_similarity": 0.7038,
+      "top_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "latency_ms": 90.39,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-TREAT-1",
+      "category": "Treatment / General Management",
+      "query": "పెద్దవారిలో హైపర్ టెన్షన్ చికిత్సకు మొదట ఇచ్చే మొదటి శ్రేణి మందులు ఏవి?",
+      "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+      "rank": 1,
+      "top_similarity": 0.8451,
+      "top_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+      "latency_ms": 87.53,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-TREAT-2",
+      "category": "Treatment / General Management",
+      "query": "గర్భిణీ స్త్రీలలో మొదటి త్రైమాసికంలో మలేరియా చికిత్సకు ఏ మందులు ఇవ్వకూడదు?",
+      "expected_doc": "WHO Guidelines for Malaria",
+      "rank": 1,
+      "top_similarity": 0.8676,
+      "top_title": "WHO Guidelines for Malaria",
+      "latency_ms": 77.51,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-TREAT-3",
+      "category": "Treatment / General Management",
+      "query": "టీబీ మెనింజైటిస్ సోకిన పిల్లలకు కార్టికోస్టెరాయిడ్స్ ఎన్ని వారాలు ఇవ్వాలి?",
+      "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "rank": 1,
+      "top_similarity": 0.6985,
+      "top_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "latency_ms": 87.08,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-DUR-1",
+      "category": "Duration",
+      "query": "పిల్లలలో పల్మనరీ టీబీ చికిత్స ఎన్ని నెలలు కొనసాగించాలి?",
+      "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "rank": 1,
+      "top_similarity": 0.7551,
+      "top_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "latency_ms": 84.73,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-DUR-2",
+      "category": "Duration",
+      "query": "సాధారణ మలేరియాకు ఆర్టెమిసినిన్ కాంబినేషన్ థెరపీ ఎన్ని రోజులు వాడాలి?",
+      "expected_doc": "WHO Guidelines for Malaria",
+      "rank": 1,
+      "top_similarity": 0.8099,
+      "top_title": "WHO Guidelines for Malaria",
+      "latency_ms": 85.91,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-RISK-1",
+      "category": "Risk Factors",
+      "query": "ప్రాథమిక ఆరోగ్య కేంద్రంలో గుండె జబ్బుల ముప్పు అంచనాకు ఏ రిస్క్ చార్టులు వాడతారు?",
+      "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "rank": 1,
+      "top_similarity": 0.7507,
+      "top_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "latency_ms": 89.49,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-RISK-2",
+      "category": "Risk Factors",
+      "query": "రక్తపోటు పెరగడానికి దారితీసే జీవనశైలి మరియు ఆహారపు అలవాట్లు ఏవి?",
+      "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+      "rank": 1,
+      "top_similarity": 0.616,
+      "top_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+      "latency_ms": 75.41,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-PREV-1",
+      "category": "Prevention",
+      "query": "మలేరియా నివారణకు దోమతెరలు మరియు కీటకనాశని స్ప్రేల పాత్ర ఏమిటి?",
+      "expected_doc": "WHO Guidelines for Malaria",
+      "rank": 1,
+      "top_similarity": 0.8259,
+      "top_title": "WHO Guidelines for Malaria",
+      "latency_ms": 87.28,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-PREV-2",
+      "category": "Prevention",
+      "query": "టైప్ 2 డయాబెటిస్ రాకుండా ప్రాథమిక స్థాయిలో ఎలాంటి జాగ్రత్తలు తీసుకోవాలి?",
+      "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "rank": 1,
+      "top_similarity": 0.8028,
+      "top_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "latency_ms": 86.62,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-EMERG-1",
+      "category": "Emergency-Related Wording",
+      "query": "తీవ్రమైన మలేరియా వల్ల రోగి అపస్మారక స్థితికి వెళ్తే ప్రాథమికంగా ఏ ఇంజెక్షన్ ఇవ్వాలి?",
+      "expected_doc": "WHO Guidelines for Malaria",
+      "rank": 1,
+      "top_similarity": 0.7691,
+      "top_title": "WHO Guidelines for Malaria",
+      "latency_ms": 87.54,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-EMERG-2",
+      "category": "Emergency-Related Wording",
+      "query": "తీవ్రమైన ఆస్తమా ఎటాక్ వచ్చినప్పుడు నెబ్యులైజేషన్ లేదా సాల్బుటమాల్ ఎలా ఇవ్వాలి?",
+      "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "rank": 1,
+      "top_similarity": 0.6491,
+      "top_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "latency_ms": 90.99,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-COLL-1",
+      "category": "Colloquial / Rural Phrasing",
+      "query": "నాకు బీపీ బాగా పెరిగింది, తల తిరుగుతోంది, డాక్టర్ దగ్గరికి వెళ్లేలోపు ఏం చేయాలి?",
+      "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+      "rank": 1,
+      "top_similarity": 0.5433,
+      "top_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+      "latency_ms": 74.77,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-COLL-2",
+      "category": "Colloquial / Rural Phrasing",
+      "query": "చలిజ్వరం వణికిస్తోంది, కీళ్ల నొప్పులు ఉన్నాయి, ఇది మలేరియా కావచ్చా?",
+      "expected_doc": "WHO Guidelines for Malaria",
+      "rank": 1,
+      "top_similarity": 0.671,
+      "top_title": "WHO Guidelines for Malaria",
+      "latency_ms": 89.47,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-COLL-3",
+      "category": "Colloquial / Rural Phrasing",
+      "query": "పిల్లాడికి నెల రోజులుగా దగ్గు తగ్గట్లేదు, బరువు తగ్గిపోతున్నాడు, టీబీ పరీక్ష చేయించాలా?",
+      "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "rank": 1,
+      "top_similarity": 0.6336,
+      "top_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "latency_ms": 87.42,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-MIX-1",
+      "category": "Telugu-English Mixed",
+      "query": "Adults లో high blood pressure ని initiate చేయడానికి threshold level ఎంత?",
+      "expected_doc": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+      "rank": 1,
+      "top_similarity": 0.6725,
+      "top_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+      "latency_ms": 43.02,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-MIX-2",
+      "category": "Telugu-English Mixed",
+      "query": "Primary health center లో severe asthma attack కి salbutamol inhaler dose ఎంత?",
+      "expected_doc": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "rank": 1,
+      "top_similarity": 0.7462,
+      "top_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "latency_ms": 37.71,
+      "num_chunks": 5
+    },
+    {
+      "id": "TE-MIX-3",
+      "category": "Telugu-English Mixed",
+      "query": "Paediatric TB లో diagnosis కోసం gastric aspirate sample ఎలా collect చేస్తారు?",
+      "expected_doc": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "rank": 1,
+      "top_similarity": 0.6197,
+      "top_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "latency_ms": 86.23,
+      "num_chunks": 5
+    }
+  ],
+  "emergency_validation": [
+    {
+      "id": "EM-TE-1",
+      "language": "te",
+      "query": "తీవ్రమైన ఛాతి నొప్పి మరియు ఊపిరి అందడం లేదు",
+      "risk_level": "EMERGENCY",
+      "escalation_required": true,
+      "latency_us": 13.6,
+      "passed": true
+    },
+    {
+      "id": "EM-HI-1",
+      "language": "hi",
+      "query": "सीने में तेज दर्द है और सांस लेने में तकलीफ हो रही है",
+      "risk_level": "EMERGENCY",
+      "escalation_required": true,
+      "latency_us": 6.0,
+      "passed": true
+    },
+    {
+      "id": "EM-EN-1",
+      "language": "en",
+      "query": "Patient is unconscious and experiencing severe chest pain",
+      "risk_level": "EMERGENCY",
+      "escalation_required": true,
+      "latency_us": 2.8,
+      "passed": true
+    }
+  ]
+}

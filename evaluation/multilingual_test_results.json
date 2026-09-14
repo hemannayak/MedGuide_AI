@@ -1,0 +1,932 @@
+[
+  {
+    "id": "EN-1",
+    "language": "en",
+    "query": "What are the first-line pharmacological treatments for hypertension in adults?",
+    "expected_document": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+    "retrieval_latency_ms": 4707.75,
+    "hit_at_1": false,
+    "hit_at_3": false,
+    "hit_at_5": false,
+    "reciprocal_rank": 0.0,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "34c6a41b-3e70-4824-b23a-ab163ff55ef2",
+        "document_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "similarity_score": 0.1281,
+        "content_preview": "• In children multiple or consecutive bones are involved, compared to a single bone in adults • May present without pyrexia or signs of inﬂammation • Insidious onset joint pain, swelling • Monoarticul",
+        "is_match": false
+      },
+      {
+        "rank": 2,
+        "chunk_id": "1607e8a4-3595-4ecc-8510-ad7e4d5163d4",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1225,
+        "content_preview": "East Asia (India, Myanmar, Thailand [two studies]) and one in the Eastern Mediterranean (Pakistan). Pyrethroid-only nets or curtains versus untreated nets or curtains: Pyrethroid-only nets or curtains",
+        "is_match": false
+      },
+      {
+        "rank": 3,
+        "chunk_id": "40e585d0-6404-4b67-ac52-b7946420f170",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1191,
+        "content_preview": "roid-only nets or curtains probably reduce all‐cause child mortality compared to untreated nets or curtains. P. falciparum uncomplicated episodes Relative risk 0.58 (CI 95% 0.43 — 0.79) Based on data ",
+        "is_match": false
+      },
+      {
+        "rank": 4,
+        "chunk_id": "37f8e7b4-ace4-4a8e-89ef-dbd0ed7cea9c",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1115,
+        "content_preview": "], Colombia, Ecuador, Nicaragua and Peru [two studies]), four in South-East Asia (India, Myanmar, Thailand [two studies]) and one in the Eastern Mediterranean (Pakistan). Pyrethroid-only nets or curta",
+        "is_match": false
+      },
+      {
+        "rank": 5,
+        "chunk_id": "57f6c75b-2624-4c8e-987b-15abadc4ae39",
+        "document_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "similarity_score": 0.1095,
+        "content_preview": "G joints for joint effusion and diagnostic aspiration • Chest X-ray, ESR, blood sugar, HIV • Radiological ﬁndings s/o osteoarticular TB and/or TB at additional site- can be labeled as clinically diagn",
+        "is_match": false
+      }
+    ],
+    "standalone_generation_sec": 38.39,
+    "standalone_response": "",
+    "rag_generation_sec": 41.77,
+    "rag_context_passed": [
+      "• In children multiple or consecutive bones are involved, compared to a single bone in adults • May present without pyrexia or signs of inﬂammation • Insidious onset joint pain, swelling • Monoarticul",
+      "East Asia (India, Myanmar, Thailand [two studies]) and one in the Eastern Mediterranean (Pakistan). Pyrethroid-only nets or curtains versus untreated nets or curtains: Pyrethroid-only nets or curtains",
+      "roid-only nets or curtains probably reduce all‐cause child mortality compared to untreated nets or curtains. P. falciparum uncomplicated episodes Relative risk 0.58 (CI 95% 0.43 — 0.79) Based on data "
+    ],
+    "rag_response": ""
+  },
+  {
+    "id": "EN-2",
+    "language": "en",
+    "query": "What is the recommended treatment for uncomplicated P. falciparum malaria?",
+    "expected_document": "WHO Guidelines for Malaria",
+    "retrieval_latency_ms": 147.35,
+    "hit_at_1": true,
+    "hit_at_3": true,
+    "hit_at_5": true,
+    "reciprocal_rank": 1.0,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "d8788c14-d163-45a1-b3f5-3f95ac09e43d",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1596,
+        "content_preview": "munity case management should be integrated into community management of childhood illnesses, which ensures coverage of priority childhood illnesses outside of health facilities. Health education From",
+        "is_match": true
+      },
+      {
+        "rank": 2,
+        "chunk_id": "38c4c57b-b906-469a-a8f5-448bd86928e5",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1482,
+        "content_preview": "carriage. It also decreases the risk of diseases related to second-hand smoke in children, such as asthma and middle-ear disease. Other benefits to quitting smoking are being better able to taste food",
+        "is_match": false
+      },
+      {
+        "rank": 3,
+        "chunk_id": "bd4b982e-54dc-4311-be66-4027fadadcbb",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1131,
+        "content_preview": "no difference in incidence of clinical malaria (mean difference: 0.1 per 1000 p-y; 95% CI: -0.38 to 0.59 per 1000 p-y; one cRCT [non-inferiority design]; moderate-certainty evidence). Adverse events •",
+        "is_match": true
+      },
+      {
+        "rank": 4,
+        "chunk_id": "74821c0c-ce86-459c-aae9-e3399a1c9861",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1058,
+        "content_preview": "◦ Among children who received a combination of RTS,S/AS01 seasonal vaccination and SMC, there was a substantially greater reduction in clinical malaria (72%; 95% CI: 64–78), compared to SMC alone, dur",
+        "is_match": true
+      },
+      {
+        "rank": 5,
+        "chunk_id": "a103f86e-2670-44f9-8c51-43b27e6f50d2",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1053,
+        "content_preview": "erior in reducing hospitalization with severe malaria. The combination of RTS,S/AS01 and SMC is probably better than SMC alone in reducing all-cause mortality and clinical malaria, and may reduce the ",
+        "is_match": true
+      }
+    ],
+    "standalone_generation_sec": 0.0,
+    "standalone_response": "(Skipped for latency)",
+    "rag_generation_sec": 0.0,
+    "rag_context_passed": [
+      "munity case management should be integrated into community management of childhood illnesses, which ensures coverage of priority childhood illnesses outside of health facilities. Health education From",
+      "carriage. It also decreases the risk of diseases related to second-hand smoke in children, such as asthma and middle-ear disease. Other benefits to quitting smoking are being better able to taste food",
+      "no difference in incidence of clinical malaria (mean difference: 0.1 per 1000 p-y; 95% CI: -0.38 to 0.59 per 1000 p-y; one cRCT [non-inferiority design]; moderate-certainty evidence). Adverse events •"
+    ],
+    "rag_response": "(Skipped for latency)"
+  },
+  {
+    "id": "EN-3",
+    "language": "en",
+    "query": "What is the treatment duration for paediatric pulmonary tuberculosis?",
+    "expected_document": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+    "retrieval_latency_ms": 82.09,
+    "hit_at_1": true,
+    "hit_at_3": true,
+    "hit_at_5": true,
+    "reciprocal_rank": 1.0,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "7a0e7d22-4a37-4e55-b61a-fe5da206700e",
+        "document_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "similarity_score": 0.1711,
+        "content_preview": "Programme TB: Tuberculosis CXR normal, ECG: ST elevation CXR & ECG Normal ECHO ± CT thorax Pericardial effusion Constrictive physiology + pericardial thickness >4 mm Pericardiocentesis Pericardial ﬂui",
+        "is_match": true
+      },
+      {
+        "rank": 2,
+        "chunk_id": "b7af70ee-a6f0-4f48-a756-cd80f9de5648",
+        "document_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "similarity_score": 0.1684,
+        "content_preview": "alternative causes of effusio-constrictive pericarditis: viral infections, systemic lupus erythematosus, primary effusion lymphomas or pericardial malignancies • Non response of cardiac symptoms to an",
+        "is_match": true
+      },
+      {
+        "rank": 3,
+        "chunk_id": "5059ba63-91fc-4afd-8311-2dd2a7aa78b5",
+        "document_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "similarity_score": 0.1671,
+        "content_preview": "Standard Treatment Workﬂow (STW) for the Management of ADULT PERICARDIAL TUBERCULOSIS ICD-10-A18.84 Constrictive pericarditis: Clinical signs for recognition include • Kussmaul's sign (lack of an insp",
+        "is_match": true
+      },
+      {
+        "rank": 4,
+        "chunk_id": "b6bc3578-48a1-40ca-8a44-7a106d29778f",
+        "document_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "similarity_score": 0.1569,
+        "content_preview": "CG) • Effusive constrictive pericarditis: Mixed clinical picture. Main clue is elevated JVP clinically & right atrial pressure on ECHO in spite of removal of pericardial ﬂuid Essential tests: • Chest ",
+        "is_match": true
+      },
+      {
+        "rank": 5,
+        "chunk_id": "7813daff-ef89-40c7-8068-95d19b58a127",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1552,
+        "content_preview": "identify and describe the abnormality in each picture.",
+        "is_match": false
+      }
+    ],
+    "standalone_generation_sec": 14.2,
+    "standalone_response": "",
+    "rag_generation_sec": 35.56,
+    "rag_context_passed": [
+      "Programme TB: Tuberculosis CXR normal, ECG: ST elevation CXR & ECG Normal ECHO ± CT thorax Pericardial effusion Constrictive physiology + pericardial thickness >4 mm Pericardiocentesis Pericardial ﬂui",
+      "alternative causes of effusio-constrictive pericarditis: viral infections, systemic lupus erythematosus, primary effusion lymphomas or pericardial malignancies • Non response of cardiac symptoms to an",
+      "Standard Treatment Workﬂow (STW) for the Management of ADULT PERICARDIAL TUBERCULOSIS ICD-10-A18.84 Constrictive pericarditis: Clinical signs for recognition include • Kussmaul's sign (lack of an insp"
+    ],
+    "rag_response": ""
+  },
+  {
+    "id": "EN-4",
+    "language": "en",
+    "query": "How is asthma acute exacerbation treated in primary health care centers?",
+    "expected_document": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+    "retrieval_latency_ms": 88.79,
+    "hit_at_1": true,
+    "hit_at_3": true,
+    "hit_at_5": true,
+    "reciprocal_rank": 1.0,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "622cef77-818f-480a-84db-cd559ff5e21b",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1193,
+        "content_preview": "ent/client may already have. 1 Adapted from: Latchford G, Duff A. Motivational interviewing: a brief guide. Leeds: University of Leeds; 2010.",
+        "is_match": true
+      },
+      {
+        "rank": 2,
+        "chunk_id": "f50b1c97-fc90-4ee1-80a8-52876d9e50e5",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.119,
+        "content_preview": "ing, rather than taking the role of an advising expert, the counsellor becomes a partner. The counsellor and patient/client work as a team toward the goal of behaviour change. (2) Listen and show empa",
+        "is_match": true
+      },
+      {
+        "rank": 3,
+        "chunk_id": "b44271e3-541a-4e6f-bc12-79884104399f",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1187,
+        "content_preview": "l day, adapting the examples to local context.",
+        "is_match": true
+      },
+      {
+        "rank": 4,
+        "chunk_id": "123da93f-0534-4c21-8553-96d13bbc688d",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1151,
+        "content_preview": "t the behaviour and its consequences, the counsellor helps the patient/ client to see the difference between their life as it is now (with the behaviour and its consequences) and the way they want the",
+        "is_match": true
+      },
+      {
+        "rank": 5,
+        "chunk_id": "a3baae1e-136e-4cb4-b9b1-d0544dc9a21c",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1129,
+        "content_preview": "in emergency settings; • Recommendations for transmission reduction are found in section 4.2.6.3 MDA to reduce transmission of P. falciparum in very low to low transmission settings; section 4.2.6.4 M",
+        "is_match": false
+      }
+    ],
+    "standalone_generation_sec": 0.0,
+    "standalone_response": "(Skipped for latency)",
+    "rag_generation_sec": 0.0,
+    "rag_context_passed": [
+      "ent/client may already have. 1 Adapted from: Latchford G, Duff A. Motivational interviewing: a brief guide. Leeds: University of Leeds; 2010.",
+      "ing, rather than taking the role of an advising expert, the counsellor becomes a partner. The counsellor and patient/client work as a team toward the goal of behaviour change. (2) Listen and show empa",
+      "l day, adapting the examples to local context."
+    ],
+    "rag_response": "(Skipped for latency)"
+  },
+  {
+    "id": "EN-5",
+    "language": "en",
+    "query": "Should children with TB meningitis receive adjuvant corticosteroids?",
+    "expected_document": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+    "retrieval_latency_ms": 87.33,
+    "hit_at_1": false,
+    "hit_at_3": false,
+    "hit_at_5": false,
+    "reciprocal_rank": 0.0,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "b1f514a8-7d4e-45b5-9742-ef84b00b4635",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1596,
+        "content_preview": "moderate physical activity over the course of each week. This can be achieved in a number of ways, such as: ¤ 30 minutes of moderate physical activity on most days of the week ¤ a two-and-a-half hour ",
+        "is_match": false
+      },
+      {
+        "rank": 2,
+        "chunk_id": "958eaed2-ce23-41bf-81bb-58a0dc25ad9a",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1579,
+        "content_preview": "ine has significant asexual stage activity against vivax malaria and augments the therapeutic response to chloroquine. When primaquine is given routinely for 14 days, it may mask low-level chloroquine",
+        "is_match": false
+      },
+      {
+        "rank": 3,
+        "chunk_id": "5d713757-1322-462f-a600-022e18a09ae3",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1529,
+        "content_preview": "ettings identified imported infections in migrant workers with onward transmission to the local population. In both studies, the migrant workers were provided with a full therapeutic dose of chloroqui",
+        "is_match": false
+      },
+      {
+        "rank": 4,
+        "chunk_id": "df70d388-4e8c-47f7-9f18-aa84d391ae8b",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1528,
+        "content_preview": "625 Making training effective Method 3. Practice Exercise Klatt (1999); p. 219: 60 minutes Task: Fractured Rectangle PURPOSE. The purpose of this activity is, to reinforce the previous adult learning ",
+        "is_match": false
+      },
+      {
+        "rank": 5,
+        "chunk_id": "42604bfe-4e4e-4064-8a81-47ebec854f30",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1521,
+        "content_preview": "upgrading of recycling facilities before insecticide-contaminated materials could be included in this process. • Two important and potentially hazardous practices are: i) routinely removing ITNs from ",
+        "is_match": false
+      }
+    ],
+    "standalone_generation_sec": 0.0,
+    "standalone_response": "(Skipped for latency)",
+    "rag_generation_sec": 0.0,
+    "rag_context_passed": [
+      "moderate physical activity over the course of each week. This can be achieved in a number of ways, such as: ¤ 30 minutes of moderate physical activity on most days of the week ¤ a two-and-a-half hour ",
+      "ine has significant asexual stage activity against vivax malaria and augments the therapeutic response to chloroquine. When primaquine is given routinely for 14 days, it may mask low-level chloroquine",
+      "ettings identified imported infections in migrant workers with onward transmission to the local population. In both studies, the migrant workers were provided with a full therapeutic dose of chloroqui"
+    ],
+    "rag_response": "(Skipped for latency)"
+  },
+  {
+    "id": "HI-1",
+    "language": "hi",
+    "query": "वयस्कों में उच्च रक्तचाप (हाई बीपी) के लिए प्राथमिक दवाएं कौन सी हैं?",
+    "expected_document": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+    "retrieval_latency_ms": 82.39,
+    "hit_at_1": false,
+    "hit_at_3": false,
+    "hit_at_5": false,
+    "reciprocal_rank": 0.0,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "15de72c3-7f41-466a-98b9-0a26abd8cd0e",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1586,
+        "content_preview": "ous or intramuscular quinine Outcome Timeframe Study results and measurements Comparator Quinine Intervention Artemether Certainty of the evidence (Quality of evidence) Death Relative risk 0.59 (CI 95",
+        "is_match": false
+      },
+      {
+        "rank": 2,
+        "chunk_id": "35853b87-6994-4883-a9b8-1640117ffd95",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1513,
+        "content_preview": "rated and provide longer post-treatment prophylaxis than oral quinine in the second and third trimesters of pregnancy, to date, WHO had recommended quinine + clindamycin instead of ACTs for the first ",
+        "is_match": false
+      },
+      {
+        "rank": 3,
+        "chunk_id": "8d4a0175-6de2-47f9-a2f9-4ca624fcb917",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1461,
+        "content_preview": "he WHO recommended dose of intravenous quinine. Imprecision: very serious. These trials and the meta-analysis have inadequate power to detect a difference or to prove equivalence. The 95% CI is very w",
+        "is_match": false
+      },
+      {
+        "rank": 4,
+        "chunk_id": "f8c1b39c-2ebc-4305-bd9a-46ddfd1c37f5",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1414,
+        "content_preview": "o quinine for treating children and adults with severe malaria. Strong recommendation for , Moderate certainty evidence Pre-referral treatment options (2015) WHO guidelines for malaria - 13 August 202",
+        "is_match": false
+      },
+      {
+        "rank": 5,
+        "chunk_id": "5b95d5ed-f763-447d-a7f7-1b3f60f1361c",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.139,
+        "content_preview": "K, Schütte D, Oyakhirome S, et al. Effectiveness of quinine monotherapy for the treatment of Plasmodium falciparum infection in pregnant women in Lambaréné, Gabon. The American journal of tropical med",
+        "is_match": false
+      }
+    ],
+    "standalone_generation_sec": 15.38,
+    "standalone_response": "",
+    "rag_generation_sec": 37.47,
+    "rag_context_passed": [
+      "ous or intramuscular quinine Outcome Timeframe Study results and measurements Comparator Quinine Intervention Artemether Certainty of the evidence (Quality of evidence) Death Relative risk 0.59 (CI 95",
+      "rated and provide longer post-treatment prophylaxis than oral quinine in the second and third trimesters of pregnancy, to date, WHO had recommended quinine + clindamycin instead of ACTs for the first ",
+      "he WHO recommended dose of intravenous quinine. Imprecision: very serious. These trials and the meta-analysis have inadequate power to detect a difference or to prove equivalence. The 95% CI is very w"
+    ],
+    "rag_response": ""
+  },
+  {
+    "id": "HI-2",
+    "language": "hi",
+    "query": "फाल्सीपेरम मलेरिया के बुखार के लिए डब्ल्यूएचओ द्वारा अनुशंसित उपचार क्या है?",
+    "expected_document": "WHO Guidelines for Malaria",
+    "retrieval_latency_ms": 86.03,
+    "hit_at_1": true,
+    "hit_at_3": true,
+    "hit_at_5": true,
+    "reciprocal_rank": 1.0,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "a4d9338f-ff09-46d0-901b-9cb7fb1eedcd",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1146,
+        "content_preview": "re characterized by an annual parasite incidence of 450 or more cases per 1000 population and a P. falciparum prevalence rate of ≥35%. • Moderate transmission areas have an annual parasite incidence o",
+        "is_match": true
+      },
+      {
+        "rank": 2,
+        "chunk_id": "78912242-e8a8-4832-b1ad-acab019dba54",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1113,
+        "content_preview": "blood has been confirmed by a diagnostic test case, presumed Case suspected of being malaria that is not confirmed by a diagnostic test case, recrudescent Malaria case attributed to the recurrence of ",
+        "is_match": true
+      },
+      {
+        "rank": 3,
+        "chunk_id": "41a31a30-1d45-479c-832b-0ce915397e19",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1112,
+        "content_preview": "czematous skin changes, nipple retraction, peau d’orange, ulceration, unilateral nipple discharge – particularly bloody discharge, lump in the axilla) with or without palpable lump. ¤ Assess signs and",
+        "is_match": false
+      },
+      {
+        "rank": 4,
+        "chunk_id": "c3a86122-e632-4991-b87c-01ad0013303c",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1087,
+        "content_preview": "hitish or reddish discolouration of the mucosa ♦ Non-healing ulcer lasting >2 weeks ♦ Oral hairy leukoplakia (roughening of the lateral or undersurface of the tongue and/or floor of the mouth) ♦ Submu",
+        "is_match": false
+      },
+      {
+        "rank": 5,
+        "chunk_id": "db125f4a-8179-4104-9336-3331362cb23f",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.0995,
+        "content_preview": "fections only) or a new infection reinfection A new infection that follows a primary infection; can be distinguished from recrudescence by the parasite genotype, which is often (but not always) differ",
+        "is_match": true
+      }
+    ],
+    "standalone_generation_sec": 0.0,
+    "standalone_response": "(Skipped for latency)",
+    "rag_generation_sec": 0.0,
+    "rag_context_passed": [
+      "re characterized by an annual parasite incidence of 450 or more cases per 1000 population and a P. falciparum prevalence rate of ≥35%. • Moderate transmission areas have an annual parasite incidence o",
+      "blood has been confirmed by a diagnostic test case, presumed Case suspected of being malaria that is not confirmed by a diagnostic test case, recrudescent Malaria case attributed to the recurrence of ",
+      "czematous skin changes, nipple retraction, peau d’orange, ulceration, unilateral nipple discharge – particularly bloody discharge, lump in the axilla) with or without palpable lump. ¤ Assess signs and"
+    ],
+    "rag_response": "(Skipped for latency)"
+  },
+  {
+    "id": "HI-3",
+    "language": "hi",
+    "query": "बच्चों में फेफड़ों की टीबी का इलाज कितने समय तक चलना चाहिए?",
+    "expected_document": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+    "retrieval_latency_ms": 78.73,
+    "hit_at_1": false,
+    "hit_at_3": false,
+    "hit_at_5": false,
+    "reciprocal_rank": 0.0,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "9983cbea-c41c-44c0-8f34-145f1780ec2e",
+        "document_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+        "similarity_score": 0.165,
+        "content_preview": "who treated HTN in Syrian refugees, the treatment was variable, and dependent on whatever drug samples were available in the clinic. They had limited choices, including atenolol, lisinopril, and verap",
+        "is_match": false
+      },
+      {
+        "rank": 2,
+        "chunk_id": "fba3dc4e-826e-46b2-ae96-03e4ccaba0af",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1262,
+        "content_preview": "t way of measuring the BP. Step 3. Ask the participants to re-measure each other’s BP following the correct method strictly. Note. Observe trainees practise and verify, and reflect whether the trainee",
+        "is_match": false
+      },
+      {
+        "rank": 3,
+        "chunk_id": "763c2838-cdf5-480b-b0a0-bbbdb2bd9e52",
+        "document_title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+        "similarity_score": 0.1191,
+        "content_preview": "re very little data on HTN control, access to care and treatment, and patient understanding of HTN from Africa and Asia (except Japan), despite protracted refugee situations on these continents. Viole",
+        "is_match": false
+      },
+      {
+        "rank": 4,
+        "chunk_id": "efe5a96d-4312-4c35-b792-c32d1419354f",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1132,
+        "content_preview": "alhotra of the Regional Office have provided valuable support in language editing the entire set of modules, and the team of designers from WHO SEARO – Mr Subhankar Bhowmik, Mr Kapil Mathur, Mr Chande",
+        "is_match": false
+      },
+      {
+        "rank": 5,
+        "chunk_id": "537bdfe1-763c-4073-8805-0fbd5d006c85",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1128,
+        "content_preview": ", performing a clinical task, cooking food, etc.) Step 1. Ask trainees to write down answers to encourage less out-spoken members. Step 2. Ask for volunteers to read out their answers. (It is not nece",
+        "is_match": false
+      }
+    ],
+    "standalone_generation_sec": 14.59,
+    "standalone_response": "",
+    "rag_generation_sec": 29.9,
+    "rag_context_passed": [
+      "who treated HTN in Syrian refugees, the treatment was variable, and dependent on whatever drug samples were available in the clinic. They had limited choices, including atenolol, lisinopril, and verap",
+      "t way of measuring the BP. Step 3. Ask the participants to re-measure each other’s BP following the correct method strictly. Note. Observe trainees practise and verify, and reflect whether the trainee",
+      "re very little data on HTN control, access to care and treatment, and patient understanding of HTN from Africa and Asia (except Japan), despite protracted refugee situations on these continents. Viole"
+    ],
+    "rag_response": ""
+  },
+  {
+    "id": "HI-4",
+    "language": "hi",
+    "query": "प्राथमिक स्वास्थ्य केंद्र में अस्थमा के दौरे का इलाज कैसे किया जाता है?",
+    "expected_document": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+    "retrieval_latency_ms": 114.08,
+    "hit_at_1": true,
+    "hit_at_3": true,
+    "hit_at_5": true,
+    "reciprocal_rank": 1.0,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "07ff64b9-06c6-4425-b034-d827f07d9d56",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1209,
+        "content_preview": "ntation slides with short video for the technique of clinical breast examination (CBE). Step 5. Perform a group practice session with breast model. Step 6. Each participant has to perform breast exami",
+        "is_match": true
+      },
+      {
+        "rank": 2,
+        "chunk_id": "98575e11-5bc0-41b7-a3d1-8c5ed9c9dd3f",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1204,
+        "content_preview": "within 28 days. Rationale for the recommendation The Guideline Development Group recognized that, in the few settings in which P. vivax is the only endemic species and where chloroquine resistance rem",
+        "is_match": false
+      },
+      {
+        "rank": 3,
+        "chunk_id": "2ca0353a-51bc-40cb-95a3-cb510dd6798c",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1179,
+        "content_preview": "mether was compared with artesunate in 494 adults, and 16 trials in Africa and Asia in which artemether was compared with quinine in 716 adults and 1447 children [264]. The trials were conducted betwe",
+        "is_match": false
+      },
+      {
+        "rank": 4,
+        "chunk_id": "e0b8585a-6d9d-4a7d-af06-2968abbd9fe4",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1152,
+        "content_preview": "tient who is willing to quit, the following actions can be taken to aid the patient in quitting: ¤ help develop a quit plan ¤ provide practical counselling ¤ provide intra-treatment social support ¤ h",
+        "is_match": true
+      },
+      {
+        "rank": 5,
+        "chunk_id": "ac78a9bd-9485-464c-a12e-1571472d9a1a",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1086,
+        "content_preview": ". ACTs are highly effective in the treatment of vivax malaria, allowing simplification (unification) of malaria treatment; i.e. all malaria infections can be treated with an ACT. The exception is arte",
+        "is_match": false
+      }
+    ],
+    "standalone_generation_sec": 0.0,
+    "standalone_response": "(Skipped for latency)",
+    "rag_generation_sec": 0.0,
+    "rag_context_passed": [
+      "ntation slides with short video for the technique of clinical breast examination (CBE). Step 5. Perform a group practice session with breast model. Step 6. Each participant has to perform breast exami",
+      "within 28 days. Rationale for the recommendation The Guideline Development Group recognized that, in the few settings in which P. vivax is the only endemic species and where chloroquine resistance rem",
+      "mether was compared with artesunate in 494 adults, and 16 trials in Africa and Asia in which artemether was compared with quinine in 716 adults and 1447 children [264]. The trials were conducted betwe"
+    ],
+    "rag_response": "(Skipped for latency)"
+  },
+  {
+    "id": "HI-5",
+    "language": "hi",
+    "query": "क्या टीबी मेनिनजाइटिस से पीड़ित बच्चे को कॉर्टिकोस्टेरॉइड दवा दी जानी चाहिए?",
+    "expected_document": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+    "retrieval_latency_ms": 90.34,
+    "hit_at_1": false,
+    "hit_at_3": false,
+    "hit_at_5": false,
+    "reciprocal_rank": 0.0,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "28e75972-97f1-4cb5-83bc-3574586731a4",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.184,
+        "content_preview": "difiable Diet, level of exercise, alcohol consumption and smoking status are all considered lifestyle factors that can be modified to achieve better health. Social environment Modifiable Support from ",
+        "is_match": false
+      },
+      {
+        "rank": 2,
+        "chunk_id": "b98743fc-3c8f-4738-a0a7-b5ea254d7f9a",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1691,
+        "content_preview": "hol for “health” reasons. ¤ Do not use alcohol when you are: — driving — operating machinery — pregnant or breastfeeding — taking medications that interact with alcohol. — living with medical conditio",
+        "is_match": false
+      },
+      {
+        "rank": 3,
+        "chunk_id": "d041e4d6-4d4b-465a-a515-46d769e9b2a7",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1512,
+        "content_preview": "akes more effective use of health resources and promotes social equity.",
+        "is_match": false
+      },
+      {
+        "rank": 4,
+        "chunk_id": "c89f7e28-1d35-47ec-851d-7ce91dd1326a",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1501,
+        "content_preview": "the acronym “OARS”. ¤ Open-ended questions Open-ended questions cannot easily be answered with a single word such as “yes” or “no”. For example, rather than asking, “Do you think that smoking is bad f",
+        "is_match": false
+      },
+      {
+        "rank": 5,
+        "chunk_id": "a98f596e-f5b9-45e4-b20a-620359467066",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1483,
+        "content_preview": "5R’s to manage overweight and obesity in adults and children.",
+        "is_match": false
+      }
+    ],
+    "standalone_generation_sec": 0.0,
+    "standalone_response": "(Skipped for latency)",
+    "rag_generation_sec": 0.0,
+    "rag_context_passed": [
+      "difiable Diet, level of exercise, alcohol consumption and smoking status are all considered lifestyle factors that can be modified to achieve better health. Social environment Modifiable Support from ",
+      "hol for “health” reasons. ¤ Do not use alcohol when you are: — driving — operating machinery — pregnant or breastfeeding — taking medications that interact with alcohol. — living with medical conditio",
+      "akes more effective use of health resources and promotes social equity."
+    ],
+    "rag_response": "(Skipped for latency)"
+  },
+  {
+    "id": "TE-1",
+    "language": "te",
+    "query": "పెద్దవారిలో హై బీపీ నియంత్రణకు ప్రాథమికంగా ఏ మందులు సూచిస్తారు?",
+    "expected_document": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+    "retrieval_latency_ms": 87.49,
+    "hit_at_1": false,
+    "hit_at_3": false,
+    "hit_at_5": false,
+    "reciprocal_rank": 0.0,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "20c7b86a-b870-42e8-9f14-dcdd040eeccc",
+        "document_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "similarity_score": 0.1708,
+        "content_preview": "ded by the treating physician. There will be no indemnity for direct or indirect consequences. Kindly visit our web portal (stw.icmr.org.in) for more information. © Indian Council of Medical Research ",
+        "is_match": false
+      },
+      {
+        "rank": 2,
+        "chunk_id": "779e0221-d017-4d7c-94f9-42bf56fb8b8a",
+        "document_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "similarity_score": 0.16,
+        "content_preview": "as decided by the treating physician. There will be no indemnity for direct or indirect consequences. Kindly visit our web portal (stw.icmr.org.in) for more information. © Indian Council of Medical Re",
+        "is_match": false
+      },
+      {
+        "rank": 3,
+        "chunk_id": "00fcd36b-0c9a-481a-b578-ffb3436c93fd",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1561,
+        "content_preview": "ce is surgical management. But sometimes the patient will be inoperable, in which case the management is medical. Medical management of inoperable malignant obstructionincludes: ¤ hydration ¢ intraven",
+        "is_match": false
+      },
+      {
+        "rank": 4,
+        "chunk_id": "a486f6a6-f28d-4b2d-80af-fc990414b817",
+        "document_title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+        "similarity_score": 0.1538,
+        "content_preview": "in the management of an individual patient based on his/her speciﬁc condition, as decided by the treating physician. There will be no indemnity for direct or indirect consequences. Kindly visit our we",
+        "is_match": false
+      },
+      {
+        "rank": 5,
+        "chunk_id": "5ae90f85-77c3-480a-9d19-17f11292a6ad",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1429,
+        "content_preview": "The results below report the absolute effects (risk differences) of the intervention, as these were used by the GDG in its judgements; relative effect sizes are available in the Research evidence. Imm",
+        "is_match": false
+      }
+    ],
+    "standalone_generation_sec": 15.66,
+    "standalone_response": "",
+    "rag_generation_sec": 40.32,
+    "rag_context_passed": [
+      "ded by the treating physician. There will be no indemnity for direct or indirect consequences. Kindly visit our web portal (stw.icmr.org.in) for more information. © Indian Council of Medical Research ",
+      "as decided by the treating physician. There will be no indemnity for direct or indirect consequences. Kindly visit our web portal (stw.icmr.org.in) for more information. © Indian Council of Medical Re",
+      "ce is surgical management. But sometimes the patient will be inoperable, in which case the management is medical. Medical management of inoperable malignant obstructionincludes: ¤ hydration ¢ intraven"
+    ],
+    "rag_response": ""
+  },
+  {
+    "id": "TE-2",
+    "language": "te",
+    "query": "ఫాల్సిపారమ్ మలేరియా జ్వరానికి సిఫార్సు చేయబడిన చికిత్స ఏమిటి?",
+    "expected_document": "WHO Guidelines for Malaria",
+    "retrieval_latency_ms": 132.56,
+    "hit_at_1": false,
+    "hit_at_3": false,
+    "hit_at_5": true,
+    "reciprocal_rank": 0.25,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "808b51f5-745f-454e-a46a-42190c720ac9",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1602,
+        "content_preview": "he square of the height in metres (kg/m 2). BMI provides the most useful population-level measure of overweight and obesity as it is the same for both sexes and for all ages of adults. However, it sho",
+        "is_match": false
+      },
+      {
+        "rank": 2,
+        "chunk_id": "051453eb-ca2a-4d5a-836f-e4905209cdb7",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1253,
+        "content_preview": "S II) (BMI 35 TO 39.9) SEVERELY OBESE (BMI 40+)Children For children, age needs to be considered when defining overweight and obesity. For children and teenagers, BMI is evaluated using age- and gende",
+        "is_match": false
+      },
+      {
+        "rank": 3,
+        "chunk_id": "a5e121b1-4ac5-44ac-9a41-5e02de166986",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1235,
+        "content_preview": "to hospital immediately. This is because the TIA is a warning sign that one is at high risk of having a full stroke. Warning signs for stroke Since the brain controls the whole body, the symptoms of a",
+        "is_match": false
+      },
+      {
+        "rank": 4,
+        "chunk_id": "7dc7b4e5-26e2-44a7-83a8-112f7c198a95",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.122,
+        "content_preview": "nts weighing < 5 kg with uncomplicated P. falciparum malaria with an ACT. The weight-adjusted dose should achieve the same mg/kg bw target dose as for children weighing 5 kg. 5.2.1.4.3 Patients co-inf",
+        "is_match": true
+      },
+      {
+        "rank": 5,
+        "chunk_id": "68e1c634-9cc2-405d-95d0-d7644648e220",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.122,
+        "content_preview": "ation This patient developed cerebellar haemorrhage. The risk factor for stroke was uncontrolled hypertension. In addition he has a previous history of CAD. His BP is under control but he is not on an",
+        "is_match": false
+      }
+    ],
+    "standalone_generation_sec": 0.0,
+    "standalone_response": "(Skipped for latency)",
+    "rag_generation_sec": 0.0,
+    "rag_context_passed": [
+      "he square of the height in metres (kg/m 2). BMI provides the most useful population-level measure of overweight and obesity as it is the same for both sexes and for all ages of adults. However, it sho",
+      "S II) (BMI 35 TO 39.9) SEVERELY OBESE (BMI 40+)Children For children, age needs to be considered when defining overweight and obesity. For children and teenagers, BMI is evaluated using age- and gende",
+      "to hospital immediately. This is because the TIA is a warning sign that one is at high risk of having a full stroke. Warning signs for stroke Since the brain controls the whole body, the symptoms of a"
+    ],
+    "rag_response": "(Skipped for latency)"
+  },
+  {
+    "id": "TE-3",
+    "language": "te",
+    "query": "పిల్లలలో ఊపిరితిత్తుల క్షయ (టీబీ) వ్యాధి చికిత్స కాల వ్యవధి ఎంత?",
+    "expected_document": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+    "retrieval_latency_ms": 91.0,
+    "hit_at_1": false,
+    "hit_at_3": false,
+    "hit_at_5": false,
+    "reciprocal_rank": 0.0,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "16841d1d-c634-4991-a73f-0f65feaeea7e",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1317,
+        "content_preview": "rug stock- out of core drugs in the last quarter Numerator Received a structured supervisory visit with a check list used in the last quarter Numerator Reporting on time 1. 2. 3. 4. 5. 6. 7. 8. 9. 10.",
+        "is_match": false
+      },
+      {
+        "rank": 2,
+        "chunk_id": "3e4d2d86-6529-4fdb-bc11-adf0a713f406",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1302,
+        "content_preview": "45–11:45 2.4 Cancer (detection of suspected cases and referrals) 10:45–11:45 3.4 Dietary counselling 10:45–11:45 4.2 Field visit – Session 2 Community mobilization and engagement for NCD prevention an",
+        "is_match": false
+      },
+      {
+        "rank": 3,
+        "chunk_id": "ff115946-e961-4055-ada5-038672d34ccf",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1201,
+        "content_preview": "rted by an evidence base of several thousand participants (mainly from clinical trials); however, rare but serious adverse drug reactions will not be detected in clinical trials of this size, particul",
+        "is_match": false
+      },
+      {
+        "rank": 4,
+        "chunk_id": "7aa9c082-687a-48eb-b48d-072731256e9b",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1162,
+        "content_preview": "up have completed their individual pieces.” ¢ “This is a competition.” (Possibilities for a ‘prize’ can be biscuits or candies for tea break.) ¢ “You are not allowed to talk or ask questions of the fa",
+        "is_match": false
+      },
+      {
+        "rank": 5,
+        "chunk_id": "351b8638-068d-4fb0-87f0-1e73f6c73757",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1097,
+        "content_preview": "salty fish or meat, salty cheese, pickles, salty snacks. ¢ Remember that many canned foods and bread contain salt – limit the amount you eat. Cut down on this... (Pictures of high salt foods) ¤ Have f",
+        "is_match": false
+      }
+    ],
+    "standalone_generation_sec": 16.07,
+    "standalone_response": "",
+    "rag_generation_sec": 38.99,
+    "rag_context_passed": [
+      "rug stock- out of core drugs in the last quarter Numerator Received a structured supervisory visit with a check list used in the last quarter Numerator Reporting on time 1. 2. 3. 4. 5. 6. 7. 8. 9. 10.",
+      "45–11:45 2.4 Cancer (detection of suspected cases and referrals) 10:45–11:45 3.4 Dietary counselling 10:45–11:45 4.2 Field visit – Session 2 Community mobilization and engagement for NCD prevention an",
+      "rted by an evidence base of several thousand participants (mainly from clinical trials); however, rare but serious adverse drug reactions will not be detected in clinical trials of this size, particul"
+    ],
+    "rag_response": ""
+  },
+  {
+    "id": "TE-4",
+    "language": "te",
+    "query": "ప్రాథమిక ఆరోగ్య కేంద్రంలో ఆస్తమా తీవ్రమైనప్పుడు ఏ చికిత్స చేయాలి?",
+    "expected_document": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+    "retrieval_latency_ms": 97.44,
+    "hit_at_1": true,
+    "hit_at_3": true,
+    "hit_at_5": true,
+    "reciprocal_rank": 1.0,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "61666e6c-a3d1-4a50-b1e0-d3e27bd7cfe7",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1517,
+        "content_preview": "apple, mango, banana or 3 tablespoons of cooked vegetables. – Starchy vegetables should not be part of your 5-a-day (these include potatoes, sweet pota- toes, cassava and other starchy root vegetables",
+        "is_match": true
+      },
+      {
+        "rank": 2,
+        "chunk_id": "beda8218-e6a6-45da-8bc2-90d4ef6c2a43",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1388,
+        "content_preview": "as where the vaccine was provided (implementation areas); 15,032 were vaccine-eligible out of 28,985 total admissions in comparison areas. 73. [195]. Patients admitted to sentinel hospitals were routi",
+        "is_match": false
+      },
+      {
+        "rank": 3,
+        "chunk_id": "5698548c-d2e8-4a7a-aae3-5e3156736dbb",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1381,
+        "content_preview": "lowing for coverage and contamination) or more. Across the three countries (Ghana, Kenya and Malawi), there were a total of 58,114 admissions to sentinel hospitals in children 1-59 months during the p",
+        "is_match": false
+      },
+      {
+        "rank": 4,
+        "chunk_id": "2a748199-2d41-43de-85ba-83ddcaea2923",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1248,
+        "content_preview": "certainty evidence House screening (2021) Screening of residential houses can be used for the prevention and control of malaria in children and adults in areas with ongoing malaria transmission. Remar",
+        "is_match": false
+      },
+      {
+        "rank": 5,
+        "chunk_id": "d5e5314c-f4ac-45c5-a8ad-503af66983b7",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1243,
+        "content_preview": "29 total admissions in areas where the vaccine was provided (implementation areas); 15,032 were vaccine-eligible out of 28,985 total admissions in comparison areas. 60. [195]. Severe malaria represent",
+        "is_match": false
+      }
+    ],
+    "standalone_generation_sec": 0.0,
+    "standalone_response": "(Skipped for latency)",
+    "rag_generation_sec": 0.0,
+    "rag_context_passed": [
+      "apple, mango, banana or 3 tablespoons of cooked vegetables. – Starchy vegetables should not be part of your 5-a-day (these include potatoes, sweet pota- toes, cassava and other starchy root vegetables",
+      "as where the vaccine was provided (implementation areas); 15,032 were vaccine-eligible out of 28,985 total admissions in comparison areas. 73. [195]. Patients admitted to sentinel hospitals were routi",
+      "lowing for coverage and contamination) or more. Across the three countries (Ghana, Kenya and Malawi), there were a total of 58,114 admissions to sentinel hospitals in children 1-59 months during the p"
+    ],
+    "rag_response": "(Skipped for latency)"
+  },
+  {
+    "id": "TE-5",
+    "language": "te",
+    "query": "టీబీ మెనింజైటిస్ ఉన్న పిల్లలకు కార్టికోస్టెరాయిడ్స్ మందులు ఇవ్వవచ్చా?",
+    "expected_document": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+    "retrieval_latency_ms": 77.26,
+    "hit_at_1": false,
+    "hit_at_3": false,
+    "hit_at_5": false,
+    "reciprocal_rank": 0.0,
+    "retrieved_chunks": [
+      {
+        "rank": 1,
+        "chunk_id": "5687c110-8edf-43c3-97bb-757b8e02282c",
+        "document_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+        "similarity_score": 0.1575,
+        "content_preview": "in the monthly meetings; take corrective action as needed. ¤ Poor understanding of data definitions and data collection methods lead to data entry errors– proper training of data entry operators shoul",
+        "is_match": false
+      },
+      {
+        "rank": 2,
+        "chunk_id": "915fa318-d496-4a54-bbc7-ceb1abc0647c",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1366,
+        "content_preview": "ias arising from the missing data. Imprecision: serious. Study did not control for one confounding domain and missing register from health facility in intervention village - the analysis is unlikely t",
+        "is_match": false
+      },
+      {
+        "rank": 3,
+        "chunk_id": "ee2e2df0-3ed0-4253-9025-b7bd2a9f7016",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1343,
+        "content_preview": "ir submission to the GRC for approval. The role of each group was to identify any errors or missing evidence and to provide comment on clarity, context-specific issues, and implications for implementa",
+        "is_match": false
+      },
+      {
+        "rank": 4,
+        "chunk_id": "4bf9f2fe-4ff1-4ea7-ab71-49884e530d07",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1314,
+        "content_preview": "ow completed and Hannah Koenker is no longer at Tropical Health. This work was not deemed to represent a conflict of interest. Joshua Yukich did not declare any interests for the current GDG membershi",
+        "is_match": false
+      },
+      {
+        "rank": 5,
+        "chunk_id": "113e3fb7-059f-4805-91b9-522eb08bbc13",
+        "document_title": "WHO Guidelines for Malaria",
+        "similarity_score": 0.1298,
+        "content_preview": "t the community level. 6. Inconsistency: serious. Study did not control for one confounding domain and missing register from health facility in intervention village - the analysis is unlikely to have ",
+        "is_match": false
+      }
+    ],
+    "standalone_generation_sec": 0.0,
+    "standalone_response": "(Skipped for latency)",
+    "rag_generation_sec": 0.0,
+    "rag_context_passed": [
+      "in the monthly meetings; take corrective action as needed. ¤ Poor understanding of data definitions and data collection methods lead to data entry errors– proper training of data entry operators shoul",
+      "ias arising from the missing data. Imprecision: serious. Study did not control for one confounding domain and missing register from health facility in intervention village - the analysis is unlikely t",
+      "ir submission to the GRC for approval. The role of each group was to identify any errors or missing evidence and to provide comment on clarity, context-specific issues, and implications for implementa"
+    ],
+    "rag_response": "(Skipped for latency)"
+  }
+]

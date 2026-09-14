@@ -2,7 +2,7 @@ import uuid
 from datetime import date, datetime, timezone
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 from sqlalchemy import Date, DateTime, ForeignKey, String, Text
-from sqlalchemy.dialects.postgresql import JSONB, UUID
+from sqlalchemy.dialects.postgresql import JSONB, UUID as PG_UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base_class import Base, TimestampMixin, uuid_pk
@@ -18,14 +18,14 @@ class Medication(Base, TimestampMixin):
     __tablename__ = "medications"
 
     id: Mapped[uuid.UUID] = uuid_pk()
-    patient_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+    patient_id: Mapped[uuid.UUID] = mapped_column(
+        PG_UUID(as_uuid=True),
         ForeignKey("patient_profiles.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
     )
-    prescription_id: Mapped[Optional[UUID]] = mapped_column(
-        UUID(as_uuid=True),
+    prescription_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        PG_UUID(as_uuid=True),
         ForeignKey("prescriptions.id", ondelete="SET NULL"),
         nullable=True,
         index=True,
@@ -51,8 +51,8 @@ class MedicationSchedule(Base, TimestampMixin):
     __tablename__ = "medication_schedules"
 
     id: Mapped[uuid.UUID] = uuid_pk()
-    medication_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+    medication_id: Mapped[uuid.UUID] = mapped_column(
+        PG_UUID(as_uuid=True),
         ForeignKey("medications.id", ondelete="CASCADE"),
         nullable=False,
         index=True,
@@ -77,8 +77,8 @@ class MedicationAdherence(Base):
 
     id: Mapped[uuid.UUID] = uuid_pk()
 
-    medication_schedule_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+    medication_schedule_id: Mapped[uuid.UUID] = mapped_column(
+        PG_UUID(as_uuid=True),
         ForeignKey("medication_schedules.id", ondelete="CASCADE"),
         nullable=False,
         index=True,

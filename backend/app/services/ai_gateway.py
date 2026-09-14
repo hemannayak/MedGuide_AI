@@ -120,6 +120,66 @@ class MockGateway(AIGateway):
 # ---------------------------------------------------------------------------
 # OllamaGateway — Local inference (primary development provider)
 # ---------------------------------------------------------------------------
+# Bounded output budget for preliminary health guidance JSON (answer, citations,
+# escalation flag). ai_service passes max_tokens=800 — enough for concise grounded
+# responses without reserving hundreds of tokens for internal reasoning.
+OLLAMA_DEFAULT_TIMEOUT_SECONDS = float(os.getenv("OLLAMA_TIMEOUT_SECONDS", "120"))
+OLLAMA_DISABLE_THINKING = os.getenv("OLLAMA_DISABLE_THINKING", "true").lower() == "true"
+
+
+def _ollama_should_disable_thinking(model: str) -> bool:
+    """
+    Qwen3 reasoning models enable thinking by default, causing high CPU latency.
+    Disable via API-level think=false unless explicitly overridden.
+    """
+    if not OLLAMA_DISABLE_THINKING:
+        return False
+    model_lower = model.lower()
+    return "qwen3" in model_lower
+
+
+def build_ollama_chat_payload(
+    model: str,
+    system_prompt: str,
+    user_prompt: str,
+    max_tokens: int = 800,
+    temperature: float = 0.2,
+    format: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Build Ollama /api/chat request payload (testable, single source of truth)."""
+    payload: Dict[str, Any] = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ],
+        "stream": False,
+        "options": {
+            "num_predict": max_tokens,
+            "temperature": temperature,
+        },
+    }
+    if format:
+        payload["format"] = format
+    if _ollama_should_disable_thinking(model):
+        payload["think"] = False
+    return payload
+
+
+def extract_ollama_message_content(data: Dict[str, Any]) -> str:
+    """
+    Return user-visible assistant content only.
+    Never expose message.thinking to callers.
+    """
+    message = data.get("message") or {}
+    content = message.get("content")
+    if content is None:
+        return ""
+    if not isinstance(content, str):
+        return str(content)
+    return content.strip()
+
+
 class OllamaGateway(AIGateway):
     """
     Local LLM inference via Ollama.
@@ -127,9 +187,15 @@ class OllamaGateway(AIGateway):
     Requires Ollama installed and running: https://ollama.com
     """
 
-    def __init__(self, model: str, base_url: str = "http://localhost:11434"):
+    def __init__(
+        self,
+        model: str,
+        base_url: str = "http://localhost:11434",
+        timeout_seconds: float = OLLAMA_DEFAULT_TIMEOUT_SECONDS,
+    ):
         self.model = model
         self.base_url = base_url.rstrip("/")
+        self.timeout_seconds = timeout_seconds
 
     @property
     def provider_name(self) -> str:
@@ -150,31 +216,49 @@ class OllamaGateway(AIGateway):
                 "httpx is required for OllamaGateway. Install with: pip install httpx"
             )
 
-        payload = {
-            "model": self.model,
-            "messages": [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
-            ],
-            "stream": False,
-            "options": {
-                "num_predict": max_tokens,
-                "temperature": temperature,
-            },
-        }
-        
-        if format:
-            payload["format"] = format
+        payload = build_ollama_chat_payload(
+            model=self.model,
+            system_prompt=system_prompt,
+            user_prompt=user_prompt,
+            max_tokens=max_tokens,
+            temperature=temperature,
+            format=format,
+        )
 
         try:
-            with httpx.Client(timeout=120.0) as client:
+            with httpx.Client(timeout=self.timeout_seconds) as client:
                 response = client.post(
                     f"{self.base_url}/api/chat",
                     json=payload,
                 )
                 response.raise_for_status()
                 data = response.json()
-                return data["message"]["content"]
+                content = extract_ollama_message_content(data)
+
+                # Defensive sanitization: remove any <think>...</think> tags if leaked into content
+                if "<think>" in content and "</think>" in content:
+                    import re
+                    content = re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL).strip()
+                elif "<think>" in content:
+                    content = content.split("<think>")[0].strip()
+
+                if not content:
+                    raise AIGatewayError(
+                        "Ollama returned empty assistant content (thinking may have consumed the token budget)"
+                    )
+                return content
+
+
+        except AIGatewayError:
+            raise
+        except httpx.TimeoutException as e:
+            logger.error(f"[OllamaGateway] Request timed out after {self.timeout_seconds}s")
+            raise AIGatewayError(
+                f"Ollama inference timed out after {self.timeout_seconds}s"
+            ) from e
+        except httpx.HTTPError as e:
+            logger.error(f"[OllamaGateway] HTTP error: {e}")
+            raise AIGatewayError(f"Ollama inference failed: {e}") from e
         except Exception as e:
             logger.error(f"[OllamaGateway] Generation failed: {e}")
             raise AIGatewayError(f"Ollama inference failed: {e}") from e

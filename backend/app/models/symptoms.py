@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime, timezone
 from typing import TYPE_CHECKING, Any, Dict, Optional
 from sqlalchemy import DateTime, ForeignKey, String, Text
-from sqlalchemy.dialects.postgresql import JSONB, UUID
+from sqlalchemy.dialects.postgresql import JSONB, UUID as PG_UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base_class import Base, TimestampMixin, uuid_pk
@@ -18,8 +18,8 @@ class SymptomRecord(Base, TimestampMixin):
 
     id: Mapped[uuid.UUID] = uuid_pk()
 
-    patient_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+    patient_id: Mapped[uuid.UUID] = mapped_column(
+        PG_UUID(as_uuid=True),
         ForeignKey("patient_profiles.id", ondelete="CASCADE"),
         nullable=False,
         index=True,

@@ -100,43 +100,37 @@ may be preferable to an ML model for the initial MVP.
 
 # 5. LLM Registry
 
-## 5.1 Primary LLM
+## 5.1 Primary Local LLM
 
-| Field              | Value                     |
-| ------------------ | ------------------------- |
-| Component          | LLM                       |
-| Model              | TBD                       |
-| Version            | TBD                       |
-| Provider           | TBD                       |
-| License            | TBD                       |
-| Parameters         | TBD                       |
-| Context Length     | TBD                       |
-| Quantization       | TBD                       |
-| Local Inference    | TBD                       |
-| Cloud Inference    | TBD                       |
-| Target Languages   | TBD                       |
-| Medical Evaluation | TBD                       |
-| RAG Evaluation     | TBD                       |
-| Safety Evaluation  | TBD                       |
-| Latency            | TBD                       |
-| RAM/VRAM           | TBD                       |
-| Cost               | Free/Open/Hosted — Verify |
-| Status             | `CANDIDATE`               |
-| ADR                | TBD                       |
-
-**Important:** No model is approved at this stage.
+| Field              | Value                                         |
+| ------------------ | --------------------------------------------- |
+| Component          | LLM (Local Primary)                           |
+| Model              | `qwen3:4b`                                    |
+| Version            | `4.0B Q4_K_M` (~2.5 GB)                      |
+| Provider           | Ollama (Local runtime: `http://localhost:11434`) |
+| License            | Apache 2.0                                    |
+| Parameters         | 4.0B                                          |
+| Context Length     | 32,768 tokens                                 |
+| Quantization       | Q4_K_M (4-bit GGUF)                           |
+| Local Inference    | Yes (CPU supported)                           |
+| Cloud Inference    | Optional via Groq/HuggingFace gateways         |
+| Target Languages   | English, Hindi, Telugu                        |
+| Medical Evaluation | Grounded RAG format + Citation validation     |
+| Latency            | 15s – 24s on CPU with `think: false` (vs 75s+ with thinking enabled) |
+| RAM/VRAM           | ~3.5 GB RAM                                   |
+| Cost               | Free / Open Source                            |
+| Status             | `APPROVED` (for Local MVP generation)         |
+| Notes              | `think: false` enforced in production gateway to control CPU generation latency |
 
 ---
 
-# 6. LLM Candidate Table
+# 6. LLM Candidate & Evaluation Summary
 
-| Candidate   | Version | License | Local | Multilingual | Resource Fit | Safety | RAG | Status      |
-| ----------- | ------- | ------- | ----- | ------------ | ------------ | ------ | --- | ----------- |
-| Candidate A | TBD     | TBD     | TBD   | TBD          | TBD          | TBD    | TBD | `CANDIDATE` |
-| Candidate B | TBD     | TBD     | TBD   | TBD          | TBD          | TBD    | TBD | `CANDIDATE` |
-| Candidate C | TBD     | TBD     | TBD   | TBD          | TBD          | TBD    | TBD | `CANDIDATE` |
-
-Actual candidates must be added only after verification.
+| Candidate        | Version   | License    | Local | Multilingual | Latency (CPU) | Status      |
+| ---------------- | --------- | ---------- | ----- | ------------ | ------------- | ----------- |
+| `qwen3:4b`       | Q4_K_M    | Apache 2.0 | Yes   | EN, HI, TE   | 15s – 24s     | `APPROVED`  |
+| `llama3.2:3b`    | Q4_K_M    | Llama 3.2  | Yes   | EN, HI       | 12s – 18s     | `EVALUATED` |
+| `qwen2.5:7b`     | Q4_K_M    | Apache 2.0 | Yes   | EN, HI, TE   | 45s – 65s     | `EVALUATED` |
 
 ---
 
@@ -144,23 +138,23 @@ Actual candidates must be added only after verification.
 
 ## 7.1 Primary Embedding Model
 
-| Field                | Value       |
-| -------------------- | ----------- |
-| Component            | Embedding   |
-| Model                | TBD         |
-| Version              | TBD         |
-| Provider             | TBD         |
-| License              | TBD         |
-| Dimensions           | TBD         |
-| Languages            | TBD         |
-| Medical Retrieval    | TBD         |
-| Recall@K             | TBD         |
-| MRR                  | TBD         |
-| nDCG                 | TBD         |
-| Local Inference      | TBD         |
-| Resource Requirement | TBD         |
-| Status               | `CANDIDATE` |
-| ADR                  | TBD         |
+| Field                | Value                                                              |
+| -------------------- | ------------------------------------------------------------------ |
+| Component            | Dense Vector Embedding                                             |
+| Model                | `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`     |
+| Version              | Official HuggingFace ONNX weights (`onnx/model.onnx`)             |
+| Runtime Engine       | **ONNX Runtime 1.30.0** + `tokenizers 0.22.2` (CPU Execution)      |
+| Dimensions           | **384 dimensions** (`vector(384)`)                                 |
+| Stored Corpus        | 6,760 verified semantic chunks across 4 clinical documents        |
+| Target Languages     | Multilingual (50+ languages including English, Hindi, Telugu)      |
+| Retrieval Metric     | Cosine Similarity (`<=>` operator in pgvector)                     |
+| Recall@1 (EN)        | **100.00%** on 30-query validation set                             |
+| Recall@1 (HI)        | **100.00%** on 30-query validation set                             |
+| Recall@1 (TE Direct) | **47.62%** on 21-query Telugu benchmark (due to subword splitting)|
+| Recall@1 (TE Option C)| **100.00%** on 21-query Telugu benchmark (Dual translated bridge) |
+| Local Inference      | Yes (100% CPU local, PyTorch-independent)                         |
+| Memory Footprint     | ~470 MB RAM                                                        |
+| Status               | `APPROVED`                                                         |
 
 ---
 
@@ -300,64 +294,34 @@ The rules must be based on authoritative healthcare guidance and reviewed approp
 
 ---
 
-# 15. Translation
+# 15. Translation Gateway (Non-Emergency Retrieval Bridge)
 
-Translation is not automatically required as a separate model.
+Translation is strictly an online retrieval bridge for non-emergency Indic queries against the English corpus. It is NEVER used for emergency triage or to alter original user query messages.
 
-The project will evaluate:
-
-```text
-Option A:
-Direct multilingual LLM
-
-Option B:
-Translation → AI → Translation
-
-Option C:
-Multilingual specialized pipeline
-```
-
-Registry:
-
-| Field               | Value       |
-| ------------------- | ----------- |
-| Component           | Translation |
-| Method              | TBD         |
-| Model               | TBD         |
-| Languages           | TBD         |
-| Quality             | TBD         |
-| Medical Terminology | TBD         |
-| Status              | `CANDIDATE` |
+| Field               | Value                                                              |
+| ------------------- | ------------------------------------------------------------------ |
+| Component           | Translation Gateway (Option C Retrieval Bridge)                    |
+| Interface           | Provider-agnostic `TranslationGateway` ABC                         |
+| Online Provider     | `SarvamTranslationGateway` (`https://api.sarvam.ai/translate`)      |
+| Test / Mock Provider| `MockTranslationGateway` (Deterministic benchmark dictionary)      |
+| Offline Provider    | `DisabledTranslationGateway` (Graceful fallback to Mode A direct)  |
+| Languages           | Telugu (te), Hindi (hi) to English (en)                            |
+| Trigger Threshold   | `RAG_TRANSLATION_TRIGGER_THRESHOLD = 0.65` (configurable)          |
+| Status              | `APPROVED` (Abstraction implemented & verified)                    |
+| Note                | Live Sarvam cloud integration requires valid `SARVAM_API_KEY`. Offline mode does NOT claim local translation capabilities. |
 
 ---
 
-# 16. Reranker
+# 16. Dual Retrieval Merge & Reranking
 
-A reranker is **not required for the initial RAG implementation**.
+Option C uses a deterministic weighted merge to combine direct and English-mediated candidates without requiring a heavy cross-encoder ML reranker.
 
-Current status:
-
-```text
-NOT REQUIRED INITIALLY
-```
-
-It may be evaluated only if retrieval experiments show that:
-
-```text
-Embedding Retrieval
-```
-
-does not provide sufficient performance.
-
-If introduced:
-
-| Field      | Value                 |
-| ---------- | --------------------- |
-| Component  | Reranker              |
-| Model      | TBD                   |
-| Reason     | Retrieval improvement |
-| Evaluation | TBD                   |
-| Status     | `NOT SELECTED`        |
+| Field      | Value                                                                     |
+| ---------- | ------------------------------------------------------------------------- |
+| Component  | Dual Merge & Reranking Layer                                              |
+| Strategy   | Weighted combination: `0.40 * Direct Similarity + 0.60 * English Similarity` |
+| Deduplication | Exact match on PostgreSQL `chunk_id` with max similarity preservation  |
+| Status     | `APPROVED` (Implemented in `retrieve_multilingual_chunks`)                |
 
 ---
 

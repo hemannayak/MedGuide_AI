@@ -579,6 +579,43 @@ class TestAIGateway:
         assert isinstance(result, str)
         assert len(result) > 0
 
+    def test_ollama_payload_sets_think_false_for_qwen3(self):
+        """Ollama chat payload must explicitly set think=False for Qwen3 to eliminate CPU thinking latency."""
+        from app.services.ai_gateway import build_ollama_chat_payload
+        payload = build_ollama_chat_payload(
+            model="qwen3:4b",
+            system_prompt="sys",
+            user_prompt="usr",
+            max_tokens=500,
+            temperature=0.2,
+        )
+        assert payload["model"] == "qwen3:4b"
+        assert payload["think"] is False
+        assert payload["options"]["num_predict"] == 500
+        assert payload["options"]["temperature"] == 0.2
+
+    def test_ollama_extract_content_ignores_thinking_block(self):
+        """extract_ollama_message_content must return only assistant content and never leak thinking tokens."""
+        from app.services.ai_gateway import extract_ollama_message_content
+        data = {
+            "message": {
+                "role": "assistant",
+                "thinking": "Internal chain of thought reasoning that should be hidden from patient.",
+                "content": "Take paracetamol for fever and rest.",
+            }
+        }
+        content = extract_ollama_message_content(data)
+        assert content == "Take paracetamol for fever and rest."
+        assert "chain of thought" not in content
+
+    def test_ollama_extract_content_empty_handling(self):
+        """extract_ollama_message_content must return empty string if no content is provided."""
+        from app.services.ai_gateway import extract_ollama_message_content
+        assert extract_ollama_message_content({}) == ""
+        assert extract_ollama_message_content({"message": None}) == ""
+        assert extract_ollama_message_content({"message": {"content": None}}) == ""
+
+
 
 # ============================================================================
 # INTEGRATION — Full Pipeline (Mock mode)

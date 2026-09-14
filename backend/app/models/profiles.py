@@ -2,7 +2,7 @@ import uuid
 from datetime import date
 from typing import TYPE_CHECKING, List, Optional
 from sqlalchemy import Date, ForeignKey, String
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base_class import Base, TimestampMixin, uuid_pk
@@ -24,8 +24,8 @@ class PatientProfile(Base, TimestampMixin):
     __tablename__ = "patient_profiles"
 
     id: Mapped[uuid.UUID] = uuid_pk()
-    user_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        PG_UUID(as_uuid=True),
         ForeignKey("users.id", ondelete="CASCADE"),
         unique=True,
         nullable=False,
@@ -75,8 +75,8 @@ class HealthcareWorkerProfile(Base, TimestampMixin):
 
     id: Mapped[uuid.UUID] = uuid_pk()
 
-    user_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        PG_UUID(as_uuid=True),
         ForeignKey("users.id", ondelete="CASCADE"),
         unique=True,
         nullable=False,

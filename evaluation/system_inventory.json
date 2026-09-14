@@ -1,0 +1,104 @@
+{
+  "python_version": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+  "os_platform": "Windows-11-10.0.26200-SP0",
+  "postgres_version": "PostgreSQL 18.4 on x86_64-windows, compiled by msvc-19.44.35227, 64-bit",
+  "pgvector_version": "0.8.5",
+  "embedding_db_dimension": 384,
+  "embedding_col_type": [
+    [
+      "USER-DEFINED",
+      "vector"
+    ]
+  ],
+  "indexes": [
+    [
+      "knowledge_chunks_pkey",
+      "CREATE UNIQUE INDEX knowledge_chunks_pkey ON public.knowledge_chunks USING btree (id)"
+    ],
+    [
+      "ix_knowledge_chunks_document_id",
+      "CREATE INDEX ix_knowledge_chunks_document_id ON public.knowledge_chunks USING btree (document_id)"
+    ]
+  ],
+  "total_documents": 4,
+  "total_chunks": 6760,
+  "documents": [
+    {
+      "id": "d4a4b5c6-7d8e-9f0a-1b2c-3d4e5f6a7b8c",
+      "title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+      "publisher": "World Health Organization",
+      "publication_date": "2021-01-01",
+      "language": "en",
+      "review_status": "APPROVED",
+      "chunk_count": 376,
+      "source_reference": "https://www.who.int/publications/i/item/9789240033986"
+    },
+    {
+      "id": "d3a3b4c5-6d7e-8f9a-0b1c-2d3e4f5a6b7c",
+      "title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+      "publisher": "Indian Council of Medical Research",
+      "publication_date": "2022-01-01",
+      "language": "en",
+      "review_status": "APPROVED",
+      "chunk_count": 274,
+      "source_reference": "https://www.icmr.gov.in/icmrobject/custom_data/pdf/downloadable-books/ICMR_STW_PTB_EPTB.pdf"
+    },
+    {
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "title": "WHO Guidelines for Malaria",
+      "publisher": "World Health Organization",
+      "publication_date": "2025-08-13",
+      "language": "en",
+      "review_status": "APPROVED",
+      "chunk_count": 4300,
+      "source_reference": "https://doi.org/10.2471/B09514"
+    },
+    {
+      "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "publisher": "World Health Organization",
+      "publication_date": "2020-01-01",
+      "language": "en",
+      "review_status": "APPROVED",
+      "chunk_count": 1810,
+      "source_reference": "https://www.who.int/publications/i/item/9789240002876"
+    }
+  ],
+  "ollama_info": {
+    "parameters": "top_p                          0.95\nrepeat_penalty                 1\nstop                           \"<|im_start|>\"\nstop                           \"<|im_end|>\"\ntemperature                    0.6\ntop_k                          20",
+    "model_info": {
+      "general.architecture": "qwen3",
+      "general.basename": "Qwen3",
+      "general.file_type": 15,
+      "general.finetune": "Thinking",
+      "general.license": "apache-2.0",
+      "general.license.link": "https://huggingface.co/Qwen/Qwen3-4B-Thinking-2507/blob/main/LICENSE",
+      "general.parameter_count": 4022468096,
+      "general.quantization_version": 2,
+      "general.size_label": "4B",
+      "general.tags": null,
+      "general.type": "model",
+      "general.version": "2507",
+      "qwen3.attention.head_count": 32,
+      "qwen3.attention.head_count_kv": 8,
+      "qwen3.attention.key_length": 128,
+      "qwen3.attention.layer_norm_rms_epsilon": 1e-06,
+      "qwen3.attention.value_length": 128,
+      "qwen3.block_count": 36,
+      "qwen3.context_length": 262144,
+      "qwen3.embedding_length": 2560,
+      "qwen3.feed_forward_length": 9728,
+      "qwen3.rope.freq_base": 5000000,
+      "tokenizer.ggml.add_bos_token": false,
+      "tokenizer.ggml.bos_token_id": 151643,
+      "tokenizer.ggml.eos_token_id": 151645,
+      "tokenizer.ggml.merges": null,
+      "tokenizer.ggml.model": "gpt2",
+      "tokenizer.ggml.padding_token_id": 151643,
+      "tokenizer.ggml.pre": "qwen2",
+      "tokenizer.ggml.token_type": null,
+      "tokenizer.ggml.tokens": null
+    },
+    "template": "{{- $lastUserIdx := -1 -}}\n{{- range $idx, $msg := .Messages -}}\n{{- if eq $msg.Role \"user\" }}{{ $lastUserIdx = $idx }}{{ end -}}\n{{- end }}\n{{- if or"
+  }
+}

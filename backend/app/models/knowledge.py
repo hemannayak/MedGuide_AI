@@ -4,7 +4,7 @@ from datetime import date, datetime, timezone
 from typing import Any, Dict, List, Optional
 from pgvector.sqlalchemy import Vector
 from sqlalchemy import Date, DateTime, ForeignKey, Integer, String, Text
-from sqlalchemy.dialects.postgresql import JSONB, UUID
+from sqlalchemy.dialects.postgresql import JSONB, UUID as PG_UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base_class import Base, TimestampMixin, uuid_pk
@@ -43,8 +43,8 @@ class KnowledgeChunk(Base):
 
     id: Mapped[uuid.UUID] = uuid_pk()
 
-    document_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+    document_id: Mapped[uuid.UUID] = mapped_column(
+        PG_UUID(as_uuid=True),
         ForeignKey("medical_documents.id", ondelete="CASCADE"),
         nullable=False,
         index=True,

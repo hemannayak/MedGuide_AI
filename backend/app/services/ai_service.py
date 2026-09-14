@@ -49,6 +49,11 @@ from app.schemas.ai import (
 )
 from app.services.ai_gateway import AIGateway, AIGatewayError, create_ai_gateway
 from app.services.knowledge_service import generate_embedding
+from app.services.translation_service import (
+    TranslationGateway,
+    TranslationError,
+    create_translation_gateway,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -56,6 +61,10 @@ logger = logging.getLogger(__name__)
 # Configuration (via environment variables)
 # ---------------------------------------------------------------------------
 RAG_SIMILARITY_THRESHOLD = float(os.getenv("RAG_SIMILARITY_THRESHOLD", "0.40"))
+# Evaluation-derived starting point (from 21-query Telugu decision benchmark).
+# Strong direct matches typically score >= 0.70; weak Telugu matches score < 0.60.
+# Not a clinically validated threshold.
+RAG_TRANSLATION_TRIGGER_THRESHOLD = float(os.getenv("RAG_TRANSLATION_TRIGGER_THRESHOLD", "0.65"))
 RAG_TOP_K_CANDIDATES = int(os.getenv("RAG_TOP_K_CANDIDATES", "10"))
 RAG_TOP_K_CONTEXT = int(os.getenv("RAG_TOP_K_CONTEXT", "4"))
 CONVERSATION_HISTORY_TURNS = int(os.getenv("CONVERSATION_HISTORY_TURNS", "5"))
@@ -232,6 +241,118 @@ def retrieve_relevant_chunks(
     # Sort descending by similarity, take top_k_context
     filtered.sort(key=lambda x: x["similarity"], reverse=True)
     return filtered[:top_k_context]
+
+
+# ---------------------------------------------------------------------------
+# M4.3.1.1 — Multilingual RAG Retrieval Engine (Option C: Dual with Fallback)
+# ---------------------------------------------------------------------------
+def retrieve_multilingual_chunks(
+    db: Session,
+    query: str,
+    language: str = "en",
+    translation_gateway: Optional[TranslationGateway] = None,
+    top_k_candidates: int = RAG_TOP_K_CANDIDATES,
+    top_k_context: int = RAG_TOP_K_CONTEXT,
+    similarity_threshold: float = RAG_SIMILARITY_THRESHOLD,
+    trigger_threshold: float = RAG_TRANSLATION_TRIGGER_THRESHOLD,
+) -> List[Dict[str, Any]]:
+    """
+    Multilingual RAG retrieval pipeline (Option C: Dual Retrieval with Fallback & Rerank).
+
+    Flow:
+      1. If language is English ('en'), execute standard single-stage direct retrieval.
+      2. If language is non-English ('te', 'hi', etc.):
+         a. Attempt direct retrieval in native query language.
+         b. If top direct similarity >= trigger_threshold (strong match, e.g. Hindi or code-mixed Telugu),
+            return direct candidates immediately without translation overhead.
+         c. If top direct similarity < trigger_threshold or 0 results (weak match):
+            - Attempt translation to English via TranslationGateway.
+            - If translation succeeds, retrieve English candidates.
+            - Merge direct and English candidates with weighted scoring (0.4 direct + 0.6 English),
+              deduplicating by chunk_id and preserving full provenance metadata.
+            - Rerank by combined score descending and return top_k_context.
+            - If translation is unavailable (offline mode, network failure), gracefully return
+              the direct retrieval candidates (Mode A fallback).
+    """
+    lang_clean = (language or "en").lower().strip()
+
+    # Mode 1: Direct English (native corpus)
+    if lang_clean == "en":
+        return retrieve_relevant_chunks(
+            db=db,
+            query=query,
+            top_k_candidates=top_k_candidates,
+            top_k_context=top_k_context,
+            similarity_threshold=similarity_threshold,
+        )
+
+    # Mode 2 & 3: Non-English (Telugu, Hindi, etc.)
+    # Step A: Direct native retrieval
+    direct_chunks = retrieve_relevant_chunks(
+        db=db,
+        query=query,
+        top_k_candidates=top_k_candidates,
+        top_k_context=top_k_context,
+        similarity_threshold=similarity_threshold,
+    )
+
+    # Check for strong direct retrieval (e.g. Hindi reaches ~0.74, code-mixed Telugu >= 0.65)
+    top_sim = direct_chunks[0]["similarity"] if direct_chunks else 0.0
+    if direct_chunks and top_sim >= trigger_threshold:
+        logger.info(
+            f"[MultilingualRAG] Strong direct {lang_clean} retrieval "
+            f"(top_sim={top_sim:.4f} >= {trigger_threshold}); using direct candidates."
+        )
+        return direct_chunks[:top_k_context]
+
+    # Step B: Weak retrieval -> invoke Option C Translation Bridge
+    logger.info(
+        f"[MultilingualRAG] Direct {lang_clean} retrieval weak or insufficient "
+        f"(top_sim={top_sim:.4f} < {trigger_threshold}). Invoking translation bridge."
+    )
+
+    gw = translation_gateway or create_translation_gateway()
+    try:
+        en_query = gw.translate(query, source_language=lang_clean, target_language="en")
+        if not en_query or not en_query.strip():
+            logger.warning("[MultilingualRAG] Empty translation received; falling back to direct retrieval.")
+            return direct_chunks[:top_k_context]
+
+        en_chunks = retrieve_relevant_chunks(
+            db=db,
+            query=en_query,
+            top_k_candidates=top_k_candidates,
+            top_k_context=top_k_context,
+            similarity_threshold=similarity_threshold,
+        )
+
+        # Dual Retrieval Merge & Rerank (0.4 direct + 0.6 English)
+        merged: Dict[str, Dict[str, Any]] = {}
+        for chunk in direct_chunks:
+            cid = str(chunk["chunk_id"])
+            merged[cid] = {**chunk, "combined_score": chunk["similarity"] * 0.4}
+        for chunk in en_chunks:
+            cid = str(chunk["chunk_id"])
+            if cid in merged:
+                merged[cid]["combined_score"] += chunk["similarity"] * 0.6
+                merged[cid]["similarity"] = max(merged[cid]["similarity"], chunk["similarity"])
+            else:
+                merged[cid] = {**chunk, "combined_score": chunk["similarity"] * 0.6}
+
+        sorted_chunks = sorted(merged.values(), key=lambda x: x["combined_score"], reverse=True)
+        # Retain chunks passing similarity threshold
+        filtered = [c for c in sorted_chunks if c["similarity"] >= similarity_threshold]
+        return filtered[:top_k_context]
+
+    except TranslationError as e:
+        logger.warning(
+            f"[MultilingualRAG] Translation bridge unavailable or failed ({e}). "
+            f"Failing closed to local direct retrieval (Mode A fallback)."
+        )
+        return direct_chunks[:top_k_context]
+    except Exception as e:
+        logger.error(f"[MultilingualRAG] Unexpected error in translation bridge: {e}")
+        return direct_chunks[:top_k_context]
 
 
 # ---------------------------------------------------------------------------
@@ -546,6 +667,7 @@ def process_ai_chat_query(
     patient_profile: PatientProfile,
     req: AIChatRequest,
     gateway: Optional[AIGateway] = None,
+    translation_gateway: Optional[TranslationGateway] = None,
 ) -> AIChatResponse:
     """
     Complete Grounded RAG + AI Health Companion pipeline.
@@ -601,17 +723,20 @@ def process_ai_chat_query(
             sources=[],
         )
 
-    # Step 5: RAG Retrieval (two-stage: top-K candidates → threshold filter)
-    chunks = retrieve_relevant_chunks(
+    # Step 5: Multilingual RAG Retrieval (Option C: Dual Retrieval with Fallback & Rerank)
+    chunks = retrieve_multilingual_chunks(
         db=db,
         query=req.message,
+        language=language,
+        translation_gateway=translation_gateway,
         top_k_candidates=RAG_TOP_K_CANDIDATES,
         top_k_context=RAG_TOP_K_CONTEXT,
         similarity_threshold=RAG_SIMILARITY_THRESHOLD,
+        trigger_threshold=RAG_TRANSLATION_TRIGGER_THRESHOLD,
     )
     logger.info(
-        f"[RAG] Query retrieved {len(chunks)} chunks "
-        f"(threshold={RAG_SIMILARITY_THRESHOLD}, top_k={RAG_TOP_K_CANDIDATES})"
+        f"[RAG] Multilingual retrieval ({language}) produced {len(chunks)} chunks "
+        f"(similarity_threshold={RAG_SIMILARITY_THRESHOLD}, trigger_threshold={RAG_TRANSLATION_TRIGGER_THRESHOLD})"
     )
 
     # Step 6: Evidence sufficiency gate

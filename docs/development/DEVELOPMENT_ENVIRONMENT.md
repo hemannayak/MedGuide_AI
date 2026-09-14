@@ -139,14 +139,14 @@ Backend and AI development use Python.
 Target Python version:
 
 ```text
-Python 3.12.x
+Python 3.12+ (Active local runtime: Python 3.14.6 in backend/.venv)
 ```
 
 Status:
 
 `CONFIRMED`
 
-The exact patch version used by the project must be recorded.
+The exact patch version used by the local active development environment is Python `3.14.6`.
 
 Verify:
 
@@ -157,7 +157,7 @@ python --version
 Expected format:
 
 ```text
-Python 3.12.x
+Python 3.14.x (or 3.12.x+)
 ```
 
 ---
