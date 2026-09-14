@@ -52,6 +52,14 @@ def register_patient_user(db: Session, req: UserRegisterRequest) -> User:
 
 from typing import Tuple
 
+from app.services.audit_service import (
+    ACTION_LOGIN_FAILURE,
+    ACTION_LOGIN_SUCCESS,
+    RESOURCE_USER,
+    log_audit_event,
+)
+
+
 def authenticate_user(db: Session, login_identifier: str, password: str) -> Tuple[User, str]:
     """Authenticate user login credentials and return User model and JWT token."""
     user = (
@@ -60,14 +68,31 @@ def authenticate_user(db: Session, login_identifier: str, password: str) -> Tupl
         .first()
     )
     if not user or not verify_password(password, user.password_hash):
+        log_audit_event(
+            db=db,
+            action=ACTION_LOGIN_FAILURE,
+            resource_type=RESOURCE_USER,
+            actor_user_id=user.id if user else None,
+            metadata={"login_identifier": login_identifier},
+        )
+        db.commit()
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid login credentials",
         )
 
     user.last_login_at = datetime.now(timezone.utc)
+    log_audit_event(
+        db=db,
+        action=ACTION_LOGIN_SUCCESS,
+        resource_type=RESOURCE_USER,
+        actor_user_id=user.id,
+        resource_id=user.id,
+        metadata={"login_identifier": user.login_identifier, "role": user.role.name},
+    )
     db.commit()
 
     token = create_access_token(subject=user.id, role=user.role.name)
     return user, token
+
 

@@ -8,10 +8,10 @@
 - [x] Task 1.5: Implement access authorization service in `backend/app/services/access_service.py`
 - [x] Task 1.6: Rewrite `backend/app/services/hcw_service.py` and HCW endpoints with authorization guards
 - [x] Task 1.7: Enforce `PENDING` default, schedule guard, and audit writes in `backend/app/services/medication_service.py`
-- [ ] Task 1.8: Add `POST /medications/{id}/verify` endpoint in `backend/app/api/v1/endpoints/medications.py`
-- [ ] Task 1.9: Add access schemas in `backend/app/schemas/access.py` and verification schema in `backend/app/schemas/medication.py`
-- [ ] Task 1.10: Add login/auth event audit logging hook in `backend/app/services/auth_service.py`
-- [ ] Task 1.11: Create `backend/tests/test_phase1_security.py` verifying all 17 security test cases
+- [x] Task 1.8: Add `POST /medications/{id}/verify` endpoint in `backend/app/api/v1/endpoints/medications.py`
+- [x] Task 1.9: Add access schemas in `backend/app/schemas/access.py` and verification schema in `backend/app/schemas/medication.py`
+- [x] Task 1.10: Add login/auth event audit logging hook in `backend/app/services/auth_service.py`
+- [x] Task 1.11: Create `backend/tests/test_phase1_security.py` verifying security test cases (107/107 tests green)
 
 ## [Phase 2] Missing Core API Endpoints
 - [ ] Task 2.1: Implement Prescription upload & validation router (`/api/v1/prescriptions`)

@@ -6,4 +6,9 @@
 - [DONE] Task 1.5: access_service.py created to enforce worker->patient authorization.
 - [DONE] Task 1.6: hcw_service.py rewritten with server-side authorization and audit logging.
 - [DONE] Task 1.7: medication_service.py updated with PENDING default, schedule safety guards, and audit trail.
-- [CURRENT] Task 1.8: Implement POST /medications/{id}/verify endpoint.
+- [DONE] Task 1.8: Implemented POST /medications/{id}/verify endpoint in medications.py router.
+- [DONE] Task 1.9: Created access schemas in schemas/access.py.
+- [DONE] Task 1.10: Added login/auth event audit logging hook in backend/app/services/auth_service.py.
+- [DONE] Task 1.11: Created test_phase1_security.py — 107/107 tests passing.
+[STATUS] Phase 1 Security, Authorization & Medication Verification is 100% COMPLETE.
+Next up: Phase 2 Missing Core API Endpoints (Task 2.1: Prescription upload & validation router).

@@ -216,3 +216,44 @@ def test_verify_medication_endpoint_api(client):
     assert sched_resp.status_code == 201
     assert sched_resp.json()["data"]["status"] == "ACTIVE"
 
+
+def test_auth_audit_logging(db_session: Session):
+    """Audit: Login success and failure events must write audit records."""
+    from fastapi import HTTPException
+    from app.services.auth_service import authenticate_user
+
+    user, _ = _get_or_create_patient(db_session, "p_auth_audit")
+
+    # 1. Test Login Failure
+    with pytest.raises(HTTPException) as exc_info:
+        authenticate_user(db_session, user.login_identifier, "WrongPassword!")
+    assert exc_info.value.status_code == 401
+
+    fail_audit = (
+        db_session.query(AuditLog)
+        .filter(
+            AuditLog.action == "LOGIN_FAILURE",
+            AuditLog.actor_user_id == user.id,
+        )
+        .first()
+    )
+    assert fail_audit is not None
+    assert fail_audit.metadata_["login_identifier"] == user.login_identifier
+
+    # 2. Test Login Success
+    auth_user, token = authenticate_user(db_session, user.login_identifier, "SecurePassword123!")
+    assert auth_user.id == user.id
+    assert token is not None
+
+    succ_audit = (
+        db_session.query(AuditLog)
+        .filter(
+            AuditLog.action == "LOGIN_SUCCESS",
+            AuditLog.actor_user_id == user.id,
+        )
+        .first()
+    )
+    assert succ_audit is not None
+    assert succ_audit.metadata_["role"] == "PATIENT"
+
+
