@@ -41,3 +41,7 @@ coverage/
 htmlcov/
 .pytest_cache/
 
+# Uploads & User Media (Prescription Images)
+uploads/
+backend/uploads/
+
