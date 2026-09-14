@@ -171,4 +171,38 @@ export class MockApiAdapter {
       },
     };
   }
+
+  static async speechSTT(language?: string): Promise<StandardResponse<{ transcript: string; language_detected: string; confidence: number; duration_seconds: number; provider: string }>> {
+    await new Promise((res) => setTimeout(res, 800));
+    const lang = language || "te";
+    const transcripts: Record<string, string> = {
+      te: "నాకు మూడు రోజులుగా తీవ్రమైన జ్వరం మరియు దగ్గు ఉంది.",
+      hi: "मुझे तीन दिनों से तेज बुखार और लगातार खांसी है।",
+      en: "I have had a high fever for three days with a persistent cough.",
+    };
+    return {
+      success: true,
+      data: {
+        transcript: transcripts[lang] || transcripts.en,
+        language_detected: lang,
+        confidence: 0.98,
+        duration_seconds: 3.2,
+        provider: "mock",
+      },
+    };
+  }
+
+  static async speechTTS(text: string, language?: string): Promise<StandardResponse<{ audio_base64: string; format: string; duration_seconds: number; provider: string }>> {
+    await new Promise((res) => setTimeout(res, 600));
+    return {
+      success: true,
+      data: {
+        audio_base64: "", // In mock mode, client can fall back to browser SpeechSynthesis
+        format: "mp3",
+        duration_seconds: 2.5,
+        provider: "mock",
+      },
+    };
+  }
 }
+

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Send,
@@ -10,6 +10,9 @@ import {
   ShieldCheck,
   RefreshCw,
   MessageSquareHeart,
+  Volume2,
+  VolumeX,
+  Loader2,
 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/context";
 import { api } from "@/lib/api/client";
@@ -29,6 +32,9 @@ interface ChatMessage {
   timestamp: string;
 }
 
+const STORAGE_KEY_MESSAGES = "medguide_chat_history";
+const STORAGE_KEY_CONV_ID = "medguide_conv_id";
+
 const EXAMPLE_PROMPTS = [
   { label: "Dehydration in children", text: "What are early signs of dehydration in children?" },
   { label: "बुखार का प्राथमिक उपचार", text: "बच्चे को तेज बुखार में क्या प्राथमिक देखभाल दें?" },
@@ -37,7 +43,7 @@ const EXAMPLE_PROMPTS = [
 ];
 
 let msgIdCounter = 1;
-const generateMsgId = (prefix: string) => `${prefix}_${msgIdCounter++}`;
+const generateMsgId = (prefix: string) => `${prefix}_${Date.now()}_${msgIdCounter++}`;
 
 export default function AIChatPage() {
   const { t, language } = useLanguage();
@@ -47,10 +53,154 @@ export default function AIChatPage() {
   const [loading, setLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | undefined>(undefined);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  
+  // Audio TTS playback state
+  const [playingMsgId, setPlayingMsgId] = useState<string | null>(null);
+  const [loadingTTSMsgId, setLoadingTTSMsgId] = useState<string | null>(null);
+  const activeAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Restore session from localStorage on initial client mount
+  useEffect(() => {
+    try {
+      const savedMessages = localStorage.getItem(STORAGE_KEY_MESSAGES);
+      const savedConvId = localStorage.getItem(STORAGE_KEY_CONV_ID);
+      if (savedMessages) {
+        const parsed = JSON.parse(savedMessages);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setMessages(parsed);
+        }
+      }
+      if (savedConvId) {
+        setConversationId(savedConvId);
+      }
+    } catch (e) {
+      console.warn("Failed to load cached chat history:", e);
+    }
+  }, []);
+
+  // Save session to localStorage whenever messages update
+  useEffect(() => {
+    if (messages.length > 0) {
+      try {
+        localStorage.setItem(STORAGE_KEY_MESSAGES, JSON.stringify(messages));
+        if (conversationId) {
+          localStorage.setItem(STORAGE_KEY_CONV_ID, conversationId);
+        }
+      } catch (e) {
+        console.warn("Failed to persist chat session:", e);
+      }
+    }
+  }, [messages, conversationId]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
+
+  // Clean up any active audio playback on unmount
+  useEffect(() => {
+    return () => {
+      if (activeAudioRef.current) {
+        activeAudioRef.current.pause();
+        activeAudioRef.current = null;
+      }
+      if (typeof window !== "undefined" && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
+  const stopAudio = useCallback(() => {
+    if (activeAudioRef.current) {
+      activeAudioRef.current.pause();
+      activeAudioRef.current = null;
+    }
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    setPlayingMsgId(null);
+    setLoadingTTSMsgId(null);
+  }, []);
+
+  const handleReadAloud = async (msgId: string, text: string) => {
+    if (playingMsgId === msgId) {
+      stopAudio();
+      return;
+    }
+
+    stopAudio();
+    setLoadingTTSMsgId(msgId);
+
+    try {
+      const res = await api.speechTTS({
+        text,
+        language,
+        speaker: "kavitha",
+        format: "mp3",
+      });
+
+      if (res.success && res.data && res.data.audio_base64) {
+        const audioSrc = `data:audio/mp3;base64,${res.data.audio_base64}`;
+        const audio = new Audio(audioSrc);
+        activeAudioRef.current = audio;
+
+        audio.onplay = () => {
+          setLoadingTTSMsgId(null);
+          setPlayingMsgId(msgId);
+        };
+
+        audio.onended = () => {
+          setPlayingMsgId(null);
+          activeAudioRef.current = null;
+        };
+
+        audio.onerror = () => {
+          console.warn("Audio playback error, falling back to Web Speech API");
+          fallbackWebSpeech(msgId, text);
+        };
+
+        await audio.play();
+      } else {
+        // Fallback to browser SpeechSynthesis
+        fallbackWebSpeech(msgId, text);
+      }
+    } catch (err) {
+      console.warn("TTS API call failed, falling back to Web Speech:", err);
+      fallbackWebSpeech(msgId, text);
+    }
+  };
+
+  const fallbackWebSpeech = (msgId: string, text: string) => {
+    setLoadingTTSMsgId(null);
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = language === "te" ? "te-IN" : language === "hi" ? "hi-IN" : "en-US";
+      
+      utterance.onstart = () => {
+        setPlayingMsgId(msgId);
+      };
+      utterance.onend = () => {
+        setPlayingMsgId(null);
+      };
+      utterance.onerror = () => {
+        setPlayingMsgId(null);
+      };
+      window.speechSynthesis.speak(utterance);
+    } else {
+      setPlayingMsgId(null);
+    }
+  };
+
+  const handleClearHistory = () => {
+    stopAudio();
+    setMessages([]);
+    setConversationId(undefined);
+    try {
+      localStorage.removeItem(STORAGE_KEY_MESSAGES);
+      localStorage.removeItem(STORAGE_KEY_CONV_ID);
+    } catch (e) {
+      console.warn("Failed to clear local storage:", e);
+    }
+  };
 
   const handleSend = async (queryText?: string) => {
     const textToSend = queryText || inputQuery;
@@ -98,7 +248,7 @@ export default function AIChatPage() {
           {
             id: generateMsgId("err"),
             sender: "ai",
-            text: "I was unable to process your request right now. Please try again.",
+            text: "I was unable to process your request right now. Please check connectivity or try again.",
             responseType: ResponseType.REFUSAL,
             timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
           },
@@ -147,12 +297,9 @@ export default function AIChatPage() {
           </span>
           {messages.length > 0 && (
             <button
-              onClick={() => {
-                setMessages([]);
-                setConversationId(undefined);
-              }}
-              className="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors"
-              title="New Conversation"
+              onClick={handleClearHistory}
+              className="p-2 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
+              title="Start New Conversation"
             >
               <RefreshCw className="w-4 h-4" />
             </button>
@@ -189,7 +336,7 @@ export default function AIChatPage() {
                   key={item.label}
                   type="button"
                   onClick={() => handleSend(item.text)}
-                  className="text-left p-4 rounded-2xl border border-slate-200/80 bg-white hover:border-[#0F766E]/40 hover:bg-teal-50/40 hover:shadow-xs transition-all group"
+                  className="text-left p-4 rounded-2xl border border-slate-200/80 bg-white hover:border-[#0F766E]/40 hover:bg-teal-50/40 hover:shadow-xs transition-all group cursor-pointer"
                 >
                   <div className="text-xs font-bold text-[#0F766E] mb-1 group-hover:text-[#0D635C]">
                     {item.label}
@@ -239,15 +386,23 @@ export default function AIChatPage() {
                 {msg.responseType === ResponseType.EMERGENCY && (
                   <div className="p-3 rounded-xl bg-red-600 text-white flex items-center justify-between gap-3 text-xs font-bold shadow-sm">
                     <div className="flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 animate-bounce" />
+                      <AlertTriangle className="w-4 h-4 animate-bounce shrink-0" />
                       <span>CRITICAL &bull; EMERGENCY ESCALATION</span>
                     </div>
-                    <a
-                      href="tel:108"
-                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white text-red-700 font-extrabold text-xs shadow-sm hover:bg-red-50"
-                    >
-                      <PhoneCall className="w-3.5 h-3.5" /> Call 108
-                    </a>
+                    <div className="flex items-center gap-2">
+                      <a
+                        href="tel:108"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-white text-red-700 font-extrabold text-xs shadow-sm hover:bg-red-50"
+                      >
+                        <PhoneCall className="w-3.5 h-3.5" /> 108 (Ambulance)
+                      </a>
+                      <a
+                        href="tel:112"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-red-800 text-white font-extrabold text-xs shadow-sm hover:bg-red-900"
+                      >
+                        <PhoneCall className="w-3.5 h-3.5" /> 112 (Emergency)
+                      </a>
+                    </div>
                   </div>
                 )}
 
@@ -258,10 +413,47 @@ export default function AIChatPage() {
                   </div>
                 )}
 
-                {/* Response Text */}
-                <p className="text-sm leading-relaxed whitespace-pre-line font-normal">
-                  {msg.text}
-                </p>
+                {/* Response Text & Read-Aloud Action */}
+                <div className="space-y-2">
+                  <p className="text-sm leading-relaxed whitespace-pre-line font-normal">
+                    {msg.text}
+                  </p>
+
+                  {/* Read Aloud Button for AI messages */}
+                  {msg.sender === "ai" && (
+                    <div className="flex items-center justify-end pt-1">
+                      <button
+                        type="button"
+                        onClick={() => handleReadAloud(msg.id, msg.text)}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                          playingMsgId === msg.id
+                            ? "bg-teal-600 text-white shadow-xs"
+                            : loadingTTSMsgId === msg.id
+                            ? "bg-amber-100 text-amber-800"
+                            : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                        }`}
+                        title="Read aloud in current language"
+                      >
+                        {loadingTTSMsgId === msg.id ? (
+                          <>
+                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                            <span>Generating Voice...</span>
+                          </>
+                        ) : playingMsgId === msg.id ? (
+                          <>
+                            <VolumeX className="w-3.5 h-3.5 animate-pulse" />
+                            <span>Stop Speaking</span>
+                          </>
+                        ) : (
+                          <>
+                            <Volume2 className="w-3.5 h-3.5 text-[#0F766E]" />
+                            <span>Read Aloud</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
+                </div>
 
                 {/* Red Flags */}
                 {msg.redFlags && msg.redFlags.length > 0 && (
@@ -297,11 +489,7 @@ export default function AIChatPage() {
             <span className="text-[11px] text-slate-400 px-1">MedGuide AI</span>
             <div className="bg-white border border-slate-200/80 rounded-2xl rounded-tl-xs px-4 py-3 shadow-xs">
               <div className="flex items-center gap-2 text-xs text-slate-500">
-                <span className="loading-dots">
-                  <span />
-                  <span />
-                  <span />
-                </span>
+                <Loader2 className="w-4 h-4 animate-spin text-[#0F766E]" />
                 <span>Retrieving source-backed health guidance...</span>
               </div>
             </div>
@@ -328,7 +516,7 @@ export default function AIChatPage() {
           type="button"
           onClick={() => handleSend()}
           disabled={loading || !inputQuery.trim()}
-          className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full font-semibold text-white bg-[#0F766E] hover:bg-[#0D635C] disabled:opacity-50 disabled:cursor-not-allowed transition-all min-h-[44px] shadow-sm shrink-0 text-sm"
+          className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full font-semibold text-white bg-[#0F766E] hover:bg-[#0D635C] disabled:opacity-50 disabled:cursor-not-allowed transition-all min-h-[44px] shadow-sm shrink-0 text-sm cursor-pointer"
         >
           <Send className="w-4 h-4" />
           <span className="hidden sm:inline">Send</span>
@@ -336,4 +524,4 @@ export default function AIChatPage() {
       </div>
     </div>
   );
-};
+}
