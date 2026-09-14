@@ -1,175 +1,151 @@
 # MedGuide AI — API Specification
 
-**Project:** MedGuide AI
 **Document:** API Specification
-**Version:** 1.0
-**Status:** Baseline API Contract
+**Version:** 2.0
+**Status:** Development Baseline — Synchronized with Project Architecture
 **API Style:** REST
 **Base Path:** `/api/v1`
-**Related Documents:**
-
-* `AGENTS.md`
-* `docs/PROJECT_SPECIFICATION.md`
-* `docs/requirements/SRS.md`
-* `docs/requirements/USE_CASES.md`
-* `docs/requirements/PRE_DEVELOPMENT_DECISIONS.md`
-* `docs/requirements/TRACEABILITY_MATRIX.md`
-* `docs/architecture/SYSTEM_ARCHITECTURE.md`
-* `docs/database/DATABASE_DESIGN.md`
-* `docs/database/ERD.md`
+**Backend:** FastAPI + Python 3.12
+**Database:** PostgreSQL + pgvector
+**Authentication:** JWT Bearer Token
+**Primary Languages:** English + Hindi + Telugu
+**Primary Deployment Model:** Local-first with controlled online AI services
 
 ---
 
 # 1. Purpose
 
-This document defines the API contract for MedGuide AI.
+This document defines the backend API contract for MedGuide AI.
 
-It specifies:
+The API provides the controlled interface between:
 
-* API structure
-* Endpoint responsibilities
-* HTTP methods
-* Authentication requirements
-* Authorization requirements
-* Request/response principles
-* Error handling
-* Validation
-* Pagination
-* Synchronization
-* AI/RAG interaction
-* Prescription processing
-* Medication management
-* Healthcare-worker operations
+```text
+Patient / Healthcare Worker PWA
+             │
+             ▼
+        FastAPI Backend
+             │
+       ┌─────┴─────┐
+       │           │
+       ▼           ▼
+  Core Services   AI Gateway
+       │           │
+       │      ┌────┼───────────────┐
+       │      │    │               │
+       ▼      ▼    ▼               ▼
+ PostgreSQL  LLM  RAG      Speech/OCR Services
+ + pgvector
+```
 
-This document defines **what the API must provide**, not how individual endpoints are internally implemented.
+The frontend must **never directly access**:
+
+* PostgreSQL
+* pgvector
+* Ollama
+* Sarvam APIs
+* embedding models
+* OCR engines
+* internal AI prompts
+* deterministic triage rules
+
+All such operations are controlled through the backend.
 
 ---
 
 # 2. API Design Principles
 
-The API must follow these principles:
+The API follows these principles:
 
-1. REST-oriented design.
-2. Versioned endpoints.
-3. Authentication for protected resources.
+1. REST-oriented resource design.
+2. Versioned API paths.
+3. Authentication before protected operations.
 4. Server-side authorization.
-5. Input validation.
-6. Consistent response structures.
-7. Consistent error structures.
-8. Minimal exposure of sensitive patient data.
-9. No direct frontend-to-database access.
-10. No direct unrestricted frontend-to-LLM access.
-11. Healthcare safety rules enforced server-side.
-12. AI responses must pass through the AI Gateway.
-13. Offline synchronization must be idempotent.
-14. APIs must not expose internal implementation details unnecessarily.
+5. Input validation using Pydantic.
+6. Consistent response envelopes.
+7. Consistent error responses.
+8. Minimum necessary health information exposure.
+9. Deterministic safety rules remain outside the LLM.
+10. AI requests pass through the AI Gateway.
+11. The frontend never communicates directly with an LLM.
+12. The frontend never communicates directly with Sarvam.
+13. Offline operations use idempotent client operation IDs.
+14. Patient data remains isolated from the global medical RAG corpus.
+15. OCR output cannot automatically become verified medication data.
+16. AI responses must distinguish evidence-grounded information from limitations.
+17. Unsupported medical claims must not be generated as a fallback.
+18. Online provider failure must degrade safely.
+19. API logs must avoid unnecessary sensitive health information.
+20. Every important operation must be traceable.
 
 ---
 
 # 3. Base URL
 
-Development:
+### Development
 
 ```text
-http://localhost:<PORT>/api/v1
+http://localhost:8000/api/v1
 ```
 
-Production:
+### Production
 
 ```text
 https://<BACKEND-DOMAIN>/api/v1
 ```
 
-The final production domain is:
-
-`TBD — Deployment Phase`
+The production URL must be configured through environment variables and must not be hard-coded into the frontend.
 
 ---
 
-# 4. API Versioning
+# 4. Authentication
 
-The initial API version is:
+Protected endpoints use:
 
-```text
-/api/v1
+```http
+Authorization: Bearer <JWT>
 ```
-
-Breaking changes should result in a new API version rather than silently changing existing contracts.
 
 Example:
 
-```text
-/api/v1/...
-/api/v2/...
+```http
+Authorization: Bearer eyJhbGciOi...
 ```
 
----
+JWT claims should contain the minimum information required for authentication and authorization.
 
-# 5. Authentication
-
-Protected endpoints require an authenticated user.
-
-Conceptually:
-
-```text
-Authorization: Bearer <access_token>
-```
-
-The exact authentication mechanism will be finalized during backend/security implementation.
-
-Authentication must not be implemented by the frontend alone.
+Sensitive health information must never be stored inside JWT claims.
 
 ---
 
-# 6. Authorization
+# 5. Roles
 
-Authentication answers:
+The API supports:
 
-> Who is the user?
+| Role                | Purpose                                              |
+| ------------------- | ---------------------------------------------------- |
+| `PATIENT`           | Access personal healthcare-support functionality     |
+| `HEALTHCARE_WORKER` | Access authorized patient information and follow-ups |
+| `ADMIN`             | Approved system administration and governance        |
 
-Authorization answers:
+Authorization is enforced **server-side**.
 
-> What is the user allowed to access?
-
-Every protected endpoint must evaluate both where applicable.
-
-Conceptual roles:
-
-```text
-PATIENT
-HEALTHCARE_WORKER
-ADMIN
-```
+Frontend route protection alone is not considered sufficient security.
 
 ---
 
-# 7. Patient Data Access Rule
+# 6. Standard Response Format
 
-A patient may access only their own authorized records.
-
-A healthcare worker may access only patient information they are authorized to access.
-
-An administrator must not automatically receive unrestricted healthcare-data access simply because they have an administrative role.
-
-Access must follow the applicable authorization and consent policies.
-
----
-
-# 8. Standard Response Structure
-
-Successful responses should follow a consistent structure.
-
-Example:
+Successful responses should use:
 
 ```json
 {
   "success": true,
   "data": {},
-  "message": "Operation completed successfully"
+  "message": "Operation completed successfully."
 }
 ```
 
-For collection responses:
+Where pagination is required:
 
 ```json
 {
@@ -179,658 +155,776 @@ For collection responses:
     "page": 1,
     "page_size": 20,
     "total": 100
-  }
+  },
+  "message": "Records retrieved successfully."
 }
 ```
 
-The exact response envelope may be simplified during implementation if a framework convention provides an equivalent consistent structure.
-
 ---
 
-# 9. Standard Error Structure
-
-Errors should follow a consistent structure.
-
-Example:
+# 7. Standard Error Format
 
 ```json
 {
   "success": false,
   "error": {
-    "code": "VALIDATION_ERROR",
-    "message": "Invalid request data",
-    "details": []
+    "code": "ERROR_CODE",
+    "message": "Human-readable error message.",
+    "details": {}
   }
 }
 ```
 
-The API must not expose:
+The API must never expose:
 
-* Stack traces
-* Database credentials
-* Internal secrets
-* Raw exception messages
-* Sensitive implementation details
-
----
-
-# 10. HTTP Status Codes
-
-The API should use appropriate HTTP status codes.
-
-| Code    | Meaning                                    |
-| ------- | ------------------------------------------ |
-| 200     | Successful request                         |
-| 201     | Resource created                           |
-| 202     | Accepted for asynchronous processing       |
-| 204     | Successful operation with no response body |
-| 400     | Invalid request                            |
-| 401     | Authentication required/failed             |
-| 403     | Insufficient authorization                 |
-| 404     | Resource not found                         |
-| 409     | Resource/state conflict                    |
-| 413     | Payload too large                          |
-| 422     | Validation failure                         |
-| 429     | Rate limit exceeded                        |
-| 500     | Internal server error                      |
-| 502/503 | External/AI service unavailable            |
+* stack traces
+* database credentials
+* JWT secrets
+* internal filesystem paths
+* internal prompts
+* raw provider credentials
+* unnecessary patient information
 
 ---
 
-# 11. Authentication APIs
+# 8. HTTP Status Codes
 
-## 11.1 Register Patient
+| Status | Meaning                                    |
+| ------ | ------------------------------------------ |
+| `200`  | Successful request                         |
+| `201`  | Resource created                           |
+| `202`  | Accepted for processing                    |
+| `204`  | Successful operation without response body |
+| `400`  | Invalid request                            |
+| `401`  | Authentication required/failed             |
+| `403`  | Insufficient permissions                   |
+| `404`  | Resource not found                         |
+| `409`  | Conflict                                   |
+| `413`  | Payload/file too large                     |
+| `422`  | Validation failure                         |
+| `429`  | Rate limit exceeded                        |
+| `500`  | Internal server error                      |
+| `502`  | External/AI provider failure               |
+| `503`  | Service temporarily unavailable            |
+
+---
+
+# 9. API Route Map
 
 ```text
-POST /auth/register
+/api/v1
+│
+├── /health
+│
+├── /auth
+│   ├── /register
+│   ├── /login
+│   ├── /logout
+│   └── /me
+│
+├── /consent
+│
+├── /patients
+│   └── /me
+│
+├── /symptoms
+│   ├── POST /
+│   └── POST /analyze
+│
+├── /ai
+│   ├── /chat
+│   ├── /speech/transcribe
+│   └── /speech/synthesize
+│
+├── /conversations
+│
+├── /prescriptions
+│
+├── /medications
+│
+├── /medication-schedules
+│
+├── /timeline
+│
+├── /alerts
+│
+├── /healthcare-workers
+│
+├── /follow-ups
+│
+├── /knowledge
+│
+├── /sync
+│
+└── /admin
+    ├── /audit-logs
+    └── /pipeline-logs
 ```
-
-**Actor:** Patient
-
-**Use Case:** UC-P01
-
-### Request
-
-```json
-{
-  "login_identifier": "user@example.com",
-  "password": "<password>",
-  "display_name": "Example User",
-  "preferred_language": "en"
-}
-```
-
-### Response
-
-```json
-{
-  "success": true,
-  "data": {
-    "user_id": "<uuid>",
-    "role": "PATIENT"
-  }
-}
-```
-
-The API must never return the password or password hash.
 
 ---
 
-# 12. Login
+# 10. Health Check
 
-```text
-POST /auth/login
-```
+## `GET /health`
 
-**Use Cases:** UC-P02, UC-P17
+Purpose:
 
-### Request
-
-```json
-{
-  "login_identifier": "user@example.com",
-  "password": "<password>"
-}
-```
-
-### Response
-
-```json
-{
-  "success": true,
-  "data": {
-    "access_token": "<token>",
-    "token_type": "bearer",
-    "user": {
-      "id": "<uuid>",
-      "role": "PATIENT"
-    }
-  }
-}
-```
-
-The final token/session implementation is:
-
-`TBD — Security Design`
-
----
-
-# 13. Logout
-
-```text
-POST /auth/logout
-```
-
-**Authentication:** Required
-
-The exact implementation depends on the final session/token strategy.
-
----
-
-# 14. Current User
-
-```text
-GET /auth/me
-```
-
-**Authentication:** Required
-
-Returns the authenticated user's basic account information and role.
-
----
-
-# 15. Consent APIs
-
-## 15.1 Get Consent Status
-
-```text
-GET /consent
-```
-
-**Actor:** Patient
-
-**Use Case:** UC-P03
-
-Returns applicable consent records/status.
-
----
-
-## 15.2 Grant Consent
-
-```text
-POST /consent
-```
-
-### Request
-
-```json
-{
-  "consent_type": "<type>",
-  "version": "1.0",
-  "status": "GRANTED"
-}
-```
-
-The system must record the consent event rather than treating consent as a simple frontend flag.
-
----
-
-## 15.3 Withdraw Consent
-
-```text
-PATCH /consent/{consent_id}
-```
-
-### Request
-
-```json
-{
-  "status": "WITHDRAWN"
-}
-```
-
-The server must apply the consequences defined by the consent policy.
-
----
-
-# 16. Patient Profile APIs
-
-## 16.1 Get Profile
-
-```text
-GET /patients/me
-```
-
-**Authentication:** Required
-
-**Actor:** Patient
-
-**Use Case:** UC-P04
-
----
-
-## 16.2 Update Profile
-
-```text
-PATCH /patients/me
-```
-
-### Request
-
-Only permitted fields may be updated.
+* Verify backend availability.
+* Verify critical infrastructure status.
+* Support local development and deployment monitoring.
 
 Example:
 
 ```json
 {
-  "display_name": "Updated Name",
-  "preferred_language": "te"
+  "success": true,
+  "data": {
+    "status": "healthy",
+    "database": "healthy",
+    "version": "0.1.0"
+  }
 }
 ```
 
+The health endpoint must not expose secrets or detailed infrastructure information.
+
 ---
 
-# 17. Symptom APIs
+# 11. Authentication APIs
 
-## 17.1 Submit Symptoms
+## 11.1 `POST /auth/register`
 
-```text
-POST /symptoms
-```
-
-**Actor:** Patient
-
-**Use Case:** UC-P06
+Creates a new account.
 
 ### Request
 
 ```json
 {
-  "input_type": "text",
-  "text": "I have fever and cough for three days",
+  "full_name": "Rajesh Kumar",
+  "email_or_phone": "rajesh@example.com",
+  "password": "SecurePassword123!",
+  "role": "PATIENT",
+  "preferred_language": "hi"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "access_token": "<JWT>",
+    "token_type": "Bearer",
+    "user": {
+      "id": "uuid",
+      "role": "PATIENT",
+      "preferred_language": "hi"
+    }
+  }
+}
+```
+
+Passwords must be securely hashed.
+
+---
+
+## 11.2 `POST /auth/login`
+
+Authenticates a user.
+
+### Request
+
+```json
+{
+  "email_or_phone": "rajesh@example.com",
+  "password": "SecurePassword123!"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "access_token": "<JWT>",
+    "token_type": "Bearer",
+    "user": {
+      "id": "uuid",
+      "role": "PATIENT",
+      "preferred_language": "hi"
+    }
+  }
+}
+```
+
+---
+
+## 11.3 `POST /auth/logout`
+
+Invalidates or otherwise handles session termination according to the selected JWT/session strategy.
+
+---
+
+## 11.4 `GET /auth/me`
+
+Returns the authenticated user's basic account information.
+
+---
+
+# 12. Consent APIs
+
+## `GET /consent`
+
+Returns the authenticated patient's consent status.
+
+## `POST /consent`
+
+Records explicit consent.
+
+Example:
+
+```json
+{
+  "consent_type": "HEALTHCARE_SUPPORT",
+  "policy_version": "2.0",
+  "granted": true
+}
+```
+
+## `PATCH /consent/{consent_id}`
+
+Updates or withdraws consent.
+
+Consent changes must be auditable.
+
+---
+
+# 13. Patient Profile APIs
+
+## `GET /patients/me`
+
+Returns the authenticated patient's profile.
+
+## `PATCH /patients/me`
+
+Updates profile information.
+
+Example:
+
+```json
+{
+  "preferred_language": "te",
+  "age": 42,
+  "village_or_town": "Example Village"
+}
+```
+
+The API must avoid collecting unnecessary personal information.
+
+---
+
+# 14. Preliminary Symptom Checker
+
+The **Preliminary Symptom Checker is the primary patient-facing workflow after sign-in.**
+
+The design goal is simplicity for rural and low-digital-literacy users.
+
+The API therefore supports structured symptom information while allowing natural-language input.
+
+---
+
+## 14.1 `POST /symptoms`
+
+Records a patient-reported symptom event.
+
+### Request
+
+```json
+{
+  "input_text": "I have fever and headache from two days",
+  "language": "en",
+  "source": "TEXT"
+}
+```
+
+Voice-derived input may use:
+
+```json
+{
+  "input_text": "నాకు రెండు రోజులుగా జ్వరం మరియు తలనొప్పి ఉంది",
+  "language": "te",
+  "source": "VOICE"
+}
+```
+
+The input is considered **patient-reported information**, not clinical truth.
+
+---
+
+# 15. Symptom Analysis & Triage
+
+## `POST /symptoms/analyze`
+
+Runs the symptom-processing pipeline.
+
+### Processing
+
+```text
+Patient Input
+     ↓
+Input Validation
+     ↓
+Symptom Extraction
+     ↓
+Structured Representation
+     ↓
+Deterministic Red-Flag Rules
+     ↓
+Risk Classification
+     ↓
+Guidance / Escalation
+```
+
+### Risk Levels
+
+```text
+ROUTINE
+URGENT
+EMERGENCY
+```
+
+The LLM must **not independently determine emergency status**.
+
+---
+
+## Emergency Example
+
+```json
+{
+  "success": true,
+  "data": {
+    "risk_level": "EMERGENCY",
+    "red_flags_detected": [
+      "SEVERE_CHEST_PAIN"
+    ],
+    "recommended_action": "Seek immediate emergency medical care.",
+    "emergency_numbers": [
+      "108",
+      "112"
+    ],
+    "escalation_required": true
+  }
+}
+```
+
+The system should present clear emergency guidance rather than attempting autonomous diagnosis.
+
+---
+
+# 16. AI Gateway
+
+All AI operations must pass through the **AI Gateway**.
+
+The frontend must never directly call:
+
+```text
+Ollama
+Sarvam
+OpenAI
+Gemini
+Claude
+local OCR engines
+local speech models
+```
+
+The API layer communicates with the AI Gateway, which selects the appropriate provider.
+
+---
+
+# 17. AI Provider Separation
+
+The project intentionally separates AI responsibilities.
+
+```text
+                    AI GATEWAY
+                        │
+        ┌───────────────┼──────────────────┐
+        │               │                  │
+        ▼               ▼                  ▼
+   LOCAL LLM       ONLINE SERVICES     LOCAL FALLBACKS
+   Ollama          Sarvam AI           Evaluated models
+        │               │
+        │          ┌────┼─────┐
+        │          ▼    ▼     ▼
+        │         STT  TTS   OCR
+        │
+        ▼
+ RAG-grounded generation
+```
+
+### Ollama
+
+Ollama is the **local LLM runtime**.
+
+It is used for tasks such as:
+
+* healthcare-support response generation
+* explanation
+* summarization
+* multilingual response generation
+* RAG-grounded language generation
+
+The exact LLM is **not permanently fixed** until benchmarking.
+
+Candidate models may include Qwen, Gemma, and other evaluated local models.
+
+### Sarvam AI
+
+Sarvam is an **online specialized Indian-language AI provider**.
+
+It may be used for:
+
+* Speech-to-Text
+* Text-to-Speech
+* Prescription/document OCR where suitable
+* Other evaluated Indian-language processing capabilities
+
+Sarvam is **not the project's mandatory LLM reasoning engine**.
+
+### Important Offline Boundary
+
+If internet connectivity is unavailable:
+
+```text
+Sarvam online services
+        ↓
+      UNAVAILABLE
+```
+
+The system must use an evaluated local alternative where one exists.
+
+Core offline functionality must not depend on Sarvam.
+
+---
+
+# 18. AI Health Companion
+
+## `POST /ai/chat`
+
+Processes a patient health question.
+
+### Request
+
+```json
+{
+  "message": "What should I do if I have a fever?",
+  "language": "en",
+  "conversation_id": "uuid"
+}
+```
+
+---
+
+# 19. AI Chat Processing Pipeline
+
+```text
+User Query
+    ↓
+Input Validation
+    ↓
+Safety / Red-Flag Precheck
+    ↓
+Query Understanding
+    ↓
+RAG Retrieval
+    ↓
+Evidence Sufficiency Gate
+    │
+    ├── Insufficient Evidence
+    │       ↓
+    │   Safe Limitation
+    │
+    └── Sufficient Evidence
+            ↓
+       Ollama / Selected LLM
+            ↓
+       Safety Validation
+            ↓
+       Citation Attachment
+            ↓
+       Response
+```
+
+---
+
+# 20. RAG Evidence Rule
+
+The LLM must not be presented with the assumption that every medical question has sufficient evidence.
+
+The API must distinguish:
+
+```text
+GROUNDED
+INSUFFICIENT_EVIDENCE
+SAFE_REFUSAL
+EMERGENCY_ESCALATION
+```
+
+If the evidence gate determines that the knowledge base does not contain sufficient information, the system must not fabricate an answer.
+
+---
+
+# 21. AI Chat Response
+
+Example:
+
+```json
+{
+  "success": true,
+  "data": {
+    "conversation_id": "uuid",
+    "response_type": "HEALTH_GUIDANCE",
+    "message": "Fever can have several causes. Monitor your temperature and drink enough fluids.",
+    "language": "en",
+    "red_flags": [],
+    "evidence_status": "GROUNDED",
+    "sources": [
+      {
+        "title": "Approved Medical Guideline",
+        "publisher": "WHO",
+        "publication_date": "2024"
+      }
+    ],
+    "disclaimer": "This information is for health guidance and does not provide a medical diagnosis."
+  }
+}
+```
+
+---
+
+# 22. AI Safety Requirements
+
+The AI API must prevent:
+
+* definitive diagnosis
+* autonomous prescribing
+* unsupported medication dosage
+* fabricated medical citations
+* fabricated clinical rules
+* unsafe treatment changes
+* false certainty
+
+AI output must remain distinguishable from deterministic system decisions.
+
+---
+
+# 23. Conversation APIs
+
+## `GET /conversations`
+
+Lists authorized patient conversations.
+
+## `GET /conversations/{id}`
+
+Returns an individual conversation.
+
+## `DELETE /conversations/{id}`
+
+Deletes a conversation where permitted by the retention policy.
+
+Raw conversations should not be retained indefinitely without a defined purpose.
+
+Health-relevant structured information may be retained for continuity of care.
+
+---
+
+# 24. Speech-to-Text
+
+## `POST /ai/speech/transcribe`
+
+Accepts an audio file.
+
+### Request
+
+```text
+multipart/form-data
+audio=<file>
+language=hi
+```
+
+### Provider routing
+
+```text
+Speech Input
+     ↓
+AI Gateway
+     ↓
+Online?
+ ┌───┴────┐
+ YES      NO
+ │         │
+Sarvam    Local
+STT       STT
+```
+
+The selected provider must be recorded in processing metadata.
+
+### Response
+
+```json
+{
+  "success": true,
+  "data": {
+    "transcript": "मुझे दो दिन से बुखार है",
+    "language": "hi",
+    "provider": "sarvam",
+    "confidence": 0.91
+  }
+}
+```
+
+Confidence values must only be returned when the underlying provider supports a meaningful confidence estimate.
+
+---
+
+# 25. Text-to-Speech
+
+## `POST /ai/speech/synthesize`
+
+Converts generated text to speech.
+
+### Request
+
+```json
+{
+  "text": "Please drink enough fluids.",
   "language": "en"
 }
 ```
 
-### Response
-
-```json
-{
-  "success": true,
-  "data": {
-    "symptom_record_id": "<uuid>",
-    "status": "RECORDED"
-  }
-}
-```
-
-This endpoint records patient input.
-
-It should not independently claim a diagnosis.
-
----
-
-# 18. Analyze Symptoms
+### Provider routing
 
 ```text
-POST /symptoms/analyze
-```
-
-**Use Cases:** UC-P06, UC-P07
-
-This endpoint invokes the symptom-processing and safety pipeline.
-
-### Request
-
-```json
-{
-  "symptom_record_id": "<uuid>"
-}
-```
-
-### Conceptual Response
-
-```json
-{
-  "success": true,
-  "data": {
-    "risk_level": "ROUTINE",
-    "red_flags": [],
-    "guidance": "...",
-    "escalation_required": false
-  }
-}
-```
-
-The exact clinical categories and fields will be finalized after the safety-rule design.
-
----
-
-# 19. Red-Flag Rule
-
-The API must not allow an LLM alone to determine emergency behavior.
-
-Conceptually:
-
-```text
-Input
- ↓
-Structured Symptoms
- ↓
-Triage Rules
- ↓
-Risk Classification
- ↓
-Escalation
-```
-
-The LLM may assist with extraction or explanation, but defined safety rules must remain independently testable.
-
----
-
-# 20. AI Health Query API
-
-```text
-POST /ai/chat
-```
-
-**Actor:** Patient
-
-**Use Case:** UC-P05
-
-### Request
-
-```json
-{
-  "message": "What should I know about fever?",
-  "language": "en",
-  "conversation_id": "<uuid>"
-}
-```
-
-### Response
-
-```json
-{
-  "success": true,
-  "data": {
-    "conversation_id": "<uuid>",
-    "message": "...",
-    "sources": []
-  }
-}
-```
-
----
-
-# 21. AI Response Requirements
-
-Applicable healthcare responses should:
-
-* Use approved knowledge where appropriate.
-* Avoid unsupported medical claims.
-* Communicate uncertainty.
-* Avoid definitive diagnosis.
-* Avoid autonomous prescribing.
-* Provide escalation guidance where required.
-
----
-
-# 22. RAG Source Attribution
-
-Where a response is grounded using RAG, the response may include source information.
-
-Conceptually:
-
-```json
-{
-  "sources": [
-    {
-      "document_id": "<uuid>",
-      "title": "Approved Medical Guideline",
-      "publisher": "..."
-    }
-  ]
-}
-```
-
-Only approved source metadata should be exposed.
-
-Internal vector/database details must not be exposed.
-
----
-
-# 23. RAG Query API
-
-The frontend should normally use:
-
-```text
-POST /ai/chat
-```
-
-rather than directly calling a vector database.
-
-Internally:
-
-```text
-/api/v1/ai/chat
-        ↓
+Text Response
+     ↓
 AI Gateway
-        ↓
-Query Processing
-        ↓
-Vector Retrieval
-        ↓
-LLM
+     ↓
+Online?
+ ┌───┴────┐
+ YES      NO
+ │         │
+Sarvam    Local TTS
+TTS       fallback
 ```
+
+Sarvam is preferred for evaluated Indian-language voice quality when online.
 
 ---
 
-# 24. Conversation APIs
+# 26. Multilingual Support
 
-## Get Conversations
+Phase 1 languages:
 
 ```text
-GET /conversations
+English
+Hindi
+Telugu
 ```
 
-Returns only conversations belonging to the authenticated patient.
+Language support must be evaluated independently.
+
+A language must not be advertised as fully supported merely because a model technically accepts the language.
+
+Evaluation should cover:
+
+* text understanding
+* generation
+* medical terminology
+* code-mixing
+* STT
+* TTS
+* OCR where applicable
+* safety behavior
 
 ---
 
-## Get Conversation
+# 27. Prescription Upload
 
-```text
-GET /conversations/{conversation_id}
-```
+## `POST /prescriptions`
 
-Authorization must verify ownership/access.
+Accepts a prescription image.
+
+### Requirements
+
+* authenticated user
+* authorized ownership
+* allowed image formats
+* file-size limit
+* image validation
+* safe storage
+* randomized storage reference
+* checksum generation
 
 ---
 
-## Delete Conversation
+# 28. Prescription OCR
+
+## `POST /prescriptions/{id}/ocr`
+
+Runs OCR processing.
+
+### Provider routing
 
 ```text
-DELETE /conversations/{conversation_id}
+Prescription Image
+       ↓
+Preprocessing
+       ↓
+AI Gateway
+       ↓
+Online?
+ ┌─────┴──────┐
+ YES          NO
+ │             │
+Sarvam OCR   Local OCR
+             fallback
 ```
 
-Actual deletion behavior must follow the final retention policy.
+Candidate local OCR engines must be evaluated before being designated as the offline fallback.
 
 ---
 
-# 25. Voice API
-
-## Speech-to-Text
-
-```text
-POST /speech/transcribe
-```
-
-**Use Case:** UC-P14
-
-Input:
-
-* Audio file
-* Language where applicable
-
-Output:
+# 29. OCR Response
 
 ```json
 {
   "success": true,
   "data": {
-    "transcript": "...",
-    "language": "te",
-    "confidence": 0.0
+    "prescription_id": "uuid",
+    "status": "REQUIRES_REVIEW",
+    "provider": "sarvam",
+    "raw_text": "...",
+    "confidence": 0.87
   }
 }
 ```
 
-The exact confidence representation depends on the selected speech model.
+OCR output is **unverified information**.
 
 ---
 
-# 26. Voice Safety Rule
+# 30. Prescription Verification
 
-Speech recognition output must be treated as potentially incorrect.
+## `POST /prescriptions/{id}/verify`
 
-For safety-sensitive workflows:
+The user or authorized healthcare worker verifies extracted information.
 
-```text
-Audio
- ↓
-Transcript
- ↓
-Verification where appropriate
- ↓
-Healthcare Processing
-```
-
-The system must not assume the transcript is perfectly accurate.
-
----
-
-# 27. Multilingual API Behavior
-
-Language may be supplied explicitly:
-
-```json
-{
-  "language": "te"
-}
-```
-
-or inferred where supported.
-
-The supported-language list must come from the approved model/evaluation configuration.
-
-The system must not advertise unsupported languages.
-
----
-
-# 28. Prescription APIs
-
-## 28.1 Upload Prescription
+Mandatory workflow:
 
 ```text
-POST /prescriptions
-```
-
-**Use Case:** UC-P08
-
-Content type:
-
-```text
-multipart/form-data
-```
-
-Input:
-
-```text
-prescription image
-```
-
-The server must validate:
-
-* File type
-* File size
-* Image validity
-* Authorization
-
----
-
-# 29. Process Prescription OCR
-
-```text
-POST /prescriptions/{prescription_id}/ocr
-```
-
-**Use Case:** UC-P09
-
-Conceptual response:
-
-```json
-{
-  "success": true,
-  "data": {
-    "ocr_result_id": "<uuid>",
-    "status": "REQUIRES_REVIEW"
-  }
-}
-```
-
-OCR output is not automatically verified medication data.
-
----
-
-# 30. Get OCR Result
-
-```text
-GET /prescriptions/{prescription_id}/ocr
-```
-
-Returns the latest authorized OCR result.
-
----
-
-# 31. Verify Prescription Information
-
-```text
-POST /prescriptions/{prescription_id}/verify
-```
-
-**Actor:** Patient / authorized healthcare worker depending on workflow.
-
-### Conceptual Request
-
-```json
-{
-  "verification_status": "VERIFIED"
-}
-```
-
-Verification rules must be defined before allowing medication scheduling.
-
----
-
-# 32. Prescription Safety Boundary
-
-The system must not silently transform:
-
-```text
-OCR output
-```
-
-into:
-
-```text
-verified medication
-```
-
-The intended workflow is:
-
-```text
-Prescription
+Image
  ↓
 OCR
  ↓
@@ -838,356 +932,211 @@ Extraction
  ↓
 Confidence
  ↓
-Verification
+Human Verification
  ↓
-Medication
+Verified Medication
+ ↓
+Schedule
 ```
+
+The API must never silently convert OCR output into an active medication schedule.
 
 ---
 
-# 33. Medication APIs
+# 31. Medication APIs
 
-## Create Medication
+## `POST /medications`
 
-```text
-POST /medications
-```
+Creates a medication only after the required verification workflow.
 
-A medication may be created only through an approved and sufficiently verified workflow.
+## `GET /medications`
 
----
+Returns the patient's medications.
 
-## Get Medications
+## `GET /medications/{id}`
 
-```text
-GET /medications
-```
+Returns a medication.
 
-Returns medications belonging to the authenticated patient.
+## `PATCH /medications/{id}`
+
+Updates authorized medication information.
 
 ---
 
-## Get Medication
+# 32. Medication Schedule APIs
 
-```text
-GET /medications/{medication_id}
-```
+## `POST /medications/{id}/schedules`
 
----
+Creates a medication schedule.
 
-## Update Medication
-
-```text
-PATCH /medications/{medication_id}
-```
-
-Updates only permitted information.
-
-Medication modification must not become autonomous AI prescribing.
-
----
-
-# 34. Medication Schedule APIs
-
-## Create Schedule
-
-```text
-POST /medications/{medication_id}/schedules
-```
-
-### Conceptual Request
+Example:
 
 ```json
 {
-  "frequency": "...",
-  "schedule_data": {},
-  "start_date": "2026-08-11",
-  "end_date": "2026-08-20",
+  "frequency": "TWICE_DAILY",
+  "start_date": "2026-08-25",
+  "end_date": "2026-09-01",
   "timezone": "Asia/Kolkata"
 }
 ```
 
----
+## `GET /medications/{id}/schedules`
 
-## Get Schedules
+Lists schedules.
 
-```text
-GET /medications/{medication_id}/schedules
-```
+## `PATCH /medication-schedules/{id}`
 
----
-
-## Update Schedule
-
-```text
-PATCH /medication-schedules/{schedule_id}
-```
+Updates a schedule.
 
 ---
 
-# 35. Medication Adherence APIs
+# 33. Medication Adherence
 
-## Record Adherence
+## `POST /medication-schedules/{id}/adherence`
+
+Records an adherence event.
+
+Possible values:
 
 ```text
-POST /medication-schedules/{schedule_id}/adherence
+TAKEN
+MISSED
+SKIPPED
+UNKNOWN
 ```
 
-### Request
-
-```json
-{
-  "scheduled_at": "2026-08-11T08:00:00+05:30",
-  "status": "TAKEN"
-}
-```
+Adherence records should be timestamped events.
 
 ---
 
-## Get Adherence
+# 34. Reminder Strategy
 
-```text
-GET /medication-schedules/{schedule_id}/adherence
-```
+The MVP uses:
+
+* PWA notifications where supported
+* local scheduling where technically possible
+
+SMS is **not a mandatory dependency**.
 
 ---
 
-# 36. Reminder API
+# 35. Health Timeline
 
-Medication reminders should preferably be generated from medication schedules rather than manually creating unrelated reminder records.
+## `GET /timeline`
 
-The exact notification architecture remains:
+Returns a patient's chronological health timeline.
 
-`TBD — Notification Design`
-
-Possible internal flow:
+Possible events:
 
 ```text
-Medication Schedule
-       ↓
-Reminder Scheduler
-       ↓
-Notification
+SYMPTOM_REPORTED
+TRIAGE_COMPLETED
+AI_INTERACTION
+PRESCRIPTION_ADDED
+MEDICATION_VERIFIED
+MEDICATION_ADHERENCE
+ALERT_CREATED
+FOLLOWUP_CREATED
 ```
 
 ---
 
-# 37. Health Timeline APIs
+# 36. Alerts
 
-## Get Timeline
+## `GET /alerts`
 
-```text
-GET /timeline
-```
+Returns authorized patient alerts.
 
-Supports:
+## `GET /alerts/{id}`
 
-* Pagination
-* Chronological ordering
-* Optional date filtering
+Returns a specific alert.
 
-Example:
+## `PATCH /alerts/{id}`
 
-```text
-GET /timeline?page=1&page_size=20
-```
+Updates an alert status where authorized.
+
+Emergency-related alerts must originate from deterministic safety logic.
 
 ---
 
-## Get Timeline Event
+# 37. Healthcare Worker APIs
 
-```text
-GET /timeline/{event_id}
-```
+## `GET /healthcare-workers/patients`
 
-Only authorized events may be returned.
+Returns patients the authenticated healthcare worker is authorized to access.
 
----
+## `GET /healthcare-workers/patients/{id}`
 
-# 38. Alert APIs
+Returns the authorized patient's relevant information.
 
-## Get Patient Alerts
-
-```text
-GET /alerts
-```
+Access must be audited.
 
 ---
 
-## Get Alert
+# 38. AI-Generated Patient Summary
+
+## `GET /healthcare-workers/patients/{id}/summary`
+
+Provides a structured summary of patient-reported information and relevant system events.
+
+The summary must clearly distinguish:
 
 ```text
-GET /alerts/{alert_id}
+PATIENT-REPORTED FACT
+        ≠
+AI-GENERATED SUMMARY
+        ≠
+CLINICAL DECISION
 ```
+
+The summary is not a diagnosis.
 
 ---
 
-## Acknowledge Alert
+# 39. Follow-Up APIs
 
-```text
-PATCH /alerts/{alert_id}
-```
+## `POST /follow-ups`
 
-Example:
+Creates a healthcare-worker follow-up.
 
-```json
-{
-  "status": "ACKNOWLEDGED"
-}
-```
+## `GET /follow-ups`
 
-Only authorized actors may acknowledge or resolve an alert.
+Lists authorized follow-ups.
 
----
+## `GET /follow-ups/{id}`
 
-# 39. Healthcare Worker APIs
+Retrieves a follow-up.
 
-## Get Authorized Patients
+## `PATCH /follow-ups/{id}`
 
-```text
-GET /healthcare-workers/patients
-```
-
-**Actor:** Healthcare Worker
-
-**Use Case:** UC-P18
-
-The endpoint must enforce patient-access authorization.
+Updates a follow-up.
 
 ---
 
-# 40. Get Patient Record
+# 40. Medical Knowledge Management
 
-```text
-GET /healthcare-workers/patients/{patient_id}
-```
+## `POST /knowledge/documents`
 
-Returns only information the healthcare worker is authorized to access.
+Registers a candidate medical document.
 
----
+## `GET /knowledge/documents`
 
-# 41. Get Patient Summary
+Lists authorized knowledge documents.
 
-```text
-GET /healthcare-workers/patients/{patient_id}/summary
-```
+## `GET /knowledge/documents/{id}`
 
-or, if generation is computationally expensive:
+Returns document metadata.
 
-```text
-POST /healthcare-workers/patients/{patient_id}/summary
-```
+## `POST /knowledge/documents/{id}/approve`
 
-The final method depends on whether summary generation is synchronous or asynchronous.
+Approves a document for RAG ingestion.
 
----
+## `POST /knowledge/documents/{id}/ingest`
 
-# 42. AI Summary Safety
-
-The healthcare-worker dashboard must distinguish:
-
-```text
-Patient-reported data
-```
-
-from:
-
-```text
-AI-generated summary
-```
-
-The AI summary must not be represented as a clinical diagnosis.
-
-The original patient information must remain available for verification.
-
----
-
-# 43. Follow-Up APIs
-
-## Create Follow-Up
-
-```text
-POST /follow-ups
-```
-
-**Actor:** Healthcare Worker
-
----
-
-## Get Follow-Ups
-
-```text
-GET /follow-ups
-```
-
----
-
-## Get Follow-Up
-
-```text
-GET /follow-ups/{follow_up_id}
-```
-
----
-
-## Update Follow-Up
-
-```text
-PATCH /follow-ups/{follow_up_id}
-```
-
----
-
-# 44. Knowledge Management APIs
-
-Knowledge-management APIs are restricted to authorized personnel.
-
-## Create Medical Document
-
-```text
-POST /knowledge/documents
-```
-
----
-
-## Get Medical Documents
-
-```text
-GET /knowledge/documents
-```
-
----
-
-## Get Medical Document
-
-```text
-GET /knowledge/documents/{document_id}
-```
-
----
-
-## Approve Medical Document
-
-```text
-POST /knowledge/documents/{document_id}/approve
-```
-
-Only approved documents may become part of the production RAG corpus.
-
----
-
-# 45. Knowledge Ingestion
-
-```text
-POST /knowledge/documents/{document_id}/ingest
-```
-
-Conceptual pipeline:
+Processes:
 
 ```text
 Document
- ↓
-Validation
  ↓
 Cleaning
  ↓
@@ -1195,60 +1144,62 @@ Chunking
  ↓
 Embedding
  ↓
-Vector Storage
+pgvector
 ```
 
-The endpoint must not allow arbitrary public users to inject knowledge into the production RAG system.
+Only approved documents may enter the production RAG corpus.
 
 ---
 
-# 46. Knowledge Versioning
+# 41. Knowledge Source Metadata
 
-The knowledge system must retain:
+Each medical source should maintain:
 
-* Source
-* Publisher
-* Version
-* Language
-* Publication date
-* Review status
-* Last review
-* Embedding/model metadata where required
+```text
+Source name
+Publisher
+Title
+Publication date
+Version
+Language
+Topic
+License / usage information
+Review status
+Last reviewed date
+```
+
+This metadata is required for traceability.
 
 ---
 
-# 47. Nearby Healthcare Resources
+# 42. Nearby Healthcare Resources — Phase 2
 
-This is currently **Phase 2**.
+## `GET /resources/nearby`
 
-If implemented:
+This endpoint is **not part of the core MVP**.
 
-```text
-GET /resources/nearby
-```
+It may later provide:
 
-Potential query parameters:
+* nearby healthcare facilities
+* PHCs
+* hospitals
+* other approved resources
 
-```text
-latitude
-longitude
-radius
-resource_type
-```
+Implementation requires additional work around:
 
-The endpoint must require appropriate location permission and must not falsely imply emergency-service capability.
+* location permissions
+* geographic data
+* rural POI accuracy
+* privacy
+* data freshness
 
 ---
 
-# 48. Offline Synchronization APIs
+# 43. Offline Synchronization
 
-## Sync Pending Operations
+## `POST /sync`
 
-```text
-POST /sync
-```
-
-The request contains one or more client operations.
+Synchronizes locally queued operations.
 
 Example:
 
@@ -1256,9 +1207,10 @@ Example:
 {
   "operations": [
     {
-      "client_operation_id": "<unique-id>",
+      "client_operation_id": "device-uuid-operation-001",
       "operation_type": "CREATE",
-      "entity_type": "MEDICATION_ADHERENCE",
+      "entity_type": "SYMPTOM_RECORD",
+      "entity_id": "uuid",
       "payload": {}
     }
   ]
@@ -1267,22 +1219,26 @@ Example:
 
 ---
 
-# 49. Sync Response
+# 44. Sync Processing
 
-Example:
-
-```json
-{
-  "success": true,
-  "data": {
-    "results": [
-      {
-        "client_operation_id": "<unique-id>",
-        "status": "SYNCED"
-      }
-    ]
-  }
-}
+```text
+Offline Client
+      ↓
+IndexedDB Queue
+      ↓
+Connectivity Restored
+      ↓
+POST /sync
+      ↓
+Authenticate
+      ↓
+Validate
+      ↓
+Check client_operation_id
+      ↓
+Apply transaction
+      ↓
+Return status
 ```
 
 Possible results:
@@ -1296,505 +1252,683 @@ CONFLICT
 
 ---
 
-# 50. Synchronization Safety
+# 45. Offline Conflict Policy
 
-The server must:
+Health events should preferably be immutable timestamped events.
 
-1. Authenticate the user.
-2. Validate the operation.
-3. Verify authorization.
-4. Verify the entity.
-5. Check the client operation ID.
-6. Prevent duplicate processing.
-7. Apply transaction where required.
-8. Return a synchronization result.
-
-Offline mode must not bypass server-side security.
-
----
-
-# 51. Audit API
-
-Audit records should generally **not be exposed as a normal patient API**.
-
-Authorized administrators/security personnel may have restricted access through an administrative interface if required.
-
-Example:
+Examples:
 
 ```text
-GET /admin/audit-logs
+Symptom recorded offline
+        ↓
+Append event
+
+Medication taken offline
+        ↓
+Append adherence event
 ```
 
-This remains restricted and optional for the MVP.
+This avoids destructive conflict resolution.
+
+Profile updates may require a different strategy such as last-write-wins or user resolution.
 
 ---
 
-# 52. Pagination
+# 46. Audit API
 
-Collection endpoints should support pagination.
+## `GET /admin/audit-logs`
 
-Preferred parameters:
+Restricted to authorized administrators.
+
+Auditable operations include:
+
+* patient record access
+* patient summary access
+* consent changes
+* prescription access
+* alert review
+* follow-up creation
+* knowledge-base changes
+* administrative actions
+
+Audit logs must avoid storing unnecessary patient content.
+
+---
+
+# 47. AI Pipeline Activity
+
+## `GET /admin/pipeline-logs`
+
+Restricted developer/admin endpoint for system observability.
+
+Possible events:
+
+```text
+ASR_STARTED
+ASR_COMPLETED
+TRIAGE_STARTED
+RED_FLAG_DETECTED
+RAG_RETRIEVAL
+EVIDENCE_GATE
+LLM_GENERATION
+SAFETY_VALIDATION
+TTS_GENERATION
+OCR_STARTED
+OCR_COMPLETED
+PROVIDER_FALLBACK
+```
+
+Sensitive patient content must not be exposed through the activity interface.
+
+---
+
+# 48. AI Provider Metadata
+
+For reproducibility, AI processing records should identify:
+
+```text
+provider
+model
+model_version
+local_or_online
+quantization
+prompt_version
+embedding_model
+knowledge_base_version
+latency
+status
+```
+
+Provider credentials must never be exposed.
+
+---
+
+# 49. Provider Failure Handling
+
+If Sarvam is unavailable:
+
+```text
+Sarvam Failure
+      ↓
+AI Gateway
+      ↓
+Local evaluated fallback
+      ↓
+Success
+```
+
+If no suitable fallback exists:
+
+```text
+Provider Failure
+      ↓
+Safe unavailable response
+```
+
+For LLM generation:
+
+```text
+Primary local model
+       ↓ failure
+Retry
+       ↓
+Fallback evaluated model
+       ↓ failure
+Safe non-AI response
+```
+
+The system must never replace provider failure with fabricated medical content.
+
+---
+
+# 50. Rate Limiting
+
+Rate limits should be applied to:
+
+* authentication endpoints
+* AI requests
+* speech requests
+* OCR requests
+* file uploads
+* synchronization
+* administrative endpoints
+
+Limits should be configurable through environment settings.
+
+---
+
+# 51. File Upload Security
+
+All uploads require:
+
+* authentication
+* authorization
+* MIME validation
+* file extension validation
+* size limits
+* image validation
+* randomized storage references
+* checksum
+* restricted access
+* safe storage outside public webroot
+
+Malware scanning should be added where practical.
+
+---
+
+# 52. AI Request Security
+
+The API must protect against:
+
+* direct prompt injection
+* indirect prompt injection
+* RAG poisoning
+* malicious retrieved content
+* output manipulation
+* excessive token requests
+* unsafe generation attempts
+
+Retrieved medical content must never override system safety instructions.
+
+---
+
+# 53. Request Validation
+
+Pydantic schemas must validate:
+
+* required fields
+* data types
+* string lengths
+* enum values
+* dates
+* language codes
+* numeric ranges
+* file types
+* payload sizes
+
+Invalid requests must return `422` where appropriate.
+
+---
+
+# 54. Pagination
+
+Collection endpoints use:
 
 ```text
 ?page=1&page_size=20
 ```
 
-The backend must enforce a maximum page size.
+The server must enforce a maximum page size.
+
+---
+
+# 55. Filtering
+
+Where applicable:
+
+```text
+?status=OPEN
+```
+
+or:
+
+```text
+?from=2026-08-01&to=2026-08-31
+```
+
+Filtering must be authorized and scoped to the requesting user.
+
+---
+
+# 56. Sorting
+
+APIs returning chronological data should use deterministic ordering.
 
 Example:
-
-```text
-page_size <= MAX_PAGE_SIZE
-```
-
-The exact maximum is:
-
-`TBD — Performance Design`
-
----
-
-# 53. Filtering
-
-Filtering should only be added where it has a clear use case.
-
-Examples:
-
-```text
-GET /timeline?from=...&to=...
-GET /alerts?status=OPEN
-GET /follow-ups?status=PENDING
-```
-
-Avoid creating arbitrary filter combinations.
-
----
-
-# 54. Sorting
-
-Sensitive patient records should use deterministic ordering.
-
-For timeline events:
 
 ```text
 event_time DESC
 ```
 
-Where timestamps can be identical, a secondary stable identifier/order should be used.
+---
+
+# 57. Idempotency
+
+Operations that may be retried must support idempotency.
+
+This is especially important for:
+
+* offline synchronization
+* medication adherence
+* symptom creation
+* prescription operations
+* other important writes
+
+Client-generated IDs must be unique.
 
 ---
 
-# 55. Idempotency
+# 58. Low-Bandwidth Requirements
 
-Operations that may be retried must support idempotency where appropriate.
+The API should support low-connectivity environments through:
 
-Especially:
+* compact JSON payloads
+* pagination
+* caching
+* image compression
+* retry with backoff
+* efficient synchronization
+* avoiding unnecessary repeated downloads
 
-* Offline synchronization
-* File processing
-* Notification creation
-* Important write operations
-
-Client-generated idempotency keys may be used where required.
-
----
-
-# 56. File Upload Limits
-
-Prescription upload APIs must enforce:
-
-* Maximum file size
-* Allowed MIME types
-* Allowed image formats
-* Request timeout
-* Authentication
-* Authorization
-
-Exact limits:
-
-`TBD — Security/Performance Design`
+Large responses should not be returned when a summary is sufficient.
 
 ---
 
-# 57. AI Request Limits
+# 59. Request Correlation
 
-AI endpoints must have appropriate protections against abuse.
+The API should support:
 
-Potential controls:
-
-* Rate limiting
-* Request size limits
-* Token/input limits
-* Authentication
-* Timeout
-* Retry policy
-
-Exact limits:
-
-`TBD — Performance/Security Design`
-
----
-
-# 58. AI Failure Response
-
-If the AI service is unavailable:
-
-```text
-POST /ai/chat
-        ↓
-AI Service Failure
-        ↓
-Safe API Response
+```http
+X-Request-ID: <unique-request-id>
 ```
 
-The API must not fabricate a response.
-
-Example:
-
-```json
-{
-  "success": false,
-  "error": {
-    "code": "AI_SERVICE_UNAVAILABLE",
-    "message": "Healthcare assistance is temporarily unavailable. Please try again or consult a qualified healthcare professional."
-  }
-}
-```
-
-The exact user-facing wording will be finalized during UX design.
-
----
-
-# 59. RAG Retrieval Failure
-
-If the system cannot retrieve sufficiently relevant approved medical knowledge:
-
-```text
-AI Request
- ↓
-Retrieval
- ↓
-Insufficient Evidence
-```
-
-The API must return a safe response rather than falsely claiming that the answer is grounded.
-
----
-
-# 60. Validation Rules
-
-All API inputs must be validated before processing.
-
-Validation includes:
-
-* Data types
-* Required fields
-* String lengths
-* Enum values
-* Date/time formats
-* File types
-* Payload sizes
-* Authorization context
-
-Healthcare-specific validation must be handled by the appropriate domain service.
-
----
-
-# 61. API Security Rules
-
-The API must:
-
-* Require authentication where applicable.
-* Enforce authorization server-side.
-* Validate every request.
-* Prevent unauthorized patient access.
-* Protect sensitive responses.
-* Rate-limit abuse-prone endpoints.
-* Never expose secrets.
-* Never expose database credentials.
-* Never expose internal stack traces.
-* Validate uploaded files.
-* Apply appropriate CORS policy.
-
----
-
-# 62. CORS
-
-The backend must allow requests only from approved frontend origins.
-
-Development origins may include:
-
-```text
-localhost
-```
-
-Production origins will be explicitly configured.
-
-Wildcard CORS should not be used for sensitive authenticated APIs unless there is a justified architecture decision.
-
----
-
-# 63. API Logging
-
-API logs may record:
-
-* Request method
-* Endpoint
-* Status code
-* Request duration
-* Correlation/request ID
-* Error code
-
-Logs should not unnecessarily contain:
-
-* Full patient symptoms
-* Prescription contents
-* Passwords
-* Access tokens
-* Sensitive health information
-
----
-
-# 64. Request Correlation
-
-The API should support a request/correlation identifier.
-
-Conceptually:
-
-```text
-X-Request-ID: <uuid>
-```
-
-This helps trace:
+This allows a single request to be traced across:
 
 ```text
 Frontend
  ↓
-API
+FastAPI
  ↓
-AI
+AI Gateway
  ↓
-Database
+RAG
+ ↓
+LLM / Sarvam / Local Provider
 ```
 
-without exposing sensitive content.
+---
+
+# 60. Logging Requirements
+
+Logs may contain:
+
+* request ID
+* endpoint
+* HTTP method
+* status
+* latency
+* provider
+* model identifier
+* error category
+
+Logs must not unnecessarily contain:
+
+* patient symptoms
+* prescription contents
+* passwords
+* tokens
+* API keys
+* raw medical conversations
 
 ---
 
-# 65. API Documentation
+# 61. AI Latency and Provider Observability
 
-The FastAPI implementation should expose automatically generated API documentation during development.
-
-The documentation must reflect the actual implemented contract.
-
-The API documentation should not be treated as a replacement for this specification.
-
----
-
-# 66. API Testing Requirements
-
-Every Core MVP endpoint should eventually have tests for:
-
-### Success
-
-Valid request → expected response.
-
-### Validation
-
-Invalid request → expected validation error.
-
-### Authentication
-
-Unauthenticated request → `401`.
-
-### Authorization
-
-Unauthorized resource access → `403`.
-
-### Not Found
-
-Missing resource → `404`.
-
-### Conflict
-
-Invalid state/duplicate operation → `409`.
-
-### Server/External Failure
-
-Dependency failure → safe error.
-
----
-
-# 67. API Traceability
-
-| API Group               | Main Requirements          |
-| ----------------------- | -------------------------- |
-| `/auth`                 | FR-01, FR-02, FR-03        |
-| `/consent`              | FR-04                      |
-| `/patients`             | FR-05                      |
-| `/symptoms`             | FR-07, FR-08, FR-09, FR-10 |
-| `/ai`                   | FR-06, FR-11               |
-| `/conversations`        | FR-06                      |
-| `/speech`               | FR-25                      |
-| `/prescriptions`        | FR-13, FR-14, FR-15        |
-| `/medications`          | FR-16                      |
-| `/medication-schedules` | FR-17, FR-18               |
-| `/timeline`             | FR-19                      |
-| `/alerts`               | FR-23                      |
-| `/healthcare-workers`   | FR-20, FR-21               |
-| `/follow-ups`           | FR-22                      |
-| `/knowledge`            | FR-12                      |
-| `/sync`                 | FR-26, FR-27               |
-| `/resources`            | FR-28, Phase 2             |
-
----
-
-# 68. APIs Explicitly Out of MVP
-
-The following APIs should **not** be implemented unless scope is formally changed:
+The AI Gateway should record:
 
 ```text
-Payments
-Insurance
-Pharmacy ordering
-Drug inventory
-Hospital management
-Ambulance dispatch
-Appointment booking
-Wearable device ingestion
-Full EHR integration
-Outbreak prediction
+provider
+operation
+start_time
+end_time
+latency
+success/failure
+fallback_used
 ```
 
-These remain outside the approved Core MVP.
+This is important for evaluating:
+
+* Ollama local inference
+* Sarvam online services
+* local fallback services
 
 ---
 
-# 69. API Development Rule
+# 62. API Security Boundary
 
-The coding agent must not:
-
-* Invent undocumented endpoints.
-* Add unrelated API modules.
-* Allow frontend direct database access.
-* Allow frontend direct unrestricted LLM access.
-* Bypass authorization.
-* Bypass consent rules.
-* Convert OCR directly into verified medication.
-* Allow arbitrary knowledge-base uploads.
-* Allow AI to directly modify patient records without validation.
-
-If a new endpoint is required, it must first be traced to:
-
-```text
-Requirement
- ↓
-Use Case
- ↓
-API Design
-```
-
----
-
-# 70. API Completion Criteria
-
-The API design phase is complete when:
-
-* Core MVP endpoints are defined.
-* Actors are defined.
-* Authentication requirements are defined.
-* Authorization requirements are defined.
-* Request/response principles are defined.
-* Error handling is defined.
-* Pagination principles are defined.
-* File-upload rules are defined.
-* AI boundaries are defined.
-* RAG boundaries are defined.
-* Offline synchronization is defined.
-* Security requirements are defined.
-* API-to-requirement traceability exists.
-* No Core MVP requirement lacks an appropriate API/interface where one is required.
-
----
-
-# 71. Final API Architecture
-
-The intended communication flow is:
-
-```text
-┌──────────────────────┐
-│   Patient Client     │
-└──────────┬───────────┘
-           │
-           │ HTTPS / REST
-           ↓
-┌──────────────────────────────┐
-│        FastAPI Backend       │
-│                              │
-│ Auth / RBAC / Consent        │
-│ Application Services         │
-│ Safety / Domain Logic        │
-│ AI Gateway                   │
-│ File Processing              │
-│ Sync Engine                  │
-└───────┬───────────┬──────────┘
-        │           │
-        ↓           ↓
-   PostgreSQL     AI Services
-        │           │
-        ↓           ├── RAG
-   pgvector        ├── LLM
-                    ├── Speech
-                    └── OCR
-```
-
-The Healthcare Worker Dashboard uses the same controlled backend boundary.
-
----
-
-# 72. API Golden Rule
-
-Every request must follow:
+The API must enforce:
 
 ```text
 REQUEST
    ↓
-Authenticate
+AUTHENTICATE
    ↓
-Authorize
+AUTHORIZE
    ↓
-Validate
+VALIDATE
    ↓
-Apply Business/Safety Rules
+SAFETY RULES
    ↓
-Perform Operation
+BUSINESS LOGIC
    ↓
-Validate Result
+AI GATEWAY / DATABASE
    ↓
-Return Minimum Necessary Data
+RESULT VALIDATION
+   ↓
+MINIMUM NECESSARY RESPONSE
 ```
 
-AI services must remain behind controlled application boundaries.
+No client-side security check can replace this sequence.
 
 ---
 
-# 73. Final Principle
+# 63. RAG Security Boundary
 
-**The API is a contract, not an implementation shortcut.**
-
-The backend must implement the approved contract, while the frontend and AI services consume it through defined interfaces.
-
-Any change to a Core MVP API must be reflected in:
+The API must maintain:
 
 ```text
-SRS
-↓
-Use Case
-↓
-Traceability Matrix
-↓
-API Specification
-↓
-Implementation
-↓
-Tests
+Patient Data
+    │
+    │ X
+    │
+    └──────► Global RAG Knowledge Base
 ```
+
+Patient data must never be inserted into the global medical knowledge vector store.
+
+The RAG corpus consists only of approved medical sources.
+
+---
+
+# 64. API → Requirement Traceability
+
+| API Group               | Primary Requirements              |
+| ----------------------- | --------------------------------- |
+| `/health`               | System availability               |
+| `/auth`                 | FR-01, FR-02, FR-03               |
+| `/consent`              | FR-04                             |
+| `/patients`             | FR-05                             |
+| `/symptoms`             | FR-07, FR-08, FR-09, FR-10        |
+| `/ai/chat`              | FR-06, FR-11                      |
+| `/conversations`        | FR-06                             |
+| `/ai/speech`            | FR-25 + multilingual requirements |
+| `/prescriptions`        | FR-13, FR-14, FR-15               |
+| `/medications`          | FR-16                             |
+| `/medication-schedules` | FR-17, FR-18                      |
+| `/timeline`             | FR-19                             |
+| `/alerts`               | FR-23                             |
+| `/healthcare-workers`   | FR-20, FR-21                      |
+| `/follow-ups`           | FR-22                             |
+| `/knowledge`            | FR-12                             |
+| `/sync`                 | FR-26, FR-27                      |
+| `/resources`            | FR-28 — Phase 2                   |
+| `/admin/audit-logs`     | Security/audit requirements       |
+| `/admin/pipeline-logs`  | AI observability requirements     |
+
+Requirement IDs must remain synchronized with the current `TRACEABILITY_MATRIX.md`.
+
+---
+
+# 65. MVP API Scope
+
+### Included
+
+```text
+Authentication
+Consent
+Patient Profile
+Preliminary Symptom Checker
+Deterministic Triage
+AI Companion
+RAG
+Conversation
+Speech
+Prescription OCR
+Prescription Verification
+Medication
+Medication Schedule
+Medication Adherence
+Health Timeline
+Alerts
+Healthcare Worker Dashboard APIs
+Follow-ups
+Knowledge Management
+Offline Sync
+Audit
+AI Pipeline Observability
+```
+
+### Phase 2
+
+```text
+Nearby Healthcare Resource Locator
+Additional languages
+Additional integrations
+```
+
+---
+
+# 66. Explicitly Excluded
+
+The API must not implement autonomous:
+
+* diagnosis
+* prescribing
+* medication changes
+* ambulance dispatch
+* pharmacy ordering
+* insurance processing
+* payment processing
+* full EHR management
+* medical-device integration
+* outbreak prediction
+* autonomous clinical decisions
+
+---
+
+# 67. Testing Requirements
+
+Every endpoint should have tests covering, where applicable:
+
+### Functional
+
+* successful request
+* invalid request
+* missing required fields
+* malformed values
+
+### Authentication
+
+* unauthenticated request → `401`
+* invalid token → `401`
+
+### Authorization
+
+* unauthorized role → `403`
+* unauthorized patient resource → `403/404`
+
+### Resource
+
+* resource exists → `200`
+* resource does not exist → `404`
+
+### Conflict
+
+* duplicate operation → `409` or appropriate idempotent response
+
+### AI
+
+* provider success
+* provider failure
+* timeout
+* fallback
+* insufficient RAG evidence
+* unsafe output
+
+### Offline
+
+* duplicate sync
+* failed sync
+* conflict
+* retry
+
+---
+
+# 68. API Documentation
+
+FastAPI's generated OpenAPI documentation should be available during development.
+
+The generated schema must remain synchronized with this specification.
+
+API implementation should not introduce undocumented production endpoints without updating this document.
+
+---
+
+# 69. Implementation Order
+
+The backend API should be implemented progressively according to the M1–M18 roadmap:
+
+```text
+M1  → Health + Backend Foundation
+M2  → Database Models
+M3  → Authentication + RBAC
+M4  → Consent
+M5  → Patient Profile
+M6  → Symptoms
+M7  → Deterministic Triage
+M8  → AI Gateway
+M9  → RAG
+M10 → AI Companion
+M11 → OCR
+M12 → Medication + Adherence
+M13 → Healthcare Worker APIs
+M14 → Speech + Multilingual
+M15 → Offline Sync
+M16 → Integration Testing
+M17 → AI Evaluation
+M18 → Deployment
+```
+
+---
+
+# 70. API Golden Rule
+
+Every protected operation follows:
+
+```text
+REQUEST
+   ↓
+AUTHENTICATE
+   ↓
+AUTHORIZE
+   ↓
+VALIDATE
+   ↓
+APPLY BUSINESS RULES
+   ↓
+APPLY SAFETY RULES
+   ↓
+EXECUTE
+   ↓
+VALIDATE RESULT
+   ↓
+AUDIT WHEN REQUIRED
+   ↓
+RETURN MINIMUM NECESSARY DATA
+```
+
+For AI operations:
+
+```text
+REQUEST
+   ↓
+AUTHENTICATE
+   ↓
+AUTHORIZE
+   ↓
+VALIDATE
+   ↓
+SAFETY / RED-FLAG CHECK
+   ↓
+AI GATEWAY
+   ↓
+RAG / MODEL / PROVIDER
+   ↓
+OUTPUT SAFETY VALIDATION
+   ↓
+CITATION / PROVENANCE
+   ↓
+RETURN
+```
+
+---
+
+# 71. Final Architecture Contract
+
+The API specification establishes the following permanent development boundaries:
+
+### Ollama
+
+**Purpose:** Local LLM execution.
+
+```text
+RAG Context
+     ↓
+AI Gateway
+     ↓
+Ollama
+     ↓
+Grounded response
+```
+
+### Sarvam
+
+**Purpose:** Online specialized Indian-language services where evaluation demonstrates sufficient quality.
+
+```text
+Audio → Sarvam STT
+Text  → Sarvam TTS
+Image → Sarvam OCR
+```
+
+### Local Alternatives
+
+Used when:
+
+* offline operation is required
+* Sarvam is unavailable
+* benchmarking demonstrates an alternative is better
+
+### Deterministic Triage
+
+Always remains independent of the LLM:
+
+```text
+Symptoms
+   ↓
+Rules Engine
+   ↓
+ROUTINE / URGENT / EMERGENCY
+```
+
+### RAG
+
+Always remains responsible for grounding medical knowledge:
+
+```text
+Approved Medical Sources
+        ↓
+      pgvector
+        ↓
+    Retrieval
+        ↓
+Evidence Gate
+        ↓
+     Ollama LLM
+```
+
+This separation is fundamental to MedGuide AI's safety, offline capability, provider flexibility, and research evaluation strategy.
+
+---
+
+**Status: API v2.0 — Development Baseline.**

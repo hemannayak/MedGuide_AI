@@ -1,112 +1,1227 @@
-# MedGuide AI — Entity Relationship Diagram
+# MedGuide AI — Entity Relationship Diagram (ERD) Specification
 
-**Project:** MedGuide AI
-**Document:** Entity Relationship Diagram
-**Version:** 1.0
-**Status:** Baseline
-**Related Document:** `docs/database/DATABASE_DESIGN.md`
+**Document:** `docs/database/ERD.md`  
+**Version:** 2.0  
+**Status:** **Development Baseline — Approved**  
+**Primary Identifier Strategy:** UUID  
+**Database:** PostgreSQL  
+**Vector Extension:** `pgvector`  
+**Related Documents:**
+
+* `docs/database/DATABASE_DESIGN.md`
+* `docs/architecture/SYSTEM_ARCHITECTURE.md`
+* `docs/architecture/TECHNOLOGY_STACK.md`
+* `docs/requirements/SRS.md`
+* `docs/requirements/USE_CASES.md`
+* `docs/requirements/TRACEABILITY_MATRIX.md`
+* `docs/requirements/PRE_DEVELOPMENT_DECISIONS.md`
 
 ---
 
 # 1. Purpose
 
-This document defines the relationships between the core MedGuide AI database entities.
+This document defines the entity relationships and logical database structure for MedGuide AI.
 
-It establishes:
+The ERD supports the complete patient-to-healthcare-worker workflow:
 
-* Primary keys
-* Foreign keys
-* Cardinality
-* Entity ownership
-* Required relationships
-* Optional relationships
-* Referential-integrity principles
+```text
+Sign In
+   ↓
+Consent
+   ↓
+Patient Profile
+   ↓
+Preliminary Symptom Checker
+   ↓
+Deterministic Triage
+   ↓
+AI / RAG Guidance
+   ↓
+Prescription OCR
+   ↓
+Medication Verification
+   ↓
+Medication Schedule
+   ↓
+Adherence
+   ↓
+Health Timeline
+   ↓
+Healthcare Worker Follow-up
+```
 
-This document is a design specification.
+The database also supports:
 
-It is **not yet the implementation schema**.
+* Multilingual interaction
+* AI conversation storage
+* RAG knowledge management
+* Offline synchronization
+* Auditability
+* AI provider traceability
+* Healthcare-worker access control
 
 ---
 
-# 2. Database Relationship Overview
+# 2. Core ERD Principles
 
-The major relationship structure is:
+The database follows five important separation principles.
 
 ```text
-User
- ├── Role
- ├── PatientProfile
- │    ├── Consent
- │    ├── SymptomRecord
- │    ├── Conversation
- │    │     └── ConversationMessage
- │    ├── Prescription
- │    │     └── PrescriptionImage
- │    │           └── OCRResult
- │    ├── Medication
- │    │     └── MedicationSchedule
- │    │           └── MedicationAdherence
- │    ├── HealthTimelineEvent
- │    ├── Alert
- │    └── FollowUp
- │
- ├── HealthcareWorkerProfile
- │
- ├── AuditLog
- │
- └── SyncOperation
+┌───────────────────────────────┐
+│ 1. PATIENT-REPORTED FACT      │
+│ "I have fever for 3 days."    │
+└───────────────┬───────────────┘
+                ↓
+┌───────────────────────────────┐
+│ 2. STRUCTURED DATA            │
+│ symptom = fever                │
+│ duration = 3 days              │
+└───────────────┬───────────────┘
+                ↓
+┌───────────────────────────────┐
+│ 3. RETRIEVED KNOWLEDGE        │
+│ Approved medical sources       │
+└───────────────┬───────────────┘
+                ↓
+┌───────────────────────────────┐
+│ 4. AI-GENERATED OUTPUT        │
+│ Explanation / guidance        │
+└───────────────┬───────────────┘
+                ↓
+┌───────────────────────────────┐
+│ 5. SYSTEM DECISION             │
+│ Deterministic triage          │
+└───────────────────────────────┘
+```
 
-MedicalDocument
- └── KnowledgeChunk
-       └── Vector Embedding
+These layers must remain distinguishable in the application and database.
+
+---
+
+# 3. Identifier Strategy
+
+All major entities use **UUID primary keys**.
+
+### Why UUID?
+
+UUIDs support:
+
+* Distributed application architecture
+* Offline record creation
+* Client-generated identifiers
+* Synchronization
+* Idempotency
+* Reduced predictability of resource IDs
+
+Example:
+
+```text
+patient_id =
+550e8400-e29b-41d4-a716-446655440000
+```
+
+The database should use a PostgreSQL-compatible UUID type rather than storing UUIDs as arbitrary strings.
+
+---
+
+# 4. High-Level Relationship Tree
+
+```text
+ROLE
+ │
+ └── USER
+      │
+      ├── PATIENT_PROFILE
+      │      │
+      │      ├── CONSENT
+      │      ├── SYMPTOM_RECORD
+      │      │       │
+      │      │       ├── TRIAGE_RESULT
+      │      │       │       └── ALERT
+      │      │       │
+      │      │       └── AI interaction reference
+      │      │
+      │      ├── CONVERSATION
+      │      │       └── CONVERSATION_MESSAGE
+      │      │
+      │      ├── PRESCRIPTION
+      │      │       └── PRESCRIPTION_IMAGE
+      │      │               └── OCR_RESULT
+      │      │
+      │      ├── MEDICATION
+      │      │       └── MEDICATION_SCHEDULE
+      │      │               └── MEDICATION_ADHERENCE
+      │      │
+      │      ├── HEALTH_TIMELINE_EVENT
+      │      ├── ALERT
+      │      └── FOLLOW_UP
+      │
+      ├── HEALTHCARE_WORKER_PROFILE
+      │       └── FOLLOW_UP
+      │
+      ├── AUDIT_LOG
+      └── SYNC_OPERATION
+
+
+MEDICAL_DOCUMENT
+      │
+      └── KNOWLEDGE_CHUNK
+              │
+              └── pgvector embedding
 ```
 
 ---
 
-# 3. ER Diagram
+# 5. Entity Inventory
 
-The following diagram represents the baseline logical relationship model.
+The development baseline contains the following core entities.
+
+|  # | Entity                      | Purpose                       |
+| -: | --------------------------- | ----------------------------- |
+|  1 | `ROLE`                      | System roles                  |
+|  2 | `USER`                      | Authentication account        |
+|  3 | `PATIENT_PROFILE`           | Patient information           |
+|  4 | `HEALTHCARE_WORKER_PROFILE` | Healthcare-worker information |
+|  5 | `CONSENT`                   | Consent records               |
+|  6 | `SYMPTOM_RECORD`            | Patient-reported symptoms     |
+|  7 | `TRIAGE_RESULT`             | Deterministic triage result   |
+|  8 | `CONVERSATION`              | AI conversation/session       |
+|  9 | `CONVERSATION_MESSAGE`      | Conversation messages         |
+| 10 | `PRESCRIPTION`              | Prescription record           |
+| 11 | `PRESCRIPTION_IMAGE`        | Prescription image            |
+| 12 | `OCR_RESULT`                | OCR output                    |
+| 13 | `MEDICATION`                | Verified medication           |
+| 14 | `MEDICATION_SCHEDULE`       | Medication schedule           |
+| 15 | `MEDICATION_ADHERENCE`      | Adherence event               |
+| 16 | `HEALTH_TIMELINE_EVENT`     | Longitudinal health event     |
+| 17 | `ALERT`                     | Safety alert                  |
+| 18 | `FOLLOW_UP`                 | Healthcare-worker follow-up   |
+| 19 | `MEDICAL_DOCUMENT`          | RAG source                    |
+| 20 | `KNOWLEDGE_CHUNK`           | RAG chunk + embedding         |
+| 21 | `AUDIT_LOG`                 | Security/audit event          |
+| 22 | `SYNC_OPERATION`            | Offline synchronization       |
+
+> **Important update:** `TRIAGE_RESULT` is explicitly represented in the ERD because deterministic triage is a first-class safety component of the system. It should not be hidden inside an AI response or a generic JSON field.
+
+---
+
+# 6. Entity Definitions
+
+## 6.1 `ROLE`
+
+Defines application roles.
+
+```text
+ROLE
+────────────────────────────
+id              PK UUID
+name            UNIQUE
+description
+created_at
+updated_at
+```
+
+Supported baseline roles:
+
+```text
+PATIENT
+HEALTHCARE_WORKER
+ADMIN
+```
+
+---
+
+# 7. `USER`
+
+Authentication identity.
+
+```text
+USER
+────────────────────────────
+id                  PK UUID
+role_id             FK → ROLE.id
+login_identifier    UNIQUE
+password_hash
+status
+created_at
+updated_at
+deleted_at
+```
+
+### Relationships
+
+```text
+ROLE 1 ───────── N USER
+```
+
+### Rules
+
+* No plaintext passwords.
+* Password hashes never leave backend authentication services.
+* Role enforcement happens server-side.
+
+---
+
+# 8. `PATIENT_PROFILE`
+
+Patient-specific information.
+
+```text
+PATIENT_PROFILE
+────────────────────────────
+id                  PK UUID
+user_id             FK → USER.id UNIQUE
+display_name
+date_of_birth
+preferred_language
+contact_reference
+created_at
+updated_at
+deleted_at
+```
+
+### Relationship
+
+```text
+USER 1 ───────── 0..1 PATIENT_PROFILE
+```
+
+Phase 1 language values:
+
+```text
+en
+hi
+te
+```
+
+Language availability must still be validated separately for each AI capability.
+
+---
+
+# 9. `HEALTHCARE_WORKER_PROFILE`
+
+Represents an authorized healthcare worker.
+
+```text
+HEALTHCARE_WORKER_PROFILE
+────────────────────────────
+id                  PK UUID
+user_id             FK → USER.id UNIQUE
+name
+worker_type
+organization
+status
+created_at
+updated_at
+deleted_at
+```
+
+Possible worker types:
+
+```text
+CHW
+ANM
+NURSE
+DOCTOR
+OTHER_AUTHORIZED_PERSONNEL
+```
+
+The database does not imply that every worker type has identical clinical authority.
+
+---
+
+# 10. `CONSENT`
+
+Stores explicit consent records.
+
+```text
+CONSENT
+────────────────────────────
+id                  PK UUID
+patient_id          FK → PATIENT_PROFILE.id
+consent_type
+status
+version
+granted_at
+withdrawn_at
+expires_at
+created_at
+updated_at
+```
+
+Possible status:
+
+```text
+GRANTED
+DENIED
+WITHDRAWN
+EXPIRED
+```
+
+### Relationship
+
+```text
+PATIENT_PROFILE 1 ───────── N CONSENT
+```
+
+Consent changes should create corresponding audit events.
+
+---
+
+# 11. `SYMPTOM_RECORD`
+
+This is a central entity because the **Preliminary Symptom Checker** is the main post-login patient workflow.
+
+```text
+SYMPTOM_RECORD
+────────────────────────────
+id
+patient_id
+source
+language
+raw_input_reference
+structured_data
+duration
+severity
+reported_at
+created_at
+updated_at
+```
+
+### Source examples
+
+```text
+TEXT
+VOICE
+FORM
+```
+
+### Structured information may include
+
+```json
+{
+  "symptoms": [],
+  "duration": {},
+  "severity": {},
+  "associated_symptoms": [],
+  "context": {}
+}
+```
+
+The raw patient report and structured extraction must remain distinguishable.
+
+---
+
+# 12. `TRIAGE_RESULT`
+
+Represents the authoritative deterministic safety evaluation.
+
+```text
+TRIAGE_RESULT
+────────────────────────────
+id
+symptom_record_id
+risk_level
+red_flags_detected
+recommended_action
+escalation_required
+rule_set_version
+evaluated_at
+created_at
+```
+
+Possible risk levels:
+
+```text
+ROUTINE
+URGENT
+EMERGENCY
+```
+
+### Relationship
+
+```text
+SYMPTOM_RECORD 1 ───────── 0..1 TRIAGE_RESULT
+```
+
+### Safety rule
+
+The LLM does **not** determine the authoritative emergency classification.
+
+Correct:
+
+```text
+Symptoms
+   ↓
+Structured extraction
+   ↓
+Deterministic triage
+   ↓
+Safety decision
+   ↓
+AI explanation
+```
+
+Not:
+
+```text
+Symptoms
+   ↓
+LLM
+   ↓
+Emergency decision
+```
+
+---
+
+# 13. `CONVERSATION`
+
+Represents an AI companion session.
+
+```text
+CONVERSATION
+────────────────────────────
+id
+patient_id
+language
+status
+started_at
+last_activity_at
+created_at
+updated_at
+```
+
+### Relationship
+
+```text
+PATIENT_PROFILE 1 ───────── N CONVERSATION
+```
+
+---
+
+# 14. `CONVERSATION_MESSAGE`
+
+Stores individual conversation messages.
+
+```text
+CONVERSATION_MESSAGE
+────────────────────────────
+id
+conversation_id
+sender_type
+content
+language
+message_type
+metadata
+created_at
+```
+
+Sender types:
+
+```text
+PATIENT
+AI
+SYSTEM
+```
+
+### Relationship
+
+```text
+CONVERSATION 1 ───────── N CONVERSATION_MESSAGE
+```
+
+Raw conversations should not be retained indefinitely without a defined purpose.
+
+---
+
+# 15. AI Provider Metadata
+
+AI responses may require traceability.
+
+Provider metadata can include:
+
+```text
+provider
+model_name
+model_version
+prompt_version
+knowledge_base_version
+retrieval_trace_id
+safety_validation_status
+created_at
+```
+
+The database should **not** couple the core patient schema directly to a specific AI vendor.
+
+For example:
+
+```text
+AI Gateway
+    │
+    ├── Ollama → Local LLM
+    │
+    ├── Sarvam → Online STT/TTS/OCR
+    │
+    └── Local alternatives → Offline-capable processing
+```
+
+This allows models/providers to be replaced without redesigning the patient database.
+
+---
+
+# 16. `PRESCRIPTION`
+
+Represents a prescription submitted by the patient.
+
+```text
+PRESCRIPTION
+────────────────────────────
+id
+patient_id
+source
+status
+verification_status
+prescribed_date
+created_at
+updated_at
+deleted_at
+```
+
+Possible verification states:
+
+```text
+PENDING
+VERIFIED
+PARTIALLY_VERIFIED
+REQUIRES_REVIEW
+```
+
+---
+
+# 17. `PRESCRIPTION_IMAGE`
+
+Stores the secure reference to the uploaded prescription.
+
+```text
+PRESCRIPTION_IMAGE
+────────────────────────────
+id
+prescription_id
+storage_reference
+file_type
+file_size
+checksum
+uploaded_at
+deleted_at
+```
+
+### Relationship
+
+```text
+PRESCRIPTION 1 ───────── N PRESCRIPTION_IMAGE
+```
+
+The image itself should be stored through controlled file storage rather than exposed through the database as a publicly accessible file.
+
+---
+
+# 18. `OCR_RESULT`
+
+Stores OCR processing output.
+
+```text
+OCR_RESULT
+────────────────────────────
+id
+prescription_image_id
+provider
+engine
+model_version
+raw_text
+confidence
+status
+processed_at
+created_at
+```
+
+Possible providers:
+
+```text
+Sarvam
+PaddleOCR
+Tesseract
+Other evaluated provider
+```
+
+Possible statuses:
+
+```text
+SUCCESS
+LOW_CONFIDENCE
+FAILED
+REQUIRES_REVIEW
+```
+
+### Relationship
+
+```text
+PRESCRIPTION_IMAGE 1 ───────── N OCR_RESULT
+```
+
+Multiple OCR attempts can therefore be retained for evaluation/debugging without replacing the original prescription.
+
+---
+
+# 19. Prescription Verification Relationship
+
+The complete relationship is:
+
+```text
+PATIENT
+   │
+   ▼
+PRESCRIPTION
+   │
+   ▼
+PRESCRIPTION_IMAGE
+   │
+   ▼
+OCR_RESULT
+   │
+   ▼
+Medicine Extraction
+   │
+   ▼
+Patient / Human Verification
+   │
+   ▼
+MEDICATION
+```
+
+**OCR alone must never activate medication schedules.**
+
+---
+
+# 20. `MEDICATION`
+
+Represents a verified medication record.
+
+```text
+MEDICATION
+────────────────────────────
+id
+patient_id
+prescription_id       FK nullable
+medicine_name
+dosage
+route
+instructions
+verification_status
+created_at
+updated_at
+deleted_at
+```
+
+### Important relationship
+
+```text
+PRESCRIPTION 1 ───────── 0..N MEDICATION
+```
+
+`prescription_id` is nullable because a medication can be entered through an authorized non-OCR workflow, such as a verified healthcare-worker interaction.
+
+---
+
+# 21. `MEDICATION_SCHEDULE`
+
+Stores medication timing.
+
+```text
+MEDICATION_SCHEDULE
+────────────────────────────
+id
+medication_id
+frequency
+schedule_data
+start_date
+end_date
+timezone
+status
+created_at
+updated_at
+```
+
+### Relationship
+
+```text
+MEDICATION 1 ───────── N MEDICATION_SCHEDULE
+```
+
+`schedule_data` may contain structured timing information such as:
+
+```json
+{
+  "times": ["08:00", "20:00"],
+  "days": ["MON", "TUE", "WED"]
+}
+```
+
+---
+
+# 22. `MEDICATION_ADHERENCE`
+
+Represents individual adherence events.
+
+```text
+MEDICATION_ADHERENCE
+────────────────────────────
+id
+medication_schedule_id
+scheduled_at
+recorded_at
+status
+source
+created_at
+```
+
+Statuses:
+
+```text
+TAKEN
+MISSED
+SKIPPED
+UNKNOWN
+```
+
+### Relationship
+
+```text
+MEDICATION_SCHEDULE 1 ───────── N MEDICATION_ADHERENCE
+```
+
+Adherence should preferably be treated as an immutable event.
+
+---
+
+# 23. `HEALTH_TIMELINE_EVENT`
+
+Provides a longitudinal health timeline.
+
+```text
+HEALTH_TIMELINE_EVENT
+────────────────────────────
+id
+patient_id
+event_type
+reference_id
+event_time
+metadata
+created_at
+updated_at
+```
+
+Possible event types:
+
+```text
+SYMPTOM_REPORTED
+TRIAGE_COMPLETED
+AI_INTERACTION
+PRESCRIPTION_ADDED
+MEDICATION_VERIFIED
+MEDICATION_STARTED
+ADHERENCE_RECORDED
+ALERT_CREATED
+FOLLOWUP_CREATED
+```
+
+### Relationship
+
+```text
+PATIENT_PROFILE 1 ───────── N HEALTH_TIMELINE_EVENT
+```
+
+---
+
+# 24. `ALERT`
+
+Represents safety or healthcare-worker alerts.
+
+```text
+ALERT
+────────────────────────────
+id
+patient_id
+symptom_record_id
+alert_type
+severity
+source
+status
+assigned_worker_id
+created_at
+acknowledged_at
+resolved_at
+```
+
+Statuses:
+
+```text
+OPEN
+ACKNOWLEDGED
+RESOLVED
+DISMISSED
+```
+
+### Relationship
+
+```text
+PATIENT_PROFILE 1 ───────── N ALERT
+```
+
+For emergency triage:
+
+```text
+TRIAGE_RESULT
+      ↓
+EMERGENCY
+      ↓
+ALERT
+      ↓
+Healthcare Worker Dashboard
+```
+
+---
+
+# 25. `FOLLOW_UP`
+
+Represents healthcare-worker follow-up.
+
+```text
+FOLLOW_UP
+────────────────────────────
+id
+patient_id
+healthcare_worker_id
+reason
+scheduled_at
+status
+notes
+created_at
+updated_at
+completed_at
+```
+
+### Relationships
+
+```text
+PATIENT_PROFILE 1 ───────── N FOLLOW_UP
+
+HEALTHCARE_WORKER_PROFILE 1 ───────── N FOLLOW_UP
+```
+
+---
+
+# 26. `MEDICAL_DOCUMENT`
+
+Represents an approved medical knowledge source.
+
+```text
+MEDICAL_DOCUMENT
+────────────────────────────
+id
+title
+publisher
+source_reference
+publication_date
+version
+language
+topic
+license
+review_status
+last_reviewed_at
+created_at
+updated_at
+```
+
+Possible review states:
+
+```text
+PENDING_REVIEW
+APPROVED
+OUTDATED
+ARCHIVED
+```
+
+Only approved knowledge should enter the production RAG corpus.
+
+---
+
+# 27. `KNOWLEDGE_CHUNK`
+
+Stores chunked medical knowledge and its vector representation.
+
+```text
+KNOWLEDGE_CHUNK
+────────────────────────────
+id
+document_id
+chunk_index
+content
+embedding
+metadata
+created_at
+updated_at
+```
+
+### Relationship
+
+```text
+MEDICAL_DOCUMENT 1 ───────── N KNOWLEDGE_CHUNK
+```
+
+The embedding is stored using:
+
+```text
+pgvector
+```
+
+The embedding dimension remains model-dependent.
+
+---
+
+# 28. RAG ERD Isolation
+
+```text
+             MEDICAL_DOCUMENT
+                    │
+                    ▼
+             KNOWLEDGE_CHUNK
+                    │
+                    ▼
+             VECTOR EMBEDDING
+                    │
+                    ▼
+                 pgvector
+
+
+       PATIENT DATA
+            │
+   ┌────────┼────────┐
+   ▼        ▼        ▼
+Symptoms Medications Prescriptions
+   │
+   ▼
+Conversations
+
+
+PATIENT DATA ────────X──────── MEDICAL KNOWLEDGE
+                     NO MIXING
+```
+
+Patient-specific information must never become part of the global medical knowledge corpus.
+
+---
+
+# 29. `AUDIT_LOG`
+
+Tracks security-sensitive actions.
+
+```text
+AUDIT_LOG
+────────────────────────────
+id
+actor_user_id
+action
+resource_type
+resource_id
+timestamp
+metadata
+```
+
+Examples:
+
+```text
+LOGIN
+PATIENT_ACCESSED
+CONSENT_CHANGED
+PRESCRIPTION_ACCESSED
+ALERT_REVIEWED
+FOLLOWUP_CREATED
+KNOWLEDGE_UPDATED
+ADMIN_OPERATION
+```
+
+### Relationship
+
+```text
+USER 1 ───────── N AUDIT_LOG
+```
+
+Sensitive patient access by healthcare workers must be auditable.
+
+---
+
+# 30. `SYNC_OPERATION`
+
+Represents offline operations waiting for synchronization.
+
+```text
+SYNC_OPERATION
+────────────────────────────
+id
+user_id
+client_operation_id
+operation_type
+entity_type
+entity_id
+payload_reference
+client_timestamp
+server_timestamp
+retry_count
+status
+error_code
+created_at
+updated_at
+```
+
+Possible statuses:
+
+```text
+PENDING
+SYNCING
+SYNCED
+FAILED
+CONFLICT
+```
+
+---
+
+# 31. Synchronization Relationship
+
+```text
+                 DEVICE
+                    │
+                    ▼
+             Local IndexedDB
+                    │
+                    ▼
+             SYNC_OPERATION
+                    │
+             Internet available
+                    │
+                    ▼
+              FastAPI /sync
+                    │
+                    ▼
+               PostgreSQL
+```
+
+Every operation must have:
+
+```text
+client_operation_id = UNIQUE
+```
+
+This prevents duplicate processing when the client retries an operation.
+
+---
+
+# 32. Offline Event Model
+
+Important patient events should preferably be represented as timestamped events.
+
+Example:
+
+```text
+Device offline
+     ↓
+Patient records "Medication Taken"
+     ↓
+MEDICATION_ADHERENCE
+     ↓
+Local queue
+     ↓
+SYNC_OPERATION
+     ↓
+Server
+     ↓
+Immutable event
+```
+
+This is safer than overwriting an existing adherence state.
+
+---
+
+# 33. Cardinality Summary
+
+| Relationship                                 | Cardinality |
+| -------------------------------------------- | ----------- |
+| `ROLE → USER`                                | 1 : N       |
+| `USER → PATIENT_PROFILE`                     | 1 : 0..1    |
+| `USER → HEALTHCARE_WORKER_PROFILE`           | 1 : 0..1    |
+| `PATIENT_PROFILE → CONSENT`                  | 1 : N       |
+| `PATIENT_PROFILE → SYMPTOM_RECORD`           | 1 : N       |
+| `SYMPTOM_RECORD → TRIAGE_RESULT`             | 1 : 0..1    |
+| `PATIENT_PROFILE → CONVERSATION`             | 1 : N       |
+| `CONVERSATION → CONVERSATION_MESSAGE`        | 1 : N       |
+| `PATIENT_PROFILE → PRESCRIPTION`             | 1 : N       |
+| `PRESCRIPTION → PRESCRIPTION_IMAGE`          | 1 : N       |
+| `PRESCRIPTION_IMAGE → OCR_RESULT`            | 1 : N       |
+| `PATIENT_PROFILE → MEDICATION`               | 1 : N       |
+| `MEDICATION → MEDICATION_SCHEDULE`           | 1 : N       |
+| `MEDICATION_SCHEDULE → MEDICATION_ADHERENCE` | 1 : N       |
+| `PATIENT_PROFILE → HEALTH_TIMELINE_EVENT`    | 1 : N       |
+| `PATIENT_PROFILE → ALERT`                    | 1 : N       |
+| `PATIENT_PROFILE → FOLLOW_UP`                | 1 : N       |
+| `HEALTHCARE_WORKER_PROFILE → FOLLOW_UP`      | 1 : N       |
+| `MEDICAL_DOCUMENT → KNOWLEDGE_CHUNK`         | 1 : N       |
+| `USER → AUDIT_LOG`                           | 1 : N       |
+| `USER → SYNC_OPERATION`                      | 1 : N       |
+
+---
+
+# 34. Complete Mermaid ERD
+
+The following should serve as the logical ERD baseline:
 
 ```mermaid
 erDiagram
 
-    ROLE ||--o{ USER : assigns
+    ROLE ||--o{ USER : has
 
-    USER ||--o| PATIENT_PROFILE : has
-    USER ||--o| HEALTHCARE_WORKER_PROFILE : has
-
-    PATIENT_PROFILE ||--o{ CONSENT : provides
-    PATIENT_PROFILE ||--o{ SYMPTOM_RECORD : reports
-
-    PATIENT_PROFILE ||--o{ CONVERSATION : owns
-    CONVERSATION ||--o{ CONVERSATION_MESSAGE : contains
-
-    PATIENT_PROFILE ||--o{ PRESCRIPTION : owns
-    PRESCRIPTION ||--o{ PRESCRIPTION_IMAGE : contains
-    PRESCRIPTION_IMAGE ||--o{ OCR_RESULT : produces
-
-    PATIENT_PROFILE ||--o{ MEDICATION : has
-    PRESCRIPTION ||--o{ MEDICATION : may_define
-
-    MEDICATION ||--o{ MEDICATION_SCHEDULE : has
-    MEDICATION_SCHEDULE ||--o{ MEDICATION_ADHERENCE : records
-
-    PATIENT_PROFILE ||--o{ HEALTH_TIMELINE_EVENT : has
-
-    PATIENT_PROFILE ||--o{ ALERT : receives
-
-    PATIENT_PROFILE ||--o{ FOLLOW_UP : has
-    HEALTHCARE_WORKER_PROFILE ||--o{ FOLLOW_UP : manages
-
+    USER ||--o| PATIENT_PROFILE : owns
+    USER ||--o| HEALTHCARE_WORKER_PROFILE : represents
     USER ||--o{ AUDIT_LOG : generates
     USER ||--o{ SYNC_OPERATION : creates
 
-    MEDICAL_DOCUMENT ||--o{ KNOWLEDGE_CHUNK : contains
+    PATIENT_PROFILE ||--o{ CONSENT : provides
+    PATIENT_PROFILE ||--o{ SYMPTOM_RECORD : reports
+    SYMPTOM_RECORD ||--o| TRIAGE_RESULT : evaluated_by
 
+    PATIENT_PROFILE ||--o{ CONVERSATION : starts
+    CONVERSATION ||--o{ CONVERSATION_MESSAGE : contains
+
+    PATIENT_PROFILE ||--o{ PRESCRIPTION : uploads
+    PRESCRIPTION ||--o{ PRESCRIPTION_IMAGE : contains
+    PRESCRIPTION_IMAGE ||--o{ OCR_RESULT : processed_by
+
+    PATIENT_PROFILE ||--o{ MEDICATION : owns
+    PRESCRIPTION ||--o{ MEDICATION : produces
+    MEDICATION ||--o{ MEDICATION_SCHEDULE : has
+    MEDICATION_SCHEDULE ||--o{ MEDICATION_ADHERENCE : records
+
+    PATIENT_PROFILE ||--o{ HEALTH_TIMELINE_EVENT : contains
+    PATIENT_PROFILE ||--o{ ALERT : generates
+    SYMPTOM_RECORD ||--o{ ALERT : may_trigger
+
+    PATIENT_PROFILE ||--o{ FOLLOW_UP : receives
+    HEALTHCARE_WORKER_PROFILE ||--o{ FOLLOW_UP : manages
+
+    MEDICAL_DOCUMENT ||--o{ KNOWLEDGE_CHUNK : contains
 
     ROLE {
         uuid id PK
         string name UK
+        string description
     }
 
     USER {
@@ -117,23 +1232,24 @@ erDiagram
         string status
         datetime created_at
         datetime updated_at
-        datetime last_login_at
+        datetime deleted_at
     }
 
     PATIENT_PROFILE {
         uuid id PK
-        uuid user_id FK UK
+        uuid user_id FK,UK
         string display_name
         date date_of_birth
         string preferred_language
         string contact_reference
         datetime created_at
         datetime updated_at
+        datetime deleted_at
     }
 
     HEALTHCARE_WORKER_PROFILE {
         uuid id PK
-        uuid user_id FK UK
+        uuid user_id FK,UK
         string name
         string worker_type
         string organization
@@ -150,19 +1266,32 @@ erDiagram
         string version
         datetime granted_at
         datetime withdrawn_at
+        datetime expires_at
         datetime created_at
-        datetime updated_at
     }
 
     SYMPTOM_RECORD {
         uuid id PK
         uuid patient_id FK
         string source
-        text raw_input_reference
+        string language
+        string raw_input_reference
         json structured_data
+        string duration
+        string severity
         datetime reported_at
         datetime created_at
-        datetime updated_at
+    }
+
+    TRIAGE_RESULT {
+        uuid id PK
+        uuid symptom_record_id FK
+        string risk_level
+        json red_flags_detected
+        string recommended_action
+        boolean escalation_required
+        string rule_set_version
+        datetime evaluated_at
     }
 
     CONVERSATION {
@@ -171,7 +1300,8 @@ erDiagram
         string language
         string status
         datetime started_at
-        datetime ended_at
+        datetime last_activity_at
+        datetime created_at
     }
 
     CONVERSATION_MESSAGE {
@@ -179,6 +1309,8 @@ erDiagram
         uuid conversation_id FK
         string sender_type
         text content
+        string language
+        string message_type
         json metadata
         datetime created_at
     }
@@ -199,7 +1331,7 @@ erDiagram
         uuid prescription_id FK
         string storage_reference
         string file_type
-        bigint file_size
+        integer file_size
         string checksum
         datetime uploaded_at
     }
@@ -207,6 +1339,7 @@ erDiagram
     OCR_RESULT {
         uuid id PK
         uuid prescription_image_id FK
+        string provider
         string engine
         string model_version
         text raw_text
@@ -222,7 +1355,7 @@ erDiagram
         string medicine_name
         string dosage
         string route
-        text instructions
+        string instructions
         string verification_status
         datetime created_at
         datetime updated_at
@@ -238,7 +1371,6 @@ erDiagram
         string timezone
         string status
         datetime created_at
-        datetime updated_at
     }
 
     MEDICATION_ADHERENCE {
@@ -264,13 +1396,13 @@ erDiagram
     ALERT {
         uuid id PK
         uuid patient_id FK
+        uuid symptom_record_id FK
         string alert_type
         string severity
         string source
         string status
+        uuid assigned_worker_id FK
         datetime created_at
-        datetime acknowledged_at
-        datetime resolved_at
     }
 
     FOLLOW_UP {
@@ -282,7 +1414,31 @@ erDiagram
         string status
         text notes
         datetime created_at
-        datetime updated_at
+        datetime completed_at
+    }
+
+    MEDICAL_DOCUMENT {
+        uuid id PK
+        string title
+        string publisher
+        string source_reference
+        date publication_date
+        string version
+        string language
+        string topic
+        string license
+        string review_status
+        datetime last_reviewed_at
+    }
+
+    KNOWLEDGE_CHUNK {
+        uuid id PK
+        uuid document_id FK
+        integer chunk_index
+        text content
+        vector embedding
+        json metadata
+        datetime created_at
     }
 
     AUDIT_LOG {
@@ -302,938 +1458,347 @@ erDiagram
         string operation_type
         string entity_type
         uuid entity_id
-        json payload_reference
-        datetime created_at
-        datetime synced_at
-        string status
+        string payload_reference
+        datetime client_timestamp
+        datetime server_timestamp
         integer retry_count
+        string status
         string error_code
     }
-
-    MEDICAL_DOCUMENT {
-        uuid id PK
-        string title
-        string publisher
-        string source_reference
-        date publication_date
-        string version
-        string language
-        string topic
-        string license
-        string review_status
-        datetime last_reviewed_at
-        datetime created_at
-        datetime updated_at
-    }
-
-    KNOWLEDGE_CHUNK {
-        uuid id PK
-        uuid document_id FK
-        integer chunk_index
-        text content
-        vector embedding
-        json metadata
-        datetime created_at
-    }
 ```
 
 ---
 
-# 4. Relationship Definitions
+# 35. Important Foreign-Key Rules
 
-## 4.1 Role → User
+### Patient isolation
 
-**Relationship:** `1:N`
-
-One role may belong to many users.
+Every patient-owned entity must ultimately resolve to an authorized patient.
 
 ```text
-ROLE 1 ─────── N USER
+PATIENT_PROFILE
+      │
+      ├── Symptoms
+      ├── Conversations
+      ├── Prescriptions
+      ├── Medications
+      ├── Alerts
+      └── Follow-ups
 ```
 
-Example:
-
-```text
-PATIENT
- ├── User A
- ├── User B
- └── User C
-```
+The API must verify ownership before returning or modifying these records.
 
 ---
 
-# 5. User → Patient Profile
+### Healthcare-worker isolation
 
-**Relationship:** `1:0..1`
+A healthcare worker cannot access every patient automatically.
 
-A user may have zero or one patient profile.
-
-A patient profile must belong to exactly one user.
+Access must be determined by:
 
 ```text
-USER 1 ─────── 0..1 PATIENT_PROFILE
-```
-
-The `user_id` in `PATIENT_PROFILE` should therefore be unique.
-
----
-
-# 6. User → Healthcare Worker Profile
-
-**Relationship:** `1:0..1`
-
-A user may have zero or one healthcare-worker profile.
-
-```text
-USER 1 ─────── 0..1 HEALTHCARE_WORKER_PROFILE
-```
-
-The `user_id` should be unique.
-
----
-
-# 7. Patient → Consent
-
-**Relationship:** `1:N`
-
-A patient can have multiple consent records because:
-
-* Different consent purposes may exist.
-* Consent may change.
-* Consent versions may change.
-
-```text
-PATIENT 1 ─────── N CONSENT
-```
-
-Historical consent records should not be silently overwritten when audit/history is required.
-
----
-
-# 8. Patient → Symptom Record
-
-**Relationship:** `1:N`
-
-A patient may report many symptom records.
-
-```text
-PATIENT 1 ─────── N SYMPTOM_RECORD
-```
-
-Each symptom record belongs to one patient.
-
----
-
-# 9. Patient → Conversation
-
-**Relationship:** `1:N`
-
-A patient may have multiple AI conversations.
-
-```text
-PATIENT 1 ─────── N CONVERSATION
-```
-
----
-
-# 10. Conversation → Message
-
-**Relationship:** `1:N`
-
-A conversation contains multiple messages.
-
-```text
-CONVERSATION 1 ─────── N CONVERSATION_MESSAGE
-```
-
-Messages should preserve their chronological order through timestamps and/or a sequence mechanism.
-
----
-
-# 11. Patient → Prescription
-
-**Relationship:** `1:N`
-
-A patient may have multiple prescriptions.
-
-```text
-PATIENT 1 ─────── N PRESCRIPTION
-```
-
----
-
-# 12. Prescription → Prescription Image
-
-**Relationship:** `1:N`
-
-A prescription may have one or more images.
-
-This allows:
-
-* Multiple pages
-* Re-uploaded images
-* Alternative captures
-
-```text
-PRESCRIPTION 1 ─────── N PRESCRIPTION_IMAGE
-```
-
----
-
-# 13. Prescription Image → OCR Result
-
-**Relationship:** `1:N`
-
-An image may be processed multiple times.
-
-For example:
-
-```text
-OCR Engine v1
+Authentication
+      +
+Role
+      +
+Authorization
+      +
+Consent / relationship
       ↓
-Result A
-
-OCR Engine v2
-      ↓
-Result B
-```
-
-This supports model experimentation and reproducibility.
-
-```text
-PRESCRIPTION_IMAGE 1 ─────── N OCR_RESULT
+Patient Access
 ```
 
 ---
 
-# 14. Patient → Medication
+# 36. Cascade Delete Policy
 
-**Relationship:** `1:N`
-
-A patient may have multiple medication records.
-
-```text
-PATIENT 1 ─────── N MEDICATION
-```
-
----
-
-# 15. Prescription → Medication
-
-**Relationship:** `1:N` optional
-
-A prescription may define zero or more medications.
-
-```text
-PRESCRIPTION 1 ─────── 0..N MEDICATION
-```
-
-The prescription reference may be nullable because a medication can potentially be entered through another approved workflow.
-
----
-
-# 16. Medication → Medication Schedule
-
-**Relationship:** `1:N`
-
-A medication may have one or more schedules.
-
-```text
-MEDICATION 1 ─────── N MEDICATION_SCHEDULE
-```
-
-This supports changes in scheduling over time without destroying historical records.
-
----
-
-# 17. Medication Schedule → Adherence
-
-**Relationship:** `1:N`
-
-A schedule can generate many adherence events.
-
-```text
-SCHEDULE 1 ─────── N ADHERENCE
-```
-
-Each adherence event represents a specific scheduled occurrence.
-
----
-
-# 18. Patient → Timeline Event
-
-**Relationship:** `1:N`
-
-A patient can have many timeline events.
-
-```text
-PATIENT 1 ─────── N TIMELINE_EVENT
-```
-
-The timeline should reference source entities rather than duplicating complete records.
-
----
-
-# 19. Patient → Alert
-
-**Relationship:** `1:N`
-
-A patient can have multiple alerts.
-
-```text
-PATIENT 1 ─────── N ALERT
-```
-
-Alerts should maintain their own lifecycle.
-
----
-
-# 20. Patient → Follow-Up
-
-**Relationship:** `1:N`
-
-A patient may have multiple follow-up records.
-
-```text
-PATIENT 1 ─────── N FOLLOW_UP
-```
-
----
-
-# 21. Healthcare Worker → Follow-Up
-
-**Relationship:** `1:N`
-
-One healthcare worker can manage multiple follow-ups.
-
-```text
-HEALTHCARE_WORKER 1 ─────── N FOLLOW_UP
-```
-
-Each follow-up belongs to one healthcare worker when assigned.
-
-An unassigned follow-up may be supported later if required.
-
----
-
-# 22. User → Audit Log
-
-**Relationship:** `1:N`
-
-A user may generate many audit events.
-
-```text
-USER 1 ─────── N AUDIT_LOG
-```
-
-The audit log records the actor responsible for a sensitive action.
-
----
-
-# 23. User → Sync Operation
-
-**Relationship:** `1:N`
-
-A user may generate multiple offline synchronization operations.
-
-```text
-USER 1 ─────── N SYNC_OPERATION
-```
-
-Each operation must have a unique client operation identifier.
-
----
-
-# 24. Medical Document → Knowledge Chunk
-
-**Relationship:** `1:N`
-
-One medical document is divided into multiple chunks.
-
-```text
-MEDICAL_DOCUMENT 1 ─────── N KNOWLEDGE_CHUNK
-```
-
-Every chunk must retain its source document reference.
-
----
-
-# 25. Vector Relationship
-
-The vector is stored as part of the knowledge chunk.
-
-Conceptually:
-
-```text
-Medical Document
-      ↓
-Knowledge Chunk
-      ↓
-Embedding Vector
-```
-
-The vector is not treated as a separate business entity unless later requirements justify such a design.
-
----
-
-# 26. Primary Key Strategy
-
-The baseline recommendation is:
-
-**UUID**
-
-for application-level entity identifiers.
-
-Reasons:
-
-* Avoid predictable sequential IDs.
-* Better for distributed/offline operations.
-* Suitable for synchronization.
-* Avoid exposing simple record counts.
-* Works well across services.
-
-The exact UUID generation strategy will be selected during implementation.
-
----
-
-# 27. Foreign Key Strategy
-
-Foreign keys should enforce valid relationships.
-
-Examples:
-
-```text
-patient_profile.user_id
-consent.patient_id
-symptom_record.patient_id
-conversation.patient_id
-conversation_message.conversation_id
-prescription.patient_id
-prescription_image.prescription_id
-ocr_result.prescription_image_id
-medication.patient_id
-medication.prescription_id
-medication_schedule.medication_id
-medication_adherence.medication_schedule_id
-timeline_event.patient_id
-alert.patient_id
-follow_up.patient_id
-follow_up.healthcare_worker_id
-audit_log.actor_user_id
-sync_operation.user_id
-knowledge_chunk.document_id
-```
-
----
-
-# 28. Nullable Foreign Keys
-
-Nullable relationships should be used only when the business process genuinely permits the relationship to be absent.
-
-Examples:
-
-### Medication → Prescription
-
-Potentially nullable.
-
-Reason:
-
-A medication may be entered through a verified workflow other than prescription OCR.
-
-### Follow-Up → Healthcare Worker
-
-Potentially nullable if the system supports an unassigned follow-up queue.
-
-This decision should be finalized before implementation.
-
----
-
-# 29. Deletion Strategy
-
-Healthcare-related records require careful deletion behavior.
-
-Default principle:
-
-> Do not use unrestricted cascading deletes on historical healthcare records.
-
-For example:
-
-```text
-Deleting User
-      ↓
-MUST NOT automatically destroy
-      ↓
-Audit / required historical records
-```
-
-The exact deletion/retention policy must be finalized before production deployment.
-
----
-
-# 30. Historical Data Principle
-
-Important healthcare events should be preserved as historical events wherever appropriate.
+Unrestricted cascading deletes are prohibited for sensitive health history.
 
 Prefer:
 
 ```text
-Old Record
-    +
-New Record
+deleted_at
 ```
 
-over:
+and controlled deletion/anonymization workflows.
 
-```text
-Old Record
-    ↓
-Overwrite
-```
-
-This is especially important for:
-
-* Medication adherence
-* Consent changes
-* Alerts
-* Follow-ups
-* AI/model evaluation metadata
+Exceptions may exist for temporary technical entities where deletion has no health-history implications.
 
 ---
 
-# 31. Timeline Reference Design
+# 37. RAG Isolation Guardrail
 
-`HEALTH_TIMELINE_EVENT.reference_id` is a polymorphic reference.
-
-Conceptually:
+This relationship is valid:
 
 ```text
-event_type = SYMPTOM_REPORTED
-reference_id = symptom_record.id
+MEDICAL_DOCUMENT
+       │
+       ▼
+KNOWLEDGE_CHUNK
+       │
+       ▼
+VECTOR
 ```
 
-or:
+This relationship is invalid:
 
 ```text
-event_type = PRESCRIPTION_ADDED
-reference_id = prescription.id
+PATIENT_PROFILE
+       │
+       ▼
+KNOWLEDGE_CHUNK
 ```
 
-Because relational databases cannot enforce a normal foreign key across multiple possible tables, application-level validation is required.
-
-An alternative normalized event-reference design may be considered if this becomes problematic.
+Patient information must never become part of the authoritative medical knowledge base.
 
 ---
 
-# 32. Conversation Data Boundary
+# 38. Offline Synchronization Guardrails
 
-Conversation messages should not automatically become:
+### Rule 1 — UUIDs
 
-* Symptoms
-* Medical records
-* Knowledge-base documents
-* Clinical decisions
+Client-generated entities should use UUIDs.
+
+### Rule 2 — Idempotency
+
+```text
+client_operation_id UNIQUE
+```
+
+### Rule 3 — Timestamped events
+
+Adherence and other historical health events should be append-oriented.
+
+### Rule 4 — Retry-safe
+
+A failed synchronization request must be safely retryable.
+
+### Rule 5 — Conflict visibility
+
+Conflicts must not silently overwrite clinically important information.
+
+---
+
+# 39. AI Provider Independence
+
+The ERD intentionally does not contain entities such as:
+
+```text
+SARVAM_MEDICATION
+OLLAMA_RESPONSE
+QWEN_PATIENT
+```
+
+That would incorrectly couple the data model to vendors/models.
 
 Instead:
 
 ```text
-Conversation
-      ↓
-Relevant structured extraction
-      ↓
-Validated record
+Application
+     ↓
+AI Gateway
+     ↓
+Provider Adapter
 ```
 
-Only validated/approved information should enter corresponding structured healthcare entities.
+Provider metadata can be stored when required for reproducibility.
 
----
-
-# 33. AI Output Boundary
-
-AI-generated information should be distinguishable from verified information.
-
-For example:
+This means the project can evaluate:
 
 ```text
-PATIENT DATA
-    ≠
-AI INTERPRETATION
-    ≠
-MEDICAL SOURCE
-    ≠
-HEALTHCARE WORKER ACTION
+Ollama
+Qwen
+Gemma
+other local LLM
 ```
 
-The schema should preserve this distinction where AI output is stored.
+without changing the patient database.
 
----
-
-# 34. RAG Source Traceability
-
-Every retrieved knowledge chunk must be traceable to:
+Likewise, online speech/OCR capabilities can use:
 
 ```text
-Knowledge Chunk
-      ↓
-Medical Document
-      ↓
-Publisher
-      ↓
-Source Reference
-      ↓
-Version
+Sarvam
 ```
 
-This enables source attribution and research reproducibility.
+while local/offline alternatives remain replaceable.
 
 ---
 
-# 35. AI Reproducibility
+# 40. Database → Application Boundary
 
-Where AI-generated records are retained for research or audit purposes, metadata should allow reconstruction of:
+The intended architecture is:
 
 ```text
-Input
-+
-Model Version
-+
-Prompt Version
-+
-Knowledge Base Version
-+
-Embedding Model
+Next.js PWA
+       │
+       ▼
+FastAPI API
+       │
+       ├── Auth Service
+       ├── Patient Service
+       ├── Symptom Service
+       ├── Triage Service
+       ├── Prescription Service
+       ├── Medication Service
+       ├── Timeline Service
+       ├── Healthcare Worker Service
+       ├── Sync Service
+       └── AI Gateway
+                 │
+                 ▼
+             PostgreSQL
+                 │
+                 └── pgvector
 ```
 
-The exact implementation should avoid unnecessarily storing sensitive patient information.
+The frontend must not connect directly to PostgreSQL.
+
+The AI models must not receive unrestricted database access.
 
 ---
 
-# 36. Offline Data Relationship
+# 41. Development Implementation Order
 
-Offline operations do not become independent healthcare records simply because they exist locally.
-
-The lifecycle is:
+The ERD should be implemented incrementally.
 
 ```text
-Local Operation
-      ↓
-SyncOperation
-      ↓
-Validation
-      ↓
-Authorized Server Operation
-      ↓
-Permanent Entity
-```
+M1
+ROLE
+USER
+database foundation
 
-This prevents arbitrary offline payloads from bypassing server validation.
+        ↓
+
+M2
+PATIENT_PROFILE
+HEALTHCARE_WORKER_PROFILE
+CONSENT
+core relationships
+
+        ↓
+
+M6
+SYMPTOM_RECORD
+
+        ↓
+
+M7
+TRIAGE_RESULT
+ALERT
+
+        ↓
+
+M8–M10
+CONVERSATION
+CONVERSATION_MESSAGE
+AI traceability
+
+        ↓
+
+M11
+PRESCRIPTION
+PRESCRIPTION_IMAGE
+OCR_RESULT
+
+        ↓
+
+M12
+MEDICATION
+MEDICATION_SCHEDULE
+MEDICATION_ADHERENCE
+HEALTH_TIMELINE_EVENT
+
+        ↓
+
+M13
+FOLLOW_UP
+
+        ↓
+
+M9
+MEDICAL_DOCUMENT
+KNOWLEDGE_CHUNK
+pgvector
+
+        ↓
+
+M15
+SYNC_OPERATION
+
+        ↓
+
+M16–M18
+Audit hardening
+Testing
+Backup
+Deployment
+```
 
 ---
 
-# 37. Sync Operation Idempotency
+# 42. ERD Completion Criteria
 
-`client_operation_id` must be unique.
+The ERD/database design is considered implementation-ready when:
 
-Example:
+* All core entities have defined primary keys.
+* All foreign-key relationships are documented.
+* Cardinalities are defined.
+* Patient data is isolated from RAG data.
+* Deterministic triage is represented independently.
+* OCR and medication verification boundaries are represented.
+* Offline synchronization has an idempotency mechanism.
+* Healthcare-worker access relationships are represented.
+* Audit logging is represented.
+* UUID strategy is established.
+* Soft-deletion strategy is documented.
+* pgvector integration is defined without hardcoding an unevaluated embedding dimension.
+* AI providers remain abstracted from the core data model.
+
+---
+
+# 43. Final ERD Principle
+
+The MedGuide AI database is not simply a collection of patient tables.
+
+It is designed to preserve **traceability from patient input to system action**:
 
 ```text
-client_operation_id:
-device-A-2026-08-11-000001
+                    PATIENT
+                       │
+                       ▼
+              Patient-reported fact
+                       │
+                       ▼
+                Symptom Record
+                       │
+                       ▼
+              Structured Symptoms
+                       │
+             ┌─────────┴─────────┐
+             ▼                   ▼
+      Medical Retrieval      Deterministic
+          via RAG               Triage
+             │                   │
+             ▼                   ▼
+       Medical Evidence       Safety Decision
+             │                   │
+             └─────────┬─────────┘
+                       ▼
+                 AI Explanation
+                       │
+                       ▼
+                Patient Guidance
+                       │
+              ┌────────┴─────────┐
+              ▼                  ▼
+        Health Timeline       Alert
+                                  │
+                                  ▼
+                         Healthcare Worker
 ```
 
-The actual format will be generated programmatically.
+The central database principle is therefore:
 
-The same operation submitted twice must not create duplicate healthcare records.
+> **Store patient facts, structured health data, retrieved medical evidence, AI-generated information, and deterministic safety decisions as distinguishable layers rather than treating them as one undifferentiated AI output.**
 
----
-
-# 38. Recommended Indexes
-
-Initial indexes should include:
-
-```text
-USER(login_identifier)
-
-PATIENT_PROFILE(user_id)
-
-SYMPTOM_RECORD(patient_id, reported_at)
-
-CONVERSATION(patient_id, started_at)
-
-PRESCRIPTION(patient_id, created_at)
-
-MEDICATION(patient_id)
-
-MEDICATION_SCHEDULE(medication_id, status)
-
-MEDICATION_ADHERENCE(medication_schedule_id, scheduled_at)
-
-HEALTH_TIMELINE_EVENT(patient_id, event_time)
-
-ALERT(patient_id, status)
-
-FOLLOW_UP(patient_id, status)
-
-AUDIT_LOG(actor_user_id, timestamp)
-
-SYNC_OPERATION(user_id, status)
-
-MEDICAL_DOCUMENT(review_status)
-
-KNOWLEDGE_CHUNK(document_id)
-```
-
-Additional indexes should be introduced only after actual query patterns are known.
-
----
-
-# 39. Unique Constraints
-
-Initial unique constraints should include:
-
-```text
-ROLE.name
-
-USER.login_identifier
-
-PATIENT_PROFILE.user_id
-
-HEALTHCARE_WORKER_PROFILE.user_id
-
-SYNC_OPERATION.client_operation_id
-```
-
-Other uniqueness constraints should be added only when supported by business rules.
-
----
-
-# 40. Data Integrity Rules
-
-The database/application combination must enforce:
-
-### User
-
-A user must have a valid role.
-
-### Patient
-
-A patient profile must reference a valid user.
-
-### Medication
-
-A medication must belong to a valid patient.
-
-### Schedule
-
-A schedule must belong to a valid medication.
-
-### Adherence
-
-An adherence record must belong to a valid schedule.
-
-### Prescription
-
-A prescription must belong to a valid patient.
-
-### OCR
-
-An OCR result must reference a valid prescription image.
-
-### Follow-Up
-
-A follow-up must reference a valid patient and, when assigned, a valid healthcare worker.
-
-### Knowledge
-
-A knowledge chunk must reference a valid medical document.
-
----
-
-# 41. Database Constraints vs Application Rules
-
-Database constraints should handle:
-
-* Required fields
-* Foreign keys
-* Uniqueness
-* Basic valid values
-* Referential integrity
-
-Application logic should handle:
-
-* Clinical rules
-* Consent authorization
-* Red-flag evaluation
-* Medication workflow
-* AI safety
-* Complex validation
-* Healthcare-worker authorization
-
-The LLM must not be responsible for database integrity.
-
----
-
-# 42. Transaction Boundaries
-
-Operations involving multiple related entities should use transactions.
-
-Example:
-
-```text
-Verify Prescription
-       ↓
-Create Medication
-       ↓
-Create Schedule
-```
-
-If schedule creation fails:
-
-```text
-Medication creation
-      ↓
-Rollback where appropriate
-```
-
-This prevents partially completed workflows.
-
----
-
-# 43. ERD Review Against Core Requirements
-
-| Requirement              | Database Support                 |
-| ------------------------ | -------------------------------- |
-| Authentication           | User + Role                      |
-| RBAC                     | Role + User                      |
-| Consent                  | Consent                          |
-| Patient Profile          | PatientProfile                   |
-| Symptoms                 | SymptomRecord                    |
-| AI Conversations         | Conversation + Message           |
-| Prescription OCR         | Prescription + Image + OCRResult |
-| Medication               | Medication                       |
-| Reminders                | MedicationSchedule               |
-| Adherence                | MedicationAdherence              |
-| Health Timeline          | HealthTimelineEvent              |
-| Alerts                   | Alert                            |
-| Healthcare Worker        | HealthcareWorkerProfile          |
-| Follow-Up                | FollowUp                         |
-| Medical Knowledge        | MedicalDocument                  |
-| RAG                      | KnowledgeChunk + Vector          |
-| Auditability             | AuditLog                         |
-| Offline Sync             | SyncOperation                    |
-| Research Reproducibility | Model/knowledge metadata         |
-
----
-
-# 44. Deliberately Excluded Entities
-
-The following are **not part of the baseline schema** unless future requirements justify them:
-
-* Hospital
-* Doctor directory
-* Insurance
-* Billing
-* Payments
-* Pharmacy
-* Drug inventory
-* Wearable devices
-* Lab results
-* Full EHR
-* Appointment booking
-* Ambulance dispatch
-* Disease outbreak database
-
-These appeared as possible future capabilities but are outside the current Core MVP.
-
----
-
-# 45. Important Scope Boundary
-
-MedGuide AI is **not being designed as a complete hospital information system or EHR replacement**.
-
-The database should therefore remain focused on:
-
-```text
-Patient Support
-+
-Healthcare Worker Support
-+
-AI Assistance
-+
-Medication Support
-+
-Continuity of Care
-+
-RAG Knowledge
-```
-
-Avoid unnecessary enterprise healthcare complexity.
-
----
-
-# 46. Schema Implementation Rule
-
-Before implementing the database:
-
-1. Review this ERD.
-2. Resolve all `TBD` relationship decisions.
-3. Convert entities into a concrete schema.
-4. Define exact field types.
-5. Define nullable fields.
-6. Define constraints.
-7. Define indexes.
-8. Define migrations.
-9. Test migrations.
-10. Only then connect the API layer.
-
----
-
-# 47. Current Database Status
-
-| Component                            | Status                               |
-| ------------------------------------ | ------------------------------------ |
-| Logical entities                     | ✅ Defined                            |
-| Major relationships                  | ✅ Defined                            |
-| Cardinality                          | ✅ Defined                            |
-| PK strategy                          | ✅ Baseline                           |
-| FK strategy                          | ✅ Baseline                           |
-| Indexing strategy                    | ✅ Baseline                           |
-| RAG relationship                     | ✅ Defined                            |
-| Offline synchronization relationship | ✅ Defined                            |
-| Audit relationship                   | ✅ Defined                            |
-| Exact SQL schema                     | ⏳ Next database implementation phase |
-| Exact ORM models                     | ⏳ Backend phase                      |
-| Migrations                           | ⏳ Backend phase                      |
-
----
-
-# 48. Database Golden Rule
-
-The database must preserve the distinction between:
-
-```text
-Identity
-   ↓
-Patient Data
-   ↓
-Medical Records
-   ↓
-AI Interpretation
-   ↓
-Healthcare Worker Actions
-   ↓
-Audit History
-```
-
-No layer should silently become another.
-
----
-
-# 49. Final ERD Principle
-
-The database should be:
-
-**Minimal enough for the MVP, structured enough for research, secure enough for sensitive healthcare information, and extensible enough for future development.**
-
-Do not add tables merely because a technology makes them possible.
-
-Every entity must have a clear responsibility and traceability to an approved requirement or architectural decision.
+This keeps the system **auditable, safer, provider-independent, offline-sync compatible, and suitable for the research evaluation planned for MedGuide AI.**

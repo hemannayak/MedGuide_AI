@@ -1,20 +1,12 @@
-# MedGuide AI — Database Design
+# MedGuide AI — Database Design Specification
 
-**Project:** MedGuide AI
-**Document:** Database Design
-**Version:** 1.0
-**Status:** Baseline Database Architecture
-**Database:** PostgreSQL
-**Vector Extension:** pgvector
-**Related Documents:**
-
-* `AGENTS.md`
-* `docs/PROJECT_SPECIFICATION.md`
-* `docs/requirements/SRS.md`
-* `docs/requirements/USE_CASES.md`
-* `docs/requirements/PRE_DEVELOPMENT_DECISIONS.md`
-* `docs/requirements/TRACEABILITY_MATRIX.md`
-* `docs/architecture/SYSTEM_ARCHITECTURE.md`
+**Document:** `docs/database/DATABASE_DESIGN.md`  
+**Version:** 2.0  
+**Status:** **Development Baseline — Approved**  
+**Database:** PostgreSQL  
+**Vector Extension:** `pgvector`  
+**Primary Languages:** English, Hindi, Telugu  
+**Related Architecture:** `SYSTEM_ARCHITECTURE.md`, `TECHNOLOGY_STACK.md`, `SRS.md`, `USE_CASES.md`, `TRACEABILITY_MATRIX.md`
 
 ---
 
@@ -22,155 +14,168 @@
 
 This document defines the logical database architecture for MedGuide AI.
 
-It establishes:
-
-* Core entities
-* Relationships
-* Data ownership
-* Data classification
-* Constraints
-* Indexing principles
-* Healthcare-data boundaries
-* AI/RAG storage
-* Auditability
-* Offline synchronization support
-* Data retention principles
-
-The exact implementation schema may evolve during development, but changes must remain consistent with the approved requirements and architecture.
-
----
-
-# 2. Database Objectives
-
 The database must support:
 
-1. Secure user management.
-2. Role-based access.
-3. Patient information.
-4. Consent management.
-5. Symptom records.
-6. AI interactions where retention is required.
-7. Prescription records.
-8. OCR results.
-9. Medication management.
-10. Medication adherence.
-11. Health timeline.
-12. Alerts.
-13. Healthcare-worker follow-ups.
-14. Medical knowledge management.
-15. RAG vector retrieval.
-16. Audit logging.
-17. Offline synchronization.
-18. Future scalability.
+* Secure patient accounts
+* Consent management
+* Patient profiles
+* Symptom records
+* Deterministic triage results
+* AI conversations and structured health extracts
+* Prescription OCR
+* Medication management
+* Medication adherence
+* Health timeline
+* Healthcare-worker workflows
+* Alerts and follow-ups
+* Medical knowledge and RAG retrieval
+* Auditability
+* Offline synchronization
+* AI/model traceability
 
----
-
-# 3. Database Technology
-
-## Primary Database
-
-**PostgreSQL**
-
-Reasons:
-
-* Open source
-* Mature relational database
-* Strong constraints
-* Transactions
-* JSON support
-* Indexing
-* Good Python/FastAPI integration
-* Suitable for structured healthcare data
-
-## Vector Storage
-
-**pgvector**
-
-Used for:
-
-* Medical knowledge embeddings
-* Semantic retrieval
-* RAG
-
-The final vector configuration will depend on the selected embedding model.
-
----
-
-# 4. Data Classification
-
-The system should classify stored information.
-
-| Classification     | Examples                                            |
-| ------------------ | --------------------------------------------------- |
-| Public             | Approved medical knowledge metadata                 |
-| Internal           | System configuration                                |
-| Sensitive          | Patient profile                                     |
-| Highly Sensitive   | Symptoms, prescriptions, medications, conversations |
-| Security-Sensitive | Password hashes, sessions, audit records            |
-
-Sensitive information must have appropriate access controls.
-
----
-
-# 5. Core Entity Overview
-
-The initial logical entities are:
+The design follows the project's five-layer data separation principle:
 
 ```text
-User
-Role
-Consent
-PatientProfile
-HealthcareWorkerProfile
-SymptomRecord
-Conversation
-ConversationMessage
-Prescription
-PrescriptionImage
-OCRResult
-Medication
-MedicationSchedule
-MedicationAdherence
-HealthTimelineEvent
-Alert
-FollowUp
-MedicalDocument
-KnowledgeChunk
-AuditLog
-SyncOperation
+PATIENT-REPORTED FACT
+        ↓
+STRUCTURED DATA
+        ↓
+RETRIEVED KNOWLEDGE
+        ↓
+AI-GENERATED OUTPUT
+        ↓
+SYSTEM DECISION
 ```
 
-Additional entities may be introduced only when justified by requirements or architecture.
+These layers must remain distinguishable throughout storage and processing.
 
 ---
 
-# 6. Identity Model
+# 2. Database Technology
 
-## 6.1 User
+| Component         | Technology            | Status        |
+| ----------------- | --------------------- | ------------- |
+| Primary database  | PostgreSQL            | **CONFIRMED** |
+| Vector extension  | pgvector              | **CONFIRMED** |
+| ORM               | SQLAlchemy            | **CONFIRMED** |
+| Migration system  | Alembic               | **CONFIRMED** |
+| Database testing  | Pytest                | **CONFIRMED** |
+| Local development | PostgreSQL + pgvector | **CONFIRMED** |
 
-Represents an authenticated system account.
+All schema changes must be performed through **Alembic migrations**.
+
+Manual uncontrolled schema modifications are not permitted.
+
+---
+
+# 3. Data Classification
+
+MedGuide AI data is classified according to sensitivity.
+
+| Classification         | Examples                                                                          |
+| ---------------------- | --------------------------------------------------------------------------------- |
+| **Public**             | Approved medical-source metadata                                                  |
+| **Internal**           | Application configuration, model metadata                                         |
+| **Sensitive**          | Patient profile, consent status                                                   |
+| **Highly Sensitive**   | Symptoms, prescriptions, OCR text, medications, adherence, AI health interactions |
+| **Security Sensitive** | Password hashes, authentication records, audit logs, synchronization metadata     |
+
+Patient data must never be exposed through public knowledge-base or vector-search interfaces.
+
+---
+
+# 4. Core Data Architecture
+
+```text
+                         PostgreSQL
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+        ▼                     ▼                     ▼
+   APPLICATION DATA       AI / RAG DATA        SECURITY DATA
+        │                     │                     │
+        ├─ Users              ├─ Documents         ├─ Audit Logs
+        ├─ Profiles           ├─ Chunks             └─ Auth Events
+        ├─ Consent            └─ Embeddings
+        ├─ Symptoms
+        ├─ Prescriptions
+        ├─ Medications
+        ├─ Timeline
+        ├─ Alerts
+        └─ Follow-ups
+                              │
+                              ▼
+                         pgvector
+```
+
+The RAG knowledge store is logically separated from patient health information.
+
+---
+
+# 5. Core Relational Entities
+
+The current database baseline contains **21 primary logical entities**.
+
+|  # | Entity                    | Purpose                                  |
+| -: | ------------------------- | ---------------------------------------- |
+|  1 | `User`                    | Authentication account                   |
+|  2 | `Role`                    | Role and permission classification       |
+|  3 | `Consent`                 | Patient consent records                  |
+|  4 | `PatientProfile`          | Patient demographic/profile information  |
+|  5 | `HealthcareWorkerProfile` | Authorized healthcare-worker information |
+|  6 | `SymptomRecord`           | Patient-reported symptoms                |
+|  7 | `Conversation`            | AI companion session                     |
+|  8 | `ConversationMessage`     | Individual conversation messages         |
+|  9 | `Prescription`            | Prescription lifecycle                   |
+| 10 | `PrescriptionImage`       | Secure uploaded image reference          |
+| 11 | `OCRResult`               | OCR extraction and confidence            |
+| 12 | `Medication`              | Verified medication information          |
+| 13 | `MedicationSchedule`      | Medication timing/schedule               |
+| 14 | `MedicationAdherence`     | Medication adherence events              |
+| 15 | `HealthTimelineEvent`     | Longitudinal health events               |
+| 16 | `Alert`                   | Safety/triage alerts                     |
+| 17 | `FollowUp`                | Healthcare-worker follow-up tasks        |
+| 18 | `MedicalDocument`         | Approved RAG source metadata             |
+| 19 | `KnowledgeChunk`          | RAG document chunks + embeddings         |
+| 20 | `AuditLog`                | Security and sensitive-access records    |
+| 21 | `SyncOperation`           | Offline synchronization operations       |
+
+---
+
+# 6. User and Role Model
+
+## 6.1 `User`
+
+Stores authentication-level information.
 
 Conceptual fields:
 
 ```text
-email / username
+id
+email
+phone_number
 password_hash
+full_name
 role_id
-status
+preferred_language
+is_active
 created_at
 updated_at
-last_login_at
+deleted_at
 ```
 
-Sensitive authentication information must never be stored in plaintext.
+### Rules
+
+* Passwords must never be stored in plaintext.
+* Password hashes must never be returned through normal API responses.
+* Authentication must be handled by the backend.
+* Role permissions must be enforced server-side.
 
 ---
 
-## 6.2 Role
+## 6.2 `Role`
 
-Represents system permissions.
-
-Initial roles:
+Supported roles:
 
 ```text
 PATIENT
@@ -178,65 +183,52 @@ HEALTHCARE_WORKER
 ADMIN
 ```
 
-The role system should support future expansion without redesigning the identity model.
+The role determines the authorization boundary but does not by itself grant access to arbitrary patient information.
 
 ---
 
-# 7. Patient Model
+# 7. Patient Profile
 
-## 7.1 PatientProfile
+## `PatientProfile`
 
-Stores information specifically required for the patient experience.
-
-Conceptual fields may include:
-
-```text
-id
-user_id
-display_name
-date_of_birth / age where required
-preferred_language
-contact_information where required
-created_at
-updated_at
-```
-
-Only necessary information should be collected.
-
-The final demographic fields must be finalized according to actual requirements and privacy considerations.
-
----
-
-# 8. Healthcare Worker Model
-
-## 8.1 HealthcareWorkerProfile
-
-Represents additional information about an authorized healthcare worker.
+Stores patient-specific information.
 
 Conceptual fields:
 
 ```text
 id
 user_id
-name
-worker_type
-organization
-status
+age
+gender
+preferred_language
+blood_group
+known_allergies
+chronic_conditions
+village_or_town
+state
+emergency_contact
 created_at
 updated_at
+deleted_at
 ```
 
-`worker_type` should support the approved categories of healthcare personnel.
+### Phase 1 languages
 
-The system must not assume that every healthcare worker is a physician.
+```text
+en
+hi
+te
+```
+
+Language support must not be interpreted as evidence that every AI capability performs equally across languages. Language-wise evaluation remains mandatory.
 
 ---
 
-# 9. Consent Model
+# 8. Consent
 
-## 9.1 Consent
+## `Consent`
 
-Stores patient consent information.
+Consent must be represented as an explicit data entity.
 
 Conceptual fields:
 
@@ -248,11 +240,12 @@ status
 version
 granted_at
 withdrawn_at
+expires_at
 created_at
 updated_at
 ```
 
-Possible statuses:
+Possible status:
 
 ```text
 GRANTED
@@ -261,77 +254,78 @@ WITHDRAWN
 EXPIRED
 ```
 
-The exact consent types will be finalized during security/privacy design.
+Consent changes must be auditable.
 
 ---
 
-# 10. Symptom Model
+# 9. Symptom Records
 
-## 10.1 SymptomRecord
+## `SymptomRecord`
 
-Represents a patient-reported symptom interaction.
+Stores the patient's reported health information separately from system interpretation.
 
 Conceptual fields:
 
 ```text
 id
 patient_id
-source
-raw_input_reference
-structured_data
+raw_description
+language
+structured_symptoms
+duration
+severity
+associated_symptoms
 reported_at
 created_at
 updated_at
 ```
 
-Possible structured information:
+The original patient-reported information must remain distinguishable from:
 
-```text
-symptom
-duration
-severity
-associated_symptoms
-context
-```
-
-The system must distinguish:
-
-**Patient-reported information**
-
-from:
-
-**AI-generated interpretation.**
+* extracted symptoms
+* retrieved medical evidence
+* AI-generated explanations
+* deterministic triage decisions
 
 ---
 
-# 11. Symptom Assessment
+# 10. Deterministic Triage Data
 
-A separate assessment record may be used if required.
+The triage result should be represented separately from the raw symptom record where appropriate.
 
-Potential information:
+Conceptual information:
 
 ```text
 symptom_record_id
 risk_level
 red_flags_detected
+rule_set_version
 recommended_action
-rule_version
+escalation_required
 evaluated_at
 ```
 
-This separation allows triage logic to be versioned and evaluated independently.
+Risk levels:
 
-Final implementation decision:
+```text
+ROUTINE
+URGENT
+EMERGENCY
+```
 
-**TBD — Detailed Database Design**
+### Critical rule
+
+> The LLM must not be the authoritative source for emergency classification.
+
+The deterministic triage engine produces the safety-critical decision.
 
 ---
 
-# 12. Conversation Model
+# 11. AI Conversation Model
 
-## 12.1 Conversation
+## 11.1 `Conversation`
 
-Represents an AI interaction session where conversation retention is required.
+Stores conversation/session metadata.
 
 Conceptual fields:
 
@@ -339,16 +333,15 @@ Conceptual fields:
 id
 patient_id
 language
-started_at
-ended_at
 status
+started_at
+last_activity_at
+created_at
 ```
 
 ---
 
-## 12.2 ConversationMessage
-
-Represents individual messages.
+## 11.2 `ConversationMessage`
 
 Conceptual fields:
 
@@ -357,8 +350,9 @@ id
 conversation_id
 sender_type
 content
+language
+message_type
 created_at
-metadata
 ```
 
 Possible sender types:
@@ -369,43 +363,55 @@ AI
 SYSTEM
 ```
 
----
+### Privacy rule
 
-# 13. Conversation Privacy
+Raw AI conversations must not automatically be retained indefinitely.
 
-The system should not retain conversations indefinitely by default.
-
-Retention rules must be defined according to:
-
-* Functional need
-* Privacy requirements
-* Research requirements
-* Consent
-
-Where possible, structured health information should be separated from raw conversational data.
+Where appropriate, health-relevant information should be converted into structured timeline/health records for continuity of care.
 
 ---
 
-# 14. Prescription Model
+# 12. AI Output Traceability
 
-## 14.1 Prescription
+Where an AI response affects healthcare workflows, the system should retain sufficient metadata for evaluation and debugging.
 
-Represents a prescription record.
+Potential metadata:
+
+```text
+model_provider
+model_name
+model_version
+prompt_version
+knowledge_base_version
+retrieval_trace_id
+response_type
+safety_validation_status
+created_at
+```
+
+The database should not store unnecessary sensitive prompt/output information solely for debugging.
+
+---
+
+# 13. Prescription Model
+
+## `Prescription`
+
+Represents the prescription lifecycle.
 
 Conceptual fields:
 
 ```text
 id
 patient_id
-source
-status
-prescribed_date
+uploaded_by
 verification_status
 created_at
 updated_at
+verified_at
 ```
 
-Possible verification statuses:
+Verification statuses:
 
 ```text
 PENDING
@@ -416,11 +422,11 @@ REQUIRES_REVIEW
 
 ---
 
-# 15. Prescription Image
+# 14. Prescription Images
 
-## 15.1 PrescriptionImage
+## `PrescriptionImage`
 
-Stores metadata/reference for uploaded prescription images.
+Stores a secure reference to the uploaded prescription.
 
 Conceptual fields:
 
@@ -428,19 +434,29 @@ Conceptual fields:
 id
 prescription_id
 storage_reference
-file_type
+mime_type
 file_size
 checksum
 uploaded_at
+deleted_at
 ```
 
-The actual image should preferably be stored in secure file/object storage rather than directly in PostgreSQL.
+The database should store a **secure storage reference**, not necessarily the image binary itself.
+
+### Security requirements
+
+* Validate file type.
+* Validate file size.
+* Reject executable/non-image files.
+* Generate non-predictable storage identifiers.
+* Restrict access using authorization.
+* Do not expose raw storage paths to unauthorized users.
 
 ---
 
-# 16. OCR Model
+# 15. OCR Results
 
-## 16.1 OCRResult
+## `OCRResult`
 
 Stores OCR processing results.
 
@@ -448,16 +464,16 @@ Conceptual fields:
 
 ```text
 id
-prescription_image_id
-engine
-model_version
+prescription_id
+provider
+model_name
 raw_text
-confidence
+confidence_score
 status
-processed_at
+created_at
 ```
 
-Possible statuses:
+Possible status:
 
 ```text
 SUCCESS
@@ -466,15 +482,53 @@ FAILED
 REQUIRES_REVIEW
 ```
 
-OCR output must remain distinguishable from verified prescription information.
+Provider metadata may identify:
+
+```text
+Sarvam
+Local OCR
+PaddleOCR
+Tesseract
+Other evaluated provider
+```
 
 ---
 
-# 17. Medication Model
+# 16. OCR Verification Guardrail
 
-## 17.1 Medication
+The following workflow is mandatory:
 
-Represents a medication associated with a patient.
+```text
+Prescription Image
+       ↓
+OCR
+       ↓
+Extracted Text
+       ↓
+Medicine Extraction
+       ↓
+Confidence Assessment
+       ↓
+Patient / Human Verification
+       ↓
+Verified Medication
+       ↓
+Medication Schedule
+```
+
+### Absolute rule
+
+> **OCR output must never automatically become an active medication schedule without verification.**
+
+The system must not silently substitute an uncertain medicine name or dosage.
+
+---
+
+# 17. Medication
+
+## `Medication`
+
+Stores verified medication information.
 
 Conceptual fields:
 
@@ -485,21 +539,20 @@ prescription_id
 medicine_name
 dosage
 route
-instructions
+frequency
+duration
 verification_status
 created_at
 updated_at
 ```
 
-The database must not automatically assume OCR output is verified medication information.
+Medication information should only become active after the required verification workflow.
 
 ---
 
 # 18. Medication Schedule
 
-## 18.1 MedicationSchedule
-
-Represents when medication should be taken.
+## `MedicationSchedule`
 
 Conceptual fields:
 
@@ -507,38 +560,38 @@ Conceptual fields:
 id
 medication_id
 frequency
-schedule_data
+dose_instruction
 start_date
 end_date
 timezone
-status
+reminder_enabled
 created_at
 updated_at
 ```
 
-The schedule must be validated before reminders are generated.
+Schedules must support local reminder functionality where technically feasible.
 
 ---
 
 # 19. Medication Adherence
 
-## 19.1 MedicationAdherence
+## `MedicationAdherence`
 
-Stores patient-reported medication-taking events.
+Represents an event rather than repeatedly overwriting historical state.
 
 Conceptual fields:
 
 ```text
 id
-medication_schedule_id
+schedule_id
+status
 scheduled_at
 recorded_at
-status
 source
 created_at
 ```
 
-Possible statuses:
+Possible status:
 
 ```text
 TAKEN
@@ -547,15 +600,29 @@ SKIPPED
 UNKNOWN
 ```
 
-The system should preserve event history rather than silently overwriting previous records.
+This event-based design supports offline synchronization more safely.
 
 ---
 
 # 20. Health Timeline
 
-## 20.1 HealthTimelineEvent
+## `HealthTimelineEvent`
 
-Represents important patient health events.
+Provides a longitudinal patient history.
+
+Example event types:
+
+```text
+SYMPTOM_REPORTED
+TRIAGE_COMPLETED
+AI_INTERACTION
+PRESCRIPTION_ADDED
+MEDICATION_VERIFIED
+MEDICATION_STARTED
+ADHERENCE_RECORDED
+ALERT_CREATED
+FOLLOWUP_CREATED
+```
 
 Conceptual fields:
 
@@ -563,47 +630,36 @@ Conceptual fields:
 id
 patient_id
 event_type
-reference_id
-event_time
-metadata
+source_entity
+source_id
+event_data
+occurred_at
 created_at
 ```
 
-Possible event types:
-
-```text
-SYMPTOM_REPORTED
-AI_INTERACTION
-PRESCRIPTION_ADDED
-MEDICATION_CREATED
-MEDICATION_TAKEN
-ALERT_CREATED
-FOLLOWUP_CREATED
-FOLLOWUP_COMPLETED
-```
-
-The timeline should preferably reference source entities rather than duplicate their complete data.
+The timeline should preserve chronological health events without unnecessarily duplicating sensitive data.
 
 ---
 
-# 21. Alert Model
+# 21. Alerts
 
-## 21.1 Alert
+## `Alert`
 
-Represents a system-generated or authorized healthcare alert.
+Used for safety and healthcare-worker workflows.
 
 Conceptual fields:
 
 ```text
 id
 patient_id
+symptom_record_id
 alert_type
 severity
-source
 status
 created_at
 acknowledged_at
 resolved_at
+assigned_worker_id
 ```
 
 Possible statuses:
@@ -615,25 +671,54 @@ RESOLVED
 DISMISSED
 ```
 
-The exact alert severity classification will be determined from approved safety rules.
+Emergency-related alerts must originate from deterministic safety logic or clearly documented system events.
 
 ---
 
-# 22. Follow-Up Model
+# 22. Healthcare Worker Profile
 
-## 22.1 FollowUp
+## `HealthcareWorkerProfile`
 
-Represents a healthcare-worker follow-up.
+Conceptual fields:
+
+```text
+id
+user_id
+worker_type
+organization
+region
+verification_status
+created_at
+updated_at
+```
+
+Possible worker types may include authorized:
+
+* Community health workers
+* ANMs
+* Nurses
+* Doctors
+* Other approved healthcare personnel
+
+The project must not claim clinical authority beyond the actual authorization and evaluation of the system.
+
+---
+
+# 23. Follow-Ups
+
+## `FollowUp`
 
 Conceptual fields:
 
 ```text
 id
 patient_id
-healthcare_worker_id
+assigned_worker_id
+created_by
 reason
-scheduled_at
 status
+due_at
+completed_at
 notes
 created_at
 updated_at
@@ -645,38 +730,56 @@ Possible statuses:
 PENDING
 COMPLETED
 CANCELLED
-MISSED
 ```
 
-Sensitive notes require appropriate authorization.
+Healthcare-worker access must be authorization-controlled and auditable.
 
 ---
 
-# 23. Medical Knowledge Model
+# 24. Medical Knowledge Base
 
-## 23.1 MedicalDocument
+The medical knowledge base is logically separate from patient health data.
 
-Represents an approved medical source.
+It consists of:
+
+```text
+MedicalDocument
+      ↓
+KnowledgeChunk
+      ↓
+Embedding
+      ↓
+pgvector
+```
+
+---
+
+# 25. Medical Document
+
+## `MedicalDocument`
+
+Stores approved-source metadata.
 
 Conceptual fields:
 
 ```text
 id
+document_id
 title
 publisher
-source_reference
 publication_date
 version
-language
 topic
-license
-review_status
+language
+source_url
+license_information
+status
 last_reviewed_at
 created_at
 updated_at
 ```
 
-Possible review statuses:
+Possible statuses:
 
 ```text
 PENDING_REVIEW
@@ -685,87 +788,152 @@ OUTDATED
 ARCHIVED
 ```
 
-Only approved content should be used for production retrieval.
+Only approved documents should enter the production retrieval corpus.
 
 ---
 
-# 24. Knowledge Chunk
+# 26. Knowledge Chunk
 
-## 24.1 KnowledgeChunk
+## `KnowledgeChunk`
 
-Represents a processed portion of a medical document.
+Stores the searchable units of approved medical documents.
 
 Conceptual fields:
 
 ```text
 id
-document_id
-chunk_index
+medical_document_id
+chunk_id
 content
+section_title
+page_number
+language
 embedding
-metadata
 created_at
 ```
 
-The `embedding` field uses pgvector where supported.
+The `embedding` field uses pgvector.
+
+Example conceptual type:
+
+```sql
+embedding vector(N)
+```
+
+where `N` is determined by the selected embedding model.
+
+The embedding dimension must **not** be hardcoded until the final embedding model is selected.
 
 ---
 
-# 25. Knowledge Versioning
+# 27. RAG Data Isolation
 
-The system should retain sufficient metadata to determine:
+The following separation is mandatory:
 
-* Which source produced a chunk.
-* Which source version was used.
-* When the source was processed.
-* Whether the source was active.
-* Which embedding/model version generated the vector.
+```text
+                 PostgreSQL
+                     │
+        ┌────────────┴────────────┐
+        │                         │
+        ▼                         ▼
+ PATIENT HEALTH DATA       MEDICAL KNOWLEDGE
+        │                         │
+ Symptoms                     Documents
+ Prescriptions                Chunks
+ Medications                  Embeddings
+ Conversations
+        │                         │
+        └───────────X─────────────┘
+              NEVER MIX
+```
 
-This is important for research reproducibility.
+Patient information must never be inserted into the global medical knowledge vector corpus.
 
 ---
 
-# 26. Audit Model
+# 28. RAG Retrieval Metadata
 
-## 26.1 AuditLog
+For traceability, retrieval operations may record metadata such as:
 
-Represents security-relevant or sensitive operations.
+```text
+retrieval_id
+query_language
+embedding_model
+knowledge_base_version
+retrieved_chunk_ids
+similarity_scores
+evidence_threshold
+created_at
+```
+
+This information supports research evaluation and debugging.
+
+The user-facing response should expose appropriate source attribution without unnecessarily exposing internal system metadata.
+
+---
+
+# 29. Evidence Sufficiency
+
+The RAG pipeline must distinguish:
+
+```text
+Sufficient Evidence
+        ↓
+Grounded LLM Response
+
+Insufficient Evidence
+        ↓
+Safe Limitation / Escalation Response
+```
+
+The similarity threshold is **not permanently fixed in the database design**.
+
+It must be calibrated during RAG evaluation.
+
+---
+
+# 30. Audit Logs
+
+## `AuditLog`
+
+Tracks sensitive operations.
 
 Conceptual fields:
 
 ```text
 id
 actor_user_id
-action
-resource_type
-resource_id
+actor_role
+event_type
+target_entity
+target_id
 timestamp
-ip_reference where appropriate
+request_id
 metadata
 ```
 
-Audit logs should avoid storing unnecessary medical content.
-
-Potential actions:
+Examples:
 
 ```text
 LOGIN
 PATIENT_ACCESSED
-PATIENT_DATA_ACCESSED
 CONSENT_CHANGED
 PRESCRIPTION_ACCESSED
+ALERT_REVIEWED
 FOLLOWUP_CREATED
-ALERT_ACCESSED
-ADMIN_ACTION
+KNOWLEDGE_UPDATED
+ADMIN_OPERATION
 ```
+
+Audit logs must avoid unnecessary raw PII.
 
 ---
 
-# 27. Offline Synchronization Model
+# 31. Offline Synchronization
 
-## 27.1 SyncOperation
+## `SyncOperation`
 
-Represents an operation generated while offline.
+Tracks operations generated while offline.
 
 Conceptual fields:
 
@@ -773,18 +941,20 @@ Conceptual fields:
 id
 client_operation_id
 user_id
-operation_type
 entity_type
 entity_id
+operation_type
 payload_reference
-created_at
-synced_at
+client_timestamp
+server_timestamp
 status
 retry_count
 error_code
+created_at
+updated_at
 ```
 
-Possible statuses:
+Statuses:
 
 ```text
 PENDING
@@ -796,718 +966,498 @@ CONFLICT
 
 ---
 
-# 28. Idempotency
+# 32. Synchronization Rules
 
-Offline operations must contain a unique client-generated operation identifier.
+Every offline operation should have a unique client-generated identifier.
 
-The server should use this identifier to prevent duplicate processing.
-
-Conceptually:
+Example:
 
 ```text
-Client Operation ID
-        ↓
-Server receives operation
-        ↓
+client_operation_id = UUID
+```
+
+This provides idempotency when a device retries the same operation.
+
+Example:
+
+```text
+Offline
+  ↓
+Create Symptom Record
+  ↓
+Queue Operation
+  ↓
+Internet Returns
+  ↓
+Send Operation
+  ↓
+Server Checks client_operation_id
+  ↓
 Already processed?
-   ┌────┴────┐
-  YES        NO
-   ↓          ↓
-Ignore     Process
+ ├── YES → Return existing result
+ └── NO  → Process operation
 ```
 
 ---
 
-# 29. Conflict Handling
+# 33. Conflict Resolution
 
-The system should avoid destructive synchronization where possible.
+The preferred strategy is **event-oriented storage** rather than destructive overwriting.
 
-Health-related events should preferably be append-only.
-
-For conflicting mutable data:
+For example:
 
 ```text
-Detect conflict
+Medication Adherence
       ↓
-Preserve existing server state
+TAKEN at 08:00
       ↓
-Record conflict
-      ↓
-Apply predefined resolution
+Immutable event
 ```
 
-The exact conflict-resolution strategy will be finalized after database and offline implementation design.
+rather than repeatedly modifying one mutable record.
+
+For profile fields where conflicts can occur:
+
+* Last-write-wins may be used where appropriate.
+* User resolution may be required for important conflicting information.
+* Conflict handling must be explicitly tested.
 
 ---
 
-# 30. Entity Relationships
+# 34. Soft Deletion and Historical Data
 
-High-level relationship model:
-
-```text
-User
- │
- ├── Role
- │
- ├── PatientProfile
- │       │
- │       ├── Consent
- │       ├── SymptomRecord
- │       ├── Conversation
- │       │      └── ConversationMessage
- │       ├── Prescription
- │       │      └── PrescriptionImage
- │       │              └── OCRResult
- │       ├── Medication
- │       │      └── MedicationSchedule
- │       │              └── MedicationAdherence
- │       ├── HealthTimelineEvent
- │       ├── Alert
- │       └── FollowUp
- │
- └── HealthcareWorkerProfile
-          │
-          └── FollowUp
-
-
-MedicalDocument
-      │
-      └── KnowledgeChunk
-             │
-             └── Vector Embedding
-
-
-User
- │
- └── AuditLog
-
-
-User
- │
- └── SyncOperation
-```
-
----
-
-# 31. Simplified ER Diagram
-
-```text
-┌──────────────┐
-│     USER     │
-├──────────────┤
-│ id           │
-│ role_id      │
-│ credentials  │
-└──────┬───────┘
-       │
-   ┌───┴───────────────┐
-   │                   │
-   ↓                   ↓
-┌──────────────┐  ┌────────────────────┐
-│    PATIENT   │  │ HEALTHCARE_WORKER │
-└──────┬───────┘  └─────────┬──────────┘
-       │                    │
-       ├──────────┐         │
-       ↓          ↓         │
-   ┌────────┐  ┌──────────┐ │
-   │CONSENT │  │ SYMPTOM  │ │
-   └────────┘  └──────────┘ │
-       │                     │
-       ↓                     │
-┌──────────────┐             │
-│ PRESCRIPTION │             │
-└──────┬───────┘             │
-       │                     │
-       ↓                     │
-┌──────────────┐             │
-│ PRESCRIPTION │             │
-│    IMAGE     │             │
-└──────┬───────┘             │
-       ↓                     │
-┌──────────────┐             │
-│  OCR RESULT  │             │
-└──────┬───────┘             │
-       ↓                     │
-┌──────────────┐             │
-│  MEDICATION  │◄────────────┘
-└──────┬───────┘
-       ↓
-┌──────────────────┐
-│ MEDICATION       │
-│ SCHEDULE         │
-└────────┬─────────┘
-         ↓
-┌──────────────────┐
-│ MEDICATION       │
-│ ADHERENCE        │
-└──────────────────┘
-
-
-PATIENT
-   │
-   ├── CONVERSATION
-   │      └── MESSAGE
-   │
-   ├── TIMELINE
-   │
-   ├── ALERT
-   │
-   └── FOLLOW_UP
-           │
-           └── HEALTHCARE_WORKER
-
-
-MEDICAL_DOCUMENT
-       │
-       ↓
-KNOWLEDGE_CHUNK
-       │
-       ↓
-VECTOR EMBEDDING
-
-
-USER
-  │
-  ├── AUDIT_LOG
-  │
-  └── SYNC_OPERATION
-```
-
----
-
-# 32. Foreign-Key Principles
-
-Relationships should use foreign keys wherever appropriate.
-
-Examples:
-
-```text
-patient.user_id → user.id
-consent.patient_id → patient.id
-symptom.patient_id → patient.id
-prescription.patient_id → patient.id
-medication.patient_id → patient.id
-schedule.medication_id → medication.id
-adherence.schedule_id → medication_schedule.id
-followup.patient_id → patient.id
-followup.healthcare_worker_id → healthcare_worker.id
-knowledge_chunk.document_id → medical_document.id
-```
-
-Exact names will be finalized during implementation.
-
----
-
-# 33. Referential Integrity
-
-The database should enforce appropriate referential integrity.
-
-Examples:
-
-* A medication cannot reference a nonexistent patient.
-* An adherence record cannot reference a nonexistent schedule.
-* A knowledge chunk cannot reference a nonexistent document.
-* A follow-up cannot reference a nonexistent healthcare worker.
-
-Deletion behavior must be carefully selected for sensitive healthcare records.
-
-Blind cascading deletion should not be used where it could destroy required audit/history information.
-
----
-
-# 34. Soft Delete vs Hard Delete
-
-Sensitive healthcare information requires deliberate deletion policies.
-
-Where historical integrity is required, the system may use:
+Where appropriate, records should support:
 
 ```text
 deleted_at
 ```
 
-instead of immediately physically deleting records.
+rather than immediately destroying historical records.
 
-However, soft deletion must not be used as an excuse to retain information indefinitely.
+However, soft deletion must not be used to bypass legitimate data-deletion requirements.
 
-The final retention/deletion policy must comply with the approved privacy requirements.
-
----
-
-# 35. Timestamp Requirements
-
-Relevant entities should maintain timestamps.
-
-Typical fields:
-
-```text
-created_at
-updated_at
-event_time
-```
-
-Healthcare events should use explicit event timestamps rather than relying only on database insertion time.
+Account deletion and privacy requirements remain governed by the approved retention/deletion policy.
 
 ---
 
-# 36. Timezone Handling
+# 35. Foreign Key & Integrity Rules
 
-Medication schedules and reminders must account for timezone.
-
-Recommended approach:
-
-* Store timestamps in UTC where appropriate.
-* Store user timezone separately.
-* Convert timestamps for presentation and scheduling.
-
-The final implementation must be tested around daylight/timezone edge cases where applicable.
-
----
-
-# 37. Indexing Strategy
-
-Indexes should be added based on actual query patterns.
-
-Likely indexes include:
-
-```text
-User.email / username
-PatientProfile.user_id
-SymptomRecord.patient_id
-SymptomRecord.reported_at
-Conversation.patient_id
-Prescription.patient_id
-Medication.patient_id
-MedicationSchedule.medication_id
-MedicationAdherence.schedule_id
-HealthTimelineEvent.patient_id + event_time
-Alert.patient_id + status
-FollowUp.patient_id + status
-AuditLog.actor_user_id + timestamp
-SyncOperation.user_id + status
-MedicalDocument.review_status
-KnowledgeChunk.document_id
-```
-
-Do not create excessive indexes without evidence of need.
-
----
-
-# 38. Unique Constraints
-
-Potential uniqueness requirements:
-
-* User authentication identifier
-* Client operation ID
-* Appropriate role identifiers
-* Approved document version combinations
-
-Exact constraints will be finalized during implementation.
-
----
-
-# 39. Data Validation
-
-Database constraints should enforce basic data integrity.
+Relationships must enforce referential integrity.
 
 Examples:
 
-* Required fields
-* Valid status values
-* Valid timestamps
-* Foreign-key relationships
-* Appropriate uniqueness
-* Reasonable data types
-
-Application-level validation remains necessary for complex business rules.
-
----
-
-# 40. JSON Usage
-
-PostgreSQL JSON/JSONB may be used for flexible structures such as:
-
-* Symptom metadata
-* OCR metadata
-* AI metadata
-* Timeline metadata
-* Model configuration
-* Sync payload metadata
-
-However, frequently queried fields should generally be represented as structured relational columns rather than hidden inside JSON.
-
----
-
-# 41. Sensitive Data Boundary
-
-The database should separate identity information from healthcare information where practical.
-
-Conceptually:
-
 ```text
-Identity Data
-     │
-     ↓
 User
-     │
-     ↓
-Patient Profile
-     │
-     ↓
-Healthcare Data
+ ├── PatientProfile
+ ├── HealthcareWorkerProfile
+ ├── AuditLog
+ └── SyncOperation
+
+PatientProfile
+ ├── Consent
+ ├── SymptomRecord
+ ├── Conversation
+ ├── Prescription
+ ├── Medication
+ ├── Alert
+ └── FollowUp
 ```
 
-Application services should control access between these domains.
+Foreign-key deletion behavior must be selected carefully for sensitive health records.
+
+Blind cascading deletion should not be used where it would destroy required audit/history information.
 
 ---
 
-# 42. AI Data Boundary
+# 36. Indexing Strategy
 
-AI systems should not have unrestricted database access.
+Indexes should be created for frequently queried fields.
 
-Instead:
+Initial candidates:
 
 ```text
-Database
-   ↓
-Authorized Service
-   ↓
-Minimum Required Data
-   ↓
+users.email
+users.phone_number
+patient_profiles.user_id
+
+symptom_records.patient_id
+symptom_records.created_at
+
+conversations.patient_id
+conversation_messages.conversation_id
+
+prescriptions.patient_id
+medications.patient_id
+medication_schedules.medication_id
+
+alerts.patient_id
+alerts.status
+alerts.assigned_worker_id
+
+followups.patient_id
+followups.assigned_worker_id
+followups.status
+
+medical_documents.status
+knowledge_chunks.medical_document_id
+
+audit_logs.actor_user_id
+audit_logs.target_id
+audit_logs.timestamp
+
+sync_operations.user_id
+sync_operations.client_operation_id
+sync_operations.status
+```
+
+Vector indexing strategy will be determined after the embedding model and retrieval scale are finalized.
+
+---
+
+# 37. Database Security
+
+The database layer must enforce:
+
+* Restricted credentials
+* Environment-based secrets
+* No credentials in Git
+* Least-privilege database access
+* Parameterized queries / ORM protections
+* Restricted production access
+* Encrypted connections where applicable
+* Backup protection
+* Sensitive-data logging restrictions
+
+The LLM must never receive unrestricted database credentials.
+
+---
+
+# 38. LLM Database Boundary
+
+The LLM does **not** directly query PostgreSQL.
+
+Correct flow:
+
+```text
+Patient Request
+      ↓
+FastAPI
+      ↓
+Application Services
+      ↓
+Retrieve minimum required data
+      ↓
 AI Gateway
-   ↓
-Model
+      ↓
+LLM
 ```
 
-This prevents unnecessary exposure of patient information.
+Incorrect:
+
+```text
+LLM
+ ↓
+Direct PostgreSQL access
+```
+
+This boundary is mandatory for security, privacy, and auditability.
 
 ---
 
-# 43. RAG Data Boundary
+# 39. AI Provider Data Boundary
 
-Medical knowledge is separate from patient records.
+The database architecture must also support the distinction between local and online AI services.
 
 ```text
-PATIENT DATA
+Application
+     ↓
+AI Gateway
      │
+     ├── Ollama
+     │      └── Local LLM inference
      │
-     └─────── separate ────────┐
-                               │
-                               ↓
-                    MEDICAL KNOWLEDGE
-                               │
-                         RAG / Vector
+     ├── Sarvam
+     │      ├── Online STT
+     │      ├── Online TTS
+     │      └── Online OCR
+     │
+     └── Local fallback services
 ```
 
-Patient data must not accidentally become part of the general medical knowledge base.
+Provider-specific API credentials must never be stored in patient records.
 
 ---
 
-# 44. No Patient Data in Global RAG
+# 40. Model Metadata
 
-Patient conversations, prescriptions, symptoms, or health records must not automatically enter the global medical knowledge base.
+Where AI operations are evaluated or need reproducibility, model metadata should be represented separately from patient health entities.
 
-This prevents:
-
-* Privacy leakage
-* Knowledge contamination
-* Cross-patient information exposure
-* RAG poisoning
-
----
-
-# 45. Research Dataset Separation
-
-Research datasets should be separate from operational application data.
-
-Conceptually:
+Potential metadata:
 
 ```text
-Application Data
-      │
-      ↓
-De-identification / Approved Export
-      │
-      ↓
-Research Dataset
-      │
-      ↓
-Evaluation
-```
-
-No real patient information should be copied into research datasets without appropriate authorization and safeguards.
-
----
-
-# 46. Model Metadata
-
-AI-generated records that need reproducibility should be capable of referencing:
-
-```text
+provider
 model_name
 model_version
+quantization
 embedding_model
 prompt_version
 knowledge_base_version
-pipeline_version
+parameters
+hardware
+evaluation_run_id
 ```
 
-This allows later reconstruction of AI experiments.
+This supports reproducibility without coupling patient records to a particular model.
 
 ---
 
-# 47. Medical Knowledge Versioning
+# 41. Backup and Recovery
 
-RAG retrieval should be reproducible.
+The PostgreSQL database must support:
 
-A response evaluation should be able to identify:
+* Regular backups
+* Documented restore procedure
+* Restore testing before final evaluation
+* Knowledge-base reconstruction from approved source documents
+
+The medical knowledge base should be rebuildable from its source manifest rather than relying solely on a database backup.
+
+---
+
+# 42. Database Migration Strategy
+
+All schema changes follow:
 
 ```text
-Query
-+
-Knowledge Base Version
-+
-Embedding Model Version
-+
-LLM Version
-+
-Prompt Version
+Modify SQLAlchemy Models
+        ↓
+Generate / Review Alembic Migration
+        ↓
+Run Migration
+        ↓
+Run Tests
+        ↓
+Verify Database
+        ↓
+Commit
 ```
 
-where technically feasible.
+Production or evaluation environments must not receive undocumented schema modifications.
 
 ---
 
-# 48. Database Backup
-
-The database should have a documented backup strategy appropriate to the deployment environment.
-
-The project documentation should identify:
-
-* Backup method
-* Backup frequency
-* Storage location
-* Restore procedure
-* Verification method
-
-Do not claim a production-grade backup strategy without testing restoration.
-
----
-
-# 49. Migration Strategy
-
-Database schema changes should be managed through version-controlled migrations.
-
-The development workflow should follow:
+# 43. High-Level ERD
 
 ```text
-Schema Change
-      ↓
-Migration
-      ↓
-Test
-      ↓
-Review
-      ↓
-Apply
-```
-
-Manual undocumented production schema changes should be avoided.
-
----
-
-# 50. ORM
-
-A Python-compatible ORM or database toolkit may be used.
-
-Potential options include:
-
-* SQLAlchemy
-* SQLModel
-* Other suitable open-source solutions
-
-The final choice will be made during backend implementation based on maintainability and project requirements.
-
----
-
-# 51. Database Testing
-
-Database testing should include:
-
-* Constraint testing
-* Foreign-key testing
-* Authorization-related query testing
-* Migration testing
-* Transaction testing
-* Duplicate prevention
-* Offline synchronization testing
-* Data integrity testing
-
----
-
-# 52. Transaction Requirements
-
-Operations that modify multiple related records should use appropriate database transactions.
-
-Examples:
-
-```text
-Prescription verification
-      ↓
-Medication creation
-      ↓
-Schedule creation
-```
-
-If a required operation fails midway, the system should avoid leaving inconsistent records.
-
----
-
-# 53. Concurrency
-
-The system should account for concurrent updates where applicable.
-
-Examples:
-
-* Patient updates medication adherence.
-* Healthcare worker records follow-up.
-* Offline device synchronizes.
-* Multiple devices update the same patient data.
-
-The final strategy will be defined during backend implementation.
-
----
-
-# 54. Database Security
-
-Database access should use:
-
-* Strong credentials
-* Environment variables
-* Least-privilege access
-* Encrypted connections where supported
-* Network restrictions where available
-* No direct public exposure unless explicitly required
-* Regular dependency/security review
-
----
-
-# 55. Database Completion Criteria
-
-The database design will be considered ready for implementation when:
-
-* Core entities are identified.
-* Relationships are defined.
-* Sensitive data boundaries are defined.
-* RAG storage is defined.
-* Offline synchronization requirements are represented.
-* Auditability is represented.
-* Data ownership is clear.
-* Referential integrity requirements are clear.
-* Indexing strategy is documented.
-* Retention/deletion strategy is documented.
-* Migration strategy is defined.
-* No major SRS requirement lacks database support where required.
-
----
-
-# 56. Final Logical Model
-
-The overall database architecture can be summarized as:
-
-```text
-                         ┌──────────────┐
-                         │     USER     │
-                         └──────┬───────┘
+                         ┌─────────────┐
+                         │    Role     │
+                         └──────┬──────┘
                                 │
-                  ┌─────────────┴─────────────┐
-                  │                           │
-           ┌──────▼──────┐            ┌───────▼─────────┐
-           │   PATIENT   │            │ HEALTHCARE      │
-           │   PROFILE   │            │ WORKER PROFILE  │
-           └──────┬──────┘            └────────┬────────┘
-                  │                            │
-       ┌──────────┼───────────┐                │
-       │          │           │                │
-       ▼          ▼           ▼                ▼
-   CONSENT    SYMPTOMS   CONVERSATIONS      FOLLOW-UPS
-                            │
-                            ▼
-                         MESSAGES
+                                ▼
+                         ┌─────────────┐
+                         │    User     │
+                         └──────┬──────┘
+                    ┌───────────┼────────────┐
+                    │           │            │
+                    ▼           ▼            ▼
+             PatientProfile   Worker     AuditLog
+                    │         Profile
+          ┌─────────┼───────────────┐
+          │         │               │
+          ▼         ▼               ▼
+       Consent   Symptoms       Conversation
+                    │               │
+                    ▼               ▼
+                 Triage          Messages
+                    │
+                    ▼
+                  Alert
 
-       PATIENT
-          │
-   ┌──────┼───────────┬────────────┐
-   │      │           │            │
-   ▼      ▼           ▼            ▼
-PRESCRIPTION  MEDICATION      TIMELINE      ALERT
-   │              │
-   ▼              ▼
-IMAGE         SCHEDULE
-   │              │
-   ▼              ▼
- OCR          ADHERENCE
+PatientProfile
+      │
+      ├──────────────► Prescription
+      │                     │
+      │                     ├──► PrescriptionImage
+      │                     │          │
+      │                     │          ▼
+      │                     │       OCRResult
+      │                     │
+      │                     ▼
+      │                  Medication
+      │                     │
+      │                     ▼
+      │              MedicationSchedule
+      │                     │
+      │                     ▼
+      │             MedicationAdherence
+      │
+      ├──────────────► HealthTimelineEvent
+      │
+      └──────────────► FollowUp ◄──── HealthcareWorker
 
+MedicalDocument
+      │
+      ▼
+KnowledgeChunk
+      │
+      ▼
+   pgvector
 
-MEDICAL DOCUMENT
-       │
-       ▼
-KNOWLEDGE CHUNK
-       │
-       ▼
-VECTOR EMBEDDING
-
-
-USER
- │
- ├──── AUDIT LOG
- │
- └──── SYNC OPERATION
+User
+  │
+  ▼
+SyncOperation
 ```
 
 ---
 
-# 57. Database Golden Rules
+# 44. Database Design Guardrails
 
-1. **Never store plaintext passwords.**
-2. **Never store secrets in the database unnecessarily.**
-3. **Never allow unauthorized patient access.**
-4. **Never treat OCR output as automatically verified medical data.**
-5. **Never mix patient data into the global medical knowledge base.**
-6. **Never allow the LLM unrestricted database access.**
-7. **Never silently overwrite important healthcare history.**
-8. **Never destroy audit/history information through careless cascading deletes.**
-9. **Never store unnecessary patient information.**
-10. **Never introduce a database entity without a justified requirement or architectural need.**
-11. **Every sensitive data access must follow authorization rules.**
-12. **Database changes must be version-controlled through migrations.**
-13. **Research datasets must remain separated from operational patient data.**
-14. **Database design must support reproducible AI evaluation where required.**
+The following rules are mandatory:
+
+### 1. No plaintext credentials
+
+Passwords must always be securely hashed.
+
+### 2. No direct LLM database access
+
+LLMs only receive application-approved context.
+
+### 3. No patient data in RAG corpus
+
+Patient records and medical knowledge remain isolated.
+
+### 4. No unverified OCR medication schedules
+
+OCR output requires verification.
+
+### 5. Deterministic triage remains separate
+
+LLM output cannot overwrite the authoritative safety classification.
+
+### 6. Offline operations must be idempotent
+
+Every sync operation requires a unique client operation ID.
+
+### 7. Health history should be event-oriented
+
+Important historical events should not be destructively overwritten.
+
+### 8. All schema changes use Alembic
+
+No undocumented manual schema modifications.
+
+### 9. Sensitive access must be auditable
+
+Healthcare-worker access to patient information must generate appropriate audit events.
+
+### 10. Provider independence
+
+Database entities must not be tightly coupled to Sarvam or Ollama.
 
 ---
 
-# 58. Final Principle
+# 45. Database Development Order
 
-The database should preserve the distinction between:
+Database implementation should follow the M1–M18 roadmap.
 
 ```text
-WHO?
-Identity
-
-WHAT DID THE PATIENT REPORT?
-Patient Data
-
-WHAT DOES THE MEDICAL SOURCE SAY?
-Medical Knowledge
-
-WHAT DID THE AI GENERATE?
-AI Output
-
-WHAT DID THE SYSTEM DETERMINE?
-Safety / Workflow Decision
-
-WHAT DID THE HEALTHCARE WORKER DO?
-Follow-Up / Care Action
-
-WHO ACCESSED WHAT?
-Audit Record
+M1
+Database connection + migration framework
+        ↓
+M2
+Core entities + relationships
+        ↓
+M3
+User / Role / Authentication
+        ↓
+M4
+Consent
+        ↓
+M5
+Patient Profile
+        ↓
+M6
+Symptom Records
+        ↓
+M7
+Triage / Alerts
+        ↓
+M8
+AI Gateway metadata
+        ↓
+M9
+Medical Documents + Knowledge Chunks + pgvector
+        ↓
+M10
+Conversation + AI health interaction
+        ↓
+M11
+Prescription + OCR
+        ↓
+M12
+Medication + adherence + timeline
+        ↓
+M13
+Healthcare-worker workflows
+        ↓
+M14
+Speech metadata
+        ↓
+M15
+Sync operations
+        ↓
+M16–M18
+Testing, evaluation, deployment
 ```
+
+---
+
+# 46. Definition of Database Completion
+
+The database layer is considered ready for full integration when:
+
+* All approved core entities are implemented.
+* Foreign-key relationships are tested.
+* Alembic migrations work from a clean database.
+* pgvector retrieval schema is operational.
+* Patient/RAG data isolation is verified.
+* RBAC boundaries are tested.
+* OCR verification constraints are implemented.
+* Offline synchronization is idempotent.
+* Audit events are recorded for sensitive operations.
+* Backup and restore are tested.
+* Database tests pass.
+* No real patient data is used during development/testing without appropriate authorization.
+
+---
+
+# 47. Final Database Principle
+
+MedGuide AI's database must preserve the distinction between **what the patient said, what the system extracted, what medical evidence was retrieved, what the AI generated, and what the safety engine decided**.
+
+```text
+┌───────────────────────────────┐
+│ Patient-Reported Information  │
+└───────────────┬───────────────┘
+                ↓
+┌───────────────────────────────┐
+│ Structured Health Data        │
+└───────────────┬───────────────┘
+                ↓
+┌───────────────────────────────┐
+│ Approved Medical Knowledge    │
+│ + pgvector Retrieval          │
+└───────────────┬───────────────┘
+                ↓
+┌───────────────────────────────┐
+│ AI-Generated Explanation      │
+│ via Ollama / selected LLM     │
+└───────────────┬───────────────┘
+                ↓
+┌───────────────────────────────┐
+│ Deterministic Safety Decision │
+└───────────────────────────────┘
+```
+
+**This separation is the core database safety principle for MedGuide AI.**

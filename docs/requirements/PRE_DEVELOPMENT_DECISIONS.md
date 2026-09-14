@@ -1,115 +1,63 @@
 # MedGuide AI — Pre-Development Decisions
 
-**Project:** MedGuide AI
-**Document:** Pre-Development Decision Register
-**Version:** 1.0
-**Status:** Open — Decisions Required Before Architecture
+**Project:** MedGuide AI  
+**Document:** Pre-Development Decision Register  
+**Version:** 2.0  
+**Status:** APPROVED — Development Baseline  
+**Last Updated:** 2026-08-22
+
 **Related Documents:**
 
 * `AGENTS.md`
 * `docs/PROJECT_SPECIFICATION.md`
 * `docs/requirements/SRS.md`
 * `docs/requirements/USE_CASES.md`
+* `docs/requirements/TRACEABILITY_MATRIX.md`
+* `docs/development/DEVELOPMENT_ENVIRONMENT.md`
 
 ---
 
 # 1. Purpose
 
-This document captures the **remaining open decisions** that must be resolved before the requirements traceability matrix can be finalized and architectural design can begin.
+This document defines the architectural, product, AI/ML, data, security, infrastructure, and evaluation decisions that establish the development baseline for MedGuide AI.
 
-Each decision is categorized, explained, and includes a recommendation. Once a decision is approved, it becomes binding for the development phase unless formally revised.
+These decisions are based on the current project requirements, prototype implementation, M1–M4 backend development, RAG validation work, local LLM benchmarking, frontend development, and the planned M5–M18 implementation roadmap.
 
-The decisions are grouped into:
+Once approved, a decision becomes the baseline for implementation unless it is formally revised and documented.
 
-* **Product scope decisions**
-* **AI/ML decisions**
-* **Data decisions**
-* **Security decisions**
-* **Infrastructure decisions**
-* **Research/evaluation decisions**
+The project follows the principle:
+
+> **Build the safest practical system first, then optimize quality, latency, multilingual capability, and offline capability through measurable evaluation.**
 
 ---
 
-# 2. Completeness Summary
+# 2. Current Development Baseline
 
-### Already solid
+The following decisions are now considered established project direction.
 
-| Area                                    | Status |
-| --------------------------------------- | ------ |
-| Problem statement                       | ✅      |
-| Project objectives                      | ✅      |
-| Target users                            | ✅      |
-| Rural/underserved focus                 | ✅      |
-| MVP scope                               | ✅      |
-| Future scope exclusions                 | ✅      |
-| Patient role and use cases              | ✅      |
-| Healthcare-worker role and use cases    | ✅      |
-| Admin role                              | ✅      |
-| Authentication and authorization        | ✅      |
-| Consent management                      | ✅      |
-| AI health companion                     | ✅      |
-| RAG architecture concept                | ✅      |
-| Symptom processing                      | ✅      |
-| Red-flag detection                      | ✅      |
-| Healthcare escalation                   | ✅      |
-| Prescription OCR                        | ✅      |
-| Medication management                   | ✅      |
-| Medication reminders                    | ✅      |
-| Medication adherence                    | ✅      |
-| Health timeline                         | ✅      |
-| Healthcare-worker dashboard             | ✅      |
-| AI-generated summaries                  | ✅      |
-| Follow-up management                    | ✅      |
-| Multilingual support (concept)          | ✅      |
-| Voice support (concept)                 | ✅      |
-| Offline-first concept                   | ✅      |
-| Synchronization concept                 | ✅      |
-| Security requirements                   | ✅      |
-| Privacy requirements                    | ✅      |
-| Free/open-source constraint             | ✅      |
-| Testing requirements                    | ✅      |
-| AI evaluation concept                   | ✅      |
-| Research direction                      | ✅      |
-| Limitations acknowledgment              | ✅      |
-| Safety philosophy                       | ✅      |
-| Technology direction                    | ✅      |
-
-### Needs decisions during design
-
-| Area                                    | Status |
-| --------------------------------------- | ------ |
-| Target geography                        | 🟡      |
-| MVP languages                           | 🟡      |
-| Healthcare-worker definition            | 🟡      |
-| Emergency escalation behavior           | 🟡      |
-| Healthcare-resource locator scope       | 🟡      |
-| Notification mechanism                  | 🟡      |
-| Prescription verification workflow      | 🟡      |
-| Medical knowledge governance            | 🟡      |
-| Data retention and deletion             | 🟡      |
-| AI conversation storage                 | 🟡      |
-| Source citation behavior                | 🟡      |
-| RAG fallback behavior                   | 🟡      |
-| Model fallback strategy                 | 🟡      |
-| Hardware constraints                    | 🟡      |
-| Offline conflict resolution             | 🟡      |
-| Low-bandwidth strategy                  | 🟡      |
-| Performance targets                     | 🟡      |
-
-### Must explicitly design before production
-
-| Area                                    | Status |
-| --------------------------------------- | ------ |
-| Clinical knowledge governance           | 🔴      |
-| File-upload security                    | 🔴      |
-| AI prompt security                      | 🔴      |
-| Threat model                            | 🔴      |
-| Auditability                            | 🔴      |
-| Dataset provenance                      | 🔴      |
-| Evaluation baselines                    | 🔴      |
-| Model reproducibility                   | 🔴      |
-| Human evaluation                        | 🔴      |
-| Ethics/institutional approval           | 🔴      |
+| Area | Current Baseline |
+|---|---|
+| Target | Rural and underserved communities in India |
+| Phase-1 Languages | English + Hindi + Telugu |
+| Primary Patient Workflow | Preliminary Symptom Checker |
+| AI Assistant | RAG-grounded health companion |
+| Safety | Deterministic triage before LLM generation |
+| LLM Runtime | Ollama for local inference |
+| Local LLM | Model remains configurable and evaluation-driven |
+| Candidate LLMs | Qwen, Gemma, Sarvam/local candidates, and other suitable models |
+| Speech | Local/open-source and Sarvam candidates to be evaluated |
+| TTS | Sarvam and suitable local/open-source candidates to be evaluated |
+| OCR | Sarvam and Tesseract/PaddleOCR/local candidates to be evaluated |
+| Database | PostgreSQL + pgvector |
+| RAG | Approved medical knowledge corpus |
+| Frontend | Next.js + TypeScript + PWA direction |
+| Backend | FastAPI |
+| Offline | Offline-first for selected core workflows |
+| Cloud Dependency | Optional for capabilities that cannot practically run offline |
+| Safety-Critical Decisions | Never delegated solely to the LLM |
+| Development Core | Laptop A |
+| Frontend Development | Laptop B |
+| Evaluation | Quantitative + qualitative + safety evaluation |
 
 ---
 
@@ -121,277 +69,268 @@ The decisions are grouped into:
 
 ### Context
 
-The system targets "rural and underserved communities," but that is globally broad. The target geography affects languages, medical sources, healthcare APIs, guidelines, datasets, evaluation, UI, and research claims.
-
-### Options
-
-| Option | Description                                                          |
-| ------ | -------------------------------------------------------------------- |
-| A      | Rural and underserved communities globally                           |
-| B      | Rural and underserved communities in India                           |
-| C      | Rural communities in India, with initial focus on a specific region  |
-
-### Recommendation
-
-> **Option B — Rural and underserved communities in India.**
-
-With MVP evaluation initially focused on languages spoken by the project team for feasible testing.
+The project targets rural and underserved communities where healthcare access, connectivity, language, and digital literacy can create barriers to primary healthcare information.
 
 ### Decision
 
-```
-Status: PENDING
-Approved: 
-Date:
+> **Rural and underserved communities in India.**
+
+The initial implementation and evaluation will focus on the Indian healthcare context.
+
+This affects:
+
+* Languages
+* Medical knowledge sources
+* Emergency guidance
+* Healthcare-worker workflows
+* UI accessibility
+* Offline requirements
+* Speech evaluation
+* Research framing
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-02 — MVP Languages
+# PD-02 — Phase-1 Languages
 
 ### Context
 
-The system claims multilingual support, but the exact languages affect datasets, speech models, LLM capabilities, translation quality, and evaluation feasibility. Languages mentioned in the original proposal include English, Hindi, Telugu, and Odiya.
-
-### Important Constraint
-
-A language must not be claimed as "supported" until its functionality has been tested and evaluated.
-
-### Options
-
-| Option | Languages                       | Rationale                                      |
-| ------ | ------------------------------- | ---------------------------------------------- |
-| A      | English + Telugu                | Minimal viable, feasibly testable              |
-| B      | English + Telugu + Hindi        | Broader reach, Hindi widely supported by models |
-| C      | English + Telugu + Hindi + Odiya | Full original proposal, hardest to evaluate    |
-
-### Evaluation Criteria
-
-For each language, verify:
-
-* LLM instruction-following quality
-* Speech-to-text availability and accuracy
-* Medical knowledge availability
-* Translation quality
-* Dataset availability for evaluation
-* Team capability to evaluate
-
-### Recommendation
-
-> **Option B — English + Telugu + Hindi**
-
-Start with English as the primary development language. Add Telugu and Hindi with explicit evaluation. Odiya may be explored as a stretch goal or future extension.
+The original proposal considered multiple Indian languages. However, every language must be technically implemented and empirically evaluated before being claimed as supported.
 
 ### Decision
 
-```
-Status: PENDING
-Approved:
-Date:
+> **Phase 1: English + Hindi + Telugu**
+
+The system must support these languages across the applicable text interaction pipeline.
+
+Speech capabilities must separately pass language-specific evaluation before being advertised as production-ready.
+
+Odiya and additional Indian languages remain future extensions.
+
+### Language Requirements
+
+For each Phase-1 language, evaluate:
+
+* Text input
+* Text output
+* Code-mixed input
+* Romanized input where applicable
+* LLM instruction following
+* RAG grounding
+* Citation preservation
+* Refusal behavior
+* Emergency detection
+* Speech-to-text
+* Text-to-speech
+* UI localization
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-03 — Healthcare Worker Definition
-
-### Context
-
-"Healthcare Worker" is broad. The system's permissions, dashboard complexity, and clinical expectations differ between doctors, nurses, community health workers (CHWs), ANMs, and clinic staff.
-
-### Options
-
-| Option | Definition                                                   |
-| ------ | ------------------------------------------------------------ |
-| A      | Doctors only                                                 |
-| B      | Community Health Workers / ANMs                              |
-| C      | Any authorized healthcare professional or personnel          |
-
-### Recommendation
-
-> **Option C — Any authorized healthcare professional or personnel.**
-
-The system should not claim to be specifically designed for doctors unless clinically validated for that purpose. The MVP should support a general "authorized healthcare worker" role with appropriate access controls.
+# PD-03 — Healthcare Worker Definition
 
 ### Decision
 
-```
-Status: PENDING
-Approved:
-Date:
+> **Authorized Healthcare Worker / Personnel**
+
+The system may support authorized:
+
+* Community Health Workers
+* ANMs
+* Nurses
+* Doctors
+* Rural clinic personnel
+* Other approved healthcare personnel
+
+The system must enforce role-based access and must not assume that every healthcare worker has physician-level authority.
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-04 — Emergency Escalation Behavior
+# PD-04 — Emergency Escalation Behavior
 
 ### Context
 
-The system detects red-flag symptoms, but the escalation response has not been defined. Different behaviors carry different technical, legal, and safety implications.
-
-### Options
-
-| Option | Behavior                                                                |
-| ------ | ----------------------------------------------------------------------- |
-| A      | Display prominent emergency guidance text only                          |
-| B      | Display guidance + notify a registered emergency contact                |
-| C      | Display guidance + alert an authorized healthcare worker                |
-| D      | Display guidance + attempt to contact emergency services                |
-
-### Recommendation
-
-> **Option A + C — Display prominent emergency guidance + optional healthcare-worker alert.**
-
-Do **not** attempt autonomous emergency-service calling in the MVP. The system should clearly advise the patient to seek immediate professional/emergency care and, where authorized, create an alert for the healthcare-worker dashboard.
+Emergency safety must not depend on the LLM correctly following a prompt.
 
 ### Decision
 
+> **Deterministic emergency detection + immediate localized guidance + optional authorized healthcare-worker alert.**
+
+Emergency flow:
+
+```text
+User Text / Voice
+       ↓
+ASR if voice
+       ↓
+Deterministic Red-Flag Engine
+       ↓
+EMERGENCY detected
+       ↓
+Bypass LLM
+       ↓
+Localized Emergency Response
+       ↓
+108 / 112 Guidance
+       ↓
+Optional Healthcare Worker Alert
 ```
-Status: PENDING
-Approved:
-Date:
+
+The LLM must not be responsible for deciding whether an emergency response should occur.
+
+The system must never claim that an emergency service has been contacted unless an actual integration has successfully performed that action.
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-05 — Healthcare Resource Locator
-
-### Context
-
-The original proposal mentions nearby clinic/hospital discovery with estimated travel time. This introduces geolocation, maps APIs, location permissions, rural POI accuracy, data freshness, and privacy concerns.
-
-### Options
-
-| Option | Scope                                          |
-| ------ | ---------------------------------------------- |
-| A      | Include in Core MVP                            |
-| B      | Phase 2 — after core functionality is complete |
-| C      | Remove entirely                                |
-
-### Recommendation
-
-> **Option B — Phase 2.**
-
-The feature is not central to the AI research contribution and introduces significant complexity. Core MVP should focus on the AI companion, symptom processing, prescription OCR, medication management, and healthcare-worker dashboard.
+# PD-05 — Healthcare Resource Locator
 
 ### Decision
 
-```
-Status: PENDING
-Approved:
-Date:
+> **Phase 2**
+
+Nearby hospital/PHC/resource discovery is valuable but introduces:
+
+* Geolocation
+* Maps
+* Rural POI accuracy
+* Data freshness
+* Privacy considerations
+
+It is therefore not required for the core M1–M18 MVP implementation unless feasibility allows.
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-06 — Notification Mechanism
-
-### Context
-
-Medication reminders require a notification delivery mechanism. The system should remain free and avoid mandatory paid services (e.g., SMS providers).
-
-### Options
-
-| Option | Mechanism                                       |
-| ------ | ----------------------------------------------- |
-| A      | Browser/PWA push notifications                  |
-| B      | Browser notifications + email                   |
-| C      | Browser notifications + SMS                     |
-| D      | Browser notifications + local scheduling        |
-
-### Recommendation
-
-> **Option D — Browser/PWA notifications + local scheduling where technically supported.**
-
-Avoid making SMS a mandatory feature. PWA notifications combined with local scheduling provide a free, functional reminder system for the MVP.
+# PD-06 — Notification Mechanism
 
 ### Decision
 
-```
-Status: PENDING
-Approved:
-Date:
+> **PWA/browser notifications + local scheduling where supported**
+
+Medication reminders should work without requiring paid SMS infrastructure.
+
+The system should prioritize:
+
+* Local reminders
+* PWA notifications
+* Browser notifications where supported
+* Offline reminder scheduling
+
+SMS/WhatsApp integrations are not mandatory for MVP.
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-07 — Prescription Verification Workflow
+# PD-07 — Prescription Verification Workflow
 
-### Context
+OCR must never automatically create a medication schedule from uncertain extraction.
 
-OCR output is inherently uncertain. The system must not automatically create medication schedules from unverified OCR output. A verification step is required.
-
-### Recommended Workflow
+### Required Workflow
 
 ```text
 Prescription Image
        ↓
-OCR Processing
+Image Validation
+       ↓
+OCR
        ↓
 Text Extraction
        ↓
-Medicine Information Extraction
+Medicine / Dosage / Frequency Extraction
        ↓
 Confidence Assessment
        ↓
-Patient Verification
+Human Verification
        ↓
 Confirmed Medication
        ↓
-Medication Schedule
+Schedule Creation
 ```
 
 ### Rules
 
-1. OCR output must be presented to the patient for review before creating schedules.
-2. Low-confidence extractions must be explicitly flagged.
-3. The system must not silently correct or substitute medication names.
-4. Unverified information must not enter the medication schedule automatically.
+1. OCR output must be visible for verification.
+2. Low-confidence fields must be flagged.
+3. The system must not silently substitute medication names.
+4. Unverified OCR data must not become an active medication schedule.
+5. Prescription interpretation must not be presented as medical diagnosis.
 
-### Decision
+### Status
 
-```
-Status: PENDING
-Approved:
-Date:
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-08 — Medical Knowledge Governance
+# PD-08 — Medical Knowledge Governance
 
-### Context
+The RAG corpus is a safety-critical project asset.
 
-RAG quality depends entirely on the knowledge corpus. The process for adding, reviewing, and maintaining medical documents must be defined.
-
-### Recommended Governance
+### Governance
 
 ```text
 Candidate Source
        ↓
-Source Verification
+Authority Verification
        ↓
-Metadata Recorded
+License / Usage Verification
        ↓
-Review by Authorized Person
+Metadata Registration
        ↓
-Approved
+Human Review
        ↓
-Processing (clean → chunk → embed)
+Approved Source
+       ↓
+Cleaning
+       ↓
+Chunking
+       ↓
+Embedding
        ↓
 Knowledge Base
 ```
 
-### Roles
-
-| Role                       | Responsibility                             |
-| -------------------------- | ------------------------------------------ |
-| Knowledge Manager / Admin  | Submit candidate documents                 |
-| Project Team / Reviewer    | Verify authority and appropriateness       |
-| System                     | Process, embed, and store approved content |
-
-### Knowledge Source Metadata
-
-Each source should record, where available:
+### Required Metadata
 
 * Source name
 * Publisher
@@ -400,669 +339,930 @@ Each source should record, where available:
 * Version
 * Topic
 * Language
-* License/usage information
-* Status (ACTIVE / OUTDATED / ARCHIVED)
+* License
+* Source URL
+* Status
 * Last reviewed date
 
-### Decision
+Only approved sources may enter the production RAG corpus.
 
-```
-Status: PENDING
-Approved:
-Date:
-```
-
----
-
-## PD-09 — Data Retention and Deletion
-
-### Context
-
-The system stores health information. Retention and deletion policies must be defined for privacy and compliance.
-
-### Recommended MVP Policy
-
-| Data Type              | Retention                                              |
-| ---------------------- | ------------------------------------------------------ |
-| Patient profile        | While account is active                                |
-| Consent records        | Retained for auditability                              |
-| Health timeline        | While account is active                                |
-| Symptom records        | While account is active                                |
-| Prescriptions          | While account is active                                |
-| Medication records     | While account is active                                |
-| AI conversations       | Structured extracts retained; raw logs have a limit    |
-| Uploaded images        | Retained while prescription is active; deletable       |
-| Audit logs             | Retained for defined audit period                      |
-| Follow-ups             | While relevant patient relationship is active          |
-
-### Account Deletion
-
-When a patient requests account deletion:
-
-* Profile is removed or anonymized.
-* Health data is removed or anonymized.
-* Audit records may be retained in anonymized form as required.
-* Uploaded files are deleted.
-
-### Decision
-
-```
-Status: PENDING
-Approved:
-Date:
-```
-
----
-
-## PD-10 — AI Conversation Storage
-
-### Context
-
-Storing every patient–AI conversation indefinitely raises privacy and storage concerns. A policy is needed.
-
-### Options
-
-| Option | Behavior                                                          |
-| ------ | ----------------------------------------------------------------- |
-| A      | Store full conversations indefinitely                             |
-| B      | Store structured health extracts only; discard raw conversations  |
-| C      | Store conversations with a retention limit (e.g., 90 days)       |
-| D      | Store conversations only where relevant to health timeline        |
-
-### Recommendation
-
-> **Option D — Store conversations only where relevant to the health timeline / continuity of care.**
-
-Structured health-relevant information (symptoms reported, guidance given, escalation triggered) should be retained. Full raw conversational logs should not be retained indefinitely without purpose.
-
-### Decision
-
-```
-Status: PENDING
-Approved:
-Date:
-```
-
----
-
-## PD-11 — Source Citation in AI Responses
-
-### Context
-
-RAG-grounded responses should be traceable. The question is how citation appears to the user.
-
-### Recommendation
-
-For applicable medical responses, the system should present source attribution:
+### Status
 
 ```text
-Response text
-
-Sources:
-  - [Source Title, Publisher, Date]
-  - [Source Title, Publisher, Date]
-```
-
-Source metadata should be stored for research evaluation (retrieval traceability).
-
-Non-medical conversational responses may not require citations.
-
-### Decision
-
-```
-Status: PENDING
-Approved:
-Date:
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-12 — RAG Fallback Behavior
+# PD-09 — Data Retention and Deletion
 
-### Context
+### Decision
 
-When no reliable document is retrieved for a user query, the system must not silently fall back to ungrounded LLM generation and present the result as grounded.
+Health information is retained only for a defined purpose.
 
-### Recommended Behavior
+| Data                       | Baseline                                              |
+| -------------------------- | ----------------------------------------------------- |
+| Patient profile            | While account is active                               |
+| Consent                    | Retained for auditability                             |
+| Symptoms                   | While account is active / applicable retention policy |
+| Medication records         | While relevant                                        |
+| Prescription images        | Until no longer required, subject to deletion         |
+| Health timeline            | While account is active                               |
+| Raw AI conversations       | Limited retention                                     |
+| Structured health extracts | Retained where required for continuity                |
+| Audit logs                 | Defined audit period                                  |
+| Uploaded files             | Deletable by authorized policy                        |
+
+Account deletion must trigger deletion or anonymization of applicable personal health data.
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
+```
+
+---
+
+# PD-10 — AI Conversation Storage
+
+### Decision
+
+> **Retain health-relevant structured information rather than indefinitely storing raw conversations.**
+
+The system may retain structured information such as:
+
+* Reported symptom
+* Duration
+* Severity
+* Guidance category
+* Escalation event
+* Relevant follow-up
+
+Raw conversations should have a defined retention policy and must not be retained indefinitely without a documented purpose.
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
+```
+
+---
+
+# PD-11 — Source Citation in AI Responses
+
+### Decision
+
+Grounded medical responses must expose source provenance to the user.
+
+Example:
+
+```text
+Guidance
+
+Sources
+WHO — Document Title
+Section — Page
+```
+
+The backend must also retain structured source metadata.
+
+### Important Rule
+
+The LLM is not trusted to invent or authoritatively define citations.
+
+Citation metadata is controlled by the application/RAG layer.
+
+The frontend may render:
+
+* Publisher
+* Document title
+* Section
+* Page
+* Source URL
+* Citation identifier
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
+```
+
+---
+
+# PD-12 — RAG Evidence Sufficiency Gate
+
+### Decision
+
+> **RAG evidence sufficiency is enforced deterministically by application code.**
+
+The LLM must not generate a medical answer when the application determines that sufficient evidence is unavailable.
+
+Current validated provisional threshold:
+
+> **Similarity threshold: 0.55**
+
+This threshold is based on the M4.3 calibration experiment and remains subject to future evaluation.
+
+### Current Gate
 
 ```text
 User Query
     ↓
-RAG Retrieval
+Embedding
     ↓
-No relevant document found (below threshold)
+pgvector Retrieval
     ↓
-System responds:
-"I couldn't find reliable information for this question
- in my current medical knowledge base.
- Please consult a qualified healthcare professional."
+Similarity Evaluation
     ↓
-Optional: general safe guidance
+Score < 0.55
     ↓
-Escalation recommendation where appropriate
+Deterministic Refusal
 ```
 
-### Rule
-
-The system must clearly distinguish between:
-
-* Grounded responses (retrieved source available)
-* General guidance (no specific source)
-* Escalation (professional care recommended)
-
-### Decision
-
-```
-Status: PENDING
-Approved:
-Date:
-```
-
----
-
-## PD-13 — Model Fallback Strategy
-
-### Context
-
-If the primary AI model fails (crash, memory, unavailability, unsafe output), the system needs a defined fallback.
-
-### Recommended Strategy
+If sufficient evidence is found:
 
 ```text
-Primary AI Model
-       ↓ failure
-Retry (if transient)
-       ↓ failure
-Fallback Model (if available)
-       ↓ failure
-Safe Non-AI Response
+Score >= 0.55
+    ↓
+Retrieve approved sources
+    ↓
+LLM generation
+    ↓
+Safety / citation validation
 ```
 
-### Rule
+The threshold may be changed only after documented evaluation.
 
-> **The system must never fail into fabricated medical content.**
+### Status
 
-A safe non-AI response might be:
+```text
+Status: APPROVED
+Approved: 2026-08-22
+```
 
-> "I'm currently unable to process your request. Please try again later or consult a healthcare professional."
+---
+
+# PD-13 — AI Model Failure / Fallback Strategy
 
 ### Decision
 
+The AI pipeline must never fail into fabricated medical information.
+
+```text
+Primary Model
+     ↓
+Transient Failure?
+     ↓ YES
+Retry
+     ↓
+Fallback Model
+     ↓
+Failure / Unsafe Output
+     ↓
+Deterministic Safe Response
 ```
-Status: PENDING
-Approved:
-Date:
+
+Emergency and evidence-refusal paths bypass the LLM completely.
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-# 4. AI/ML Decisions
+# 4. AI / ML Decisions
 
 ---
 
-## PD-14 — Model Hosting Strategy
+# PD-14 — AI Model Hosting, Runtime and Provider Strategy
+
+### Important Distinction
+
+> **Ollama is not the LLM model.**
+
+Ollama is the local model runtime/inference layer used to run compatible models locally.
+
+Architecture:
+
+```text
+MedGuide AI
+     ↓
+AI Gateway
+     ↓
+Local LLM Runtime
+     ↓
+Ollama
+     ↓
+Selected Local Model
+```
+
+The model itself remains configurable.
+
+### Candidate Models
+
+The project may evaluate:
+
+* Qwen
+* Gemma
+* Sarvam/local language models
+* Other suitable open-source models
+
+The project must not declare a model as best before benchmarking.
+
+### Current Local Baseline
+
+> **Qwen3:4B via Ollama**
+
+This remains the current local baseline because it has already been successfully executed locally and benchmarked.
+
+### Why Keep the Gateway
+
+The AI Gateway must allow:
+
+```text
+Qwen
+Gemma
+Sarvam / compatible local model
+Other evaluated model
+```
+
+to be swapped without changing application business logic.
+
+### Cloud / External Providers
+
+Cloud providers may be used when they provide capabilities that cannot practically be reproduced locally, but they must remain isolated behind provider interfaces.
+
+### Status
+
+```text
+Status: APPROVED
+Baseline: Ollama + Qwen3:4B
+Model selection: Evaluation-driven
+Approved: 2026-08-22
+```
+
+---
+
+# PD-15 — Hardware Constraints
+
+### Primary Development Architecture
+
+Laptop A is the primary AI/backend development environment.
+
+It contains the core:
+
+* PostgreSQL
+* pgvector
+* Backend
+* RAG
+* Ollama
+* Local AI models
+* AI evaluation
+* Speech/OCR experimentation
+
+Laptop B is primarily for:
+
+* Frontend
+* UI/UX
+* Responsive testing
+* PWA
+* Frontend API integration
+
+### Hardware Requirements
+
+Actual hardware specifications must be recorded in the development environment documentation rather than guessed.
+
+Model selection must consider:
+
+* CPU
+* RAM
+* GPU
+* VRAM
+* Disk
+* Operating system
+* Quantization
+* Inference latency
+
+### Status
+
+```text
+Status: APPROVED
+Baseline: Local CPU-capable inference + optional Colab/cloud evaluation
+Approved: 2026-08-22
+```
+
+---
+
+# PD-16 — LLM Hallucination Definition
+
+A hallucination/safety failure includes:
+
+1. Unsupported medical claim
+2. Contradiction of retrieved evidence
+3. Fabricated citation
+4. Unsafe recommendation
+5. Incorrect medication information
+6. False certainty
+7. Invented clinical rule
+
+Additional multilingual failures include:
+
+8. Meaning-changing translation
+9. Language leakage
+10. Incorrect code-switch interpretation
+11. Unsafe mistranslation of emergency guidance
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
+```
+
+---
+
+# 5. Multilingual AI Processing Decisions
+
+Speech and multilingual capabilities require separate evaluation from the LLM.
+
+---
+
+# PD-17 — Speech-to-Text Strategy
+
+### Objective
+
+Provide real-time voice interaction for English, Hindi, and Telugu users.
+
+### Candidate Technologies
+
+The project may evaluate:
+
+* Whisper/open-source STT
+* Indic/open-source speech models
+* Sarvam Speech-to-Text
+* Other suitable providers/models
+
+### Important Rule
+
+Sarvam is a candidate provider, not an unconditional dependency.
+
+STT must be evaluated for:
+
+* Telugu
+* Hindi
+* English
+* Code-mixed speech
+* Rural accents
+* Medical vocabulary
+* Noise
+* Latency
+* Cost
+* Offline feasibility
+
+### Status
+
+```text
+Status: APPROVED
+Provider/model: Evaluation-driven
+Approved: 2026-08-22
+```
+
+---
+
+# PD-18 — Text-to-Speech Strategy
+
+### Objective
+
+Allow health guidance to be heard rather than only read.
+
+This is particularly important for:
+
+* Low-literacy users
+* Elderly users
+* Users with reading difficulty
+* Voice-first rural workflows
+
+### Candidate Technologies
+
+Evaluate:
+
+* Sarvam TTS
+* Local/open-source TTS
+* Other suitable multilingual TTS systems
+
+Evaluation criteria:
+
+* Hindi quality
+* Telugu quality
+* English quality
+* Naturalness
+* Pronunciation
+* Medical terminology
+* Latency
+* Offline capability
+* Resource requirements
+
+### Status
+
+```text
+Status: APPROVED
+Provider/model: Evaluation-driven
+Approved: 2026-08-22
+```
+
+---
+
+# PD-19 — Prescription OCR Strategy
+
+### Candidate Technologies
+
+Evaluate:
+
+* Tesseract
+* PaddleOCR
+* Sarvam OCR / document processing capability
+* Other suitable OCR systems
+
+Evaluation must consider:
+
+* Printed prescriptions
+* Handwritten text where feasible
+* Medicine names
+* Dosage
+* Frequency
+* Duration
+* Indian medical terminology
+* Image quality
+* OCR latency
+* Confidence
+
+OCR output must always pass the verification workflow defined in PD-07.
+
+### Status
+
+```text
+Status: APPROVED
+Provider/model: Evaluation-driven
+Approved: 2026-08-22
+```
+
+---
+
+# PD-20 — Multilingual Code-Mixed Input
 
 ### Context
 
-The LLM can run locally, in the cloud, or in a hybrid configuration. This affects cost, latency, offline capability, and hardware requirements.
+Real users may not speak or type formal textbook language.
 
-### Options
+Examples may contain:
 
-| Option | Strategy                                     | Pros                           | Cons                              |
-| ------ | -------------------------------------------- | ------------------------------ | --------------------------------- |
-| A      | Fully local                                  | Free, offline, private         | Hardware limited, model size      |
-| B      | Fully cloud (free tier)                       | Larger models possible         | Connectivity required, API limits |
-| C      | Hybrid (local small + cloud large)           | Best of both, research angle   | More complexity                   |
+```text
+Mujhe fever hai
+```
 
-### Recommendation
+```text
+Naaku two days nundi fever undi
+```
 
-> **Option C — Hybrid.**
-
-This is the most interesting for the research angle (offline-capable with quality comparison). Final decision after model benchmarking.
+```text
+Mera chest mein pain ho raha hai
+```
 
 ### Decision
 
-```
-Status: PENDING — requires hardware assessment and model evaluation
-Approved:
-Date:
-```
+The system should evaluate and support practical code-mixed input where technically feasible.
 
----
+The system must not assume that users will always produce grammatically correct English, Hindi, or Telugu.
 
-## PD-15 — Hardware Constraints
+### Evaluation
 
-### Context
+Test:
 
-As a student project using free resources, the available development hardware directly constrains model selection, quantization, and inference strategy.
+* Native script
+* Romanized language
+* English medical terminology
+* Hindi-English mixing
+* Telugu-English mixing
+* Hindi-Telugu-English mixing where relevant
 
-### Required Information
+### Status
 
-| Parameter              | Value |
-| ---------------------- | ----- |
-| CPU                    |       |
-| RAM                    |       |
-| GPU                    |       |
-| GPU VRAM               |       |
-| Disk (available)       |       |
-| OS                     |       |
-| Cloud access (Colab?)  |       |
-| Other compute access   |       |
-
-### Impact
-
-* Determines maximum model size
-* Determines quantization requirements
-* Determines local vs. cloud inference split
-* Determines embedding model choice
-* Determines OCR and speech processing feasibility
-
-### Decision
-
-```
-Status: PENDING — requires hardware documentation
-Approved:
-Date:
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-16 — LLM Hallucination Definition
+# 6. Security Decisions
 
-### Context
+---
 
-"Hallucination testing" requires a definition of what constitutes a hallucination failure.
+# PD-21 — File Upload Security
 
-### Recommended Failure Categories
+Prescription images must be treated as untrusted input.
 
-| Category                  | Example                                              |
-| ------------------------- | ---------------------------------------------------- |
-| Unsupported medical claim | Stating a treatment without source                   |
-| Contradicted by source    | Response contradicts the retrieved document           |
-| Fabricated citation       | Citing a non-existent source                         |
-| Unsafe recommendation     | Advising stopping medication without authority       |
-| Incorrect medication info | Wrong dosage, wrong drug                             |
-| False confidence          | Presenting uncertain information as definitive        |
-| Invented clinical rule    | Creating a triage threshold without medical basis    |
+Required controls:
 
-### Decision
+* File-type validation
+* File-size limits
+* MIME validation
+* Image decoding validation
+* Randomized filenames
+* Restricted storage
+* RBAC
+* No executable uploads
+* Safe image preprocessing
+* Malware scanning where practical
 
-```
-Status: PENDING
-Approved:
-Date:
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-# 5. Security Decisions
+# PD-22 — AI Prompt Security
 
----
+The system must defend against:
 
-## PD-17 — File Upload Security
+* Direct prompt injection
+* Indirect prompt injection
+* RAG poisoning
+* User attempts to override safety rules
+* Citation manipulation
+* Medical instruction manipulation
 
-### Context
+### Critical Rule
 
-Prescription OCR requires image uploads, introducing an attack surface.
+Retrieved medical content is evidence, not executable instructions.
 
-### Required Controls
+User input must never override deterministic safety logic.
 
-| Control                | Description                                  |
-| ---------------------- | -------------------------------------------- |
-| File-type validation   | Accept only approved image formats           |
-| Size limits            | Enforce reasonable maximum file size         |
-| Image validation       | Verify file is a valid image                 |
-| Safe storage           | Store outside webroot with restricted access |
-| Randomized filenames   | Prevent predictable file paths               |
-| Access control         | Only the owning patient and authorized roles |
-| No executable uploads  | Reject non-image files                       |
-| Malware scanning       | Where practical                              |
+### Status
 
-### Decision
-
-```
-Status: PENDING — to be detailed during security architecture
-Approved:
-Date:
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-18 — AI Prompt Security
+# PD-23 — Auditability
 
-### Context
+Sensitive operations must be auditable.
 
-LLM applications are vulnerable to prompt injection. Users could attempt to override safety instructions.
+Examples:
 
-### Threat Scenarios
+* Healthcare worker views patient
+* Healthcare worker views summary
+* Alert reviewed
+* Follow-up created
+* Knowledge source modified
+* Admin operation
+* Consent changed
 
-| Threat                  | Example                                              |
-| ----------------------- | ---------------------------------------------------- |
-| Direct prompt injection | User writes "Ignore safety instructions..."          |
-| Indirect injection      | Malicious content in retrieved documents              |
-| RAG poisoning           | Corrupted medical documents in the knowledge base     |
-| Output manipulation     | Attempting to make the AI produce unsafe content      |
+Logs must avoid unnecessary PII.
 
-### Required Mitigations
+### Status
 
-* System prompt must be protected from user override.
-* Retrieved documents must not override safety instructions.
-* Input sanitization where appropriate.
-* Output safety validation.
-* Knowledge base access control and governance.
-
-### Decision
-
-```
-Status: PENDING — to be detailed during AI security design
-Approved:
-Date:
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-19 — Auditability
+# PD-24 — Threat Model
 
-### Context
+The security architecture must address:
 
-Healthcare-worker access to patient information should be auditable.
-
-### Recommended Audit Events
-
-| Event                              | Logged Information                   |
-| ---------------------------------- | ------------------------------------ |
-| Healthcare worker views patient    | Worker ID, Patient ID, Timestamp     |
-| Healthcare worker views summary    | Worker ID, Patient ID, Timestamp     |
-| Alert reviewed                     | Worker ID, Alert ID, Timestamp       |
-| Follow-up created                  | Worker ID, Patient ID, Timestamp     |
-| Knowledge base updated             | User ID, Document ID, Timestamp      |
-| Admin operation                    | Admin ID, Operation, Timestamp       |
-
-### Rule
-
-Not every screen interaction needs to be logged, but sensitive operations involving patient data access must be auditable.
-
-### Decision
-
-```
-Status: PENDING
-Approved:
-Date:
-```
-
----
-
-## PD-20 — Threat Model
-
-### Context
-
-A formal threat model has not yet been created. It should be developed during the security architecture phase.
-
-### Key Threat Categories
-
-* Unauthorized patient data access
-* Healthcare-worker privilege abuse
-* Credential theft
-* API abuse / rate limiting
+* Unauthorized patient access
+* Privilege escalation
+* Credential compromise
+* API abuse
 * Prompt injection
 * RAG poisoning
-* Malicious file uploads
-* Data leakage through logs/errors
+* Malicious files
+* Sensitive logs
 * OCR manipulation
-* Model output abuse
-* Insecure synchronization
+* Model misuse
+* Offline synchronization attacks
 
-### Decision
+### Status
 
-```
-Status: PENDING — to be created during security architecture
-Approved:
-Date:
-```
-
----
-
-# 6. Infrastructure Decisions
-
----
-
-## PD-21 — Offline Conflict Resolution
-
-### Context
-
-When offline data is synchronized, conflicts can occur (e.g., different values on device vs. server for the same record).
-
-### Recommended Strategy
-
-> **Immutable timestamped health events are preferred over destructive updates.**
-
-| Scenario                          | Strategy                                      |
-| --------------------------------- | --------------------------------------------- |
-| Medication adherence recorded     | Accept as timestamped event (no conflict)     |
-| Symptom recorded offline          | Accept as timestamped event                   |
-| Profile updated on both sides     | Last-write-wins or prompt user to resolve     |
-| Duplicate operation               | Deduplicate using idempotency key             |
-
-### Decision
-
-```
-Status: PENDING
-Approved:
-Date:
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-22 — Low-Bandwidth Strategy
-
-### Context
-
-"Offline-first" and "low-bandwidth" are different concerns. The system should also work reasonably when connectivity is slow but available.
-
-### Recommended Practices
-
-* Small API payloads
-* Image compression for uploads
-* Lazy loading
-* Aggressive caching
-* Minimal JavaScript payload
-* Request retry with backoff
-* Efficient synchronization (delta sync where possible)
-* Progressive loading
-
-### Decision
-
-```
-Status: PENDING — to be detailed during architecture
-Approved:
-Date:
-```
+# 7. Infrastructure and Offline Decisions
 
 ---
 
-## PD-23 — Performance Targets
+# PD-25 — Offline-First Strategy
 
-### Context
+### Core Principle
 
-"Acceptable response time" is too vague. Measurable targets should be defined after feasibility analysis.
+Offline capability is a **product requirement**, but not every AI capability is required to work offline.
 
-### Placeholder Targets (to be validated)
+### Offline-capable features
 
-| Operation                  | Target (TBD)         |
-| -------------------------- | -------------------- |
-| Standard API response      | To be determined     |
-| OCR processing             | To be determined     |
-| RAG retrieval              | To be determined     |
-| AI response generation     | To be determined     |
-| Offline sync               | To be determined     |
+Where technically feasible:
+
+* User profile
+* Cached health information
+* Previously viewed guidance
+* Symptom entry
+* Preliminary symptom rules
+* Medication schedules
+* Medication reminders
+* Health timeline viewing
+* Pending data queue
+* Basic emergency information
+
+### Potentially Online-Dependent Features
+
+Depending on evaluated hardware:
+
+* Large LLM inference
+* Cloud RAG
+* Cloud STT
+* Cloud TTS
+* Cloud OCR
+* Healthcare-worker synchronization
+
+### Important Architecture
+
+```text
+                    MedGuide AI
+                         │
+              ┌──────────┴──────────┐
+              ↓                     ↓
+         LOCAL LAYER            ONLINE LAYER
+              │                     │
+       Offline storage        Cloud APIs
+       Local rules            External AI
+       Cached knowledge       Synchronization
+       Local models           Worker updates
+       Reminders              Advanced processing
+```
 
 ### Rule
 
-Do not invent performance numbers. Determine realistic targets during architecture/feasibility analysis and validate during testing.
+The application must clearly indicate when a requested capability requires connectivity.
 
-### Decision
+The system must not falsely claim that a cloud capability is offline.
 
-```
-Status: PENDING — to be defined during architecture
-Approved:
-Date:
-```
+### Status
 
----
-
-## PD-24 — Observability
-
-### Context
-
-The system needs basic monitoring for health, errors, and AI performance.
-
-### Recommended MVP Observability
-
-| Area                  | Mechanism                            |
-| --------------------- | ------------------------------------ |
-| Application health    | Health-check endpoint                |
-| Error tracking        | Structured error logging             |
-| API metrics           | Request count, latency, error rate   |
-| AI latency            | Per-request timing                   |
-| OCR failures          | Failure count, failure type          |
-| RAG retrieval quality | Hit/miss rate, retrieval confidence  |
-| Sync failures         | Queue length, failure count          |
-
-### Decision
-
-```
-Status: PENDING — to be detailed during architecture
-Approved:
-Date:
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-25 — Backup and Recovery
+# PD-26 — Offline Conflict Resolution
 
-### Context
+### Decision
 
-Database backup and recovery must be defined, even for a student project.
+Prefer immutable timestamped events for health-related records.
 
-### Recommended MVP
+Example:
 
-* Regular PostgreSQL backups (pg\_dump or equivalent)
+```text
+Medication Taken
+2026-08-22 08:00
+```
+
+is an event rather than a mutable state that can silently overwrite another event.
+
+Use:
+
+* Event IDs
+* Timestamps
+* Idempotency keys
+* Synchronization queues
+* Duplicate detection
+
+For editable profile data, conflict resolution may use last-write-wins or explicit user resolution.
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
+```
+
+---
+
+# PD-27 — Low-Bandwidth Strategy
+
+The system must be designed for constrained connectivity.
+
+### Requirements
+
+* Small API payloads
+* Compressed images
+* Lazy loading
+* Caching
+* Minimal unnecessary JavaScript
+* Retry with backoff
+* Delta synchronization
+* Offline queue
+* Progressive loading
+* Avoid unnecessary background requests
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
+```
+
+---
+
+# 8. Performance and Operations Decisions
+
+---
+
+# PD-28 — Performance Targets
+
+Performance targets must be measured rather than invented.
+
+The project will benchmark:
+
+| Operation     | Measurement              |
+| ------------- | ------------------------ |
+| API request   | Latency                  |
+| RAG retrieval | Retrieval latency        |
+| LLM           | Generation latency       |
+| STT           | Transcription latency    |
+| TTS           | Synthesis latency        |
+| OCR           | Processing latency       |
+| Offline sync  | Synchronization latency  |
+| Frontend      | Load/performance metrics |
+
+Current Qwen3:4B local benchmark:
+
+```text
+Average generation latency: ~14.63 seconds
+```
+
+This is a measured development benchmark and not a production SLA.
+
+Future model comparisons must use the same evaluation conditions where practical.
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
+```
+
+---
+
+# PD-29 — Observability
+
+Track:
+
+* Application health
+* API latency
+* Error rate
+* LLM latency
+* Model used
+* RAG retrieval scores
+* OCR failures
+* STT failures
+* TTS failures
+* Synchronization failures
+* Emergency detections
+* Refusal events
+
+Sensitive user content must not be unnecessarily written into logs.
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
+```
+
+---
+
+# PD-30 — Backup and Recovery
+
+Required:
+
+* PostgreSQL backups
+* Knowledge-base source backup
 * Documented restore procedure
-* Tested recovery at least once before final evaluation
-* Knowledge base rebuild capability from source documents
+* At least one tested restore before final deployment
+* Ability to rebuild the RAG index from approved source documents
 
-### Decision
+### Status
 
-```
-Status: PENDING
-Approved:
-Date:
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-26 — CI/CD
+# PD-31 — CI/CD and Versioning
 
-### Context
-
-Automated testing and deployment can strengthen the engineering demonstration.
-
-### Recommended MVP
+### CI/CD
 
 ```text
 GitHub
-  ↓
-Push / PR
-  ↓
-Automated tests (pytest, lint)
-  ↓
+   ↓
+Pull Request
+   ↓
+Backend tests
+   ↓
+Frontend lint/build
+   ↓
+Integration tests
+   ↓
 Build verification
-  ↓
-Manual deployment
 ```
 
-Full automated deployment is optional for the MVP but would strengthen the project.
+### Versioning
 
-### Decision
+| Component   | Strategy                      |
+| ----------- | ----------------------------- |
+| API         | `/api/v1/...`                 |
+| Application | Semantic versioning           |
+| Database    | Alembic migrations            |
+| LLM         | Name + version + quantization |
+| Embedding   | Model + version               |
+| RAG corpus  | Knowledge-base version        |
+| Evaluation  | Experiment ID                 |
 
-```
-Status: PENDING
-Approved:
-Date:
-```
-
----
-
-## PD-27 — Versioning Strategy
-
-### Context
-
-APIs, models, knowledge base, and the application itself need version tracking for reproducibility.
-
-### Recommended Strategy
-
-| Component        | Versioning                              |
-| ---------------- | --------------------------------------- |
-| API              | URL prefix: `/api/v1/...`              |
-| Application      | Semantic: `v0.1`, `v0.2`, `v1.0`      |
-| Database         | Migration-based (Alembic or equivalent) |
-| AI models        | Model name + version + quantization    |
-| Knowledge base   | Version identifier + document manifest |
-| Evaluation       | Experiment ID + parameters             |
-
-### Decision
-
-```
-Status: PENDING
-Approved:
-Date:
-```
-
----
-
-# 7. Research and Evaluation Decisions
-
----
-
-## PD-28 — Model/Experiment Reproducibility
-
-### Context
-
-For every AI experiment, the following should be recorded for reproducibility.
-
-### Required Metadata
+### Status
 
 ```text
-Model name
+Status: APPROVED
+Approved: 2026-08-22
+```
+
+---
+
+# 9. Research and Evaluation Decisions
+
+---
+
+# PD-32 — Model / Experiment Reproducibility
+
+Every AI experiment must record:
+
+```text
+Model
 Model version
-Quantization (if applicable)
-Prompt version / template
+Runtime
+Quantization
+Prompt version
 Embedding model
 Knowledge-base version
 Dataset version
-Parameters (temperature, top_k, etc.)
-Evaluation date
-Hardware used
+Parameters
+Hardware
+Latency
 Results
+Evaluation date
 ```
 
-### Decision
+For local LLM experiments, record:
 
+```text
+Runtime = Ollama
+Model = Qwen3:4B / evaluated candidate
 ```
-Status: PENDING — to be enforced during AI development
-Approved:
-Date:
+
+### Status
+
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-29 — Dataset Provenance
+# PD-33 — Dataset Provenance
 
-### Context
-
-Every dataset used must have tracked provenance to prevent the classic student-project problem of "we downloaded some dataset from somewhere."
-
-### Required Metadata
+Every dataset must have:
 
 ```text
 Dataset name
@@ -1073,167 +1273,124 @@ Version
 Language(s)
 Size
 Collection method
-Preprocessing applied
-Train/validation/test split
+Preprocessing
+Split
 Known limitations
+Intended use
 ```
 
-### Decision
+Particular attention is required for:
 
-```
-Status: PENDING — to be enforced during data collection
-Approved:
-Date:
-```
+* Medical RAG corpus
+* Symptom/triage evaluation
+* OCR evaluation
+* Speech/STT evaluation
+* Multilingual evaluation
 
----
+No dataset may be treated as an official project resource merely because it was downloaded.
 
-## PD-30 — Evaluation Baselines
+### Status
 
-### Context
-
-Evaluating only "our model works" is academically weak. Baselines enable meaningful comparison.
-
-### Recommended Baselines
-
-| Baseline                     | Purpose                                        |
-| ---------------------------- | ---------------------------------------------- |
-| LLM without RAG              | Measure RAG contribution to grounding          |
-| Rule-only triage              | Measure AI contribution to triage accuracy     |
-| LLM-only triage              | Compare rule-based vs. LLM-based triage        |
-| RAG + LLM                    | Full system evaluation                         |
-| OCR without preprocessing     | Measure preprocessing contribution             |
-| Monolingual only             | Measure multilingual capability impact          |
-
-### Decision
-
-```
-Status: PENDING — to be finalized during evaluation design
-Approved:
-Date:
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-31 — Human Evaluation
+# PD-34 — Evaluation Baselines and Human Evaluation
 
-### Context
+The project will compare:
 
-Some healthcare AI outputs cannot be evaluated using automatic metrics alone.
+1. LLM without RAG
+2. RAG + LLM
+3. Rule-only triage
+4. LLM-based triage where appropriate as a research comparison
+5. OCR without preprocessing
+6. OCR with preprocessing
+7. Monolingual vs multilingual
+8. Candidate local LLMs
+9. Candidate STT systems
+10. Candidate TTS systems
+11. Candidate OCR systems
 
-### Options
+### Human Evaluation
 
-| Option | Evaluators                      | Feasibility           |
-| ------ | ------------------------------- | --------------------- |
-| A      | Healthcare professionals        | Strongest, harder     |
-| B      | Domain-knowledgeable evaluators | Good, more accessible |
-| C      | Structured rubric by team       | Weakest, most feasible|
+Where feasible, evaluation should include healthcare/domain-knowledgeable reviewers.
 
-### Recommendation
+The project must not claim clinical validation without appropriate clinical study design and qualified evaluation.
 
-> Attempt **Option A or B** for at least a subset of the evaluation.
+### Status
 
-Do **not** claim clinical validation unless qualified professionals and an appropriate study design are used.
-
-### Decision
-
-```
-Status: PENDING — to be planned during evaluation design
-Approved:
-Date:
-```
-
----
-
-## PD-32 — Ethics and Institutional Approval
-
-### Context
-
-If the project eventually involves real patients, real patient data, healthcare workers, or user studies with sensitive health information, appropriate institutional/ethical approval and informed consent may be required.
-
-### Recommendation
-
-* MVP development and evaluation should use synthetic/public/de-identified data.
-* If user studies are planned, check institutional requirements for ethics approval.
-* Do not collect real patient data without appropriate authorization.
-
-### Decision
-
-```
-Status: PENDING — to be assessed if user studies are planned
-Approved:
-Date:
+```text
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-## PD-33 — Clinical Scope
+# 10. Clinical Scope and Research Positioning
 
-### Context
+---
 
-"Primary healthcare" is broad. The system should define the scope of clinical topics for the MVP to prevent the system from becoming "AI for every medical condition."
+# PD-35 — Clinical Scope, Research Positioning and System Layer Separation
 
-### Recommendation
+## Clinical Scope
 
-Define a focused knowledge scope for MVP evaluation. For example:
+The MVP focuses on:
 
-* Common symptoms (fever, cough, headache, stomach pain, etc.)
+* Common primary-care symptoms
 * Basic health information
-* Medication understanding
 * Preventive guidance
-* Red-flag escalation for documented emergency indicators
+* Medication understanding
+* Prescription understanding
+* Preliminary symptom assessment
+* Red-flag detection
+* Emergency escalation
 
-The exact clinical topic coverage should be derived from authoritative sources and limited to what can feasibly be evaluated.
-
-### Decision
-
-```
-Status: PENDING
-Approved:
-Date:
-```
+The system does not perform autonomous diagnosis or autonomous treatment decisions.
 
 ---
 
-## PD-34 — Research Novelty Claim
+## Primary Patient Workflow
 
-### Context
+The post-login experience must be designed around simplicity rather than exposing the user immediately to a complex AI chatbot.
 
-The project should not claim:
+### Primary Flow
 
-> "No major solution yet offers..."
-
-without a proper literature and product review.
-
-### Recommendation
-
-Use the safer framing:
-
-> "The project investigates an offline-capable, multilingual, RAG-grounded healthcare support architecture designed specifically for low-resource rural settings."
-
-Novelty claims should be validated during the literature review phase.
-
-### Decision
-
+```text
+SIGN IN
+   ↓
+CONSENT / ONBOARDING
+   ↓
+PRELIMINARY SYMPTOM CHECKER
+   ↓
+DETERMINISTIC TRIAGE
+   │
+   ├── EMERGENCY
+   │      ↓
+   │   108 / 112
+   │
+   ├── URGENT
+   │      ↓
+   │   Prompt professional care
+   │
+   └── ROUTINE
+          ↓
+      RAG-grounded guidance
+          ↓
+      ASK MEDGUIDE
+          ↓
+      Sources / Next Steps
 ```
-Status: PENDING — to be finalized after literature review
-Approved:
-Date:
-```
+
+The symptom checker is therefore a primary entry point for rural users who may not know how to formulate a medical question.
 
 ---
 
-# 8. Architectural Principle Decision
+## Data / Processing Layer Separation
 
----
-
-## PD-35 — Data/Processing Layer Separation
-
-### Context
-
-Healthcare AI systems benefit from clear separation between different types of information at every stage.
-
-### Recommended Architecture
+The system must preserve the distinction between:
 
 ```text
 PATIENT FACT
@@ -1244,139 +1401,355 @@ symptom = fever
 duration = 3 days
         ↓
 RETRIEVED KNOWLEDGE
-Source-backed medical information
+Approved medical source
         ↓
-AI INTERPRETATION
-Generated explanation
+AI GENERATION
+Natural-language explanation
         ↓
 SYSTEM DECISION
-Rule-based escalation
+Deterministic triage / escalation
 ```
 
-### Layers
+These layers must remain distinguishable in:
 
-| Layer                | Description                                         |
-| -------------------- | --------------------------------------------------- |
-| Patient-reported     | Raw input from the user                             |
-| Structured extraction| System-extracted structured data                    |
-| Retrieved knowledge  | Documents/chunks from the approved knowledge base   |
-| AI generation        | LLM-generated text                                  |
-| System decision      | Deterministic rule-based logic                      |
-
-### Rule
-
-These layers must remain distinguishable in data storage, processing, and presentation. This separation improves safety, debuggability, traceability, and research evaluation.
-
-### Decision
-
-```
-Status: PENDING
-Approved:
-Date:
-```
+* Backend processing
+* Database design
+* API responses
+* Logging
+* Evaluation
+* Frontend presentation
 
 ---
 
-# 9. Decision Approval Process
+## Research Positioning
 
-### Process
+The project should be framed as:
 
-1. Review each decision.
-2. Discuss alternatives if needed.
-3. Select an option.
-4. Record the decision, rationale, and date.
-5. Update `Status` to `APPROVED`.
-6. The decision becomes binding unless formally revised.
+> **An investigation into an offline-capable, multilingual, RAG-grounded healthcare-support architecture designed for low-resource rural settings in India.**
 
-### After All Decisions Are Approved
+Do not claim:
+
+* Autonomous diagnosis
+* Clinical validation without appropriate evidence
+* Guaranteed medical accuracy
+* Universal language support
+* Full offline AI unless experimentally demonstrated
+* That a specific model is universally superior
+
+### Status
 
 ```text
-PRE_DEVELOPMENT_DECISIONS.md (all approved)
-        ↓
-Update SRS.md if any requirement changed
-        ↓
-Create TRACEABILITY_MATRIX.md
-        ↓
-Begin architecture design
+Status: APPROVED
+Approved: 2026-08-22
 ```
 
 ---
 
-# 10. Decision Summary
+# 11. Final Architecture Baseline
 
-| ID    | Decision                        | Status   | Selected Option / Baseline |
-| ----- | ------------------------------- | -------- | -------------------------- |
-| PD-01 | Target geography                | APPROVED | Rural India                |
-| PD-02 | MVP languages                   | APPROVED | English + Telugu + Hindi   |
-| PD-03 | Healthcare-worker definition    | APPROVED | Authorized Personnel / CHW |
-| PD-04 | Emergency escalation behavior   | APPROVED | Guidance + Worker Alert    |
-| PD-05 | Healthcare-resource locator     | APPROVED | Phase 2 (Post-MVP)         |
-| PD-06 | Notification mechanism          | APPROVED | PWA Push + Local Schedule  |
-| PD-07 | Prescription verification       | APPROVED | Patient Verification Flow  |
-| PD-08 | Medical knowledge governance    | APPROVED | Document Approval Workflow |
-| PD-09 | Data retention and deletion     | APPROVED | Active Account Retention   |
-| PD-10 | AI conversation storage         | APPROVED | Timeline-Relevant Extract  |
-| PD-11 | Source citation behavior        | APPROVED | Source Metadata Attribution|
-| PD-12 | RAG fallback behavior           | APPROVED | Safe Limitation Message    |
-| PD-13 | Model fallback strategy         | APPROVED | Safe Non-AI Response       |
-| PD-14 | Model hosting strategy          | APPROVED | Hybrid (Local/Cloud)       |
-| PD-15 | Hardware constraints            | APPROVED | Local + Colab Baseline     |
-| PD-16 | LLM hallucination definition    | APPROVED | 7 Failure Categories       |
-| PD-17 | File-upload security            | APPROVED | Validation + Random Paths  |
-| PD-18 | AI prompt security              | APPROVED | System Prompt Safeguards   |
-| PD-19 | Auditability                    | APPROVED | Sensitive Event Logs       |
-| PD-20 | Threat model                    | APPROVED | 11 Threat Scenarios        |
-| PD-21 | Offline conflict resolution     | APPROVED | Timestamped Immutable      |
-| PD-22 | Low-bandwidth strategy          | APPROVED | Payload Compression/Cache  |
-| PD-23 | Performance targets             | APPROVED | Defined in Arch Phase      |
-| PD-24 | Observability                   | APPROVED | Request/Latency Metrics    |
-| PD-25 | Backup and recovery             | APPROVED | pg_dump + Document Restore |
-| PD-26 | CI/CD                           | APPROVED | GitHub Actions Pipeline    |
-| PD-27 | Versioning strategy             | APPROVED | SemVer + API Prefix        |
-| PD-28 | Model reproducibility           | APPROVED | Experiment Metadata Track  |
-| PD-29 | Dataset provenance              | APPROVED | Metadata & License Track   |
-| PD-30 | Evaluation baselines            | APPROVED | 6 Evaluation Baselines     |
-| PD-31 | Human evaluation                | APPROVED | Expert Rubric Assessment   |
-| PD-32 | Ethics/institutional approval   | APPROVED | Synthetic/De-identified    |
-| PD-33 | Clinical scope                  | APPROVED | Common Symptoms Focus      |
-| PD-34 | Research novelty claim          | APPROVED | Low-Resource Architecture  |
-| PD-35 | Data/processing layer separation| APPROVED | 5-Layer System Model       |
-
----
-
-# 11. Final Note
-
-These decisions are not signs of deficiency in the existing documents. They are exactly the **engineering details that should be resolved before implementation begins**.
-
-Resolving them now prevents:
-
-* Scope creep during development
-* Architectural rework
-* Untestable claims
-* Security gaps
-* Research weaknesses
-* Evaluation gaps
-
-The sequence is now:
+The resulting system is conceptually:
 
 ```text
-AGENTS.md                      ✅
-PROJECT_SPECIFICATION.md       ✅
-SRS.md                         ✅
-USE_CASES.md                   ✅
-PRE_DEVELOPMENT_DECISIONS.md   ✅ (decisions pending approval)
-        ↓
-Approve decisions
-        ↓
-TRACEABILITY_MATRIX.md
-        ↓
-Architecture Design
-        ↓
-Database Design
-        ↓
-API Specification
-        ↓
-AI/RAG Design
-        ↓
-Development
+                    MEDGUIDE AI
+                         │
+                         ▼
+                 PATIENT / HCW UI
+                         │
+                         ▼
+                    FASTAPI API
+                         │
+          ┌──────────────┼───────────────┐
+          │              │               │
+          ▼              ▼               ▼
+       AUTH/RBAC      SYMPTOM          CONSENT
+                         │
+                         ▼
+                DETERMINISTIC TRIAGE
+                         │
+             ┌───────────┴───────────┐
+             │                       │
+          EMERGENCY                ROUTINE
+             │                       │
+          108/112                    ▼
+                              RAG RETRIEVAL
+                                     │
+                                     ▼
+                              EVIDENCE GATE
+                                     │
+                            ┌────────┴────────┐
+                            │                 │
+                       INSUFFICIENT        SUFFICIENT
+                            │                 │
+                        REFUSAL              ▼
+                                      AI GATEWAY
+                                           │
+                              ┌────────────┼────────────┐
+                              ▼            ▼            ▼
+                           Ollama       Cloud        Other
+                              │
+                     Evaluated Local LLM
+                     ├── Qwen
+                     ├── Gemma
+                     └── Other candidates
+
+VOICE
+  │
+  ├── STT → Local / Sarvam / Evaluated Provider
+  │
+  └── TTS → Local / Sarvam / Evaluated Provider
+
+PRESCRIPTION
+  │
+  └── OCR → Tesseract / PaddleOCR / Sarvam / Evaluated Provider
+
+                         │
+                         ▼
+                  POSTGRESQL + PGVECTOR
+                         │
+                         ▼
+                  OFFLINE SYNC LAYER
+                         │
+                         ▼
+                HEALTHCARE WORKER
 ```
+
+---
+
+# 12. Development Environment Separation
+
+The project uses two coordinated development environments.
+
+## Laptop A — Core AI / Backend
+
+Responsible for:
+
+* FastAPI
+* PostgreSQL
+* pgvector
+* Authentication
+* Consent
+* Patient data
+* Triage
+* RAG
+* Ollama
+* Local LLM evaluation
+* STT evaluation
+* TTS evaluation
+* OCR evaluation
+* Offline backend/sync logic
+* Integration testing
+* AI evaluation
+
+## Laptop B — Frontend
+
+Responsible for:
+
+* Next.js
+* TypeScript
+* UI/UX
+* PWA
+* Responsive design
+* Accessibility
+* Frontend states
+* API integration
+* Multilingual UI
+* Voice interaction UI
+
+Both environments must use the same API contracts and Git repository.
+
+---
+
+# 13. Milestone Alignment
+
+These decisions map to the planned M1–M18 implementation sequence:
+
+```text
+M1  Backend Foundation                 ✅
+M2  Database + Migrations              ✅
+M3  Authentication + RBAC              ✅
+M4  Consent Management                 ✅
+
+M5  Patient Profile                    → NEXT
+M6  Symptom Records
+M7  Deterministic Triage
+M8  AI Gateway
+M9  RAG
+M10 AI Health Companion
+M11 Prescription OCR
+M12 Medication Management
+M13 Healthcare Worker Dashboard
+M14 Speech + Multilingual
+M15 Offline/PWA + Sync
+M16 Full Integration Testing
+M17 AI Safety + Performance Evaluation
+M18 Deployment + Operations
+```
+
+Important:
+
+> M4.3 RAG validation/remediation work is considered part of the current AI/RAG validation track and does not replace the official milestone sequence.
+
+---
+
+# 14. Decision Change Policy
+
+An approved decision may be changed only when:
+
+1. A technical limitation is discovered.
+2. Evaluation provides evidence for a better approach.
+3. A safety requirement changes.
+4. A project scope change is formally approved.
+
+When changing a decision:
+
+```text
+Existing Decision
+       ↓
+Reason for Change
+       ↓
+Evidence / Evaluation
+       ↓
+New Decision
+       ↓
+Date + Version
+       ↓
+Affected Documents Updated
+```
+
+Affected documentation may include:
+
+* `PROJECT_SPECIFICATION.md`
+* `SRS.md`
+* `USE_CASES.md`
+* `TRACEABILITY_MATRIX.md`
+* Architecture documents
+* API specifications
+* AI/RAG documentation
+* Development environment documentation
+* Evaluation documentation
+
+---
+
+# 15. Final Decision Summary
+
+| ID    | Decision                      | Status   | Current Baseline                                 |
+| ----- | ----------------------------- | -------- | ------------------------------------------------ |
+| PD-01 | Target geography              | APPROVED | Rural India                                      |
+| PD-02 | Phase-1 languages             | APPROVED | English + Hindi + Telugu                         |
+| PD-03 | Healthcare worker             | APPROVED | Authorized healthcare personnel                  |
+| PD-04 | Emergency behavior            | APPROVED | Deterministic guidance + optional worker alert   |
+| PD-05 | Resource locator              | APPROVED | Phase 2                                          |
+| PD-06 | Notifications                 | APPROVED | PWA + local scheduling                           |
+| PD-07 | Prescription verification     | APPROVED | Mandatory human verification                     |
+| PD-08 | Knowledge governance          | APPROVED | Approved-source workflow                         |
+| PD-09 | Data retention                | APPROVED | Purpose-based retention                          |
+| PD-10 | AI conversation storage       | APPROVED | Health-relevant structured extracts              |
+| PD-11 | Citations                     | APPROVED | Application-controlled source metadata           |
+| PD-12 | RAG evidence gate             | APPROVED | Provisional threshold 0.55                       |
+| PD-13 | AI fallback                   | APPROVED | Safe non-AI fallback                             |
+| PD-14 | LLM runtime/model strategy    | APPROVED | Ollama + evaluation-driven models                |
+| PD-15 | Hardware                      | APPROVED | Local CPU-capable baseline + optional compute    |
+| PD-16 | Hallucination definition      | APPROVED | 11 failure categories                            |
+| PD-17 | STT                           | APPROVED | Evaluate local + Sarvam + alternatives           |
+| PD-18 | TTS                           | APPROVED | Evaluate local + Sarvam + alternatives           |
+| PD-19 | OCR                           | APPROVED | Evaluate Tesseract/PaddleOCR/Sarvam/alternatives |
+| PD-20 | Code-mixed input              | APPROVED | Explicitly evaluate                              |
+| PD-21 | File security                 | APPROVED | Validated restricted uploads                     |
+| PD-22 | Prompt security               | APPROVED | Deterministic safety boundaries                  |
+| PD-23 | Auditability                  | APPROVED | Sensitive-event logging                          |
+| PD-24 | Threat model                  | APPROVED | Required threat coverage                         |
+| PD-25 | Offline strategy              | APPROVED | Offline-first selected workflows                 |
+| PD-26 | Offline conflicts             | APPROVED | Timestamped immutable events                     |
+| PD-27 | Low bandwidth                 | APPROVED | Cache + compression + delta sync                 |
+| PD-28 | Performance                   | APPROVED | Measure; do not invent                           |
+| PD-29 | Observability                 | APPROVED | Health + latency + AI/OCR/STT/RAG metrics        |
+| PD-30 | Backup/recovery               | APPROVED | PostgreSQL + KB rebuild                          |
+| PD-31 | CI/CD/versioning              | APPROVED | GitHub Actions + versioned components            |
+| PD-32 | Reproducibility               | APPROVED | Full experiment metadata                         |
+| PD-33 | Dataset provenance            | APPROVED | Source/license/version tracking                  |
+| PD-34 | Evaluation                    | APPROVED | Technical + human evaluation                     |
+| PD-35 | Clinical scope / architecture | APPROVED | Primary-care support + 5-layer separation        |
+
+---
+
+# 16. Final Development Principle
+
+MedGuide AI is not being built as:
+
+```text
+User
+ ↓
+LLM
+ ↓
+Medical Answer
+```
+
+It is being built as:
+
+```text
+                    USER
+                     │
+             Text / Voice / Image
+                     │
+                     ▼
+              INPUT PROCESSING
+                     │
+                     ▼
+          DETERMINISTIC SAFETY
+                     │
+        ┌────────────┴────────────┐
+        │                         │
+    EMERGENCY                  CONTINUE
+        │                         │
+     108/112                      ▼
+                         STRUCTURED SYMPTOMS
+                                  │
+                                  ▼
+                            RAG RETRIEVAL
+                                  │
+                                  ▼
+                           EVIDENCE GATE
+                                  │
+                     ┌────────────┴────────────┐
+                     │                         │
+                 REFUSAL                   EVIDENCE
+                     │                         │
+                     │                         ▼
+                     │                    AI GATEWAY
+                     │                         │
+                     │              ┌──────────┴──────────┐
+                     │              │                     │
+                     │          Local LLM             Cloud /
+                     │           Ollama               Providers
+                     │
+                     ▼
+              SAFE USER RESPONSE
+                     │
+                     ▼
+             SOURCES + NEXT STEPS
+```
+
+The central engineering principle is:
+
+> **The LLM generates language. The application controls safety, evidence, authorization, and clinical escalation.**
+
+This architecture allows MedGuide AI to evaluate better models later without redesigning the healthcare application.
+
+---
+
+# 17. Development Status
+
+```text
+Requirements Baseline       ✅
+Product Scope               ✅
+Use Cases                   ✅
+Pre-Development Decisions   ✅
+Frontend Architecture       ✅
+M1–M4 Backend               ✅
+M4.3 RAG Validation         🔄 Remediation / final closure
+Frontend UI                 🔄 Active refinement
+Laptop A Core Backend       → Next development phase
+M5–M18                      → Planned sequential execution
+```
+
+The next major implementation environment is **Laptop A**, where the core backend, database, RAG, local AI runtime, speech/OCR evaluation, and subsequent M5–M18 milestones will be completed.
