@@ -3,19 +3,19 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Form, Button } from "react-aria-components";
 import {
   Lock,
   Mail,
   Phone,
   ArrowRight,
   AlertCircle,
-  Eye,
-  EyeOff,
   HeartPulse,
   User as UserIcon,
 } from "lucide-react";
 import { api } from "@/lib/api/client";
 import { UserRole } from "@/types/user";
+import { AuthTextField } from "@/components/auth/auth-text-field";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -24,13 +24,12 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState<UserRole>(UserRole.PATIENT);
   const [preferredLang, setPreferredLang] = useState<"en" | "hi" | "te">("en");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
@@ -62,34 +61,25 @@ export default function RegisterPage() {
     }
   };
 
-  const inputClass = `
-    w-full pr-4 py-3 min-h-[48px] rounded-lg border text-sm
-    bg-white dark:bg-slate-900
-    text-slate-900 dark:text-slate-100
-    placeholder:text-slate-400
-    focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500
-    transition-colors
-  `;
-
-  const labelClass = "block text-sm font-medium mb-1.5";
+  const selectClass =
+    "w-full px-3 py-3 min-h-[48px] rounded-lg border border-slate-200 text-sm bg-white text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0F766E] focus:border-[#0F766E] transition-colors";
 
   return (
     <div
       className="min-h-[85vh] flex items-center justify-center px-4 py-16"
       style={{ backgroundColor: "var(--background)" }}
     >
-      <div className="w-full max-w-md">
-        {/* Brand mark */}
-        <div className="flex items-center justify-center gap-2.5 mb-10">
-          <div
-            className="flex items-center justify-center w-9 h-9 rounded-xl"
+      <div className="auth-card auth-animate-in">
+        {/* Brand Icon */}
+        <div className="flex justify-center mb-6">
+          <Link
+            href="/"
+            className="auth-icon-box"
             style={{ backgroundColor: "var(--teal)" }}
+            aria-label="MedGuide AI Home"
           >
-            <HeartPulse className="w-5 h-5 text-white" aria-hidden="true" />
-          </div>
-          <span className="font-semibold text-xl" style={{ color: "var(--ink)" }}>
-            MedGuide <span style={{ color: "var(--teal)" }}>AI</span>
-          </span>
+            <HeartPulse className="w-6 h-6 text-white" aria-hidden="true" />
+          </Link>
         </div>
 
         {/* Heading */}
@@ -122,144 +112,66 @@ export default function RegisterPage() {
         )}
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+        <Form onSubmit={handleSubmit} className="space-y-4" validationBehavior="native">
           {/* Full name */}
-          <div>
-            <label
-              htmlFor="full-name"
-              className={labelClass}
-              style={{ color: "var(--ink-secondary)" }}
-            >
-              Full name
-            </label>
-            <div className="relative">
-              <UserIcon
-                className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
-                style={{ color: "var(--muted-light)" }}
-                aria-hidden="true"
-              />
-              <input
-                id="full-name"
-                type="text"
-                required
-                autoComplete="name"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                placeholder="Ramesh Kumar"
-                className={`${inputClass} pl-10`}
-                style={{ borderColor: "var(--border)" }}
-              />
-            </div>
-          </div>
+          <AuthTextField
+            label="Full name"
+            name="full-name"
+            type="text"
+            value={fullName}
+            onChange={setFullName}
+            placeholder="Ramesh Kumar"
+            icon={<UserIcon className="w-4 h-4" aria-hidden="true" />}
+            isRequired
+            autoComplete="name"
+          />
 
-          {/* Email + Phone */}
+          {/* Email + Phone row */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label
-                htmlFor="email"
-                className={labelClass}
-                style={{ color: "var(--ink-secondary)" }}
-              >
-                Email
-              </label>
-              <div className="relative">
-                <Mail
-                  className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
-                  style={{ color: "var(--muted-light)" }}
-                  aria-hidden="true"
-                />
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  className={`${inputClass} pl-10`}
-                  style={{ borderColor: "var(--border)" }}
-                />
-              </div>
-            </div>
+            <AuthTextField
+              label="Email"
+              name="email"
+              type="email"
+              value={email}
+              onChange={setEmail}
+              placeholder="you@example.com"
+              icon={<Mail className="w-4 h-4" aria-hidden="true" />}
+              isRequired
+              autoComplete="email"
+            />
 
-            <div>
-              <label
-                htmlFor="phone"
-                className={labelClass}
-                style={{ color: "var(--ink-secondary)" }}
-              >
-                Phone{" "}
-                <span style={{ color: "var(--muted-light)" }}>(optional)</span>
-              </label>
-              <div className="relative">
-                <Phone
-                  className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
-                  style={{ color: "var(--muted-light)" }}
-                  aria-hidden="true"
-                />
-                <input
-                  id="phone"
-                  type="tel"
-                  autoComplete="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+91 98765 43210"
-                  className={`${inputClass} pl-10`}
-                  style={{ borderColor: "var(--border)" }}
-                />
-              </div>
-            </div>
+            <AuthTextField
+              label="Phone"
+              name="phone"
+              type="tel"
+              value={phone}
+              onChange={setPhone}
+              placeholder="+91 98765 43210"
+              icon={<Phone className="w-4 h-4" aria-hidden="true" />}
+              autoComplete="tel"
+              description="Optional"
+            />
           </div>
 
           {/* Password */}
-          <div>
-            <label
-              htmlFor="reg-password"
-              className={labelClass}
-              style={{ color: "var(--ink-secondary)" }}
-            >
-              Password
-            </label>
-            <div className="relative">
-              <Lock
-                className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
-                style={{ color: "var(--muted-light)" }}
-                aria-hidden="true"
-              />
-              <input
-                id="reg-password"
-                type={showPassword ? "text" : "password"}
-                required
-                autoComplete="new-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Minimum 8 characters"
-                className={`${inputClass} pl-10 pr-12`}
-                style={{ borderColor: "var(--border)" }}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 rounded"
-                style={{ color: "var(--muted)" }}
-                aria-label={showPassword ? "Hide password" : "Show password"}
-              >
-                {showPassword ? (
-                  <EyeOff className="w-4 h-4" aria-hidden="true" />
-                ) : (
-                  <Eye className="w-4 h-4" aria-hidden="true" />
-                )}
-              </button>
-            </div>
-          </div>
+          <AuthTextField
+            label="Password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={setPassword}
+            placeholder="Minimum 8 characters"
+            icon={<Lock className="w-4 h-4" aria-hidden="true" />}
+            isRequired
+            autoComplete="new-password"
+          />
 
-          {/* Account type + Language */}
+          {/* Account type + Language row */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
+            <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="account-type"
-                className={labelClass}
-                style={{ color: "var(--ink-secondary)" }}
+                className="block text-sm font-medium text-slate-700"
               >
                 Account type
               </label>
@@ -267,8 +179,7 @@ export default function RegisterPage() {
                 id="account-type"
                 value={role}
                 onChange={(e) => setRole(e.target.value as UserRole)}
-                className="w-full px-3 py-3 min-h-[48px] rounded-lg border text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
-                style={{ borderColor: "var(--border)" }}
+                className={selectClass}
               >
                 <option value={UserRole.PATIENT}>Patient / Citizen</option>
                 <option value={UserRole.HEALTHCARE_WORKER}>
@@ -277,11 +188,10 @@ export default function RegisterPage() {
               </select>
             </div>
 
-            <div>
+            <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="preferred-lang"
-                className={labelClass}
-                style={{ color: "var(--ink-secondary)" }}
+                className="block text-sm font-medium text-slate-700"
               >
                 Preferred language
               </label>
@@ -291,8 +201,7 @@ export default function RegisterPage() {
                 onChange={(e) =>
                   setPreferredLang(e.target.value as "en" | "hi" | "te")
                 }
-                className="w-full px-3 py-3 min-h-[48px] rounded-lg border text-sm bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
-                style={{ borderColor: "var(--border)" }}
+                className={selectClass}
               >
                 <option value="en">English</option>
                 <option value="hi">हिंदी (Hindi)</option>
@@ -302,20 +211,17 @@ export default function RegisterPage() {
           </div>
 
           {/* Submit */}
-          <button
+          <Button
             type="submit"
-            disabled={
+            isDisabled={
               loading || !fullName.trim() || !email.trim() || !password.trim()
             }
-            className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg font-semibold text-white min-h-[48px] text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+            className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg font-semibold text-white min-h-[48px] text-sm
+              transition-all cursor-pointer
+              disabled:opacity-50 disabled:cursor-not-allowed
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0F766E]
+              hover:opacity-90 pressed:scale-[0.98] mt-2"
             style={{ backgroundColor: "var(--teal)" }}
-            onMouseEnter={(e) => {
-              if (!loading)
-                e.currentTarget.style.backgroundColor = "var(--teal-hover)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "var(--teal)";
-            }}
           >
             {loading ? (
               <>
@@ -332,8 +238,8 @@ export default function RegisterPage() {
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </>
             )}
-          </button>
-        </form>
+          </Button>
+        </Form>
 
         {/* Sign in link */}
         <p
@@ -352,8 +258,8 @@ export default function RegisterPage() {
 
         {/* Legal */}
         <div
-          className="flex items-center justify-center gap-4 mt-8 text-xs"
-          style={{ color: "var(--muted-light)" }}
+          className="flex items-center justify-center gap-4 mt-6 pt-5 border-t text-xs"
+          style={{ borderColor: "var(--border)", color: "var(--muted-light)" }}
         >
           <Link href="/legal/privacy" className="hover:underline">
             Privacy
