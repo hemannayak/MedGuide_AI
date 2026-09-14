@@ -24,10 +24,15 @@ class ApiClient {
   async login(data: LoginRequest): Promise<StandardResponse<AuthTokenResponse>> {
     if (isMockMode()) return MockApiAdapter.login(data);
 
+    const payload = {
+      login_identifier: data.email_or_phone,
+      password: data.password,
+    };
+
     const res = await fetch(`${API_BASE_URL}/auth/login`, {
       method: "POST",
       headers: this.getHeaders(),
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
     return res.json();
   }
@@ -35,10 +40,17 @@ class ApiClient {
   async register(data: RegisterRequest): Promise<StandardResponse<AuthTokenResponse>> {
     if (isMockMode()) return MockApiAdapter.register(data);
 
+    const payload = {
+      login_identifier: data.email,
+      display_name: data.full_name,
+      password: data.password,
+      preferred_language: data.preferred_language || "en",
+    };
+
     const res = await fetch(`${API_BASE_URL}/auth/register`, {
       method: "POST",
       headers: this.getHeaders(),
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
     return res.json();
   }
@@ -101,7 +113,24 @@ class ApiClient {
       headers,
       body: formData,
     });
-    return res.json();
+
+    const json = await res.json();
+    if (!res.ok) {
+      return {
+        success: false,
+        message: json.detail || "Speech recognition failed.",
+      };
+    }
+
+    // Normalize direct STTResponse into StandardResponse envelope
+    if (json.transcript !== undefined) {
+      return {
+        success: true,
+        data: json as STTResponse,
+      };
+    }
+
+    return json;
   }
 
   async speechTTS(req: TTSRequest): Promise<StandardResponse<TTSResponse>> {
@@ -112,7 +141,24 @@ class ApiClient {
       headers: this.getHeaders(),
       body: JSON.stringify(req),
     });
-    return res.json();
+
+    const json = await res.json();
+    if (!res.ok) {
+      return {
+        success: false,
+        message: json.detail || "Text-to-speech synthesis failed.",
+      };
+    }
+
+    // Normalize direct TTSResponse into StandardResponse envelope
+    if (json.audio_base64 !== undefined) {
+      return {
+        success: true,
+        data: json as TTSResponse,
+      };
+    }
+
+    return json;
   }
 }
 
