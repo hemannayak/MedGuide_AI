@@ -21,6 +21,7 @@ from app.services.medication_service import (
     get_patient_medications,
     get_schedules_for_medication,
     record_medication_adherence,
+    verify_medication,
 )
 from app.services.patient_service import get_patient_profile_by_user
 
@@ -79,6 +80,25 @@ def get_med_detail(
     return StandardResponse(
         success=True,
         data=MedicationResponse.model_validate(med),
+    )
+
+
+@router.post(
+    "/{medication_id}/verify",
+    response_model=StandardResponse,
+    summary="Explicitly verify a PENDING medication (Patient or Authorized Caregiver)",
+)
+def verify_med(
+    medication_id: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> Any:
+    profile = get_patient_profile_by_user(db, current_user)
+    med = verify_medication(db, profile, medication_id)
+    return StandardResponse(
+        success=True,
+        data=MedicationResponse.model_validate(med),
+        message="Medication successfully verified and approved for active scheduling",
     )
 
 

@@ -1,0 +1,9 @@
+[2026-09-14] Phase 1 Security Baseline Initialized.
+- [DONE] Task 1.1: PatientWorkerAccess model created.
+- [DONE] Task 1.2: Model exported in __init__.py, relationships added to PatientProfile and HealthcareWorkerProfile.
+- [DONE] Task 1.3: Alembic migration (25cb6f5a0d28_add_patient_worker_access_table) generated and upgraded to head.
+- [DONE] Task 1.4: Reusable audit_service.py created for transactional audit logging.
+- [DONE] Task 1.5: access_service.py created to enforce worker->patient authorization.
+- [DONE] Task 1.6: hcw_service.py rewritten with server-side authorization and audit logging.
+- [DONE] Task 1.7: medication_service.py updated with PENDING default, schedule safety guards, and audit trail.
+- [CURRENT] Task 1.8: Implement POST /medications/{id}/verify endpoint.

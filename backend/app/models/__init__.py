@@ -1,4 +1,5 @@
-"""Central export of all 21 MedGuide AI ORM models."""
+"""Central export of all ORM models for MedGuide AI (22 entities after Phase 1)."""
+
 
 from app.db.base_class import Base, TimestampMixin
 from app.models.roles import Role
@@ -12,6 +13,8 @@ from app.models.medications import Medication, MedicationSchedule, MedicationAdh
 from app.models.timeline import HealthTimelineEvent, Alert, FollowUp
 from app.models.knowledge import MedicalDocument, KnowledgeChunk
 from app.models.audit import AuditLog, SyncOperation
+from app.models.access import PatientWorkerAccess
+
 
 __all__ = [
     "Base",
@@ -37,4 +40,6 @@ __all__ = [
     "KnowledgeChunk",
     "AuditLog",
     "SyncOperation",
+    "PatientWorkerAccess",
 ]
+

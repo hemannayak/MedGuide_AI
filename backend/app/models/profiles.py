@@ -15,6 +15,7 @@ if TYPE_CHECKING:
     from app.models.prescriptions import Prescription
     from app.models.medications import Medication
     from app.models.timeline import HealthTimelineEvent, Alert, FollowUp
+    from app.models.access import PatientWorkerAccess
 
 
 class PatientProfile(Base, TimestampMixin):
@@ -60,6 +61,11 @@ class PatientProfile(Base, TimestampMixin):
     follow_ups: Mapped[List["FollowUp"]] = relationship(
         "FollowUp", back_populates="patient", cascade="all, delete-orphan"
     )
+    worker_accesses: Mapped[List["PatientWorkerAccess"]] = relationship(
+        "PatientWorkerAccess",
+        back_populates="patient",
+        cascade="all, delete-orphan",
+    )
 
 
 class HealthcareWorkerProfile(Base, TimestampMixin):
@@ -84,4 +90,9 @@ class HealthcareWorkerProfile(Base, TimestampMixin):
     user: Mapped["User"] = relationship("User", back_populates="healthcare_worker_profile")
     managed_follow_ups: Mapped[List["FollowUp"]] = relationship(
         "FollowUp", back_populates="healthcare_worker"
+    )
+    patient_accesses: Mapped[List["PatientWorkerAccess"]] = relationship(
+        "PatientWorkerAccess",
+        back_populates="healthcare_worker",
+        cascade="all, delete-orphan",
     )

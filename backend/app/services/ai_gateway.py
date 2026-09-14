@@ -2,15 +2,17 @@
 MedGuide AI — AI Gateway (M4.3)
 =================================
 Provider-agnostic LLM gateway. Implements the AIGateway abstract interface
-with three concrete providers:
-  - MockGateway      : Deterministic test fixture. No external dependencies.
-  - OllamaGateway    : Local inference via Ollama. Primary development provider.
-  - GroqGateway      : Hosted inference via Groq API. Optional accelerator.
+with concrete providers:
+  - MockGateway        : Deterministic test fixture. No external dependencies.
+  - OllamaGateway      : Local inference via Ollama. Primary development provider.
+  - GroqGateway        : Hosted inference via Groq API. Optional accelerator.
+  - HuggingFaceGateway : Serverless inference via Hugging Face Router API (OpenAI compatible).
 
 Configuration (via environment variables):
-  AI_PROVIDER=ollama          # ollama | groq | mock
-  AI_MODEL=llama3.2:3b        # provider-specific model identifier
-  GROQ_API_KEY=               # required only when AI_PROVIDER=groq
+  AI_PROVIDER=ollama | groq | huggingface | mock
+  AI_MODEL=llama3.2:3b | Qwen/Qwen2.5-7B-Instruct | Qwen/Qwen3-4B:featherless-ai
+  GROQ_API_KEY=               # required when AI_PROVIDER=groq
+  HF_TOKEN=                   # required when AI_PROVIDER=huggingface
   OLLAMA_BASE_URL=http://localhost:11434
 
 No provider-specific behavior bleeds into application logic.
@@ -20,7 +22,7 @@ All providers implement the identical generate() interface.
 import logging
 import os
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Any, Dict, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -38,6 +40,7 @@ class AIGateway(ABC):
         user_prompt: str,
         max_tokens: int = 800,
         temperature: float = 0.2,
+        format: Optional[str] = None,
     ) -> str:
         """
         Generate a text response given system and user prompts.
@@ -47,6 +50,7 @@ class AIGateway(ABC):
             user_prompt: User message with injected RAG context
             max_tokens: Maximum response token length
             temperature: Generation temperature (low for medical = more deterministic)
+            format: Optional format constraint (e.g. 'json')
 
         Returns:
             Generated text string.
@@ -87,17 +91,30 @@ class MockGateway(AIGateway):
         user_prompt: str,
         max_tokens: int = 800,
         temperature: float = 0.2,
+        format: Optional[str] = None,
     ) -> str:
         logger.debug("[MockGateway] Generating deterministic response")
         # Extract first source tag from prompt for realistic citation
         import re
         match = re.search(r"\[1\] Document: (.+?) \|", user_prompt)
         doc_name = match.group(1) if match else "official medical guidelines"
-        return (
+        
+        answer = (
             f"Based on the verified medical guidelines [1], the recommended approach "
             f"involves following the clinical protocols described in the {doc_name}. "
             f"Please consult a qualified healthcare professional for personalized advice. [1]"
         )
+        
+        if format == "json":
+            import json
+            return json.dumps({
+                "response_type": "INFORMATIONAL",
+                "language": "en",
+                "answer": answer,
+                "citation_ids": [1],
+                "requires_escalation": False
+            })
+        return answer
 
 
 # ---------------------------------------------------------------------------
@@ -124,6 +141,7 @@ class OllamaGateway(AIGateway):
         user_prompt: str,
         max_tokens: int = 800,
         temperature: float = 0.2,
+        format: Optional[str] = None,
     ) -> str:
         try:
             import httpx
@@ -144,6 +162,9 @@ class OllamaGateway(AIGateway):
                 "temperature": temperature,
             },
         }
+        
+        if format:
+            payload["format"] = format
 
         try:
             with httpx.Client(timeout=120.0) as client:
@@ -183,6 +204,7 @@ class GroqGateway(AIGateway):
         user_prompt: str,
         max_tokens: int = 800,
         temperature: float = 0.2,
+        format: Optional[str] = None,
     ) -> str:
         try:
             import httpx
@@ -195,7 +217,7 @@ class GroqGateway(AIGateway):
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
         }
-        payload = {
+        payload: Dict[str, Any] = {
             "model": self.model,
             "messages": [
                 {"role": "system", "content": system_prompt},
@@ -204,6 +226,9 @@ class GroqGateway(AIGateway):
             "max_tokens": max_tokens,
             "temperature": temperature,
         }
+
+        if format == "json":
+            payload["response_format"] = {"type": "json_object"}
 
         try:
             with httpx.Client(timeout=60.0) as client:
@@ -221,6 +246,72 @@ class GroqGateway(AIGateway):
 
 
 # ---------------------------------------------------------------------------
+# HuggingFaceGateway — Serverless inference via HF Router API (OpenAI-compatible)
+# ---------------------------------------------------------------------------
+class HuggingFaceGateway(AIGateway):
+    """
+    Hosted LLM inference via Hugging Face Router API (OpenAI compatible).
+    Enables serverless execution of open models like Qwen/Qwen2.5-7B-Instruct.
+    Requires HF_TOKEN or HUGGINGFACE_API_KEY environment variable.
+    """
+
+    def __init__(self, model: str, api_key: str, base_url: str = "https://router.huggingface.co/v1"):
+        self.model = model
+        self.api_key = api_key
+        self.base_url = base_url.rstrip("/")
+
+    @property
+    def provider_name(self) -> str:
+        return f"huggingface/{self.model}"
+
+    def generate(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        max_tokens: int = 800,
+        temperature: float = 0.2,
+        format: Optional[str] = None,
+    ) -> str:
+        try:
+            import httpx
+        except ImportError:
+            raise AIGatewayError(
+                "httpx is required for HuggingFaceGateway. Install with: pip install httpx"
+            )
+
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+        }
+        payload: Dict[str, Any] = {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+            "max_tokens": max_tokens,
+            "temperature": temperature,
+        }
+
+        if format == "json":
+            payload["response_format"] = {"type": "json_object"}
+
+        try:
+            with httpx.Client(timeout=60.0) as client:
+                response = client.post(
+                    f"{self.base_url}/chat/completions",
+                    headers=headers,
+                    json=payload,
+                )
+                response.raise_for_status()
+                data = response.json()
+                return data["choices"][0]["message"]["content"]
+        except Exception as e:
+            logger.error(f"[HuggingFaceGateway] Generation failed: {e}")
+            raise AIGatewayError(f"Hugging Face inference failed: {e}") from e
+
+
+# ---------------------------------------------------------------------------
 # Factory — create gateway from environment configuration
 # ---------------------------------------------------------------------------
 def create_ai_gateway(
@@ -231,9 +322,10 @@ def create_ai_gateway(
     Create the appropriate AIGateway based on environment configuration.
 
     Configuration:
-        AI_PROVIDER: ollama | groq | mock  (default: mock)
+        AI_PROVIDER: ollama | groq | huggingface (hf) | mock  (default: mock)
         AI_MODEL: provider-specific model identifier
         GROQ_API_KEY: required when AI_PROVIDER=groq
+        HF_TOKEN / HUGGINGFACE_API_KEY: required when AI_PROVIDER=huggingface
         OLLAMA_BASE_URL: Ollama server URL (default: http://localhost:11434)
 
     Returns:
@@ -262,7 +354,18 @@ def create_ai_gateway(
         logger.info(f"[AIGateway] Using GroqGateway: {groq_model}")
         return GroqGateway(model=groq_model, api_key=groq_key)
 
+    elif provider in {"huggingface", "hf"}:
+        hf_model = model or "Qwen/Qwen2.5-7B-Instruct"
+        hf_token = os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACE_API_KEY", "")
+        if not hf_token:
+            raise AIGatewayError(
+                "HF_TOKEN or HUGGINGFACE_API_KEY environment variable is required when AI_PROVIDER=huggingface"
+            )
+        hf_url = os.getenv("HF_BASE_URL", "https://router.huggingface.co/v1")
+        logger.info(f"[AIGateway] Using HuggingFaceGateway: {hf_model} @ {hf_url}")
+        return HuggingFaceGateway(model=hf_model, api_key=hf_token, base_url=hf_url)
+
     else:
         raise AIGatewayError(
-            f"Unknown AI_PROVIDER: '{provider}'. Supported: ollama | groq | mock"
+            f"Unknown AI_PROVIDER: '{provider}'. Supported: ollama | groq | huggingface (hf) | mock"
         )

@@ -1,8 +1,9 @@
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 # Predefined red-flag clinical rules based on documented primary care guidelines
 RED_FLAG_KEYWORDS: Dict[str, List[str]] = {
     "EMERGENCY": [
+        # English
         "chest pain",
         "crushing pain",
         "severe difficulty breathing",
@@ -15,8 +16,25 @@ RED_FLAG_KEYWORDS: Dict[str, List[str]] = {
         "coughing blood",
         "severe allergic reaction",
         "anaphylaxis",
+        # Hindi (Devanagari)
+        "सीने में दर्द",
+        "छाती में दर्द",
+        "सांस लेने में तकलीफ",
+        "बेहोश",
+        "खून की उल्टी",
+        "गंभीर एलर्जी",
+        "अचानक कमजोरी",
+        # Telugu (Telugu script)
+        "ఛాతి నొప్పి",
+        "తీవ్రమైన నొప్పి",
+        "శ్వాస తీసుకోవడం కష్టం",
+        "స్పృహ కోల్పోవడం",
+        "రక్తం దగ్గు",
+        "తీవ్రమైన అలెర్జీ",
+        "అకస్మాత్తుగా బలహీనత",
     ],
     "URGENT": [
+        # English
         "high fever",
         "fever over 102",
         "persistent vomiting",
@@ -24,6 +42,16 @@ RED_FLAG_KEYWORDS: Dict[str, List[str]] = {
         "severe abdominal pain",
         "inability to keep fluids down",
         "confusion",
+        # Hindi (Devanagari)
+        "तेज बुखार",
+        "लगातार उल्टी",
+        "पेट में तेज दर्द",
+        "भ्रम",
+        # Telugu (Telugu script)
+        "అధిక జ్వరం",
+        "నిరంతర వాంతులు",
+        "పొట్ట నొప్పి",
+        "గందరగోళం",
     ],
 }
 

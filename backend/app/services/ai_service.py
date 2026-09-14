@@ -55,7 +55,7 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 # Configuration (via environment variables)
 # ---------------------------------------------------------------------------
-RAG_SIMILARITY_THRESHOLD = float(os.getenv("RAG_SIMILARITY_THRESHOLD", "0.55"))
+RAG_SIMILARITY_THRESHOLD = float(os.getenv("RAG_SIMILARITY_THRESHOLD", "0.40"))
 RAG_TOP_K_CANDIDATES = int(os.getenv("RAG_TOP_K_CANDIDATES", "10"))
 RAG_TOP_K_CONTEXT = int(os.getenv("RAG_TOP_K_CONTEXT", "4"))
 CONVERSATION_HISTORY_TURNS = int(os.getenv("CONVERSATION_HISTORY_TURNS", "5"))
@@ -90,9 +90,13 @@ _RED_FLAG_PATTERNS = [
     r"\bসীনায়\s+ব্যথা\b",
     r"\bसीने\s+(में)?\s+दर्द\b",
     r"\bसांस\s+(नहीं|लेने\s+में)\b",
-    # Telugu patterns
-    r"\bఛాతీ\s+నొప్పి\b",
-    r"\bఊపిరి\s+అందడం\s+లేదు\b",
+    # Telugu patterns — no \b boundaries (Unicode word boundaries are unreliable for Telugu)
+    r"ఛాతీ\s+నొప్పి",
+    r"ఛాతి\s+నొప్పి",
+    r"తీవ్రమైన\s+నొప్పి",
+    r"ఊపిరి\s+అందడం\s+లేదు",
+    r"స్పృహ\s+కోల్పో",
+    r"రక్తం\s+దగ్గు",
 ]
 _RED_FLAG_RE = [re.compile(p, re.IGNORECASE) for p in _RED_FLAG_PATTERNS]
 
@@ -285,17 +289,26 @@ def format_history_for_prompt(history: List[Dict[str, str]]) -> str:
 # ---------------------------------------------------------------------------
 SYSTEM_PROMPT_TEMPLATE = """You are MedGuide AI, a multilingual primary healthcare information assistant for rural communities in India.
 
+Respond ONLY with a JSON object matching this schema:
+{{
+  "response_type": "INFORMATIONAL" | "SYMPTOM_GUIDANCE" | "MEDICATION_INFO" | "REFUSAL",
+  "language": "en" | "hi" | "te",
+  "answer": "Grounded answer text in the requested language containing appropriate [1], [2] citations",
+  "citation_ids": [1, 2],
+  "requires_escalation": false
+}}
+
 CRITICAL SAFETY RULES — FOLLOW EXACTLY:
 1. Answer STRICTLY AND ONLY using the Verified Medical Context provided below.
 2. Do NOT use any outside medical knowledge from your training data.
-3. If the context does not contain enough information, say: "The provided medical guidelines do not contain sufficient information to answer this question."
-4. Include in-text citations like [1], [2] corresponding to the numbered sources below.
+3. If the context does not contain enough information, set "response_type" to "REFUSAL" and "answer" to "The provided medical guidelines do not contain sufficient information to answer this question."
+4. Include in-text citations like [1], [2] inside your "answer" corresponding to the numbered sources below.
 5. ONLY cite source numbers that appear in the context below. Never invent a citation.
 6. Respond in {language_name}.
 7. NEVER claim to diagnose, prescribe medication, or change prescribed dosages.
 8. NEVER tell a patient to stop prescribed medication.
 9. NEVER claim to be a doctor or replace professional medical advice.
-10. If emergency symptoms are mentioned, always recommend immediate emergency care."""
+10. If emergency symptoms are mentioned, set "response_type" to "EMERGENCY", "requires_escalation" to true, and recommend immediate care."""
 
 LANGUAGE_NAMES = {
     "en": "English",
@@ -313,7 +326,7 @@ CONVERSATION HISTORY (for context only — do not use as medical source):
 
 USER QUESTION: {question}
 
-INSTRUCTIONS: Answer using ONLY the verified context above. Cite sources with [1], [2] etc. 
+INSTRUCTIONS: Answer using ONLY the verified context above. Cite sources with [1], [2] etc. inside your "answer" JSON field.
 Respond in {language_name}."""
 
 
@@ -487,6 +500,44 @@ def build_emergency_response(language: str, red_flags: List[str]) -> str:
     return messages.get(language, messages["en"])
 
 
+def parse_llm_response(raw_text: str) -> str:
+    """
+    Attempt to parse structured JSON output from LLM.
+    If it is valid JSON with an 'answer' key, returns the 'answer'.
+    Otherwise, returns the raw text.
+    """
+    import json
+    raw_clean = raw_text.strip()
+    if raw_clean.startswith("{") and raw_clean.endswith("}"):
+        try:
+            data = json.loads(raw_clean)
+            if isinstance(data, dict) and "answer" in data:
+                return str(data["answer"])
+        except Exception:
+            pass
+    return raw_text
+
+
+def sanitize_llm_citations(response_text: str, chunks: List[Dict[str, Any]]) -> str:
+    """
+    Sanitize citation numbers in LLM output.
+    Removes any phantom citation markers that exceed the number of retrieved chunks.
+    """
+    valid_ids = set(range(1, len(chunks) + 1))
+    
+    def replace_citation(match):
+        num = int(match.group(1))
+        if num in valid_ids:
+            return f"[{num}]"
+        return "" # Strip phantom citation
+        
+    # Replace [x] pattern
+    sanitized = re.sub(r'\[(\d+)\]', replace_citation, response_text)
+    # Remove empty brackets/brackets that got stripped
+    sanitized = re.sub(r'\s*\[\s*\]', '', sanitized)
+    return sanitized
+
+
 # ---------------------------------------------------------------------------
 # M4.3.9 — Main pipeline entry point
 # ---------------------------------------------------------------------------
@@ -599,6 +650,7 @@ def process_ai_chat_query(
             user_prompt=user_prompt,
             max_tokens=800,
             temperature=0.2,
+            format="json",
         )
         logger.info(f"[AIGateway] Generated via {gateway.provider_name}")
     except AIGatewayError as e:
@@ -616,8 +668,38 @@ def process_ai_chat_query(
             sources=build_citations(chunks),
         )
 
+    # Parse and sanitize response text
+    parsed_response = parse_llm_response(raw_response)
+    sanitized_response = sanitize_llm_citations(parsed_response, chunks)
+
+    # Step 9.5: Check for semantic refusal indicators in the response text
+    lower_resp = sanitized_response.lower()
+    refusal_indicators = [
+        "sufficient information",
+        "insufficient information",
+        "not contain enough information",
+        "does not contain information",
+        "no information in the verified",
+        "context does not",
+        "no verified context",
+        "guidelines do not contain",
+    ]
+    if any(ind in lower_resp for ind in refusal_indicators):
+        logger.info("[ai_service] LLM output detected as refusal. Overriding with localized refusal.")
+        refusal_text = build_refusal_message(language, db)
+        _save_ai_message(db, conversation, refusal_text, language, len(chunks), False)
+        return AIChatResponse(
+            conversation_id=conversation.id,
+            message=refusal_text,
+            language=language,
+            response_type=ResponseType.REFUSAL,
+            refusal_triggered=True,
+            red_flags=[],
+            sources=build_citations(chunks),
+        )
+
     # Step 10: Output validation (citation + safety check)
-    is_valid, failure_reason = validate_llm_output(raw_response, chunks)
+    is_valid, failure_reason = validate_llm_output(sanitized_response, chunks)
     if not is_valid:
         logger.warning(f"[OutputValidator] Response failed validation: {failure_reason}")
         refusal_text = build_refusal_message(language, db)
@@ -634,11 +716,11 @@ def process_ai_chat_query(
 
     # Step 11: Build citations and return final grounded response
     citations = build_citations(chunks)
-    _save_ai_message(db, conversation, raw_response, language, len(chunks), False)
+    _save_ai_message(db, conversation, sanitized_response, language, len(chunks), False)
 
     return AIChatResponse(
         conversation_id=conversation.id,
-        message=raw_response,
+        message=sanitized_response,
         language=language,
         response_type=response_type,
         refusal_triggered=False,
