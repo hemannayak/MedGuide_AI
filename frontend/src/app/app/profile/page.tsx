@@ -1,0 +1,5 @@
+"use client";
+import { usePatientProfile } from "@/components/workspace/use-patient-profile";
+import { isMockMode } from "@/lib/api/config";
+import styles from "@/components/workspace/workspace.module.css";
+export default function ProfilePage(){const {profile,loading,error}=usePatientProfile();return <><div className={styles.welcome}><p className={styles.eyebrow}>YOUR INFORMATION</p><h1>Your profile</h1><p>Review the information returned by your profile service.</p></div>{loading&&<p role="status">Loading profile…</p>}{error&&<p role="alert" className={styles.notice}>{error}</p>}{profile&&<>{isMockMode()&&<p className={styles.notice}>Synthetic sample profile · This is not your personal health record.</p>}<dl className={styles.details}>{[['Name',profile.full_name],['Preferred language',profile.primary_language],['Village or town',profile.village_or_town],['State',profile.state]].map(([label,value])=><div key={label}><dt>{label}</dt><dd>{value||'Not provided'}</dd></div>)}</dl><p className={styles.empty}>Profile editing is not connected in this frontend yet. No changes to personal records are submitted from this page.</p></>}</>}

@@ -1,0 +1,36 @@
+.page{--forest:#073d37;--paper:#fbf8f1;--coral:#d65f4c;background:var(--paper);color:var(--forest);font-family:var(--body-font),sans-serif;overflow:hidden}.layout{max-width:1280px;margin:auto;padding:55px 6% 100px;display:grid;grid-template-columns:1fr 1fr;gap:8%;align-items:start;position:relative}.story{position:sticky;top:35px;padding-top:32px}.label{font-size:11px;letter-spacing:.25em;font-weight:600}.story h1{font-family:var(--heading-font),serif;font-size:clamp(44px,4.8vw,76px);line-height:1.02;font-weight:400;margin:24px 0}.story h1 em{font-style:normal;color:var(--coral)}.story p{font-size:15px;line-height:1.8;max-width:430px}.photo{width:100%;height:300px;object-fit:cover;border-radius:100px 4px 4px 4px;margin-top:28px}.caption{font-size:10px!important;margin:8px 0!important;color:#52635f}.principles{display:flex;flex-wrap:wrap;gap:18px;margin:25px 0;font-size:12px}.principles span{display:flex;gap:6px;align-items:center}.card{background:#fffdf7;border:1px solid #073d3714;border-radius:24px;padding:36px;box-shadow:0 20px 65px #073d3710}.cardBrand{display:flex;justify-content:center;margin-bottom:24px}.card h2{font-family:var(--heading-font),serif;font-size:34px;line-height:1.1;text-align:center;margin:0 0 10px;font-weight:400}.intro{text-align:center;font-size:13px;line-height:1.7;color:#52635f;margin-bottom:26px}.form{display:grid;gap:18px}.form input,.form select{background:#fbf8f1;color:#073d37;border-color:#073d3725}.form label{color:#073d37;font-size:12px}.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}.check{display:flex;align-items:flex-start;gap:10px;font-size:12px;line-height:1.7;min-height:44px}.check input{width:18px;height:18px;accent-color:#073d37;margin-top:2px;flex-shrink:0}.options{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px}.options .check{align-items:center;margin:0}.options a,.switch a,.check a,.back{color:#073d37;text-decoration:underline;text-underline-offset:4px}.submit{min-height:50px;background:#073d37;color:#fffaf2;border:0;border-radius:12px;display:flex;justify-content:center;align-items:center;gap:12px;font-size:14px;font-weight:600;cursor:pointer;transition:transform .2s,background .2s}.submit:hover{background:#11564c;transform:translateY(-2px)}.submit:active{transform:scale(.98)}.submit:disabled{opacity:.6;cursor:wait;transform:none}.switch{text-align:center;font-size:12px;margin:24px 0 0;line-height:1.8}.error{padding:12px;background:#fff0e9;border:1px solid #d65f4c;border-radius:8px;color:#803b2e;font-size:13px;line-height:1.6}.status{font-size:12px;line-height:1.7;color:#52635f;padding:12px 0;border-bottom:1px solid #073d3717;margin-bottom:20px}.select{display:flex;flex-direction:column;gap:8px;font-size:12px}.select select{width:100%;min-height:48px;padding:10px;border:1px solid #073d3725;border-radius:8px}.back{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:13px}.page :focus-visible{outline:3px solid #d65f4c;outline-offset:3px}.loading{width:16px;height:16px;border:2px solid #fff8;border-top-color:white;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:900px){.layout{gap:5%;padding:30px 5% 70px}.card{padding:25px}.story h1{font-size:48px}.row{grid-template-columns:1fr}}@media(max-width:700px){.layout{grid-template-columns:1fr;padding:25px 6% 55px;gap:28px}.story{position:static;padding:0}.story h1{font-size:43px;margin:18px 0}.story p{font-size:14px}.photo,.caption,.principles{display:none}.card{padding:26px 20px;border-radius:18px}.cardBrand{margin-bottom:20px}.card h2{font-size:30px}.options{flex-wrap:wrap}.row{grid-template-columns:1fr}.status{margin-top:0}}@media(prefers-reduced-motion:reduce){.page *{animation:none!important;transition:none!important}}
+
+.page > header { position: relative; top: auto; left: auto; right: auto; width: 100%; height: 82px; padding: 18px 6%; z-index: 10; }
+@media (max-width: 700px) { .page > header { height: 78px; padding: 16px 6%; } }
+/* Reference-led environmental composition, with separately art-directed mobile assets. */
+.stage { position: relative; isolation: isolate; background-color: #fbf8f1; background-image: var(--auth-desktop); background-size: cover; background-position: left bottom; }
+.signinStage { --auth-desktop: url('/marketing/backgrounds/signin-desktop.webp'); --auth-mobile: url('/marketing/backgrounds/signin-mobile.webp'); }
+.signupStage { --auth-desktop: url('/marketing/backgrounds/signup-desktop.webp'); --auth-mobile: url('/marketing/backgrounds/signup-mobile.webp'); }
+.stage > header { position: relative; top: auto; left: auto; right: auto; width: 100%; height: 82px; padding: 18px 6%; z-index: 10; }
+.layout { max-width: 1440px; min-height: 940px; padding: 38px 7% 95px; grid-template-columns: 1fr minmax(380px, 500px); gap: 9%; }
+.story { position: relative; top: auto; padding-top: 40px; }
+.story h1 { font-size: clamp(46px, 4.5vw, 72px); max-width: 620px; }
+.story > p:not(.label) { background: #fbf8f18c; border-radius: 8px; padding: 8px 0; font-size: 17px; }
+.principles { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; font-size: 14px; }
+.principles span { background: #fbf8f1d9; padding: 10px 14px; border-radius: 999px; }
+.card { background: #fffdf7f5; border-radius: 22px; padding: 36px; box-shadow: 0 24px 65px #073d3714; }
+@media (max-width: 1000px) { .layout { grid-template-columns: 1fr minmax(330px,1fr); padding-inline: 5%; gap: 5%; } .story h1 { font-size: 46px; } .card { padding: 26px; } }
+@media (max-width: 700px) {
+ .stage { background-image: var(--auth-mobile); background-size: 100% auto; background-position: center bottom; background-repeat: no-repeat; padding-bottom: 270px; }
+ .stage > header { height: 78px; padding: 16px 6%; }
+ .layout { grid-template-columns: 1fr; min-height: 0; padding: 20px 6% 25px; gap: 24px; }
+ .story { padding-top: 0; }
+ .story h1 { font-size: clamp(36px,10vw,48px); margin: 18px 0; }
+ .story > p:not(.label) { font-size: 15px; background: transparent; }
+ .principles { display: none; }
+ .card { padding: 25px 20px; }
+}
+.stage { background-image: linear-gradient(180deg,#fbf8f1ed 0%,#fbf8f1cc 28%,#fbf8f100 62%),var(--auth-desktop); }
+.cardBrand > a > span, .stage > header > a > span { font-size: 20px; gap: 9px; }
+.cardBrand > a > span > span, .stage > header > a > span > span { width: 32px; height: 32px; }
+@media (max-width: 700px) { .stage { background-image: var(--auth-mobile); } .stage > header > a > span { font-size: 17px; gap: 6px; } .stage > header > a > span > span { width: 27px; height: 27px; } }
+
+.card { border-radius: 12px; box-shadow: 0 12px 40px #073d3710; }
+.story h1 { letter-spacing: -.035em; font-weight: 400; }
+/* Match the marketing headline accent; errors keep their darker readable treatment. */
+.page { --coral: #ed735e; }

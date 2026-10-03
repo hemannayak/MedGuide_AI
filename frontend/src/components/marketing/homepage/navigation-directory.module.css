@@ -1,0 +1,13 @@
+.trigger { display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent; color: var(--forest); font: inherit; font-weight: 600; white-space: nowrap; min-height: 44px; cursor: pointer; }
+.trigger:hover { color: var(--coral-dark); }
+.panel { position: absolute; top: calc(100% + 12px); left: 0; right: 0; background: var(--paper); color: var(--forest); border: 1px solid #073d3720; border-radius: 16px; padding: 25px; box-shadow: 0 18px 45px #073d3720; z-index: 30; }
+.intro { position: relative; padding: 0 48px 18px 0; border-bottom: 1px solid #073d3720; }
+.intro strong { font-family: var(--heading-font); font-size: 27px; font-weight: 400; }
+.intro p { font-size: 14px; margin-top: 8px; line-height: 1.6; }
+.intro button { position: absolute; top: 0; right: 0; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid #073d3730; background: transparent; color: inherit; border-radius: 50%; cursor: pointer; }
+.groups { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 24px; padding-top: 20px; }
+.groups h2 { font-family: var(--heading-font); font-size: 23px; font-weight: 400; margin-bottom: 10px; }
+.groups a { min-height: 44px; padding: 8px 0 !important; font-size: 14px; line-height: 1.5; white-space: normal !important; }
+@media (max-width: 1500px) { .groups { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+@media (max-width: 1300px) { .panel { position: static; box-shadow: none; padding: 18px; width: 100%; } .groups { grid-template-columns: 1fr 1fr; gap: 20px; } .trigger { width: 100%; padding: 8px 14px; } }
+@media (max-width: 500px) { .groups { grid-template-columns: 1fr; } .intro strong { font-size: 23px; } }

@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import vm from 'node:vm';
+const require = createRequire(import.meta.url);
+const ts = require('typescript');
+const source = readFileSync(new URL('../src/components/marketing/experience/faq-filter.ts',import.meta.url),'utf8');
+const exports = {};
+vm.runInNewContext(ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText,{exports});
+const questions = [{index:4,category:'Safety',question:'Medical boundaries',answer:'No prescribing.'},{index:2,category:'Languages',question:'Which languages?',answer:'English, Hindi, Telugu.'}];
+test('FAQ search searches answers, ignores casing and surrounding whitespace',()=>{assert.equal(exports.filterQuestions(questions,'  TELUGU  ','All')[0].index,2);});
+test('FAQ categories and query apply together without changing stable IDs',()=>{assert.equal(exports.filterQuestions(questions,'prescribing','Languages').length,0);assert.equal(exports.filterQuestions(questions,'prescribing','Safety')[0].index,4);});
+test('FAQ reset returns all authored questions and empty searches return no results',()=>{assert.equal(exports.filterQuestions(questions,'','All').length,2);assert.equal(exports.filterQuestions(questions,'unknown','All').length,0);});
