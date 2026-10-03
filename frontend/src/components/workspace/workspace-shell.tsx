@@ -29,11 +29,11 @@ export function WorkspaceShell({children}:{children:ReactNode}) {
     <a className={styles.skip} href="#workspace-content">Skip to workspace</a>
     {open&&<button className={styles.backdrop} aria-label="Close workspace navigation" onClick={()=>setOpen(false)}/>}
     <aside id="workspace-navigation" className={`${styles.sidebar} ${open?styles.open:''}`} aria-label="Workspace navigation">
-      <Link href="/app/dashboard" className={styles.brand} onClick={()=>setOpen(false)}><Image src="/medguide-mark.svg" alt="" width={32} height={32}/><span>MedGuide AI</span></Link>
-      <button className={styles.collapseButton} type="button" aria-label={collapsed?"Expand sidebar":"Collapse sidebar"} aria-expanded={!collapsed} aria-controls="workspace-navigation" onClick={()=>setCollapsed(!collapsed)}>{collapsed?<PanelLeftOpen size={20}/>:<PanelLeftClose size={20}/>}</button>
+      <Link href="/app/dashboard" aria-label="MedGuide AI overview" className={styles.brand} onClick={()=>setOpen(false)}><Image src="/medguide-mark.svg" alt="" width={32} height={32}/><span>MedGuide AI</span></Link>
+
       <p className={styles.label}>YOUR HEALTH WORKSPACE</p>
       <nav>{destinations.map(({href,label,Icon})=><Link key={href} href={href} aria-label={label} title={collapsed?label:undefined} aria-current={current?.href===href?'page':undefined} onClick={()=>setOpen(false)}><Icon size={19} aria-hidden="true"/><span>{label}</span></Link>)}</nav>
-      <div className={styles.sidebarBottom}><Link href="/app/emergency" aria-label="Emergency information" title={collapsed?"Emergency information":undefined}><ArrowUpRight size={18} aria-hidden="true"/><span>Emergency information</span></Link><Link href="/safety">Understand MedGuide’s limits</Link><button aria-label="Sign out" title={collapsed?"Sign out":undefined} onClick={()=>{clearSession();router.replace('/login');}}><LogOut size={18} aria-hidden="true"/><span>Sign out</span></button></div>
+      <div className={styles.sidebarBottom}><Link href="/app/emergency" aria-label="Emergency information" title={collapsed?"Emergency information":undefined}><ArrowUpRight size={18} aria-hidden="true"/><span>Emergency information</span></Link><Link href="/safety">Understand MedGuide’s limits</Link><button className={styles.collapseButton} type="button" aria-label={collapsed?"Expand sidebar":"Collapse sidebar"} aria-expanded={!collapsed} aria-controls="workspace-navigation" onClick={()=>setCollapsed(!collapsed)}>{collapsed?<PanelLeftOpen size={20}/>:<PanelLeftClose size={20}/>}</button><button aria-label="Sign out" title={collapsed?"Sign out":undefined} onClick={()=>{clearSession();router.replace('/login');}}><LogOut size={18} aria-hidden="true"/><span>Sign out</span></button></div>
     </aside>
     <div className={styles.main}>
       <EmergencyBanner withinWorkspace />
