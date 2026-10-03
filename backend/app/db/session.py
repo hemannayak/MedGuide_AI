@@ -33,5 +33,5 @@ def check_database_connection() -> dict:
         with engine.connect() as connection:
             connection.execute(text("SELECT 1"))
         return {"status": "connected", "details": "Database connection verified"}
-    except Exception as exc:
-        return {"status": "disconnected", "details": str(exc)}
+    except Exception:
+        return {"status": "disconnected", "details": "Database connection unavailable"}

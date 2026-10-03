@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 # Predefined red-flag clinical rules based on documented primary care guidelines
 RED_FLAG_KEYWORDS: Dict[str, List[str]] = {

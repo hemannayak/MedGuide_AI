@@ -48,7 +48,7 @@ from app.schemas.ai import (
     SourceCitation,
 )
 from app.services.ai_gateway import AIGateway, AIGatewayError, create_ai_gateway
-from app.services.knowledge_service import generate_embedding
+from app.services.knowledge_service import EmbeddingUnavailableError, generate_embedding
 
 logger = logging.getLogger(__name__)
 
@@ -176,7 +176,11 @@ def retrieve_relevant_chunks(
 
     Returns list of dicts with chunk content and metadata.
     """
-    query_embedding = generate_embedding(query)
+    try:
+        query_embedding = generate_embedding(query)
+    except EmbeddingUnavailableError:
+        logger.error("RAG retrieval unavailable: semantic embedding failed")
+        return []
     embedding_str = "[" + ",".join(str(x) for x in query_embedding) + "]"
 
     # pgvector cosine distance: 1 - cosine_similarity

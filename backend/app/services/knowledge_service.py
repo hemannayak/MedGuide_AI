@@ -1,4 +1,6 @@
 import uuid
+import logging
+from pathlib import Path
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 from fastapi import HTTPException, status
@@ -9,6 +11,11 @@ from app.models.knowledge import KnowledgeChunk, MedicalDocument
 
 # Multilingual embedding model singleton
 _embedding_model = None
+logger = logging.getLogger(__name__)
+
+
+class EmbeddingUnavailableError(RuntimeError):
+    """Real semantic embeddings are unavailable; retrieval must fail closed."""
 
 
 def get_embedding_model():
@@ -17,9 +24,13 @@ def get_embedding_model():
     if _embedding_model is None:
         try:
             from sentence_transformers import SentenceTransformer
-            _embedding_model = SentenceTransformer("sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2")
+            _embedding_model = SentenceTransformer(
+                "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+                cache_folder=str(Path(__file__).resolve().parents[2] / ".model-cache"),
+            )
         except Exception:
-            _embedding_model = None
+            logger.error("Embedding model could not be loaded")
+            raise EmbeddingUnavailableError("Semantic embedding service unavailable") from None
     return _embedding_model
 
 
@@ -27,16 +38,15 @@ def generate_embedding(text: str) -> List[float]:
     """Generate 384-dimensional vector embedding for input text."""
     model = get_embedding_model()
     if model is not None:
-        embedding = model.encode(text, convert_to_numpy=True).tolist()
+        try:
+            embedding = model.encode(text, convert_to_numpy=True).tolist()
+        except Exception:
+            logger.error("Embedding encoding failed")
+            raise EmbeddingUnavailableError("Semantic embedding service unavailable") from None
+        if len(embedding) != 384:
+            raise EmbeddingUnavailableError("Semantic embedding dimension mismatch")
         return [float(x) for x in embedding]
-    
-    # Deterministic fallback vector (384-dimensional) if model loading fails
-    import hashlib
-    h = hashlib.sha256(text.encode("utf-8")).digest()
-    v = [(b / 255.0) * 2 - 1 for b in h]
-    # Repeat to reach 384 dimensions
-    v384 = (v * 12)[:384]
-    return v384
+    raise EmbeddingUnavailableError("Semantic embedding service unavailable")
 
 
 def extract_pdf_pages_and_sections(pdf_path: str) -> List[Dict[str, Any]]:
@@ -154,8 +164,7 @@ def ingest_official_medical_document(
     )
 
     db.add(med_doc)
-    db.commit()
-    db.refresh(med_doc)
+    db.flush()
 
     inserted_chunks = 0
     for c in chunks_data:
@@ -169,6 +178,7 @@ def ingest_official_medical_document(
             content=c["text"],
             embedding=embedding,
             metadata_={
+                "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
                 "page_number": c["page_number"],
                 "section_title": c["section_title"],
                 "source_url": doc_metadata.get("source_url"),
