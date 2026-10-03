@@ -17,7 +17,7 @@ import { PhoneCall } from "lucide-react";
  * Emergency page (/app/emergency):
  *   → Hidden. The page itself handles full emergency treatment.
  */
-export const EmergencyBanner: React.FC = () => {
+export const EmergencyBanner: React.FC<{ withinWorkspace?: boolean }> = ({ withinWorkspace = false }) => {
   const pathname = usePathname();
 
   // Hide entirely on public/marketing pages and on the emergency page itself
@@ -25,7 +25,7 @@ export const EmergencyBanner: React.FC = () => {
     !pathname?.startsWith("/app") && !pathname?.startsWith("/worker");
   const isEmergencyPage = pathname === "/app/emergency";
 
-  if (isPublicPage || isEmergencyPage) return null;
+  if (isPublicPage || isEmergencyPage || (pathname?.startsWith("/app") && !withinWorkspace)) return null;
 
   return (
     <div
@@ -36,10 +36,10 @@ export const EmergencyBanner: React.FC = () => {
       <span className="font-medium text-red-100">
         Life-threatening emergency? Call immediately.
       </span>
-      <div className="flex items-center gap-2 shrink-0">
+      <div className="flex flex-wrap items-center gap-2">
         <a
           href="tel:108"
-          className="bg-white text-red-700 hover:bg-red-50 font-bold px-3 py-1 rounded min-h-[32px] inline-flex items-center gap-1 text-xs shadow-sm"
+          className="bg-white text-red-700 hover:bg-red-50 font-bold px-3 py-1 rounded min-h-[44px] inline-flex items-center gap-1 text-xs shadow-sm"
           aria-label="Call 108 Ambulance"
         >
           <PhoneCall className="w-3 h-3" aria-hidden="true" />
@@ -47,7 +47,7 @@ export const EmergencyBanner: React.FC = () => {
         </a>
         <a
           href="tel:112"
-          className="border border-red-400 text-white hover:bg-red-800 font-bold px-3 py-1 rounded min-h-[32px] inline-flex items-center gap-1 text-xs"
+          className="border border-red-400 text-white hover:bg-red-800 font-bold px-3 py-1 rounded min-h-[44px] inline-flex items-center gap-1 text-xs"
           aria-label="Call 112 National Emergency"
         >
           112 Emergency

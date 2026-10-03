@@ -2,6 +2,7 @@ import { StandardResponse } from "@/types/api";
 import { AIChatRequest, AIChatResponse, ResponseType } from "@/types/ai";
 import { SymptomRecordRequest, SymptomTriageResult, RiskLevel } from "@/types/symptom";
 import { AuthTokenResponse, LoginRequest, RegisterRequest, User, UserRole, PatientProfile } from "@/types/user";
+import { Medication, Prescription } from "@/types/medication";
 
 export class MockApiAdapter {
   private static mockUser: User = {
@@ -171,4 +172,132 @@ export class MockApiAdapter {
       },
     };
   }
+
+  static async getMedications(): Promise<StandardResponse<Medication[]>> {
+    await new Promise((res) => setTimeout(res, 500));
+    return {
+      success: true,
+      data: [
+        {
+          id: "med_001",
+          patient_id: "pat_mock_001",
+          medicine_name: "Metformin 500mg",
+          dosage: "1 tablet twice daily",
+          route: "Oral",
+          instructions: "Take after morning and evening meals with water.",
+          verification_status: "VERIFIED",
+          status: "ACTIVE",
+          created_at: "2026-09-20T08:00:00Z",
+          schedules: [
+            {
+              id: "sch_001",
+              medication_id: "med_001",
+              time_of_day: "08:30 AM",
+              dosage_amount: "1 tablet",
+              meal_relation: "AFTER",
+              reminder_enabled: true,
+            },
+            {
+              id: "sch_002",
+              medication_id: "med_001",
+              time_of_day: "08:30 PM",
+              dosage_amount: "1 tablet",
+              meal_relation: "AFTER",
+              reminder_enabled: true,
+            },
+          ],
+        },
+        {
+          id: "med_002",
+          patient_id: "pat_mock_001",
+          medicine_name: "Amlodipine 5mg",
+          dosage: "1 tablet once daily",
+          route: "Oral",
+          instructions: "Take every morning at regular time.",
+          verification_status: "VERIFIED",
+          status: "ACTIVE",
+          created_at: "2026-09-20T08:00:00Z",
+          schedules: [
+            {
+              id: "sch_003",
+              medication_id: "med_002",
+              time_of_day: "09:00 AM",
+              dosage_amount: "1 tablet",
+              meal_relation: "INDEPENDENT",
+              reminder_enabled: true,
+            },
+          ],
+        },
+        {
+          id: "med_003",
+          patient_id: "pat_mock_001",
+          medicine_name: "Paracetamol 650mg",
+          dosage: "1 tablet as needed",
+          route: "Oral",
+          instructions: "Take for fever or headache; max 3 doses per day. PENDING VERIFICATION from recent prescription upload.",
+          verification_status: "PENDING",
+          status: "ACTIVE",
+          created_at: "2026-09-24T14:30:00Z",
+          schedules: [],
+        },
+      ],
+    };
+  }
+
+  static async getPrescriptions(): Promise<StandardResponse<Prescription[]>> {
+    await new Promise((res) => setTimeout(res, 500));
+    return {
+      success: true,
+      data: [
+        {
+          id: "rx_001",
+          patient_id: "pat_mock_001",
+          source: "UPLOAD",
+          status: "ACTIVE",
+          verification_status: "PENDING",
+          prescribed_date: "2026-09-24",
+          doctor_name: "Dr. K. Srinivas, MBBS, MD",
+          hospital_name: "Community Health Centre, Narsipatnam",
+          notes: "Patient reported acute body ache and intermittent fever for 2 days.",
+          created_at: "2026-09-24T14:20:00Z",
+          images: [
+            {
+              id: "img_001",
+              prescription_id: "rx_001",
+              storage_reference: "/prescriptions/sample_rx_telugu_rural.jpg",
+              file_type: "image/jpeg",
+              file_size: 1420580,
+              uploaded_at: "2026-09-24T14:20:00Z",
+              ocr_results: [
+                {
+                  id: "ocr_001",
+                  prescription_image_id: "img_001",
+                  engine: "PaddleOCR + Tesseract v5.0",
+                  model_version: "2.8.0",
+                  raw_text: "Tab. Paracetamol 650mg 1-0-1 x 3 days\nTab. Cetirizine 10mg 0-0-1 x 5 days\nReview after 3 days if fever persists.",
+                  confidence: 0.88,
+                  status: "SUCCESS",
+                  processed_at: "2026-09-24T14:21:00Z",
+                },
+              ],
+            },
+          ],
+          medications: [
+            {
+              id: "med_003",
+              patient_id: "pat_mock_001",
+              medicine_name: "Paracetamol 650mg",
+              dosage: "1-0-1 (Twice daily)",
+              route: "Oral",
+              instructions: "Take after meals for 3 days",
+              status: "ACTIVE",
+              verification_status: "PENDING",
+              created_at: "2026-09-24T14:21:00Z",
+            },
+          ],
+        },
+      ],
+    };
+  }
 }
+

@@ -4,9 +4,18 @@
    Principle: Rich visual system. Simple user experience. Zero unnecessary complexity.
    ───────────────────────────────────────────────────────────────────────────── */
 
-@import url('https://fonts.googleapis.com/css2?family=Italiana&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'MedGuide Display';
+  src: url('/marketing/fonts/newsreader-variable.ttf') format('truetype');
+  font-style: normal; font-weight: 200 800; font-display: swap;
+}
+@font-face {
+  font-family: 'MedGuide Sans';
+  src: url('/marketing/fonts/dm-sans-variable.ttf') format('truetype');
+  font-style: normal; font-weight: 100 1000; font-display: swap;
+}
 
 :root {
   /* ── Canvas & Surface ──────────────────────────────────────────────────── */
@@ -126,19 +135,19 @@ body {
 
 /* ── Editorial Serif Utilities ────────────────────────────────────────────── */
 .montserrat-bold {
-  font-family: "Montserrat", sans-serif !important;
+  font-family: var(--medguide-ui) !important;
   font-weight: 700 !important;
   font-style: normal !important;
 }
 
 .italiana-regular {
-  font-family: "Italiana", sans-serif !important;
+  font-family: var(--medguide-display) !important;
   font-weight: 700 !important;
   font-style: normal !important;
 }
 
 .font-italiana {
-  font-family: "Italiana", sans-serif !important;
+  font-family: var(--medguide-display) !important;
   font-weight: 700 !important;
 }
 
@@ -241,7 +250,7 @@ input[type="submit"] {
   border-radius: var(--radius-pill);
   min-height: 48px;
   padding-inline: 1.75rem;
-  font-family: "Italiana", sans-serif !important;
+  font-family: var(--medguide-display) !important;
   font-size: 1.0625rem;
   font-weight: 700 !important;
   letter-spacing: 0.01em;
@@ -318,3 +327,15 @@ input[type="submit"] {
     scroll-behavior: auto !important;
   }
 }
+
+/* Shared editorial typography, including legacy application surfaces. */
+body {
+  --medguide-display: 'MedGuide Display', Georgia, serif;
+  --medguide-ui: 'MedGuide Sans', var(--font-hindi), var(--font-telugu), sans-serif;
+  --font-serif: var(--medguide-display);
+  --font-sans: var(--medguide-ui);
+  --font-italiana: var(--medguide-display);
+  font-family: var(--medguide-ui);
+  font-optical-sizing: auto;
+}
+button, input, select, textarea { font-family: inherit; }

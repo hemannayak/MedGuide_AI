@@ -1,0 +1,9 @@
+.enhanced { position: fixed; top: 0; left: 0; right: 0; z-index: 60; padding: 18px 6%; background: #fbf8f1; transition: box-shadow .2s, border-color .2s; border-bottom: 1px solid transparent; }
+.enhanced a { transition: color .18s; }
+.enhanced nav a[aria-current=page] { color: #073d37; box-shadow: inset 0 -2px #ed735e; font-weight: 700; }
+.scrolled { border-bottom-color: #073d3720; box-shadow: 0 5px 22px #073d370b; }
+.mobileTry { display: none !important; }
+@media(max-width:1300px) { .enhanced nav { top: 78px; left: 6%; right: 6%; } .enhanced nav[aria-label] { animation: menuEnter .18s ease-out; } .mobileTry { display: flex !important; font-weight: 700; color: #073d37; border-top: 1px solid #073d3720; } }
+@keyframes menuEnter { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+@media(max-width:380px) { .enhanced { padding-inline: 5%; } }
+@media(prefers-reduced-motion:reduce) { .enhanced,.enhanced a { transition: none; } .enhanced nav[aria-label] { animation: none; } }

@@ -1,5 +1,6 @@
 "use client";
 
+import { getSessionToken } from "@/lib/auth/session";
 import React, { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Loader2 } from "lucide-react";
@@ -15,7 +16,7 @@ export default function AdminAuthLayout({
 
   useEffect(() => {
     // Check if authentication token exists in localStorage
-    const token = localStorage.getItem("medguide_token");
+    const token = getSessionToken();
 
     if (!token) {
       // Unauthenticated -> Redirect to login page

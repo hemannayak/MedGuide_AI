@@ -4,6 +4,9 @@ import { StandardResponse } from "@/types/api";
 import { AIChatRequest, AIChatResponse } from "@/types/ai";
 import { SymptomRecordRequest, SymptomTriageResult } from "@/types/symptom";
 import { AuthTokenResponse, LoginRequest, RegisterRequest, PatientProfile } from "@/types/user";
+import { Medication, Prescription } from "@/types/medication";
+
+import { getSessionToken } from "@/lib/auth/session";
 
 class ApiClient {
   private getHeaders(): Record<string, string> {
@@ -11,7 +14,7 @@ class ApiClient {
       "Content-Type": "application/json",
     };
     if (typeof window !== "undefined") {
-      const token = localStorage.getItem("medguide_token");
+      const token = getSessionToken();
       if (token) {
         headers["Authorization"] = `Bearer ${token}`;
       }
@@ -28,7 +31,8 @@ class ApiClient {
       headers: this.getHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+    const response = await res.json();
+    return res.ok ? response : { success: false, message: response.message || "Sign in could not be completed." };
   }
 
   async register(data: RegisterRequest): Promise<StandardResponse<AuthTokenResponse>> {
@@ -39,7 +43,8 @@ class ApiClient {
       headers: this.getHeaders(),
       body: JSON.stringify(data),
     });
-    return res.json();
+    const response = await res.json();
+    return res.ok ? response : { success: false, message: response.message || "Account creation could not be completed." };
   }
 
   // --- Patient APIs ---
@@ -76,6 +81,28 @@ class ApiClient {
     });
     return res.json();
   }
+
+  // --- Medication & Prescription APIs ---
+  async getMedications(): Promise<StandardResponse<Medication[]>> {
+    if (isMockMode()) return MockApiAdapter.getMedications();
+
+    const res = await fetch(`${API_BASE_URL}/medications`, {
+      method: "GET",
+      headers: this.getHeaders(),
+    });
+    return res.json();
+  }
+
+  async getPrescriptions(): Promise<StandardResponse<Prescription[]>> {
+    if (isMockMode()) return MockApiAdapter.getPrescriptions();
+
+    const res = await fetch(`${API_BASE_URL}/prescriptions`, {
+      method: "GET",
+      headers: this.getHeaders(),
+    });
+    return res.json();
+  }
 }
 
 export const api = new ApiClient();
+

@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { usesReferenceMarketingLayout } from "@/components/marketing/homepage/marketing-routes";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, PhoneCall, User } from "lucide-react";
 import { NAV_ITEMS, NavItemData } from "./nav-data";
@@ -24,6 +25,9 @@ export const MegaNavbar: React.FC = () => {
   const leaveTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const isAppRoute = pathname?.startsWith("/app");
+  // Landing page (/) uses its own embedded header (HeroLanding → LandingHeader).
+  // The global MegaNavbar is suppressed on that route to avoid duplication.
+  const isLandingPage = usesReferenceMarketingLayout(pathname);
 
   // Active Menu ID is hovered item OR clicked item
   const activeMenuId = hoveredItemId || clickedItemId;
@@ -86,6 +90,11 @@ export const MegaNavbar: React.FC = () => {
   ];
 
   // ──────────────────────────────────────────────────────────────────────────
+  // LANDING PAGE: handled by HeroLanding → LandingHeader
+  // ──────────────────────────────────────────────────────────────────────────
+  if (isLandingPage || isAppRoute) return null;
+
+  // ──────────────────────────────────────────────────────────────────────────
   // PATIENT APP HEADER (Internal /app/* routes)
   // ──────────────────────────────────────────────────────────────────────────
   if (isAppRoute) {
@@ -94,14 +103,10 @@ export const MegaNavbar: React.FC = () => {
         <div className="section-container">
           <div className="flex items-center justify-between h-16">
             <Link href="/app/dashboard" className="flex items-center group">
-              <Image
-                src="/logo_navbar.png"
-                alt="MedGuide Logo"
-                width={240}
-                height={64}
-                className="h-10 sm:h-11 lg:h-12 w-auto object-contain"
-                priority
-              />
+              <span className="flex items-center gap-2.5 text-[#073d37] text-xl font-bold tracking-tight whitespace-nowrap">
+                <Image src="/medguide-mark.svg" alt="" width={36} height={36} priority />
+                MedGuide AI
+              </span>
             </Link>
 
             <nav className="hidden md:flex items-center gap-1.5 p-1 bg-slate-100/80 rounded-full border border-slate-200/60 text-xs font-medium">
@@ -199,14 +204,10 @@ export const MegaNavbar: React.FC = () => {
           <div className={`relative ${pathname === "/" ? "bg-[#FFF5EA]/90 border-amber-900/10" : "bg-white/95 border-slate-200/90"} backdrop-blur-xl border rounded-[36px] shadow-sm px-6 sm:px-7 h-16 sm:h-[68px] flex items-center justify-between transition-all`}>
             {/* BRAND LOGO */}
             <Link href="/" onClick={handleCloseAll} className="flex items-center group shrink-0">
-              <Image
-                src="/logo_navbar.png"
-                alt="MedGuide Logo"
-                width={240}
-                height={64}
-                className="h-10 sm:h-11 lg:h-12 w-auto object-contain"
-                priority
-              />
+              <span className="flex items-center gap-2.5 text-[#073d37] text-xl font-bold tracking-tight whitespace-nowrap">
+                <Image src="/medguide-mark.svg" alt="" width={36} height={36} priority />
+                MedGuide AI
+              </span>
             </Link>
 
             {/* CENTRAL NAVIGATION LINKS (Inter font, Uppercase, Wide letter spacing, font-medium) */}

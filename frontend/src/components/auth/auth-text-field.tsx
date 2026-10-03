@@ -37,6 +37,7 @@ interface AuthTextFieldProps {
   className?: string;
   /** Extra content to the right of the label (e.g. "Forgot password?" link) */
   labelSuffix?: React.ReactNode;
+  minLength?: number;
 }
 
 export function AuthTextField({
@@ -53,6 +54,7 @@ export function AuthTextField({
   errorMessage,
   className = "",
   labelSuffix,
+  minLength,
 }: AuthTextFieldProps) {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === "password";
@@ -85,6 +87,7 @@ export function AuthTextField({
           type={resolvedType}
           placeholder={placeholder}
           autoComplete={autoComplete}
+          minLength={minLength}
           className={`
             w-full min-h-[48px] py-3 rounded-lg border text-sm
             bg-white text-slate-900 placeholder:text-slate-400
@@ -100,9 +103,9 @@ export function AuthTextField({
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 transition-colors"
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 min-w-[44px] min-h-[44px] flex items-center justify-center text-slate-600 hover:text-slate-600 transition-colors"
             aria-label={showPassword ? "Hide password" : "Show password"}
-            tabIndex={-1}
+            aria-pressed={showPassword}
           >
             {showPassword ? (
               <EyeOff className="w-4 h-4" aria-hidden="true" />
@@ -119,7 +122,7 @@ export function AuthTextField({
         </Text>
       )}
 
-      {errorMessage && (
+      {(
         <FieldError className="text-xs text-red-600 flex items-center gap-1">
           {errorMessage}
         </FieldError>
