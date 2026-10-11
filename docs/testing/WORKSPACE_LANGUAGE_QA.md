@@ -1,0 +1,7 @@
+# Workspace interface language
+
+The existing English/Hindi/Telugu selector now updates authored workspace interface copy, including navigation, overview, preferences, profile, document availability, chat controls, symptom form, medication controls, and emergency information. Both selectors share the existing provider and browser preference. Document language and script fonts follow the selected locale. The session gate waits for hydration before redirecting, so reload does not prematurely redirect a stored session.
+
+Translations are local authored resources, with English fallback. No translation API, backend change, model-response translation, prescription rewriting, or patient-data translation was added. Public marketing/authentication pages retain their current copy; this change targets the workspace selector shown in the request. Medication names, instructions, server responses, and user-entered content remain as supplied.
+
+Validation: TypeScript and targeted ESLint passed. All 50 frontend tests passed, including translation completeness, English restoration, unknown-content preservation, entity rendering, and unchanged emergency numbers. Browser verified immediate Telugu/Hindi switching and shared preference across navigation; saved Hindi survives reload. Small-mobile width 358px has no horizontal overflow. These translations have not undergone independent native-speaker clinical review.

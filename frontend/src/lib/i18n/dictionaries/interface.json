@@ -1,0 +1,714 @@
+{
+  "Overview": [
+    "अवलोकन",
+    "అవలోకనం"
+  ],
+  "Ask MedGuide": [
+    "MedGuide से पूछें",
+    "MedGuideను అడగండి"
+  ],
+  "Symptom input": [
+    "लक्षण दर्ज करें",
+    "లక్షణాలు నమోదు చేయండి"
+  ],
+  "Documents": [
+    "दस्तावेज़",
+    "పత్రాలు"
+  ],
+  "Medications": [
+    "दवाएँ",
+    "మందులు"
+  ],
+  "Profile": [
+    "प्रोफ़ाइल",
+    "ప్రొఫైల్"
+  ],
+  "Preferences": [
+    "पसंद",
+    "ప్రాధాన్యతలు"
+  ],
+  "Language": [
+    "भाषा",
+    "భాష"
+  ],
+  "Workspace language preference": [
+    "कार्यस्थल की भाषा",
+    "కార్యస్థలం భాష"
+  ],
+  "YOUR HEALTH WORKSPACE": [
+    "आपका स्वास्थ्य कार्यस्थल",
+    "మీ ఆరోగ్య కార్యస్థలం"
+  ],
+  "Skip to workspace": [
+    "कार्यस्थल पर जाएँ",
+    "కార్యస్థలానికి వెళ్లండి"
+  ],
+  "Close workspace navigation": [
+    "कार्यस्थल मेनू बंद करें",
+    "కార్యస్థలం మెనూను మూసివేయండి"
+  ],
+  "Workspace navigation": [
+    "कार्यस्थल मेनू",
+    "కార్యస్థలం మెనూ"
+  ],
+  "MedGuide AI overview": [
+    "MedGuide AI अवलोकन",
+    "MedGuide AI అవలోకనం"
+  ],
+  "Emergency information": [
+    "आपातकालीन जानकारी",
+    "అత్యవసర సమాచారం"
+  ],
+  "Understand MedGuide’s limits": [
+    "MedGuide की सीमाएँ समझें",
+    "MedGuide పరిమితులను తెలుసుకోండి"
+  ],
+  "Expand sidebar": [
+    "साइडबार खोलें",
+    "సైడ్‌బార్‌ను విస్తరించండి"
+  ],
+  "Collapse sidebar": [
+    "साइडबार छोटा करें",
+    "సైడ్‌బార్‌ను కుదించండి"
+  ],
+  "Sign out": [
+    "साइन आउट",
+    "సైన్ అవుట్"
+  ],
+  "Close navigation": [
+    "मेनू बंद करें",
+    "మెనూను మూసివేయండి"
+  ],
+  "Open navigation": [
+    "मेनू खोलें",
+    "మెనూను తెరవండి"
+  ],
+  "MedGuide workspace": [
+    "MedGuide कार्यस्थल",
+    "MedGuide కార్యస్థలం"
+  ],
+  "Demo mode": [
+    "डेमो मोड",
+    "డెమో మోడ్"
+  ],
+  "Sample data · Mock services": [
+    "नमूना डेटा · अनुकरण सेवाएँ",
+    "నమూనా డేటా · అనుకరణ సేవలు"
+  ],
+  "This workspace uses synthetic data and simulated responses. No live account verification or clinical assessment takes place. Please use sample information.": [
+    "इस कार्यस्थल में कृत्रिम डेटा और अनुकरण किए गए उत्तर हैं। वास्तविक खाता सत्यापन या चिकित्सीय मूल्यांकन नहीं होता। कृपया नमूना जानकारी का उपयोग करें।",
+    "ఈ కార్యస్థలంలో కృత్రిమ డేటా, అనుకరణ సమాధానాలు ఉంటాయి. నిజమైన ఖాతా ధృవీకరణ లేదా వైద్య మూల్యాంకనం జరగదు. నమూనా సమాచారాన్ని ఉపయోగించండి."
+  ],
+  "MedGuide supports understanding. It does not replace a qualified healthcare professional.": [
+    "MedGuide जानकारी समझने में मदद करता है। यह योग्य स्वास्थ्य पेशेवर का विकल्प नहीं है।",
+    "MedGuide సమాచారాన్ని అర్థం చేసుకోవడంలో సహాయపడుతుంది. ఇది అర్హత కలిగిన ఆరోగ్య నిపుణులకు ప్రత్యామ్నాయం కాదు."
+  ],
+  "A CLEARER STARTING POINT": [
+    "समझने की एक सरल शुरुआत",
+    "మరింత స్పష్టమైన ప్రారంభం"
+  ],
+  "Welcome to MedGuide": [
+    "MedGuide में आपका स्वागत है",
+    "MedGuideకు స్వాగతం"
+  ],
+  "Welcome": [
+    "स्वागत है",
+    "స్వాగతం"
+  ],
+  "Your questions, documents, and medication information—in one calm workspace.": [
+    "आपके सवाल, दस्तावेज़ और दवाओं की जानकारी—एक सरल कार्यस्थल में।",
+    "మీ ప్రశ్నలు, పత్రాలు, మందుల సమాచారం—ఒకే ప్రశాంతమైన కార్యస్థలంలో."
+  ],
+  "Showing a synthetic sample profile.": [
+    "कृत्रिम नमूना प्रोफ़ाइल दिखाई जा रही है।",
+    "కృత్రిమ నమూనా ప్రొఫైల్ చూపబడుతోంది."
+  ],
+  "What would you like to understand?": [
+    "आप क्या समझना चाहेंगे?",
+    "మీరు ఏమి తెలుసుకోవాలనుకుంటున్నారు?"
+  ],
+  "Start with a health question in your own words. Keep professional care at the centre of your next steps.": [
+    "अपना स्वास्थ्य सवाल अपने शब्दों में पूछें। अगले कदम में पेशेवर देखभाल को प्राथमिकता दें।",
+    "మీ ఆరోగ్య ప్రశ్నను మీ మాటల్లో అడగండి. తదుపరి చర్యల్లో నిపుణుల సంరక్షణకు ప్రాధాన్యత ఇవ్వండి."
+  ],
+  "Your everyday tools": [
+    "आपके रोज़मर्रा के साधन",
+    "మీ రోజువారీ సాధనాలు"
+  ],
+  "Describe symptoms": [
+    "लक्षण बताएँ",
+    "లక్షణాలను వివరించండి"
+  ],
+  "Organize what you have noticed and review the information you provide.": [
+    "जो आपने महसूस किया है उसे व्यवस्थित करें और दी गई जानकारी की समीक्षा करें।",
+    "మీరు గమనించిన విషయాలను క్రమబద్ధీకరించి, ఇచ్చిన సమాచారాన్ని సమీక్షించండి."
+  ],
+  "Prescription documents": [
+    "प्रिस्क्रिप्शन दस्तावेज़",
+    "ప్రిస్క్రిప్షన్ పత్రాలు"
+  ],
+  "Explore the document-review experience. Automated OCR is not connected yet.": [
+    "दस्तावेज़ समीक्षा अनुभव देखें। स्वचालित OCR अभी जुड़ा नहीं है।",
+    "పత్రాల సమీక్ష అనుభవాన్ని చూడండి. స్వయంచాలక OCR ఇంకా అనుసంధానించబడలేదు."
+  ],
+  "Medication overview": [
+    "दवाओं का अवलोकन",
+    "మందుల అవలోకనం"
+  ],
+  "Review medication information and the scheduling interface.": [
+    "दवाओं की जानकारी और समय-सारणी इंटरफ़ेस देखें।",
+    "మందుల సమాచారం, షెడ్యూల్ ఇంటర్‌ఫేస్‌ను చూడండి."
+  ],
+  "Open tool": [
+    "साधन खोलें",
+    "సాధనాన్ని తెరవండి"
+  ],
+  "Your care, in context": [
+    "आपकी देखभाल का संदर्भ",
+    "మీ సంరక్షణ వివరాలు"
+  ],
+  "Conversation history and health timeline records will appear here when those services are connected. This overview does not invent past visits or symptom checks.": [
+    "सेवाएँ जुड़ने पर बातचीत और स्वास्थ्य रिकॉर्ड यहाँ दिखेंगे। यह अवलोकन पिछली मुलाकातें या लक्षण जाँच नहीं गढ़ता।",
+    "సేవలు అనుసంధానమైనప్పుడు సంభాషణ చరిత్ర, ఆరోగ్య రికార్డులు ఇక్కడ కనిపిస్తాయి. ఈ అవలోకనం గత సందర్శనలు లేదా లక్షణాల తనిఖీలను కల్పించదు."
+  ],
+  "Review your profile →": [
+    "अपनी प्रोफ़ाइल देखें →",
+    "మీ ప్రొఫైల్‌ను చూడండి →"
+  ],
+  "MAKE IT FAMILIAR": [
+    "अपने अनुसार बनाएँ",
+    "మీకు అనుకూలంగా మార్చుకోండి"
+  ],
+  "Your preferences": [
+    "आपकी पसंद",
+    "మీ ప్రాధాన్యతలు"
+  ],
+  "Choose your interface language. Navigation, page text, and controls update immediately. Your preference is saved on this browser.": [
+    "इंटरफ़ेस की भाषा चुनें। मेनू, पेज का पाठ और नियंत्रण तुरंत बदलेंगे। आपकी पसंद इस ब्राउज़र में सहेजी जाएगी।",
+    "ఇంటర్‌ఫేస్ భాషను ఎంచుకోండి. మెనూ, పేజీ వచనం, నియంత్రణలు వెంటనే మారుతాయి. మీ ప్రాధాన్యత ఈ బ్రౌజర్‌లో భద్రపరచబడుతుంది."
+  ],
+  "Preferred language": [
+    "पसंदीदा भाषा",
+    "ప్రాధాన్య భాష"
+  ],
+  "Language preference:": [
+    "भाषा की पसंद:",
+    "భాష ప్రాధాన్యత:"
+  ],
+  "Accessibility": [
+    "सुगम्यता",
+    "అందుబాటు"
+  ],
+  "Your device’s reduced-motion setting is respected. Navigation and controls support keyboard use and visible focus.": [
+    "आपके डिवाइस की कम गति की सेटिंग का पालन होता है। मेनू और नियंत्रण कीबोर्ड तथा स्पष्ट फ़ोकस का समर्थन करते हैं।",
+    "మీ పరికరంలోని తగ్గించిన కదలిక సెట్టింగ్ గౌరవించబడుతుంది. మెనూ, నియంత్రణలు కీబోర్డ్ వినియోగాన్ని, కనిపించే ఫోకస్‌ను అనుమతిస్తాయి."
+  ],
+  "YOUR INFORMATION": [
+    "आपकी जानकारी",
+    "మీ సమాచారం"
+  ],
+  "Your profile": [
+    "आपकी प्रोफ़ाइल",
+    "మీ ప్రొఫైల్"
+  ],
+  "Review the information returned by your profile service.": [
+    "प्रोफ़ाइल सेवा से मिली जानकारी देखें।",
+    "ప్రొఫైల్ సేవ అందించిన సమాచారాన్ని చూడండి."
+  ],
+  "Loading profile…": [
+    "प्रोफ़ाइल लोड हो रही है…",
+    "ప్రొఫైల్ లోడ్ అవుతోంది…"
+  ],
+  "Synthetic sample profile · This is not your personal health record.": [
+    "कृत्रिम नमूना प्रोफ़ाइल · यह आपका निजी स्वास्थ्य रिकॉर्ड नहीं है।",
+    "కృత్రిమ నమూనా ప్రొఫైల్ · ఇది మీ వ్యక్తిగత ఆరోగ్య రికార్డు కాదు."
+  ],
+  "Name": [
+    "नाम",
+    "పేరు"
+  ],
+  "Village or town": [
+    "गाँव या शहर",
+    "గ్రామం లేదా పట్టణం"
+  ],
+  "State": [
+    "राज्य",
+    "రాష్ట్రం"
+  ],
+  "Not provided": [
+    "नहीं दिया गया",
+    "అందించలేదు"
+  ],
+  "Profile editing is not connected in this frontend yet. No changes to personal records are submitted from this page.": [
+    "इस फ्रंटएंड में प्रोफ़ाइल संपादन अभी जुड़ा नहीं है। इस पेज से निजी रिकॉर्ड में बदलाव नहीं भेजे जाते।",
+    "ఈ ఫ్రంట్‌ఎండ్‌లో ప్రొఫైల్ సవరణ ఇంకా అనుసంధానించబడలేదు. ఈ పేజీ వ్యక్తిగత రికార్డులకు మార్పులను పంపదు."
+  ],
+  "Emergency Quick Access": [
+    "आपातकालीन त्वरित सहायता",
+    "అత్యవసర సహాయానికి త్వరిత ప్రవేశం"
+  ],
+  "Life-threatening emergency? Call immediately.": [
+    "जानलेवा आपातकाल? तुरंत कॉल करें।",
+    "ప్రాణాపాయ అత్యవసర పరిస్థితా? వెంటనే కాల్ చేయండి."
+  ],
+  "Call 108 Ambulance": [
+    "108 एम्बुलेंस को कॉल करें",
+    "108 అంబులెన్స్‌కు కాల్ చేయండి"
+  ],
+  "108 Ambulance": [
+    "108 एम्बुलेंस",
+    "108 అంబులెన్స్"
+  ],
+  "Call 112 National Emergency": [
+    "112 राष्ट्रीय आपातकाल पर कॉल करें",
+    "112 జాతీయ అత్యవసర సేవకు కాల్ చేయండి"
+  ],
+  "112 Emergency": [
+    "112 आपातकाल",
+    "112 అత్యవసర సేవ"
+  ],
+  "Full guide →": [
+    "पूरी जानकारी →",
+    "పూర్తి మార్గదర్శకం →"
+  ],
+  "MedGuide · Feature availability": [
+    "MedGuide · सुविधा उपलब्धता",
+    "MedGuide · సదుపాయం అందుబాటు"
+  ],
+  "This feature is not connected in the current web version. No document processing or history retrieval takes place on this page.": [
+    "वर्तमान वेब संस्करण में यह सुविधा जुड़ी नहीं है। इस पेज पर दस्तावेज़ प्रसंस्करण या इतिहास प्राप्त नहीं होता।",
+    "ప్రస్తుత వెబ్ వెర్షన్‌లో ఈ సదుపాయం అనుసంధానించబడలేదు. ఈ పేజీలో పత్రాల ప్రాసెసింగ్ లేదా చరిత్ర సేకరణ జరగదు."
+  ],
+  "Explore the document preview": [
+    "दस्तावेज़ पूर्वावलोकन देखें",
+    "పత్రం ముందస్తు వీక్షణను చూడండి"
+  ],
+  "Back to dashboard": [
+    "डैशबोर्ड पर वापस जाएँ",
+    "డ్యాష్‌బోర్డ్‌కు తిరిగి వెళ్లండి"
+  ],
+  "Prescription review is part of MedGuide’s approved scope. Extracted medicine details will need verification before they are used.": [
+    "प्रिस्क्रिप्शन समीक्षा MedGuide के स्वीकृत दायरे में है। निकाली गई दवा जानकारी उपयोग से पहले सत्यापित करनी होगी।",
+    "ప్రిస్క్రిప్షన్ సమీక్ష MedGuide ఆమోదిత పరిధిలో ఉంది. సేకరించిన మందుల వివరాలను ఉపయోగించే ముందు ధృవీకరించాలి."
+  ],
+  "AI Health Companion": [
+    "AI स्वास्थ्य साथी",
+    "AI ఆరోగ్య సహాయకుడు"
+  ],
+  "Source-backed guidance &bull; English &bull; हिंदी &bull; తెలుగు": [
+    "स्रोत-आधारित जानकारी • English • हिंदी • తెలుగు",
+    "మూలాల ఆధారిత సమాచారం • English • हिंदी • తెలుగు"
+  ],
+  "Safety-First Safeguards": [
+    "सुरक्षा को प्राथमिकता",
+    "భద్రతకు ప్రాధాన్యత"
+  ],
+  "New Conversation": [
+    "नई बातचीत",
+    "కొత్త సంభాషణ"
+  ],
+  "How can I help you today?": [
+    "आज मैं आपकी कैसे मदद कर सकता हूँ?",
+    "ఈ రోజు మీకు ఎలా సహాయపడగలను?"
+  ],
+  "Ask any health question in English, Hindi, or Telugu. Every response is source-backed by clinical guidance.": [
+    "English, हिंदी या తెలుగు में स्वास्थ्य सवाल पूछें। दिए गए स्रोतों और जानकारी की सीमाओं की समीक्षा करें।",
+    "English, हिंदी లేదా తెలుగులో ఆరోగ్య ప్రశ్న అడగండి. అందించిన మూలాలను, సమాచారం పరిమితులను సమీక్షించండి."
+  ],
+  "Preliminary health guidance only &bull; Not a replacement for a doctor.": [
+    "केवल प्रारंभिक स्वास्थ्य जानकारी • डॉक्टर का विकल्प नहीं।",
+    "ప్రాథమిక ఆరోగ్య సమాచారం మాత్రమే • వైద్యునికి ప్రత్యామ్నాయం కాదు."
+  ],
+  "CRITICAL &bull; EMERGENCY ESCALATION": [
+    "गंभीर • आपातकालीन सहायता",
+    "తీవ్ర పరిస్థితి • అత్యవసర సహాయం"
+  ],
+  "Call 108": [
+    "108 पर कॉल करें",
+    "108కు కాల్ చేయండి"
+  ],
+  "Safety Safeguard:": [
+    "सुरक्षा जाँच:",
+    "భద్రత తనిఖీ:"
+  ],
+  "Red-Flag Indicators Detected:": [
+    "गंभीर संकेत मिले:",
+    "తీవ్రమైన సూచనలు గుర్తించబడ్డాయి:"
+  ],
+  "Retrieving source-backed health guidance...": [
+    "स्रोत-आधारित स्वास्थ्य जानकारी प्राप्त हो रही है…",
+    "మూలాల ఆధారిత ఆరోగ్య సమాచారం సేకరిస్తోంది…"
+  ],
+  "Send": [
+    "भेजें",
+    "పంపండి"
+  ],
+  "4-step progressive symptom assessment to determine routine, urgent, or emergency care guidance.": [
+    "चार चरणों में लक्षण दर्ज करें और प्रारंभिक देखभाल संबंधी जानकारी देखें।",
+    "నాలుగు దశల్లో లక్షణాలను నమోదు చేసి, ప్రాథమిక సంరక్షణ సమాచారాన్ని చూడండి."
+  ],
+  "Experience": [
+    "अनुभव",
+    "అనుభవం"
+  ],
+  "Duration": [
+    "अवधि",
+    "వ్యవధి"
+  ],
+  "Severity": [
+    "गंभीरता",
+    "తీవ్రత"
+  ],
+  "Result": [
+    "परिणाम",
+    "ఫలితం"
+  ],
+  "Report Symptoms": [
+    "लक्षण दर्ज करें",
+    "లక్షణాలు నమోదు చేయండి"
+  ],
+  "Step 01 &bull; Describe your symptoms": [
+    "चरण 01 • अपने लक्षण बताएँ",
+    "దశ 01 • మీ లక్షణాలను వివరించండి"
+  ],
+  "e.g. High fever for 3 days with chills, severe headache, and fatigue...": [
+    "उदा. तीन दिनों से बुखार और थकान…",
+    "ఉదా. మూడు రోజులుగా జ్వరం, అలసట…"
+  ],
+  "Step 02 &bull; Duration (in days)": [
+    "चरण 02 • अवधि (दिनों में)",
+    "దశ 02 • వ్యవధి (రోజుల్లో)"
+  ],
+  "e.g. 3": [
+    "उदा. 3",
+    "ఉదా. 3"
+  ],
+  "Step 03 &bull; How severe does it feel?": [
+    "चरण 03 • कितना गंभीर महसूस होता है?",
+    "దశ 03 • ఎంత తీవ్రంగా అనిపిస్తోంది?"
+  ],
+  "Mild": [
+    "हल्का",
+    "స్వల్పం"
+  ],
+  "Moderate": [
+    "मध्यम",
+    "మధ్యస్థం"
+  ],
+  "Severe": [
+    "गंभीर",
+    "తీవ్రం"
+  ],
+  "Evaluated by rule-based safeguards. This tool does not provide a definitive clinical diagnosis.": [
+    "नियम-आधारित सुरक्षा जाँच। यह साधन निश्चित चिकित्सीय निदान नहीं देता।",
+    "నియమాల ఆధారిత భద్రత తనిఖీ. ఈ సాధనం ఖచ్చితమైన వైద్య నిర్ధారణ ఇవ్వదు."
+  ],
+  "Step 04 &bull; Triage result will appear here": [
+    "चरण 04 • प्रारंभिक मूल्यांकन यहाँ दिखेगा",
+    "దశ 04 • ప్రాథమిక మూల్యాంకనం ఇక్కడ కనిపిస్తుంది"
+  ],
+  "Complete the 3 steps on the left to evaluate your symptom risk level.": [
+    "लक्षणों की जानकारी देखने के लिए पहले तीन चरण पूरे करें।",
+    "లక్షణాల సమాచారం చూడటానికి మొదటి మూడు దశలను పూర్తి చేయండి."
+  ],
+  "Checking symptoms against clinical triage rules...": [
+    "लक्षणों की नियमों के अनुसार जाँच हो रही है…",
+    "నియమాల ప్రకారం లక్షణాలను తనిఖీ చేస్తోంది…"
+  ],
+  "Unable to complete triage": [
+    "मूल्यांकन पूरा नहीं हो सका",
+    "మూల్యాంకనం పూర్తి కాలేదు"
+  ],
+  "There was a network issue submitting your symptoms. Please try again.": [
+    "लक्षण भेजने में नेटवर्क समस्या हुई। फिर कोशिश करें।",
+    "లక్షణాలను పంపేటప్పుడు నెట్‌వర్క్ సమస్య వచ్చింది. మళ్లీ ప్రయత్నించండి."
+  ],
+  "Try again": [
+    "फिर कोशिश करें",
+    "మళ్లీ ప్రయత్నించండి"
+  ],
+  "Triage Risk Assessment": [
+    "प्रारंभिक जोखिम मूल्यांकन",
+    "ప్రాథమిక ప్రమాద మూల్యాంకనం"
+  ],
+  "Check again": [
+    "फिर जाँचें",
+    "మళ్లీ తనిఖీ చేయండి"
+  ],
+  "Evaluated Risk Level:": [
+    "मूल्यांकित जोखिम स्तर:",
+    "మూల్యాంకనం చేసిన ప్రమాద స్థాయి:"
+  ],
+  "CRITICAL &bull; IMMEDIATE MEDICAL HELP REQUIRED": [
+    "गंभीर • तुरंत चिकित्सा सहायता चाहिए",
+    "తీవ్ర పరిస్థితి • వెంటనే వైద్య సహాయం అవసరం"
+  ],
+  "Your reported symptoms match emergency criteria. Dial 108 or 112 immediately.": [
+    "आपके बताए लक्षण आपातकालीन मानदंडों से मेल खाते हैं। तुरंत 108 या 112 पर कॉल करें।",
+    "మీరు తెలిపిన లక్షణాలు అత్యవసర ప్రమాణాలకు సరిపోతున్నాయి. వెంటనే 108 లేదా 112కు కాల్ చేయండి."
+  ],
+  "Dial 108 Ambulance": [
+    "108 एम्बुलेंस को कॉल करें",
+    "108 అంబులెన్స్‌కు కాల్ చేయండి"
+  ],
+  "Recommended Action:": [
+    "सुझाया गया कदम:",
+    "సూచించిన చర్య:"
+  ],
+  "Ask AI Companion for more details": [
+    "अधिक जानकारी के लिए AI साथी से पूछें",
+    "మరిన్ని వివరాలకు AI సహాయకుడిని అడగండి"
+  ],
+  "Patient Care Portal": [
+    "रोगी देखभाल पोर्टल",
+    "రోగి సంరక్షణ పోర్టల్"
+  ],
+  "My Medications & Schedules": [
+    "मेरी दवाएँ और समय-सारणी",
+    "నా మందులు, షెడ్యూల్‌లు"
+  ],
+  "Prescriptions": [
+    "प्रिस्क्रिप्शन",
+    "ప్రిస్క్రిప్షన్‌లు"
+  ],
+  "Upload Rx": [
+    "प्रिस्क्रिप्शन अपलोड करें",
+    "ప్రిస్క్రిప్షన్ అప్‌లోడ్ చేయండి"
+  ],
+  "Medication": [
+    "दवा",
+    "మందు"
+  ],
+  "Pending Review": [
+    "समीक्षा बाकी",
+    "సమీక్ష పెండింగ్‌లో ఉంది"
+  ],
+  "Prescriptions extracted via OCR must be reviewed and confirmed. Never change or start unverified dosages without clinical advice.": [
+    "OCR से निकाले प्रिस्क्रिप्शन की समीक्षा और पुष्टि ज़रूरी है। चिकित्सीय सलाह के बिना असत्यापित खुराक शुरू या बदलें नहीं।",
+    "OCRతో సేకరించిన ప్రిస్క్రిప్షన్‌లను సమీక్షించి నిర్ధారించాలి. వైద్య సలహా లేకుండా ధృవీకరించని మోతాదును ప్రారంభించవద్దు లేదా మార్చవద్దు."
+  ],
+  "Review Now &rarr;": [
+    "अभी समीक्षा करें →",
+    "ఇప్పుడు సమీక్షించండి →"
+  ],
+  "Search by medicine name or dosage...": [
+    "दवा के नाम या खुराक से खोजें…",
+    "మందు పేరు లేదా మోతాదుతో వెతకండి…"
+  ],
+  "No medications found": [
+    "कोई दवा नहीं मिली",
+    "మందులు కనబడలేదు"
+  ],
+  "Verified": [
+    "सत्यापित",
+    "ధృవీకరించబడింది"
+  ],
+  "Schedules:": [
+    "समय-सारणी:",
+    "షెడ్యూల్‌లు:"
+  ],
+  "Added": [
+    "जोड़ा गया",
+    "చేర్చబడింది"
+  ],
+  "Details": [
+    "विवरण",
+    "వివరాలు"
+  ],
+  "MedGuide AI Clinical Safety Framework": [
+    "MedGuide AI चिकित्सीय सुरक्षा ढाँचा",
+    "MedGuide AI వైద్య భద్రత విధానం"
+  ],
+  "View Adherence History &rarr;": [
+    "दवा लेने का इतिहास देखें →",
+    "మందులు తీసుకున్న చరిత్రను చూడండి →"
+  ],
+  "National Emergency Protocols": [
+    "राष्ट्रीय आपातकालीन जानकारी",
+    "జాతీయ అత్యవసర సమాచారం"
+  ],
+  "EMERGENCY ESCALATION PROTOCOL": [
+    "आपातकालीन सहायता प्रक्रिया",
+    "అత్యవసర సహాయ ప్రక్రియ"
+  ],
+  "National Emergency": [
+    "राष्ट्रीय आपातकालीन",
+    "జాతీయ అత్యవసర"
+  ],
+  "Health Assistance": [
+    "स्वास्थ्य सहायता",
+    "ఆరోగ్య సహాయం"
+  ],
+  "If you or someone near you is experiencing life-threatening symptoms, initiate an emergency call immediately.": [
+    "आपको या आपके पास किसी को जानलेवा लक्षण हों तो तुरंत आपातकालीन कॉल करें।",
+    "మీకు లేదా మీ సమీపంలో ఉన్నవారికి ప్రాణాపాయ లక్షణాలు ఉంటే వెంటనే అత్యవసర కాల్ చేయండి."
+  ],
+  "MedGuide AI displays national emergency contact numbers. The system does not automatically initiate calls without user action.": [
+    "MedGuide AI राष्ट्रीय आपातकालीन नंबर दिखाता है। उपयोगकर्ता की कार्रवाई के बिना कॉल अपने-आप नहीं होती।",
+    "MedGuide AI జాతీయ అత్యవసర నంబర్లను చూపుతుంది. వినియోగదారు చర్య లేకుండా స్వయంచాలకంగా కాల్ చేయదు."
+  ],
+  "Recognising Medical Emergencies": [
+    "चिकित्सीय आपातकाल पहचानना",
+    "వైద్య అత్యవసర పరిస్థితులను గుర్తించడం"
+  ],
+  "Seek immediate emergency care if experiencing any of the following critical conditions:": [
+    "इन गंभीर स्थितियों में तुरंत आपातकालीन सहायता लें:",
+    "కింది తీవ్రమైన పరిస్థితుల్లో వెంటనే అత్యవసర సహాయం పొందండి:"
+  ],
+  "Rural Primary Healthcare Escalation": [
+    "ग्रामीण प्राथमिक स्वास्थ्य सहायता",
+    "గ్రామీణ ప్రాథమిక ఆరోగ్య సహాయం"
+  ],
+  "Contact Local ASHA / ANM Worker Immediately": [
+    "स्थानीय ASHA / ANM कार्यकर्ता से तुरंत संपर्क करें",
+    "స్థానిక ASHA / ANM కార్యకర్తను వెంటనే సంప్రదించండి"
+  ],
+  "Your local ASHA or ANM worker can facilitate emergency transport to the nearest Primary Health Centre (PHC), Sub-District Hospital, or CHC.": [
+    "स्थानीय ASHA या ANM कार्यकर्ता निकटतम प्राथमिक स्वास्थ्य केंद्र, उप-जिला अस्पताल या CHC तक आपातकालीन परिवहन में मदद कर सकते हैं।",
+    "స్థానిక ASHA లేదా ANM కార్యకర్త సమీప ప్రాథమిక ఆరోగ్య కేంద్రం, ఉపజిల్లా ఆసుపత్రి లేదా CHCకు అత్యవసర రవాణాలో సహాయపడవచ్చు."
+  ],
+  "All": [
+    "सभी",
+    "అన్నీ"
+  ],
+  "Verified Active": [
+    "सत्यापित और सक्रिय",
+    "ధృవీకరించిన క్రియాశీల"
+  ],
+  "Upload Prescription": [
+    "प्रिस्क्रिप्शन अपलोड करें",
+    "ప్రిస్క్రిప్షన్ అప్‌లోడ్ చేయండి"
+  ],
+  "You currently have no active or scheduled medications recorded.": [
+    "अभी कोई सक्रिय या निर्धारित दवा दर्ज नहीं है।",
+    "ప్రస్తుతం క్రియాశీల లేదా షెడ్యూల్ చేసిన మందులు నమోదు కాలేదు."
+  ],
+  "No medications match your search. Try a different search.": [
+    "आपकी खोज से कोई दवा नहीं मिली। दूसरी खोज करें।",
+    "మీ శోధనకు సరిపడే మందులు లేవు. మరో శోధన చేయండి."
+  ],
+  "Evaluating symptoms...": [
+    "लक्षणों का मूल्यांकन हो रहा है…",
+    "లక్షణాలను మూల్యాంకనం చేస్తోంది…"
+  ],
+  "Submit for Triage": [
+    "मूल्यांकन के लिए भेजें",
+    "మూల్యాంకనం కోసం పంపండి"
+  ],
+  "You": [
+    "आप",
+    "మీరు"
+  ],
+  "I was unable to process your request right now. Please try again.": [
+    "अभी आपका अनुरोध पूरा नहीं हो सका। फिर कोशिश करें।",
+    "ప్రస్తుతం మీ అభ్యర్థనను పూర్తి చేయలేకపోయాము. మళ్లీ ప్రయత్నించండి."
+  ],
+  "Network connection error. Please check your signal and try again.": [
+    "नेटवर्क कनेक्शन में समस्या है। सिग्नल जाँचकर फिर कोशिश करें।",
+    "నెట్‌వర్క్ కనెక్షన్ సమస్య. సిగ్నల్ తనిఖీ చేసి మళ్లీ ప్రయత్నించండి."
+  ],
+  "Your profile could not be loaded. Please refresh to try again.": [
+    "प्रोफ़ाइल लोड नहीं हो सकी। पेज रिफ्रेश करके फिर कोशिश करें।",
+    "ప్రొఫైల్ లోడ్ కాలేదు. పేజీని రిఫ్రెష్ చేసి మళ్లీ ప్రయత్నించండి."
+  ],
+  "We could not connect to your profile. Please try again later.": [
+    "प्रोफ़ाइल से जुड़ नहीं सके। बाद में फिर कोशिश करें।",
+    "మీ ప్రొఫైల్‌కు కనెక్ట్ కాలేకపోయాము. తర్వాత మళ్లీ ప్రయత్నించండి."
+  ],
+  "Checking account access…": [
+    "खाते की पहुँच जाँची जा रही है…",
+    "ఖాతా ప్రవేశాన్ని తనిఖీ చేస్తోంది…"
+  ],
+  "Call 108: Ambulance": [
+    "108: एम्बुलेंस को कॉल करें",
+    "108: అంబులెన్స్‌కు కాల్ చేయండి"
+  ],
+  "Call 112: National Emergency": [
+    "112: राष्ट्रीय आपातकाल पर कॉल करें",
+    "112: జాతీయ అత్యవసర సేవకు కాల్ చేయండి"
+  ],
+  "Cardiac / Severe Chest Distress": [
+    "हृदय / सीने में गंभीर तकलीफ़",
+    "గుండె / ఛాతీలో తీవ్రమైన ఇబ్బంది"
+  ],
+  "Crushing chest pain or pressure spreading to arm, jaw, or back; severe shortness of breath; sudden cold sweats.": [
+    "सीने में तेज़ दर्द या दबाव जो बाँह, जबड़े या पीठ तक फैले; साँस लेने में गंभीर तकलीफ़; अचानक ठंडा पसीना।",
+    "చేయి, దవడ లేదా వీపుకు వ్యాపించే తీవ్రమైన ఛాతీ నొప్పి లేదా ఒత్తిడి; తీవ్రమైన శ్వాస ఇబ్బంది; అకస్మాత్తుగా చల్లని చెమటలు."
+  ],
+  "Stroke / Sudden Paralysis": [
+    "स्ट्रोक / अचानक लकवा",
+    "స్ట్రోక్ / అకస్మాత్తుగా పక్షవాతం"
+  ],
+  "Sudden facial drooping, arm weakness, slurred speech, confusion, or sudden loss of vision in one or both eyes.": [
+    "अचानक चेहरा लटकना, बाँह में कमजोरी, अस्पष्ट बोलना, भ्रम या एक या दोनों आँखों से अचानक दिखाई न देना।",
+    "అకస్మాత్తుగా ముఖం వాలిపోవడం, చేయి బలహీనత, అస్పష్టంగా మాట్లాడటం, అయోమయం లేదా ఒకటి లేదా రెండు కళ్లలో అకస్మాత్తుగా చూపు కోల్పోవడం."
+  ],
+  "Severe Respiratory Distress": [
+    "साँस लेने में गंभीर तकलीफ़",
+    "తీవ్రమైన శ్వాస ఇబ్బంది"
+  ],
+  "Inability to breathe, bluish or pale lips and face, severe wheezing or choking unresponsive to medication.": [
+    "साँस न ले पाना, होंठ और चेहरा नीले या पीले पड़ना, दवा से न सुधरने वाली गंभीर घरघराहट या दम घुटना।",
+    "శ్వాస తీసుకోలేకపోవడం, పెదవులు ముఖం నీలంగా లేదా పాలిపోయినట్లు ఉండటం, మందులకు స్పందించని తీవ్రమైన గురకలాంటి శ్వాస లేదా గొంతు అడ్డుపడటం."
+  ],
+  "Severe Trauma or Uncontrolled Bleeding": [
+    "गंभीर चोट या अनियंत्रित रक्तस्राव",
+    "తీవ్రమైన గాయం లేదా అదుపుకాని రక్తస్రావం"
+  ],
+  "Uncontrolled bleeding, severe head or spinal injury, loss of consciousness, or snake / venomous animal bite.": [
+    "अनियंत्रित रक्तस्राव, सिर या रीढ़ की गंभीर चोट, बेहोशी या साँप / विषैले जानवर का काटना।",
+    "అదుపుకాని రక్తస్రావం, తల లేదా వెన్నెముకకు తీవ్రమైన గాయం, స్పృహ కోల్పోవడం లేదా పాము / విషపూరిత జంతువు కాటు."
+  ],
+  "Obstetric Emergency": [
+    "गर्भावस्था संबंधी आपातकाल",
+    "గర్భధారణ అత్యవసర పరిస్థితి"
+  ],
+  "Heavy bleeding during pregnancy, severe abdominal pain, sudden decreased fetal movement, or seizures in pregnancy.": [
+    "गर्भावस्था में भारी रक्तस्राव, पेट में तेज़ दर्द, भ्रूण की हलचल अचानक कम होना या गर्भावस्था में दौरे।",
+    "గర్భధారణలో అధిక రక్తస్రావం, తీవ్రమైన కడుపు నొప్పి, పిండం కదలికలు అకస్మాత్తుగా తగ్గడం లేదా గర్భధారణలో మూర్ఛలు."
+  ],
+  "High Fever with Convulsions / Danger Signs": [
+    "दौरों / ख़तरे के संकेतों के साथ तेज़ बुखार",
+    "మూర్ఛలు / ప్రమాద సూచనలతో అధిక జ్వరం"
+  ],
+  "Fever with convulsions in children, or fever with stiff neck and severe headache indicating possible meningitis signs.": [
+    "बच्चों में दौरों के साथ बुखार, या गर्दन अकड़ने और तेज़ सिरदर्द के साथ बुखार जो मेनिन्जाइटिस के संभावित संकेत हो सकते हैं।",
+    "పిల్లల్లో మూర్ఛలతో జ్వరం లేదా మెడ బిగుసుకుపోవడం, తీవ్రమైన తలనొప్పితో జ్వరం మెనింజైటిస్‌కు సంభావ్య సూచనలు కావచ్చు."
+  ],
+  "Home": [
+    "होम",
+    "హోమ్"
+  ],
+  "My information": [
+    "मेरी जानकारी",
+    "నా సమాచారం"
+  ],
+  "Ask a question or choose a tool below.": [
+    "प्रश्न पूछें या नीचे कोई विकल्प चुनें।",
+    "ప్రశ్న అడగండి లేదా కింద ఒక ఎంపికను ఎంచుకోండి."
+  ],
+  "Type your question in your own words.": [
+    "अपना प्रश्न अपने शब्दों में लिखें।",
+    "మీ ప్రశ్నను మీ మాటల్లో రాయండి."
+  ],
+  "View the sample document experience.": [
+    "नमूना दस्तावेज़ देखें।",
+    "నమూనా పత్రాలను చూడండి."
+  ],
+  "See sample medication information.": [
+    "दवाओं की नमूना जानकारी देखें।",
+    "మందుల నమూనా సమాచారాన్ని చూడండి."
+  ],
+  "Documents, medicines, profile and preferences": [
+    "दस्तावेज़, दवाएँ, प्रोफ़ाइल और प्राथमिकताएँ",
+    "పత్రాలు, మందులు, ప్రొఫైల్ మరియు ప్రాధాన్యతలు"
+  ],
+  "Choose what you would like to view.": [
+    "चुनें कि आप क्या देखना चाहते हैं।",
+    "మీరు ఏమి చూడాలనుకుంటున్నారో ఎంచుకోండి."
+  ],
+  "Choose your preferred language.": [
+    "अपनी पसंदीदा भाषा चुनें।",
+    "మీకు నచ్చిన భాషను ఎంచుకోండి."
+  ]
+}

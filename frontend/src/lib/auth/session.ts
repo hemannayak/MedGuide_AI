@@ -11,9 +11,10 @@ export function saveSessionToken(token: string, remember = false) {
 }
 export function clearSession() {
   sessionStorage.removeItem(tokenKey);
+  sessionStorage.removeItem("medguide_sample_setup");
   localStorage.removeItem(tokenKey);
   window.dispatchEvent(new Event("medguide-session"));
 }
 export function safeReturnPath(value: string | null) {
-  return value?.startsWith("/app/") && !value.includes("\\") && !value.includes("//") ? value : "/app/dashboard";
+  return value?.startsWith("/app/") && !value.includes("\\") && !value.includes("//") ? value : "/app/chat";
 }

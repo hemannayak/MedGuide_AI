@@ -1,4 +1,5 @@
 "use client";
+import { useLanguage } from "@/lib/i18n/context";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
@@ -23,6 +24,8 @@ import { Medication, MedicationSchedule } from "@/types/medication";
 import { StandardResponse } from "@/types/api";
 
 export default function MedicationsPage() {
+ const { tr } = useLanguage();
+
   const [medications, setMedications] = useState<Medication[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -68,25 +71,22 @@ export default function MedicationsPage() {
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold text-[#0F766E] uppercase tracking-wider mb-1">
               <Pill className="w-3.5 h-3.5" />
-              <span>Patient Care Portal</span>
+              <span>{tr("Patient Care Portal")}</span>
             </div>
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-              My Medications & Schedules
-            </h1>
+              {tr("My Medications & Schedules")}</h1>
           </div>
 
           <div className="flex items-center gap-2.5">
             <Link href="/app/prescriptions">
               <MedButton variant="outline" size="sm">
                 <FileText className="w-4 h-4 mr-1.5 text-slate-500" />
-                Prescriptions
-              </MedButton>
+                {tr("Prescriptions")}</MedButton>
             </Link>
             <Link href="/app/prescriptions/upload">
               <MedButton variant="primary" size="sm">
                 <Plus className="w-4 h-4 mr-1.5" />
-                Upload Rx
-              </MedButton>
+                {tr("Upload Rx")}</MedButton>
             </Link>
           </div>
         </div>
@@ -99,16 +99,13 @@ export default function MedicationsPage() {
             <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
             <div className="flex-1">
               <div className="font-semibold text-amber-950">
-                {pendingVerificationCount} Medication{pendingVerificationCount > 1 ? "s" : ""} Pending Review
-              </div>
+                {pendingVerificationCount} {tr("Medication")}{pendingVerificationCount > 1 ? "s" : ""} {tr("Pending Review")}</div>
               <p className="text-xs text-amber-800/90 mt-0.5 leading-relaxed">
-                Prescriptions extracted via OCR must be reviewed and confirmed. Never change or start unverified dosages without clinical advice.
-              </p>
+                {tr("Prescriptions extracted via OCR must be reviewed and confirmed. Never change or start unverified dosages without clinical advice.")}</p>
             </div>
             <Link href="/app/prescriptions">
               <span className="text-xs font-semibold text-amber-800 underline hover:text-amber-950 whitespace-nowrap">
-                Review Now &rarr;
-              </span>
+                {tr("Review Now &rarr;")}</span>
             </Link>
           </div>
         )}
@@ -121,7 +118,7 @@ export default function MedicationsPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by medicine name or dosage..."
+              placeholder={tr("Search by medicine name or dosage...")}
               className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F766E]/20 focus:border-[#0F766E]"
             />
           </div>
@@ -138,9 +135,9 @@ export default function MedicationsPage() {
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                {filterKey === "ALL" && "All"}
-                {filterKey === "ACTIVE" && "Verified Active"}
-                {filterKey === "PENDING" && "Pending Review"}
+                {filterKey === "ALL" && tr("All")}
+                {filterKey === "ACTIVE" && tr("Verified Active")}
+                {filterKey === "PENDING" && tr("Pending Review")}
               </button>
             ))}
           </div>
@@ -165,13 +162,13 @@ export default function MedicationsPage() {
         ) : filteredMeds.length === 0 ? (
           <MedFeedbackState
             variant="empty"
-            title="No medications found"
+            title={tr("No medications found")}
             description={
               searchQuery
-                ? `No medications match "${searchQuery}". Try a different search.`
-                : "You currently have no active or scheduled medications recorded."
+                ? tr("No medications match your search. Try a different search.")
+                : tr("You currently have no active or scheduled medications recorded.")
             }
-            actionLabel="Upload Prescription"
+            actionLabel={tr("Upload Prescription")}
             onAction={() => {
               window.location.href = "/app/prescriptions/upload";
             }}
@@ -191,12 +188,10 @@ export default function MedicationsPage() {
                       </span>
                       {med.verification_status === "VERIFIED" ? (
                         <span className="inline-flex items-center gap-1 text-xs px-2.5 py-0.5 rounded-full font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-                          <CheckCircle2 className="w-3 h-3" /> Verified
-                        </span>
+                          <CheckCircle2 className="w-3 h-3" /> {tr("Verified")}</span>
                       ) : (
                         <span className="inline-flex items-center gap-1 text-xs px-2.5 py-0.5 rounded-full font-medium bg-amber-50 text-amber-800 border border-amber-200">
-                          <AlertCircle className="w-3 h-3" /> Pending Review
-                        </span>
+                          <AlertCircle className="w-3 h-3" /> {tr("Pending Review")}</span>
                       )}
                     </div>
 
@@ -208,8 +203,7 @@ export default function MedicationsPage() {
                     {med.schedules && med.schedules.length > 0 && (
                       <div className="pt-2 flex flex-wrap items-center gap-2">
                         <span className="text-xs font-medium text-slate-500 flex items-center gap-1 mr-1">
-                          <Clock className="w-3.5 h-3.5 text-slate-400" /> Schedules:
-                        </span>
+                          <Clock className="w-3.5 h-3.5 text-slate-400" /> {tr("Schedules:")}</span>
                         {med.schedules.map((sch: MedicationSchedule) => (
                           <span
                             key={sch.id}
@@ -227,11 +221,11 @@ export default function MedicationsPage() {
                   <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
                     <span className="text-[11px] text-slate-400 flex items-center gap-1">
                       <Calendar className="w-3 h-3" />
-                      Added {new Date(med.created_at).toLocaleDateString()}
+                      {tr("Added")}{new Date(med.created_at).toLocaleDateString()}
                     </span>
                     <Link href={`/app/medications/${med.id}`}>
                       <MedButton variant="outline" size="sm" className="text-xs">
-                        Details <ChevronRight className="w-3 h-3 ml-1" />
+                        {tr("Details")}<ChevronRight className="w-3 h-3 ml-1" />
                       </MedButton>
                     </Link>
                   </div>
@@ -245,11 +239,10 @@ export default function MedicationsPage() {
         <div className="pt-4 border-t border-slate-200/70 flex items-center justify-between text-xs text-slate-500">
           <div className="flex items-center gap-1.5">
             <ShieldCheck className="w-4 h-4 text-[#0F766E]" />
-            <span>MedGuide AI Clinical Safety Framework</span>
+            <span>{tr("MedGuide AI Clinical Safety Framework")}</span>
           </div>
           <Link href="/app/medications/history" className="hover:underline text-[#0F766E] font-medium">
-            View Adherence History &rarr;
-          </Link>
+            {tr("View Adherence History &rarr;")}</Link>
         </div>
       </div>
     </div>

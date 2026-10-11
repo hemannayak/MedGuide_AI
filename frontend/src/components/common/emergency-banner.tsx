@@ -1,9 +1,11 @@
 "use client";
+import { useLanguage } from "@/lib/i18n/context";
 
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { PhoneCall } from "lucide-react";
+import styles from "./emergency-banner.module.css";
 
 /**
  * EmergencyBanner: Route-aware emergency access strip.
@@ -18,6 +20,8 @@ import { PhoneCall } from "lucide-react";
  *   → Hidden. The page itself handles full emergency treatment.
  */
 export const EmergencyBanner: React.FC<{ withinWorkspace?: boolean }> = ({ withinWorkspace = false }) => {
+ const { tr } = useLanguage();
+
   const pathname = usePathname();
 
   // Hide entirely on public/marketing pages and on the emergency page itself
@@ -30,34 +34,30 @@ export const EmergencyBanner: React.FC<{ withinWorkspace?: boolean }> = ({ withi
   return (
     <div
       role="region"
-      aria-label="Emergency Quick Access"
-      className="bg-red-700 text-white px-4 py-2 flex flex-wrap items-center justify-between gap-2 text-xs"
+      aria-label={tr("Emergency Quick Access")}
+      className={styles.banner}
     >
-      <span className="font-medium text-red-100">
-        Life-threatening emergency? Call immediately.
-      </span>
-      <div className="flex flex-wrap items-center gap-2">
+      <span className={styles.message}>
+        {tr("Life-threatening emergency? Call immediately.")}</span>
+      <div className={styles.actions}>
         <a
           href="tel:108"
-          className="bg-white text-red-700 hover:bg-red-50 font-bold px-3 py-1 rounded min-h-[44px] inline-flex items-center gap-1 text-xs shadow-sm"
-          aria-label="Call 108 Ambulance"
+          className={styles.call}
+          aria-label={tr("Call 108 Ambulance")}
         >
           <PhoneCall className="w-3 h-3" aria-hidden="true" />
-          108 Ambulance
-        </a>
+          {tr("108 Ambulance")}</a>
         <a
           href="tel:112"
-          className="border border-red-400 text-white hover:bg-red-800 font-bold px-3 py-1 rounded min-h-[44px] inline-flex items-center gap-1 text-xs"
-          aria-label="Call 112 National Emergency"
+          className={styles.call}
+          aria-label={tr("Call 112 National Emergency")}
         >
-          112 Emergency
-        </a>
+          {tr("112 Emergency")}</a>
         <Link
           href="/app/emergency"
-          className="text-red-200 hover:text-white underline text-xs ml-1"
+          className={styles.guide}
         >
-          Full guide →
-        </Link>
+          {tr("Full guide →")}</Link>
       </div>
     </div>
   );

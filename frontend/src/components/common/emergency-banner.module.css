@@ -1,0 +1,45 @@
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding: 12px 5%;
+  background: #edf0e4;
+  border-bottom: 1px solid #073d371a;
+  color: #073d37;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.message { flex: 1 1 220px; font-weight: 500; }
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.call, .guide {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  color: #073d37;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background .18s ease;
+}
+.call { background: #fbf8f1; border: 1px solid #073d3726; }
+.call svg { width: 16px; height: 16px; flex-shrink: 0; }
+.call:hover { background: #dde7d7; }
+.guide { text-decoration: underline; text-underline-offset: 4px; }
+.guide:hover { background: #dde7d7; }
+.banner a:focus-visible { outline: 3px solid #a14a36; outline-offset: 3px; }
+@media (max-width: 760px) {
+  .banner { display: grid; gap: 8px; padding: 12px 5%; }
+  .message { font-size: 12px; }
+  .actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .call { padding-inline: 8px; font-size: 12px; text-align: center; }
+  .guide { grid-column: 1 / -1; justify-self: start; padding: 4px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .call, .guide { transition: none; }
+}

@@ -34,3 +34,9 @@
 .story h1 { letter-spacing: -.035em; font-weight: 400; }
 /* Match the marketing headline accent; errors keep their darker readable treatment. */
 .page { --coral: #ed735e; }
+
+.select input{min-height:48px;width:100%;padding:12px;border:1px solid #073d3730;border-radius:10px;background:#fbf8f1;color:#073d37}.select input:focus-visible{outline:3px solid #b45b44;outline-offset:3px}
+
+/* App account access is separate from the public marketing composition. */
+.appAccess{min-height:100dvh;background:#fbf8f1}.appAccess .appHeader{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 6%;height:auto;max-width:1300px;margin:auto}.appHeader>a:last-child{font-size:13px;min-height:44px;display:flex;align-items:center;color:#52635f}.appLayout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,480px);gap:70px;align-items:center;max-width:1120px;margin:auto;padding:50px 5% 70px}.appStory h1{font:400 clamp(38px,4vw,60px)/1.12 var(--heading-font),Georgia,serif;margin:20px 0}.appStory>p:last-of-type{max-width:380px;font-size:16px;line-height:1.8;color:#52635f}.appJourney{display:grid;gap:18px;margin-top:32px;padding-left:18px;border-left:2px solid #c8775950;font-size:14px;color:#52635f}.appFooter{display:flex;justify-content:center;flex-wrap:wrap;gap:24px;padding:24px;font-size:12px;color:#52635f}.appFooter a{min-height:44px;display:flex;align-items:center}.appAccess .card{box-shadow:0 8px 32px #073d3708;border-radius:18px}.appAccess .card h2{font:600 25px/1.3 var(--body-font),sans-serif;text-align:left}.appAccess .intro{text-align:left}.appAccess .status{font-size:12px}
+@media(max-width:760px){.appLayout{grid-template-columns:1fr;gap:24px;padding:20px 5% 32px}.appStory h1{font-size:34px;margin:12px 0}.appStory>p:last-of-type{font-size:14px;max-width:none}.appJourney{display:none}.appAccess .appHeader{padding:16px 5%}.appHeader>a:last-child{font-size:12px}.appAccess .card{padding:24px 20px}.appFooter{padding:12px 5%}}
