@@ -24,6 +24,8 @@ import { MedBadge } from "@/components/ui/med-badge";
 type PageState = "idle" | "submitting" | "result" | "error";
 
 export default function SymptomCheckerPage() {
+ const { tr } = useLanguage();
+
   const { t, language } = useLanguage();
 
   const [description, setDescription] = useState("");
@@ -78,8 +80,7 @@ export default function SymptomCheckerPage() {
           {t("symptoms.title")}
         </h1>
         <p className="text-sm text-slate-500">
-          4-step progressive symptom assessment to determine routine, urgent, or emergency care guidance.
-        </p>
+          {tr("4-step progressive symptom assessment to determine routine, urgent, or emergency care guidance.")}</p>
       </div>
 
       {/* ── 4-Step Progressive Indicator Bar ─────────────────────── */}
@@ -90,7 +91,7 @@ export default function SymptomCheckerPage() {
             : "bg-white border-slate-200 text-slate-400"
         }`}>
           <div className="text-[10px] uppercase">01</div>
-          <div>Experience</div>
+          <div>{tr("Experience")}</div>
         </div>
 
         <div className={`p-2.5 rounded-xl border transition-all ${
@@ -99,7 +100,7 @@ export default function SymptomCheckerPage() {
             : "bg-white border-slate-200 text-slate-400"
         }`}>
           <div className="text-[10px] uppercase">02</div>
-          <div>Duration</div>
+          <div>{tr("Duration")}</div>
         </div>
 
         <div className={`p-2.5 rounded-xl border transition-all ${
@@ -108,7 +109,7 @@ export default function SymptomCheckerPage() {
             : "bg-white border-slate-200 text-slate-400"
         }`}>
           <div className="text-[10px] uppercase">03</div>
-          <div>Severity</div>
+          <div>{tr("Severity")}</div>
         </div>
 
         <div className={`p-2.5 rounded-xl border transition-all ${
@@ -117,7 +118,7 @@ export default function SymptomCheckerPage() {
             : "bg-white border-slate-200 text-slate-400"
         }`}>
           <div className="text-[10px] uppercase">04</div>
-          <div>Result</div>
+          <div>{tr("Result")}</div>
         </div>
       </div>
 
@@ -126,8 +127,7 @@ export default function SymptomCheckerPage() {
         {/* Form Card */}
         <MedCard hoverEffect={false} className="space-y-6">
           <h2 className="font-semibold text-base text-[#161A24]">
-            Report Symptoms
-          </h2>
+            {tr("Report Symptoms")}</h2>
 
           <form onSubmit={handleSubmit} className="space-y-6" noValidate>
             {/* Step 1: Experience */}
@@ -137,8 +137,7 @@ export default function SymptomCheckerPage() {
                   htmlFor="symptom-description"
                   className="block text-xs font-bold uppercase tracking-wider text-slate-700"
                 >
-                  Step 01 &bull; Describe your symptoms
-                </label>
+                  {tr("Step 01 &bull; Describe your symptoms")}</label>
                 <MedVoice
                   onTranscription={(text) =>
                     setDescription((prev) => (prev ? `${prev} ${text}` : text))
@@ -151,7 +150,7 @@ export default function SymptomCheckerPage() {
                 rows={4}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="e.g. High fever for 3 days with chills, severe headache, and fatigue..."
+                placeholder={tr("e.g. High fever for 3 days with chills, severe headache, and fatigue...")}
                 className="w-full p-3.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0F766E] focus:border-[#0F766E] resize-none"
               />
             </div>
@@ -162,8 +161,7 @@ export default function SymptomCheckerPage() {
                 htmlFor="duration-days"
                 className="block text-xs font-bold uppercase tracking-wider text-slate-700"
               >
-                Step 02 &bull; Duration (in days)
-              </label>
+                {tr("Step 02 &bull; Duration (in days)")}</label>
               <input
                 id="duration-days"
                 type="number"
@@ -171,7 +169,7 @@ export default function SymptomCheckerPage() {
                 max={365}
                 value={durationDays}
                 onChange={(e) => setDurationDays(e.target.value)}
-                placeholder="e.g. 3"
+                placeholder={tr("e.g. 3")}
                 className="w-full px-3.5 py-3 min-h-[48px] rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0F766E]"
               />
             </div>
@@ -179,8 +177,7 @@ export default function SymptomCheckerPage() {
             {/* Step 3: Severity Large Choice Cards */}
             <div className="space-y-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-                Step 03 &bull; How severe does it feel?
-              </label>
+                {tr("Step 03 &bull; How severe does it feel?")}</label>
               <div className="grid grid-cols-3 gap-2">
                 <button
                   type="button"
@@ -192,8 +189,8 @@ export default function SymptomCheckerPage() {
                   }`}
                 >
                   <Smile className="w-5 h-5 mx-auto mb-1 text-emerald-600" />
-                  <div className="text-xs">Mild</div>
-                  <div className="text-[10px] text-slate-400">1 &ndash; 3</div>
+                  <div className="text-xs">{tr("Mild")}</div>
+                  <div className="text-[10px] text-slate-400">{tr("1 &ndash; 3")}</div>
                 </button>
 
                 <button
@@ -206,8 +203,8 @@ export default function SymptomCheckerPage() {
                   }`}
                 >
                   <Meh className="w-5 h-5 mx-auto mb-1 text-amber-600" />
-                  <div className="text-xs">Moderate</div>
-                  <div className="text-[10px] text-slate-400">4 &ndash; 7</div>
+                  <div className="text-xs">{tr("Moderate")}</div>
+                  <div className="text-[10px] text-slate-400">{tr("4 &ndash; 7")}</div>
                 </button>
 
                 <button
@@ -220,8 +217,8 @@ export default function SymptomCheckerPage() {
                   }`}
                 >
                   <Frown className="w-5 h-5 mx-auto mb-1 text-red-600" />
-                  <div className="text-xs">Severe</div>
-                  <div className="text-[10px] text-slate-400">8 &ndash; 10</div>
+                  <div className="text-xs">{tr("Severe")}</div>
+                  <div className="text-[10px] text-slate-400">{tr("8 &ndash; 10")}</div>
                 </button>
               </div>
             </div>
@@ -240,13 +237,12 @@ export default function SymptomCheckerPage() {
                 )
               }
             >
-              {pageState === "submitting" ? "Evaluating symptoms..." : "Submit for Triage"}
+              {pageState === "submitting" ? tr("Evaluating symptoms...") : tr("Submit for Triage")}
             </MedButton>
           </form>
 
           <p className="text-[11px] text-slate-400 leading-relaxed">
-            Evaluated by rule-based safeguards. This tool does not provide a definitive clinical diagnosis.
-          </p>
+            {tr("Evaluated by rule-based safeguards. This tool does not provide a definitive clinical diagnosis.")}</p>
         </MedCard>
 
         {/* Result Display Panel */}
@@ -255,11 +251,9 @@ export default function SymptomCheckerPage() {
             <div className="flex flex-col items-center justify-center text-center py-16 rounded-2xl border-2 border-dashed border-slate-200 bg-white p-6">
               <ClipboardList className="w-12 h-12 mb-3 text-slate-300" />
               <div className="font-semibold text-base text-slate-700 mb-1">
-                Step 04 &bull; Triage result will appear here
-              </div>
+                {tr("Step 04 &bull; Triage result will appear here")}</div>
               <p className="text-xs text-slate-400">
-                Complete the 3 steps on the left to evaluate your symptom risk level.
-              </p>
+                {tr("Complete the 3 steps on the left to evaluate your symptom risk level.")}</p>
             </div>
           )}
 
@@ -271,25 +265,22 @@ export default function SymptomCheckerPage() {
                 <span />
               </div>
               <p className="text-xs font-medium text-slate-600">
-                Checking symptoms against clinical triage rules...
-              </p>
+                {tr("Checking symptoms against clinical triage rules...")}</p>
             </div>
           )}
 
           {pageState === "error" && (
             <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-center space-y-3">
               <AlertTriangle className="w-10 h-10 mx-auto text-red-600" />
-              <div className="font-bold text-red-900 text-sm">Unable to complete triage</div>
+              <div className="font-bold text-red-900 text-sm">{tr("Unable to complete triage")}</div>
               <p className="text-xs text-slate-600">
-                There was a network issue submitting your symptoms. Please try again.
-              </p>
+                {tr("There was a network issue submitting your symptoms. Please try again.")}</p>
               <button
                 type="button"
                 onClick={handleReset}
                 className="text-xs font-bold text-[#0F766E] hover:underline"
               >
-                Try again
-              </button>
+                {tr("Try again")}</button>
             </div>
           )}
 
@@ -297,22 +288,19 @@ export default function SymptomCheckerPage() {
             <MedCard hoverEffect={false} className="space-y-5">
               <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <h3 className="font-semibold text-sm text-[#161A24]">
-                  Triage Risk Assessment
-                </h3>
+                  {tr("Triage Risk Assessment")}</h3>
                 <button
                   type="button"
                   onClick={handleReset}
                   className="text-xs text-[#0F766E] hover:underline font-medium"
                 >
-                  Check again
-                </button>
+                  {tr("Check again")}</button>
               </div>
 
               {/* Risk Level Badge Card */}
               <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-slate-50">
                 <span className="text-xs font-semibold text-slate-700">
-                  Evaluated Risk Level:
-                </span>
+                  {tr("Evaluated Risk Level:")}</span>
                 <MedBadge level={triageResult.risk_level} />
               </div>
 
@@ -321,17 +309,14 @@ export default function SymptomCheckerPage() {
                 <div className="p-4 rounded-xl bg-red-700 text-white space-y-3">
                   <div className="flex items-center gap-2 font-bold text-xs">
                     <AlertTriangle className="w-4 h-4 animate-bounce" />
-                    CRITICAL &bull; IMMEDIATE MEDICAL HELP REQUIRED
-                  </div>
+                    {tr("CRITICAL &bull; IMMEDIATE MEDICAL HELP REQUIRED")}</div>
                   <p className="text-xs opacity-95">
-                    Your reported symptoms match emergency criteria. Dial 108 or 112 immediately.
-                  </p>
+                    {tr("Your reported symptoms match emergency criteria. Dial 108 or 112 immediately.")}</p>
                   <a
                     href="tel:108"
                     className="inline-flex items-center gap-2 bg-white text-red-700 font-extrabold px-4 py-2 rounded-full text-xs shadow-sm hover:bg-red-50"
                   >
-                    <PhoneCall className="w-4 h-4" /> Dial 108 Ambulance
-                  </a>
+                    <PhoneCall className="w-4 h-4" /> {tr("Dial 108 Ambulance")}</a>
                 </div>
               )}
 
@@ -339,8 +324,7 @@ export default function SymptomCheckerPage() {
               {triageResult.red_flags_detected.length > 0 && (
                 <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs space-y-1">
                   <div className="font-bold flex items-center gap-1.5 text-amber-800">
-                    <AlertTriangle className="w-4 h-4" /> Red-Flag Indicators Detected:
-                  </div>
+                    <AlertTriangle className="w-4 h-4" /> {tr("Red-Flag Indicators Detected:")}</div>
                   <ul className="list-disc list-inside space-y-0.5">
                     {triageResult.red_flags_detected.map((flag, idx) => (
                       <li key={idx}>{flag}</li>
@@ -352,8 +336,7 @@ export default function SymptomCheckerPage() {
               {/* Action recommendation */}
               <div className="space-y-1.5">
                 <div className="text-xs font-bold uppercase tracking-wider text-slate-700">
-                  Recommended Action:
-                </div>
+                  {tr("Recommended Action:")}</div>
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs leading-relaxed text-slate-800">
                   {triageResult.recommended_action}
                 </div>
@@ -366,7 +349,7 @@ export default function SymptomCheckerPage() {
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F766E] hover:underline"
                 >
                   <CheckCircle2 className="w-4 h-4" />
-                  Ask AI Companion for more details <ArrowRight className="w-3.5 h-3.5" />
+                  {tr("Ask AI Companion for more details")}<ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </MedCard>

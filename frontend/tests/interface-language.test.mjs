@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import vm from 'node:vm';
+const require = createRequire(import.meta.url);
+const ts = require('typescript');
+const copy = JSON.parse(readFileSync(new URL('../src/lib/i18n/dictionaries/interface.json',import.meta.url),'utf8'));
+const source = readFileSync(new URL('../src/lib/i18n/interface-copy.ts',import.meta.url),'utf8');
+const exports = {};
+vm.runInNewContext(ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText,{exports,require:()=>({default:copy})});
+const tr=exports.translateInterface;
+test('every authored interface phrase has Hindi and Telugu translations',()=>{for(const [key,values] of Object.entries(copy)){assert.equal(values.length,2,key);for(const value of values){assert.ok(value.trim(),key);assert.notEqual(value,key,key);}}});
+test('switching language updates headings and navigation and restores English',()=>{assert.equal(tr('Overview','te'),'అవలోకనం');assert.equal(tr('Your preferences','hi'),'आपकी पसंद');assert.equal(tr('Overview','en'),'Overview');});
+test('unknown patient and server content is preserved verbatim',()=>{for(const lang of ['en','hi','te'])assert.equal(tr('Patient-provided text 123',lang),'Patient-provided text 123');});
+test('translation retains emergency contact numbers',()=>{for(const lang of ['en','hi','te']){assert.match(tr('Call 108: Ambulance',lang),/108/);assert.match(tr('Call 112: National Emergency',lang),/112/);}});
+test('HTML entities render as characters, rather than raw entity names',()=>{assert.equal(tr('Review Now &rarr;','en'),'Review Now →');});

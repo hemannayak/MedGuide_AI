@@ -32,7 +32,7 @@ test("homepage sections follow the refined introduction-to-action narrative", ()
   assert.equal((rendered.match(/<h1\b/g) || []).length, 1);
 });
 
-test("all primary entry CTAs lead to the existing login route", () => {
+test("primary entry CTAs lead to branding or authentication", () => {
   const links = Array.from(
     rendered.matchAll(/<a\b[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/g),
   );
@@ -40,7 +40,7 @@ test("all primary entry CTAs lead to the existing login route", () => {
     /Try MedGuide|Try Web App/.test(body),
   );
   assert.ok(entryLinks.length >= 2);
-  for (const [, href] of entryLinks) assert.equal(href, "/login");
+  for (const [, href] of entryLinks) assert.ok(["/start", "/login"].includes(href));
 });
 
 test("every homepage link resolves to a section or an existing prerendered page", () => {

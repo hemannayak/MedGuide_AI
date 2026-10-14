@@ -43,7 +43,7 @@ export function PremiumNavbar({ enhanced = false }: { enhanced?: boolean }) {
     <nav aria-label="Main navigation" className={styles.desktop}>{navigation}</nav>
     <div className={styles.actions}>
       <Link href="/login" aria-current={active("/login") ? "page" : undefined} className={styles.login} onClick={dismiss}>Sign in</Link>
-      <Link href="/login" className={styles.primary} onClick={dismiss}>Try MedGuide<ArrowUpRight size={16} aria-hidden="true" /></Link>
+      <Link href="/start" className={styles.primary} onClick={dismiss}>Try MedGuide<ArrowUpRight size={16} aria-hidden="true" /></Link>
       <button type="button" ref={mobileTrigger} className={styles.menu} aria-label={open ? "Close navigation" : "Open navigation"} aria-expanded={open} aria-controls="marketing-navigation" onClick={() => setOpen(!open)}>{open ? <X size={22} /> : <Menu size={22} />}</button>
     </div>
     <AnimatePresence>{open && <motion.nav id="marketing-navigation" aria-label="Mobile navigation" className={styles.mobile} initial={{ opacity: 0, y: reduced ? 0 : -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: .18 }}>

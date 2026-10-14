@@ -46,6 +46,8 @@ let msgIdCounter = 1;
 const generateMsgId = (prefix: string) => `${prefix}_${Date.now()}_${msgIdCounter++}`;
 
 export default function AIChatPage() {
+ const { tr } = useLanguage();
+
   const { t, language } = useLanguage();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -248,7 +250,7 @@ export default function AIChatPage() {
           {
             id: generateMsgId("err"),
             sender: "ai",
-            text: "I was unable to process your request right now. Please check connectivity or try again.",
+            text: tr("I was unable to process your request right now. Please try again."),
             responseType: ResponseType.REFUSAL,
             timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
           },
@@ -260,7 +262,7 @@ export default function AIChatPage() {
         {
           id: generateMsgId("err"),
           sender: "ai",
-          text: "Network connection error. Please check your signal and try again.",
+          text: tr("Network connection error. Please check your signal and try again."),
           responseType: ResponseType.REFUSAL,
           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         },
@@ -282,19 +284,16 @@ export default function AIChatPage() {
           </div>
           <div>
             <h1 className="font-serif text-xl text-[#161A24] leading-tight">
-              AI Health Companion
-            </h1>
+              {tr("AI Health Companion")}</h1>
             <p className="text-xs text-slate-500">
-              Source-backed guidance &bull; English &bull; हिंदी &bull; తెలుగు
-            </p>
+              {tr("Source-backed guidance &bull; English &bull; हिंदी &bull; తెలుగు")}</p>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-teal-50 text-[#0F766E] border border-teal-200/70">
             <ShieldCheck className="w-3.5 h-3.5" />
-            Safety-First Safeguards
-          </span>
+            {tr("Safety-First Safeguards")}</span>
           {messages.length > 0 && (
             <button
               onClick={handleClearHistory}
@@ -322,11 +321,9 @@ export default function AIChatPage() {
 
             <div className="max-w-md space-y-2">
               <h2 className="font-serif text-2xl sm:text-3xl text-[#161A24]">
-                How can I help you today?
-              </h2>
+                {tr("How can I help you today?")}</h2>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Ask any health question in English, Hindi, or Telugu. Every response is source-backed by clinical guidance.
-              </p>
+                {tr("Ask any health question in English, Hindi, or Telugu. Every response is source-backed by clinical guidance.")}</p>
             </div>
 
             {/* Native script quick prompt pills */}
@@ -342,15 +339,13 @@ export default function AIChatPage() {
                     {item.label}
                   </div>
                   <div className="text-xs text-slate-600 line-clamp-2">
-                    &ldquo;{item.text}&rdquo;
-                  </div>
+                    {tr("&ldquo;")}{item.text}{tr("&rdquo;")}</div>
                 </button>
               ))}
             </div>
 
             <p className="text-[11px] text-slate-400 max-w-xs pt-4">
-              Preliminary health guidance only &bull; Not a replacement for a doctor.
-            </p>
+              {tr("Preliminary health guidance only &bull; Not a replacement for a doctor.")}</p>
           </motion.div>
         )}
 
@@ -366,9 +361,9 @@ export default function AIChatPage() {
               {/* Header */}
               <div className="flex items-center gap-1.5 text-[11px] text-slate-400 mb-1 px-1">
                 <span className="font-semibold text-slate-600">
-                  {msg.sender === "user" ? "You" : "MedGuide AI"}
+                  {msg.sender === "user" ? tr("You") : "MedGuide AI"}
                 </span>
-                <span>&bull;</span>
+                <span>{tr("&bull;")}</span>
                 <span>{msg.timestamp}</span>
               </div>
 
@@ -409,7 +404,7 @@ export default function AIChatPage() {
                 {/* Safety refusal alert */}
                 {msg.refusalTriggered && (
                   <div className="text-xs px-3.5 py-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900">
-                    <strong>Safety Safeguard:</strong> {t("ai.refusalNotice")}
+                    <strong>{tr("Safety Safeguard:")}</strong> {t("ai.refusalNotice")}
                   </div>
                 )}
 
@@ -459,8 +454,7 @@ export default function AIChatPage() {
                 {msg.redFlags && msg.redFlags.length > 0 && (
                   <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-900 text-xs space-y-1">
                     <div className="font-bold flex items-center gap-1.5 text-red-700">
-                      <AlertTriangle className="w-4 h-4" /> Red-Flag Indicators Detected:
-                    </div>
+                      <AlertTriangle className="w-4 h-4" /> {tr("Red-Flag Indicators Detected:")}</div>
                     <ul className="list-disc list-inside space-y-0.5">
                       {msg.redFlags.map((flag, idx) => (
                         <li key={idx}>{flag}</li>
@@ -489,8 +483,12 @@ export default function AIChatPage() {
             <span className="text-[11px] text-slate-400 px-1">MedGuide AI</span>
             <div className="bg-white border border-slate-200/80 rounded-2xl rounded-tl-xs px-4 py-3 shadow-xs">
               <div className="flex items-center gap-2 text-xs text-slate-500">
-                <Loader2 className="w-4 h-4 animate-spin text-[#0F766E]" />
-                <span>Retrieving source-backed health guidance...</span>
+                <span className="loading-dots">
+                  <span />
+                  <span />
+                  <span />
+                </span>
+                <span>{tr("Retrieving source-backed health guidance...")}</span>
               </div>
             </div>
           </div>
@@ -519,7 +517,7 @@ export default function AIChatPage() {
           className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full font-semibold text-white bg-[#0F766E] hover:bg-[#0D635C] disabled:opacity-50 disabled:cursor-not-allowed transition-all min-h-[44px] shadow-sm shrink-0 text-sm cursor-pointer"
         >
           <Send className="w-4 h-4" />
-          <span className="hidden sm:inline">Send</span>
+          <span className="hidden sm:inline">{tr("Send")}</span>
         </button>
       </div>
     </div>

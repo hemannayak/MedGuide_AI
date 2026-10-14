@@ -92,7 +92,7 @@ export const MegaNavbar: React.FC = () => {
   // ──────────────────────────────────────────────────────────────────────────
   // LANDING PAGE: handled by HeroLanding → LandingHeader
   // ──────────────────────────────────────────────────────────────────────────
-  if (isLandingPage || isAppRoute) return null;
+  if (isLandingPage || isAppRoute || pathname === "/start") return null;
 
   // ──────────────────────────────────────────────────────────────────────────
   // PATIENT APP HEADER (Internal /app/* routes)

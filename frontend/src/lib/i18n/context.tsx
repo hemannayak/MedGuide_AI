@@ -1,9 +1,10 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useSyncExternalStore } from "react";
 import en from "./dictionaries/en.json";
 import hi from "./dictionaries/hi.json";
 import te from "./dictionaries/te.json";
+import { translateInterface } from "./interface-copy";
 
 export type Language = "en" | "hi" | "te";
 
@@ -19,31 +20,37 @@ interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (keyPath: string) => string;
+  tr: (text: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType>({
   language: "en",
   setLanguage: () => {},
   t: (key) => key,
+  tr: (text) => text,
 });
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState<Language>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("medguide_lang") as Language;
-      if (saved === "en" || saved === "hi" || saved === "te") {
-        return saved;
-      }
-    }
-    return "en";
-  });
-
+  const language = useSyncExternalStore(
+    (notify) => {
+      window.addEventListener("medguide-language", notify);
+      window.addEventListener("storage", notify);
+      return () => { window.removeEventListener("medguide-language", notify); window.removeEventListener("storage", notify); };
+    },
+    () => {
+      try { const saved = localStorage.getItem("medguide_lang"); return saved === "hi" || saved === "te" ? saved : "en"; }
+      catch { return "en"; }
+    },
+    () => "en" as Language,
+  );
   const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("medguide_lang", lang);
-    }
+    if (!["en", "hi", "te"].includes(lang)) return;
+    try { localStorage.setItem("medguide_lang", lang); }
+    catch { return; }
+    window.dispatchEvent(new Event("medguide-language"));
   };
+  useEffect(() => { document.documentElement.lang = language; }, [language]);
+  const tr = (text: string): string => translateInterface(text, language);
 
   const t = (keyPath: string): string => {
     const keys = keyPath.split(".");
@@ -67,7 +74,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, tr }}>
       {children}
     </LanguageContext.Provider>
   );
