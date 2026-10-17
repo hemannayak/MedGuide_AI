@@ -16,5 +16,5 @@ export function clearSession() {
   window.dispatchEvent(new Event("medguide-session"));
 }
 export function safeReturnPath(value: string | null) {
-  return value?.startsWith("/app/") && !value.includes("\\") && !value.includes("//") ? value : "/app/chat";
+  return value?.startsWith("/app/") && !value.includes("\\") && !value.includes("//") ? value : "/app/dashboard";
 }
