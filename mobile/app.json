@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "MedGuide AI",
+    "slug": "medguide-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/medguide-icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#fbf8f1",
+        "foregroundImage": "./assets/medguide-adaptive.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "in.medguide.mobile"
+    },
+    "web": {
+      "favicon": "./assets/medguide-icon.png"
+    },
+    "scheme": "medguide",
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-asset"
+    ]
+  }
+}
