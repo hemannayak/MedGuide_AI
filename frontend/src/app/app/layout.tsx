@@ -10,12 +10,12 @@ export default function AppAuthLayout({ children }: {
     children: ReactNode;
 }) {
     const { tr } = useLanguage();
-    const hydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
     const token = useSyncExternalStore(subscribe, getSessionToken, () => null);
+  const ready = useSyncExternalStore(subscribe, () => true, () => false);
     const router = useRouter();
     const pathname = usePathname();
-    useEffect(() => { if (hydrated && !token)
-        router.replace(`/login?redirect=${encodeURIComponent(pathname)}`); }, [hydrated, token, pathname, router]);
+    useEffect(() => { if (ready && !token)
+        router.replace(`/login?redirect=${encodeURIComponent(pathname)}`); }, [ready, token, pathname, router]);
     if (!token)
         return <p role="status" className="min-h-[60vh] grid place-items-center text-[#073d37]">{tr("Checking account access…")}</p>;
     return <WorkspaceShell>{children}</WorkspaceShell>;

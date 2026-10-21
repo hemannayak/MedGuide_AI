@@ -33,6 +33,8 @@ export interface MedicationSchedule {
   meal_relation: MealRelation;
   days_of_week?: string[];
   reminder_enabled?: boolean;
+  frequency?: string;
+  status?: string;
 }
 
 export interface MedicationAdherence {

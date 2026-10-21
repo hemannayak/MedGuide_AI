@@ -1,33 +1,36 @@
 "use client";
 
-import { getSessionToken } from "@/lib/auth/session";
-import React, { useEffect, useState } from "react";
+import { useEffect, useSyncExternalStore, type ReactNode } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { getSessionToken } from "@/lib/auth/session";
+
+const subscribe = (callback: () => void) => {
+  window.addEventListener("medguide-session", callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    window.removeEventListener("medguide-session", callback);
+    window.removeEventListener("storage", callback);
+  };
+};
 
 export default function AdminAuthLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const token = useSyncExternalStore(subscribe, getSessionToken, () => null);
+  const ready = useSyncExternalStore(subscribe, () => true, () => false);
 
   useEffect(() => {
-    // Check if authentication token exists in localStorage
-    const token = getSessionToken();
-
-    if (!token) {
-      // Unauthenticated -> Redirect to login page
-      setIsAuthenticated(false);
+    if (ready && !token) {
       router.replace(`/login?redirect=${encodeURIComponent(pathname)}`);
-    } else {
-      setIsAuthenticated(true);
     }
-  }, [pathname, router]);
+  }, [ready, token, pathname, router]);
 
-  if (isAuthenticated === null) {
+  if (!ready || !token) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#FCFCFA]">
         <div className="flex flex-col items-center gap-3">
@@ -38,10 +41,6 @@ export default function AdminAuthLayout({
         </div>
       </div>
     );
-  }
-
-  if (!isAuthenticated) {
-    return null;
   }
 
   return <>{children}</>;

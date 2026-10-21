@@ -13,17 +13,11 @@ export function ContactForm() {
     <form className={styles.contactForm} onSubmit={submit}>
       <p>Demo form only. Please do not enter private medical information.</p>
       <label>
-        Your name
-        <input name="name" required autoComplete="name" />
+        Synthetic example message
+        <textarea name="message" rows={5} maxLength={1000} required aria-describedby="contact-purpose" />
       </label>
-      <label>
-        Email address
-        <input name="email" type="email" required autoComplete="email" />
-      </label>
-      <label>
-        Message
-        <textarea name="message" rows={5} required />
-      </label>
+      <p id="contact-purpose">This preview does not need your name or email and sends nothing. Do not include health records or personal details.</p>
+      <label><input type="checkbox" name="preview-consent" required />I understand this is an unsent preview and have used synthetic information only.</label>
       <button type="submit">Preview message →</button>
       <p className={styles.status} role="status">
         {notice}

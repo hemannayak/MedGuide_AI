@@ -5,11 +5,62 @@ import { AIChatRequest, AIChatResponse } from "@/types/ai";
 import { STTResponse, TTSRequest, TTSResponse } from "@/types/speech";
 import { SymptomRecordRequest, SymptomTriageResult } from "@/types/symptom";
 import { AuthTokenResponse, LoginRequest, RegisterRequest, PatientProfile } from "@/types/user";
-import { Medication, Prescription } from "@/types/medication";
+import { Medication } from "@/types/medication";
 
 import { getSessionToken } from "@/lib/auth/session";
+import type { PrescriptionSummary, PrescriptionDetail, PrescriptionUpload, CarePatient, CareRecords, CareFollowUp, CareMedication, CareSchedule, CareAdherence, TimelineEvent } from "@/types/care";
 
 class ApiClient {
+  getConsents() { return this.request<{ id: string; consent_type: string; status: string; version: string; created_at: string }[]>("/consent"); }
+  grantConsent(consent_type: "AI_PROCESSING" | "SPEECH_PROCESSING") { return this.request("/consent", { method: "POST", body: JSON.stringify({ consent_type, version: "1.0" }) }); }
+  withdrawConsent(id: string) { return this.request(`/consent/${encodeURIComponent(id)}`, { method: "PATCH", body: JSON.stringify({ status: "WITHDRAWN" }) }); }
+  private async request<T>(path: string, options: RequestInit = {}): Promise<StandardResponse<T>> {
+    if (isMockMode()) return { success: false, message: "This action requires the connected service. Demo mode does not process records." };
+    try {
+      const headers = this.getHeaders();
+      if (options.body instanceof FormData) delete headers["Content-Type"];
+      const response = await fetch(`${API_BASE_URL}${path}`, { ...options, headers });
+      const body = await response.json();
+      if (!response.ok) return { success: false, message: typeof body.detail === "string" ? body.detail : "The request could not be completed. Check your details and account access." };
+      return body;
+    } catch {
+      return { success: false, message: "We could not connect to MedGuide. Please try again." };
+    }
+  }
+
+  updatePatientProfile(data: { display_name: string; preferred_language: "en" | "hi" | "te" }) {
+    return this.request<CarePatient>("/patients/me", { method: "PATCH", body: JSON.stringify(data) });
+  }
+  getCurrentAccount() { return this.request<{ id: string; role: string }>("/auth/me"); }
+  getPrescription(id: string) { return this.request<PrescriptionDetail>(`/prescriptions/${encodeURIComponent(id)}`); }
+  uploadPrescription(file: File, prescribedDate?: string) {
+    const form = new FormData(); form.append("file", file);
+    if (prescribedDate) form.append("prescribed_date", prescribedDate);
+    return this.request<PrescriptionUpload>("/prescriptions/upload", { method: "POST", body: form });
+  }
+  verifyMedication(id: string) { return this.request<CareMedication>(`/medications/${encodeURIComponent(id)}/verify`, { method: "POST" }); }
+  getMedication(id: string) { return this.request<CareMedication>(`/medications/${encodeURIComponent(id)}`); }
+  getMedicationSchedules(id: string) { return this.request<CareSchedule[]>(`/medications/${encodeURIComponent(id)}/schedules`); }
+  createMedicationSchedule(id: string, data: { frequency: string; schedule_data: { times: string[] }; start_date: string; end_date?: string; timezone: string }) {
+    return this.request<CareSchedule>(`/medications/${encodeURIComponent(id)}/schedules`, { method: "POST", body: JSON.stringify(data) });
+  }
+  getWorkerPatients() { return this.request<CarePatient[]>("/healthcare-workers/patients"); }
+  getWorkerRecords(id: string) { return this.request<CareRecords>(`/healthcare-workers/patients/${encodeURIComponent(id)}/records`); }
+  verifyWorkerMedication(patientId: string, medicationId: string) {
+    return this.request<CareMedication>(`/healthcare-workers/patients/${encodeURIComponent(patientId)}/medications/${encodeURIComponent(medicationId)}/verify`, { method: "POST" });
+  }
+  getFollowUps(patientId?: string) { return this.request<CareFollowUp[]>(`/follow-ups${patientId ? `?patient_id=${encodeURIComponent(patientId)}` : ""}`); }
+  createFollowUp(data: { patient_id: string; reason: string; scheduled_at: string; notes?: string }) {
+    return this.request<CareFollowUp>("/follow-ups", { method: "POST", body: JSON.stringify(data) });
+  }
+  updateFollowUp(id: string, status: "COMPLETED" | "CANCELLED") {
+    return this.request<CareFollowUp>(`/follow-ups/${encodeURIComponent(id)}`, { method: "PATCH", body: JSON.stringify({ status }) });
+  }
+  getAdherence(scheduleId: string) { return this.request<CareAdherence[]>(`/medications/schedules/${encodeURIComponent(scheduleId)}/adherence`); }
+  recordAdherence(scheduleId: string, data: { scheduled_at: string; status: "TAKEN" | "SKIPPED" | "MISSED" }) {
+    return this.request<CareAdherence>(`/medications/schedules/${encodeURIComponent(scheduleId)}/adherence`, { method: "POST", body: JSON.stringify(data) });
+  }
+  getTimeline(page = 1) { return this.request<TimelineEvent[]>(`/timeline?page=${page}&page_size=20`); }
   private getHeaders(): Record<string, string> {
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
@@ -94,7 +145,9 @@ class ApiClient {
       headers: this.getHeaders(),
       body: JSON.stringify(req),
     });
-    return res.json();
+      const response = await res.json();
+      if (!res.ok) return { success: false, message: typeof response.detail === "string" ? response.detail : "The answer could not be requested. Please retry." };
+      return response;
   }
 
   // --- Symptom Record & Triage APIs ---
@@ -135,14 +188,8 @@ class ApiClient {
     return res.json();
   }
 
-  async getPrescriptions(): Promise<StandardResponse<Prescription[]>> {
-    if (isMockMode()) return MockApiAdapter.getPrescriptions();
-
-    const res = await fetch(`${API_BASE_URL}/prescriptions`, {
-      method: "GET",
-      headers: this.getHeaders(),
-    });
-    return res.json();
+  async getPrescriptions(): Promise<StandardResponse<PrescriptionSummary[]>> {
+    return this.request<PrescriptionSummary[]>("/prescriptions");
   }
 
   // --- Speech APIs (STT / TTS) ---
@@ -150,14 +197,15 @@ class ApiClient {
     if (isMockMode()) return MockApiAdapter.speechSTT(languageCode);
 
     const formData = new FormData();
-    formData.append("file", audioBlob, "recording.wav");
+    const extension = audioBlob.type.includes("webm") ? "webm" : audioBlob.type.includes("mp4") ? "mp4" : audioBlob.type.includes("ogg") ? "ogg" : "wav";
+    formData.append("file", audioBlob, `recording.${extension}`);
     if (languageCode) {
       formData.append("language_code", languageCode);
     }
 
     const headers: Record<string, string> = {};
     if (typeof window !== "undefined") {
-      const token = localStorage.getItem("medguide_token");
+      const token = getSessionToken();
       if (token) {
         headers["Authorization"] = `Bearer ${token}`;
       }

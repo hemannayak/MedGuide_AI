@@ -339,3 +339,10 @@ body {
   font-optical-sizing: auto;
 }
 button, input, select, textarea { font-family: inherit; }
+
+/* Keyboard focus must remain visible across public and authenticated forms. */
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 3px solid #073d37;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px #fffaf2;
+}

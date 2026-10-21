@@ -18,7 +18,10 @@ import { useLanguage } from "@/lib/i18n/context";
 import { api } from "@/lib/api/client";
 import { AIChatResponse, ResponseType, SourceCitation } from "@/types/ai";
 import { MedVoice } from "@/components/voice/med-voice";
+import { SpeechPlayback } from "@/lib/audio/speech-playback";
 import { MedEvidence } from "@/components/chat/med-evidence";
+import { symptomPrompts } from "@/lib/i18n/symptom-prompts";
+import { clearLegacyChatCache } from "@/lib/auth/session";
 
 interface ChatMessage {
   id: string;
@@ -30,10 +33,10 @@ interface ChatMessage {
   refusalTriggered?: boolean;
   disclaimer?: string;
   timestamp: string;
+  serviceError?: boolean;
+  language?: "en" | "hi" | "te";
 }
 
-const STORAGE_KEY_MESSAGES = "medguide_chat_history";
-const STORAGE_KEY_CONV_ID = "medguide_conv_id";
 
 const EXAMPLE_PROMPTS = [
   { label: "Dehydration in children", text: "What are early signs of dehydration in children?" },
@@ -52,161 +55,90 @@ export default function AIChatPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const [inputQuery, setInputQuery] = useState("");
+  const [reviewingVoice, setReviewingVoice] = useState(false);
   const [loading, setLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | undefined>(undefined);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const requestGeneration = useRef(0);
   
   // Audio TTS playback state
   const [playingMsgId, setPlayingMsgId] = useState<string | null>(null);
   const [loadingTTSMsgId, setLoadingTTSMsgId] = useState<string | null>(null);
-  const activeAudioRef = useRef<HTMLAudioElement | null>(null);
+  const playbackRef = useRef(new SpeechPlayback());
+  const [audioError, setAudioError] = useState<string | null>(null);
 
-  // Restore session from localStorage on initial client mount
+  // Never restore shared-device medical conversations from browser storage.
   useEffect(() => {
-    try {
-      const savedMessages = localStorage.getItem(STORAGE_KEY_MESSAGES);
-      const savedConvId = localStorage.getItem(STORAGE_KEY_CONV_ID);
-      if (savedMessages) {
-        const parsed = JSON.parse(savedMessages);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(parsed);
-        }
-      }
-      if (savedConvId) {
-        setConversationId(savedConvId);
-      }
-    } catch (e) {
-      console.warn("Failed to load cached chat history:", e);
-    }
+    clearLegacyChatCache();
+    const resetSession = () => {
+      requestGeneration.current += 1;
+      playbackRef.current.cancel();
+      setMessages([]);
+      setConversationId(undefined);
+      setInputQuery("");
+      setLoading(false);
+      setReviewingVoice(false);
+      setAudioError(null);
+      setPlayingMsgId(null);
+      setLoadingTTSMsgId(null);
+    };
+    window.addEventListener("medguide-session", resetSession);
+    return () => {
+      requestGeneration.current += 1;
+      window.removeEventListener("medguide-session", resetSession);
+    };
   }, []);
-
-  // Save session to localStorage whenever messages update
-  useEffect(() => {
-    if (messages.length > 0) {
-      try {
-        localStorage.setItem(STORAGE_KEY_MESSAGES, JSON.stringify(messages));
-        if (conversationId) {
-          localStorage.setItem(STORAGE_KEY_CONV_ID, conversationId);
-        }
-      } catch (e) {
-        console.warn("Failed to persist chat session:", e);
-      }
-    }
-  }, [messages, conversationId]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
-  // Clean up any active audio playback on unmount
-  useEffect(() => {
-    return () => {
-      if (activeAudioRef.current) {
-        activeAudioRef.current.pause();
-        activeAudioRef.current = null;
-      }
-      if (typeof window !== "undefined" && window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-      }
-    };
-  }, []);
+  useEffect(() => () => playbackRef.current.cancel(), []);
 
   const stopAudio = useCallback(() => {
-    if (activeAudioRef.current) {
-      activeAudioRef.current.pause();
-      activeAudioRef.current = null;
-    }
-    if (typeof window !== "undefined" && window.speechSynthesis) {
-      window.speechSynthesis.cancel();
-    }
+    playbackRef.current.cancel();
     setPlayingMsgId(null);
     setLoadingTTSMsgId(null);
   }, []);
 
-  const handleReadAloud = async (msgId: string, text: string) => {
-    if (playingMsgId === msgId) {
+  const handleReadAloud = async (msgId: string, text: string, replyLanguage = language) => {
+    if (playingMsgId === msgId || loadingTTSMsgId === msgId) {
       stopAudio();
       return;
     }
-
     stopAudio();
+    setAudioError(null);
     setLoadingTTSMsgId(msgId);
-
     try {
-      const res = await api.speechTTS({
-        text,
-        language,
-        speaker: "kavitha",
-        format: "mp3",
-      });
-
-      if (res.success && res.data && res.data.audio_base64) {
-        const audioSrc = `data:audio/mp3;base64,${res.data.audio_base64}`;
-        const audio = new Audio(audioSrc);
-        activeAudioRef.current = audio;
-
-        audio.onplay = () => {
-          setLoadingTTSMsgId(null);
-          setPlayingMsgId(msgId);
-        };
-
-        audio.onended = () => {
-          setPlayingMsgId(null);
-          activeAudioRef.current = null;
-        };
-
-        audio.onerror = () => {
-          console.warn("Audio playback error, falling back to Web Speech API");
-          fallbackWebSpeech(msgId, text);
-        };
-
-        await audio.play();
-      } else {
-        // Fallback to browser SpeechSynthesis
-        fallbackWebSpeech(msgId, text);
-      }
-    } catch (err) {
-      console.warn("TTS API call failed, falling back to Web Speech:", err);
-      fallbackWebSpeech(msgId, text);
-    }
-  };
-
-  const fallbackWebSpeech = (msgId: string, text: string) => {
-    setLoadingTTSMsgId(null);
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = language === "te" ? "te-IN" : language === "hi" ? "hi-IN" : "en-US";
-      
-      utterance.onstart = () => {
+      await playbackRef.current.speak(text, async (segment) => {
+        const res = await api.speechTTS({ text: segment, language: replyLanguage, speaker: "shubh", format: "mp3" });
+        if (!res.success || !res.data?.audio_base64) throw new Error("Speech service unavailable");
+        return `data:audio/mp3;base64,${res.data.audio_base64}`;
+      }, (source) => new Audio(source), () => {
+        setLoadingTTSMsgId(null);
         setPlayingMsgId(msgId);
-      };
-      utterance.onend = () => {
-        setPlayingMsgId(null);
-      };
-      utterance.onerror = () => {
-        setPlayingMsgId(null);
-      };
-      window.speechSynthesis.speak(utterance);
-    } else {
-      setPlayingMsgId(null);
+      });
+    } catch {
+      setAudioError("Spoken reply could not play. Your text reply is available; tap the speaker to retry.");
+    } finally {
+      setLoadingTTSMsgId((active) => active === msgId ? null : active);
+      setPlayingMsgId((active) => active === msgId ? null : active);
     }
   };
 
   const handleClearHistory = () => {
+    requestGeneration.current += 1;
+    setLoading(false);
     stopAudio();
     setMessages([]);
     setConversationId(undefined);
-    try {
-      localStorage.removeItem(STORAGE_KEY_MESSAGES);
-      localStorage.removeItem(STORAGE_KEY_CONV_ID);
-    } catch (e) {
-      console.warn("Failed to clear local storage:", e);
-    }
+    clearLegacyChatCache();
   };
 
-  const handleSend = async (queryText?: string) => {
+  const handleSend = async (queryText?: string, spokenReply = !queryText && reviewingVoice) => {
     const textToSend = queryText || inputQuery;
     if (!textToSend.trim() || loading) return;
+    const generation = ++requestGeneration.current;
 
     const timeStr = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
@@ -219,6 +151,7 @@ export default function AIChatPage() {
 
     setMessages((prev) => [...prev, userMsg]);
     setInputQuery("");
+    setReviewingVoice(false);
     setLoading(true);
 
     try {
@@ -227,15 +160,19 @@ export default function AIChatPage() {
         language: language,
         conversation_id: conversationId,
       });
+      if (generation !== requestGeneration.current) return;
 
       if (res.success && res.data) {
         const aiData: AIChatResponse = res.data;
+        const replyLanguage = ["en", "hi", "te"].includes(aiData.language)
+          ? aiData.language as "en" | "hi" | "te" : language;
         if (aiData.conversation_id) setConversationId(aiData.conversation_id);
 
         const aiMsg: ChatMessage = {
           id: generateMsgId("ai"),
           sender: "ai",
           text: aiData.message,
+          language: replyLanguage,
           responseType: aiData.response_type,
           sources: aiData.sources,
           redFlags: aiData.red_flags,
@@ -244,23 +181,29 @@ export default function AIChatPage() {
           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         };
         setMessages((prev) => [...prev, aiMsg]);
+        if (spokenReply) await handleReadAloud(aiMsg.id, aiMsg.text, replyLanguage);
       } else {
+        setInputQuery((current) => current || textToSend);
         setMessages((prev) => [
           ...prev,
           {
             id: generateMsgId("err"),
+            serviceError: true,
             sender: "ai",
-            text: tr("I was unable to process your request right now. Please try again."),
+            text: res.message || "I was unable to process your request right now. Please check connectivity or try again.",
             responseType: ResponseType.REFUSAL,
             timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
           },
         ]);
       }
     } catch {
+      if (generation !== requestGeneration.current) return;
+      setInputQuery((current) => current || textToSend);
       setMessages((prev) => [
         ...prev,
         {
           id: generateMsgId("err"),
+          serviceError: true,
           sender: "ai",
           text: tr("Network connection error. Please check your signal and try again."),
           responseType: ResponseType.REFUSAL,
@@ -268,7 +211,7 @@ export default function AIChatPage() {
         },
       ]);
     } finally {
-      setLoading(false);
+      if (generation === requestGeneration.current) setLoading(false);
     }
   };
 
@@ -276,6 +219,8 @@ export default function AIChatPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-5.5rem)] max-w-4xl mx-auto px-4 py-4">
+      {audioError && <p role="alert" className="px-4 py-2 text-sm text-red-700">{audioError}</p>}
+      <a href="/app/consent" className="text-sm underline py-2">Review permissions for AI questions and speech</a>
       {/* ── Healthcare Companion Header ─────────────────────────── */}
       <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-200/80 shrink-0">
         <div className="flex items-center gap-3">
@@ -284,9 +229,11 @@ export default function AIChatPage() {
           </div>
           <div>
             <h1 className="font-serif text-xl text-[#161A24] leading-tight">
-              {tr("AI Health Companion")}</h1>
-            <p className="text-xs text-slate-500">
-              {tr("Source-backed guidance &bull; English &bull; हिंदी &bull; తెలుగు")}</p>
+              AI Health Companion
+            </h1>
+            <p className="text-xs text-slate-600">
+              Preliminary health information &bull; English &bull; हिंदी &bull; తెలుగు
+            </p>
           </div>
         </div>
 
@@ -323,7 +270,8 @@ export default function AIChatPage() {
               <h2 className="font-serif text-2xl sm:text-3xl text-[#161A24]">
                 {tr("How can I help you today?")}</h2>
               <p className="text-sm text-slate-600 leading-relaxed">
-                {tr("Ask any health question in English, Hindi, or Telugu. Every response is source-backed by clinical guidance.")}</p>
+                Ask any health question in English, Hindi, or Telugu. Answers may be incomplete or incorrect. Check available sources and consult a healthcare professional.
+              </p>
             </div>
 
             {/* Native script quick prompt pills */}
@@ -361,7 +309,7 @@ export default function AIChatPage() {
               {/* Header */}
               <div className="flex items-center gap-1.5 text-[11px] text-slate-400 mb-1 px-1">
                 <span className="font-semibold text-slate-600">
-                  {msg.sender === "user" ? tr("You") : "MedGuide AI"}
+                  {msg.sender === "user" ? "You" : msg.serviceError || msg.id.startsWith("err_") ? "Request error" : "MedGuide AI"}
                 </span>
                 <span>{tr("&bull;")}</span>
                 <span>{msg.timestamp}</span>
@@ -404,22 +352,22 @@ export default function AIChatPage() {
                 {/* Safety refusal alert */}
                 {msg.refusalTriggered && (
                   <div className="text-xs px-3.5 py-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900">
-                    <strong>{tr("Safety Safeguard:")}</strong> {t("ai.refusalNotice")}
+                    <strong>{t("ai.refusalTitle")}</strong> {t("ai.refusalNotice")}
                   </div>
                 )}
 
                 {/* Response Text & Read-Aloud Action */}
                 <div className="space-y-2">
-                  <p className="text-sm leading-relaxed whitespace-pre-line font-normal">
+                  <p role={msg.serviceError || msg.id.startsWith("err_") ? "alert" : undefined} className="text-sm leading-relaxed whitespace-pre-line font-normal">
                     {msg.text}
                   </p>
 
                   {/* Read Aloud Button for AI messages */}
-                  {msg.sender === "ai" && (
+                  {msg.sender === "ai" && !msg.serviceError && !msg.id.startsWith("err_") && (
                     <div className="flex items-center justify-end pt-1">
                       <button
                         type="button"
-                        onClick={() => handleReadAloud(msg.id, msg.text)}
+                        onClick={() => handleReadAloud(msg.id, msg.text, msg.language)}
                         className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                           playingMsgId === msg.id
                             ? "bg-teal-600 text-white shadow-xs"
@@ -427,7 +375,7 @@ export default function AIChatPage() {
                             ? "bg-amber-100 text-amber-800"
                             : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                         }`}
-                        title="Read aloud in current language"
+                        title="Read aloud in the reply language"
                       >
                         {loadingTTSMsgId === msg.id ? (
                           <>
@@ -454,17 +402,14 @@ export default function AIChatPage() {
                 {msg.redFlags && msg.redFlags.length > 0 && (
                   <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-900 text-xs space-y-1">
                     <div className="font-bold flex items-center gap-1.5 text-red-700">
-                      <AlertTriangle className="w-4 h-4" /> {tr("Red-Flag Indicators Detected:")}</div>
-                    <ul className="list-disc list-inside space-y-0.5">
-                      {msg.redFlags.map((flag, idx) => (
-                        <li key={idx}>{flag}</li>
-                      ))}
-                    </ul>
+                      <AlertTriangle className="w-4 h-4" /> Red-Flag Indicators Detected:
+                    </div>
+                    <p>Your message triggered the emergency safety check. Follow the emergency instructions above.</p>
                   </div>
                 )}
 
                 {/* Grounded Evidence Sources */}
-                {msg.sender === "ai" && <MedEvidence sources={msg.sources} />}
+                {msg.sender === "ai" && !msg.serviceError && !msg.id.startsWith("err_") && msg.responseType !== ResponseType.EMERGENCY && <MedEvidence sources={msg.sources} />}
 
                 {/* Disclaimer */}
                 {msg.disclaimer && msg.sender === "ai" && (
@@ -498,10 +443,12 @@ export default function AIChatPage() {
       </div>
 
       {/* ── Input Bar with Speech Trigger ───────────────────────── */}
+      {reviewingVoice && <p role="status" className="text-sm px-3 pt-3">{language === "hi" ? "पहचाने गए शब्द जांचें। गलती सुधारें, फिर भेजें।" : language === "te" ? "గుర్తించిన మాటలు తనిఖీ చేయండి. తప్పులు సరిచేసి పంపండి." : "Check the recognized words, especially symptoms, medicine names and numbers. Edit any mistakes, then press Send."}</p>}
       <div className="mt-3 bg-white border border-slate-200/90 rounded-2xl p-2 shadow-md flex items-center gap-3 shrink-0">
-        <MedVoice onTranscription={(text) => handleSend(text)} />
+        <MedVoice disabled={loading} onRecordingStart={stopAudio} onTranscription={(text) => { stopAudio(); setInputQuery(text); setReviewingVoice(true); }} />
 
         <input
+          aria-label={symptomPrompts[language].question}
           type="text"
           value={inputQuery}
           onChange={(e) => setInputQuery(e.target.value)}
@@ -512,6 +459,7 @@ export default function AIChatPage() {
 
         <button
           type="button"
+          aria-label={symptomPrompts[language].sendChat}
           onClick={() => handleSend()}
           disabled={loading || !inputQuery.trim()}
           className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full font-semibold text-white bg-[#0F766E] hover:bg-[#0D635C] disabled:opacity-50 disabled:cursor-not-allowed transition-all min-h-[44px] shadow-sm shrink-0 text-sm cursor-pointer"

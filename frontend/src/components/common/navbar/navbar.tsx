@@ -24,7 +24,7 @@ export const MegaNavbar: React.FC = () => {
   const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
   const leaveTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const isAppRoute = pathname?.startsWith("/app");
+  const isAppRoute = pathname?.startsWith("/app") || pathname === "/hcw" || pathname?.startsWith("/hcw/");
   // Landing page (/) uses its own embedded header (HeroLanding → LandingHeader).
   // The global MegaNavbar is suppressed on that route to avoid duplication.
   const isLandingPage = usesReferenceMarketingLayout(pathname);

@@ -8,19 +8,17 @@ import { api } from "@/lib/api/client";
 interface MedVoiceProps {
   onTranscription: (text: string) => void;
   className?: string;
+  disabled?: boolean;
+  onRecordingStart?: () => void;
 }
 
 export type VoiceState = "idle" | "listening" | "transcribing" | "success" | "error";
 
-const SAMPLE_TRANSCRIPTS: Record<string, string> = {
-  en: "I have had a high fever for three days with a persistent cough.",
-  hi: "मुझे तीन दिनों से तेज बुखार और लगातार खांसी है।",
-  te: "నాకు మూడు రోజులుగా తీవ్రమైన జ్వరం మరియు దగ్గు ఉంది.",
-};
-
 export const MedVoice: React.FC<MedVoiceProps> = ({
   onTranscription,
   className = "",
+  disabled = false,
+  onRecordingStart,
 }) => {
   const { language } = useLanguage();
   const [state, setState] = useState<VoiceState>("idle");
@@ -41,6 +39,7 @@ export const MedVoice: React.FC<MedVoiceProps> = ({
 
   const startRecording = async () => {
     try {
+      onRecordingStart?.();
       setErrorMessage(null);
       audioChunksRef.current = [];
 
@@ -62,9 +61,11 @@ export const MedVoice: React.FC<MedVoiceProps> = ({
       };
 
       mediaRecorder.onstop = async () => {
+        stream.getTracks().forEach(track => track.stop());
+        streamRef.current = null;
         setState("transcribing");
         try {
-          const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
+          const audioBlob = new Blob(audioChunksRef.current, { type: mediaRecorder.mimeType || audioChunksRef.current[0]?.type || "audio/webm" });
           
           // Call backend STT endpoint
           const res = await api.speechSTT(audioBlob, language);
@@ -72,40 +73,22 @@ export const MedVoice: React.FC<MedVoiceProps> = ({
             setState("success");
             onTranscription(res.data.transcript);
           } else {
-            // Fallback to sample transcript if server speech is unavailable
-            const fallbackText = SAMPLE_TRANSCRIPTS[language] || SAMPLE_TRANSCRIPTS.en;
-            setState("success");
-            onTranscription(fallbackText);
+            setState("error");
+            setErrorMessage(res.message || "No speech was recognized. Please retry or type your concern.");
           }
-        } catch (err) {
-          console.error("Speech recognition error:", err);
-          const fallbackText = SAMPLE_TRANSCRIPTS[language] || SAMPLE_TRANSCRIPTS.en;
-          setState("success");
-          onTranscription(fallbackText);
-        } finally {
-          if (streamRef.current) {
-            streamRef.current.getTracks().forEach((track) => track.stop());
-            streamRef.current = null;
-          }
-          setTimeout(() => setState("idle"), 2500);
+        } catch {
+          setState("error");
+          setErrorMessage("Speech recognition failed. Please retry or type your concern.");
         }
       };
 
       mediaRecorder.start();
       setState("listening");
-    } catch (err: unknown) {
-      console.warn("Microphone access error / fallback trigger:", err);
-      // If permission is denied or unsupported, provide friendly fallback
-      setState("listening");
-      setTimeout(() => {
-        setState("transcribing");
-        setTimeout(() => {
-          const fallbackText = SAMPLE_TRANSCRIPTS[language] || SAMPLE_TRANSCRIPTS.en;
-          setState("success");
-          onTranscription(fallbackText);
-          setTimeout(() => setState("idle"), 2500);
-        }, 800);
-      }, 1500);
+    } catch {
+      streamRef.current?.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+      setState("error");
+      setErrorMessage("Microphone unavailable. Allow microphone access or type your concern.");
     }
   };
 
@@ -152,6 +135,7 @@ export const MedVoice: React.FC<MedVoiceProps> = ({
       <button
         type="button"
         onClick={handleToggle}
+        disabled={disabled || state === "transcribing"}
         aria-label={
           state === "listening"
             ? "Stop listening"
@@ -188,6 +172,7 @@ export const MedVoice: React.FC<MedVoiceProps> = ({
         )}
       </button>
 
+      {state === "error" && <p role="alert" className="max-w-xs text-sm text-red-700">{errorMessage}</p>}
       {/* Micro-label */}
       <span className="text-[11px] text-slate-500 font-medium mt-1.5">
         {state === "idle"

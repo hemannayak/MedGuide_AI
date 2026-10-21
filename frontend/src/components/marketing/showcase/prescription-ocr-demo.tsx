@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
-import { Upload, ArrowRight, Table, CheckCircle2, SlidersHorizontal, Sparkles } from "lucide-react";
+import { Upload, ArrowRight, Table, CheckCircle2, SlidersHorizontal } from "lucide-react";
 
 interface PresetExample {
   id: string;
@@ -62,7 +62,21 @@ export const PrescriptionOcrDemo: React.FC = () => {
   const [isScanning, setIsScanning] = useState(false);
   const [sliderPos, setSliderPos] = useState(50); // percentage (0 - 100)
   const [isDragging, setIsDragging] = useState(false);
+  const [containerWidth, setContainerWidth] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const el = containerRef.current;
+    setContainerWidth(el.clientWidth);
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setContainerWidth(entry.contentRect.width);
+      }
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   const activeExample = PRESET_EXAMPLES[selectedExampleIdx];
 
@@ -247,7 +261,7 @@ export const PrescriptionOcrDemo: React.FC = () => {
             >
               <div
                 className="p-6 sm:p-8 h-full flex flex-col justify-between relative bg-[#FAFAF7]"
-                style={{ width: containerRef.current ? `${containerRef.current.clientWidth}px` : "100%" }}
+                style={{ width: containerWidth ? `${containerWidth}px` : "100%" }}
               >
                 {/* Header Badge */}
                 <div className="flex items-center justify-between">

@@ -3,6 +3,7 @@ import { useLanguage } from "@/lib/i18n/context";
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Pill,
   Clock,
@@ -24,24 +25,26 @@ import { Medication, MedicationSchedule } from "@/types/medication";
 import { StandardResponse } from "@/types/api";
 
 export default function MedicationsPage() {
- const { tr } = useLanguage();
-
+  const { tr } = useLanguage();
+  const router = useRouter();
   const [medications, setMedications] = useState<Medication[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState<"ALL" | "ACTIVE" | "PENDING">("ALL");
 
   useEffect(() => {
-    setLoading(true);
     api
       .getMedications()
       .then((res: StandardResponse<Medication[]>) => {
         if (res.success && res.data) {
           setMedications(res.data);
+        } else {
+          setError("Your medications could not be loaded. Please try again.");
         }
       })
-      .catch((err: unknown) => {
-        console.error("Error loading medications:", err);
+      .catch(() => {
+        setError("We could not connect to your medication records. Please try again.");
       })
       .finally(() => {
         setLoading(false);
@@ -51,10 +54,10 @@ export default function MedicationsPage() {
   const filteredMeds = medications.filter((med) => {
     const matchesSearch =
       med.medicine_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      med.instructions.toLowerCase().includes(searchQuery.toLowerCase());
+      (med.instructions || "").toLowerCase().includes(searchQuery.toLowerCase());
 
     if (!matchesSearch) return false;
-    if (selectedFilter === "ACTIVE") return med.status === "ACTIVE" && med.verification_status === "VERIFIED";
+    if (selectedFilter === "ACTIVE") return med.verification_status === "VERIFIED";
     if (selectedFilter === "PENDING") return med.verification_status === "PENDING";
     return true;
   });
@@ -135,9 +138,9 @@ export default function MedicationsPage() {
                     : "text-slate-600 hover:text-slate-900"
                 }`}
               >
-                {filterKey === "ALL" && tr("All")}
-                {filterKey === "ACTIVE" && tr("Verified Active")}
-                {filterKey === "PENDING" && tr("Pending Review")}
+                {filterKey === "ALL" && "All"}
+                {filterKey === "ACTIVE" && "Verified"}
+                {filterKey === "PENDING" && "Pending Review"}
               </button>
             ))}
           </div>
@@ -159,6 +162,8 @@ export default function MedicationsPage() {
               </div>
             ))}
           </div>
+        ) : error ? (
+          <MedFeedbackState variant="error" title="Medication records unavailable" description={error} />
         ) : filteredMeds.length === 0 ? (
           <MedFeedbackState
             variant="empty"
@@ -170,7 +175,7 @@ export default function MedicationsPage() {
             }
             actionLabel={tr("Upload Prescription")}
             onAction={() => {
-              window.location.href = "/app/prescriptions/upload";
+              router.push("/app/prescriptions/upload");
             }}
           />
         ) : (
@@ -210,8 +215,9 @@ export default function MedicationsPage() {
                             className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-teal-50 border border-teal-200 text-teal-900 text-xs font-semibold"
                           >
                             <BellRing className="w-3 h-3 text-teal-600" />
-                            {sch.time_of_day} • {sch.dosage_amount}
-                            {sch.meal_relation !== "INDEPENDENT" && ` (${sch.meal_relation.toLowerCase()} food)`}
+                            {sch.time_of_day || sch.frequency || "Schedule details unavailable"}
+                            {sch.dosage_amount && ` • ${sch.dosage_amount}`}
+                            {sch.meal_relation && sch.meal_relation !== "INDEPENDENT" && ` (${sch.meal_relation.toLowerCase()} food)`}
                           </span>
                         ))}
                       </div>

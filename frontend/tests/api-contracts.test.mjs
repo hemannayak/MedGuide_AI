@@ -7,7 +7,7 @@ const ts = createRequire(import.meta.url)('typescript');
 const source = readFileSync(new URL('../src/lib/api/client.ts', import.meta.url), 'utf8');
 function harness(fetchImpl, base = 'http://example.invalid/api/v1') {
   let token = null;
-  const context = { exports: {}, window: {}, fetch: fetchImpl, require: name => {
+  const context = { exports: {}, window: {}, FormData, fetch: fetchImpl, require: name => {
     if (name === './config') return { API_BASE_URL: base, isMockMode: () => false };
     if (name === './mock-adapter') return { MockApiAdapter: {} };
     if (name === '@/lib/auth/session') return { getSessionToken: () => token };
@@ -17,6 +17,18 @@ function harness(fetchImpl, base = 'http://example.invalid/api/v1') {
   return { api: context.exports.api, setToken: value => { token = value; } };
 }
 const response = data => ({ ok: true, json: async () => ({ success: true, data }) });
+
+test('speech upload uses the shared session token for tab-only sign-in', async () => {
+  let authorization;
+  const h = harness(async (_url, options) => {
+    authorization = options.headers.Authorization;
+    return { ok: true, json: async () => ({ transcript: 'Synthetic transcript' }) };
+  });
+  h.setToken('synthetic-tab-session');
+  const result = await h.api.speechSTT(new Blob(['synthetic audio']), 'en');
+  assert.equal(authorization, 'Bearer synthetic-tab-session');
+  assert.equal(result.data.transcript, 'Synthetic transcript');
+});
 
 test('registration maps fields and signs in through the existing login contract', async () => {
   const calls = [];
@@ -73,4 +85,25 @@ test('live synthetic patient can register, load profile, analyze symptoms and us
   const chat = await h.api.postAIChat({ message: 'chest pain and severe difficulty breathing', language: 'en' });
   assert.equal(chat.data.response_type, 'EMERGENCY');
   assert.equal(chat.data.sources.length, 0);
+});
+
+
+test('prescription upload preserves multipart boundary and session authorization', async () => {
+  let sent;
+  const h = harness(async (url, options) => { sent = { url, ...options }; return response({ prescription_id: 'SYN-prescription' }); });
+  h.setToken('SYN-token');
+  const result = await h.api.uploadPrescription(new Blob(['SYN image'], { type: 'image/png' }), '2026-10-03');
+  assert.equal(result.success, true);
+  assert.ok(sent.url.endsWith('/prescriptions/upload'));
+  assert.equal(sent.headers.Authorization, 'Bearer SYN-token');
+  assert.equal(sent.headers['Content-Type'], undefined);
+  assert.ok(sent.body instanceof FormData);
+  assert.equal(sent.body.get('prescribed_date'), '2026-10-03');
+});
+
+test('care API errors remain errors rather than synthetic success records', async () => {
+  const { api } = harness(async () => ({ ok: false, json: async () => ({ detail: 'Access denied' }) }));
+  const result = await api.getWorkerRecords('SYN-patient');
+  assert.equal(result.success, false);
+  assert.equal(result.message, 'Access denied');
 });

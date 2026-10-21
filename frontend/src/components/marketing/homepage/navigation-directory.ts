@@ -22,6 +22,6 @@ export const navigationDirectory = [
   ] },
   { title: "Legal & Safety", links: [
     ["Medical disclaimer", "/legal/disclaimer"], ["Privacy", "/privacy"],
-    ["Terms", "/terms"], ["AI safety", "/safety"],
+    ["Terms", "/terms"], ["Cookie policy", "/cookies"], ["Refund policy", "/refunds"], ["AI safety", "/safety"],
   ] },
 ] as const;

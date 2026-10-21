@@ -15,7 +15,7 @@ export const MedEvidence: React.FC<MedEvidenceProps> = ({ sources }) => {
     return (
       <div className="mt-3 pt-3 border-t border-slate-100 flex items-center gap-2 text-xs text-slate-500">
         <ShieldCheck className="w-4 h-4 text-[#8C6D46] shrink-0" />
-        <span>Grounded in verified healthcare guidance</span>
+        <span>No retrieved references attached to this response</span>
       </div>
     );
   }
@@ -31,7 +31,7 @@ export const MedEvidence: React.FC<MedEvidenceProps> = ({ sources }) => {
       >
         <div className="flex items-center gap-2">
           <BookOpen className="w-4 h-4 text-[#8C6D46] shrink-0" />
-          <span>Source-backed guidance ({sources.length} clinical references)</span>
+          <span>Retrieved evidence ({sources.length} excerpts)</span>
         </div>
         <div className="flex items-center gap-1 text-[#8C6D46] text-[11px] font-semibold">
           <span>{expanded ? "Hide sources" : "View sources"}</span>
@@ -49,7 +49,7 @@ export const MedEvidence: React.FC<MedEvidenceProps> = ({ sources }) => {
             >
               <div className="flex items-start justify-between gap-2 font-semibold text-slate-900 text-xs">
                 <span>
-                  [{src.citation_id}] {src.title || "Clinical Health Protocol"}
+                  [{src.citation_id}] {src.title || "Untitled source"}
                 </span>
                 {src.source_url && (
                   <a
@@ -63,7 +63,7 @@ export const MedEvidence: React.FC<MedEvidenceProps> = ({ sources }) => {
                 )}
               </div>
               <div className="text-[11px] text-slate-500">
-                <span>Publisher: {src.publisher || "WHO / Ministry Guidelines"}</span>
+                <span>Publisher: {src.publisher || "Not provided"}</span>
                 {src.section_title && <span> &bull; Section: {src.section_title}</span>}
                 {src.page_number && <span> &bull; Page {src.page_number}</span>}
               </div>

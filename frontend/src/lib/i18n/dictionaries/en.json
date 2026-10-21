@@ -29,7 +29,8 @@
     "listening": "Listening to voice input...",
     "micTooltip": "Voice interaction entry point",
     "sourcesTitle": "Verified Medical Sources",
-    "refusalNotice": "Guidance Notice: Unsafe or unverified query detected. Re-grounding in official medical guidelines."
+    "refusalTitle": "Answer unavailable.",
+    "refusalNotice": "MedGuide could not provide a verified answer. See the explanation below. Retrieved excerpts may not be sufficient or relevant to your question."
   },
   "symptoms": {
     "title": "Preliminary Symptom Checker",

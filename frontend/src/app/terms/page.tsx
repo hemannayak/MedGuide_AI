@@ -1,4 +1,3 @@
-import { InformationPage, informationTitles } from "@/components/marketing/editorial/information-page";
-import { marketingMetadata } from "@/lib/seo";
-export const metadata=marketingMetadata(informationTitles["terms"][0],informationTitles["terms"][1],"/terms");
-export default function Page(){return <InformationPage kind="terms"/>;}
+import { LegalPolicy } from "@/components/marketing/legal-policy";
+export const metadata = { title: "Terms and conditions | MedGuide AI", alternates: { canonical: "/terms" }, openGraph: { title: "Terms and conditions | MedGuide AI" }, twitter: { card: "summary" } };
+export default function Page(){return <LegalPolicy kind="terms"/>;}

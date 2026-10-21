@@ -20,6 +20,7 @@ import { MedVoice } from "@/components/voice/med-voice";
 import { MedButton } from "@/components/ui/med-button";
 import { MedCard } from "@/components/ui/med-card";
 import { MedBadge } from "@/components/ui/med-badge";
+import { symptomPrompts } from "@/lib/i18n/symptom-prompts";
 
 type PageState = "idle" | "submitting" | "result" | "error";
 
@@ -27,6 +28,8 @@ export default function SymptomCheckerPage() {
  const { tr } = useLanguage();
 
   const { t, language } = useLanguage();
+  const copy = symptomPrompts[language];
+  const [reviewingVoice, setReviewingVoice] = useState(false);
 
   const [description, setDescription] = useState("");
   const [durationDays, setDurationDays] = useState<string>("");
@@ -66,6 +69,7 @@ export default function SymptomCheckerPage() {
 
   const handleReset = () => {
     setDescription("");
+    setReviewingVoice(false);
     setDurationDays("");
     setSeverityScale(null);
     setTriageResult(null);
@@ -80,7 +84,8 @@ export default function SymptomCheckerPage() {
           {t("symptoms.title")}
         </h1>
         <p className="text-sm text-slate-500">
-          {tr("4-step progressive symptom assessment to determine routine, urgent, or emergency care guidance.")}</p>
+          {copy.intro}
+        </p>
       </div>
 
       {/* ── 4-Step Progressive Indicator Bar ─────────────────────── */}
@@ -127,7 +132,8 @@ export default function SymptomCheckerPage() {
         {/* Form Card */}
         <MedCard hoverEffect={false} className="space-y-6">
           <h2 className="font-semibold text-base text-[#161A24]">
-            {tr("Report Symptoms")}</h2>
+            {copy.report}
+          </h2>
 
           <form onSubmit={handleSubmit} className="space-y-6" noValidate>
             {/* Step 1: Experience */}
@@ -137,10 +143,12 @@ export default function SymptomCheckerPage() {
                   htmlFor="symptom-description"
                   className="block text-xs font-bold uppercase tracking-wider text-slate-700"
                 >
-                  {tr("Step 01 &bull; Describe your symptoms")}</label>
+                  {copy.describe}
+                </label>
                 <MedVoice
+                  disabled={pageState === "submitting"}
                   onTranscription={(text) =>
-                    setDescription((prev) => (prev ? `${prev} ${text}` : text))
+                    { setDescription((prev) => (prev ? `${prev} ${text}` : text)); setReviewingVoice(true); }
                   }
                 />
               </div>
@@ -150,9 +158,10 @@ export default function SymptomCheckerPage() {
                 rows={4}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder={tr("e.g. High fever for 3 days with chills, severe headache, and fatigue...")}
+                placeholder={copy.placeholder}
                 className="w-full p-3.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0F766E] focus:border-[#0F766E] resize-none"
               />
+              {reviewingVoice && <p role="status" className="text-sm text-slate-700">{copy.review}</p>}
             </div>
 
             {/* Step 2: Duration */}
@@ -161,7 +170,8 @@ export default function SymptomCheckerPage() {
                 htmlFor="duration-days"
                 className="block text-xs font-bold uppercase tracking-wider text-slate-700"
               >
-                {tr("Step 02 &bull; Duration (in days)")}</label>
+                {copy.duration}
+              </label>
               <input
                 id="duration-days"
                 type="number"
@@ -177,11 +187,13 @@ export default function SymptomCheckerPage() {
             {/* Step 3: Severity Large Choice Cards */}
             <div className="space-y-2">
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-                {tr("Step 03 &bull; How severe does it feel?")}</label>
+                {copy.severity}
+              </label>
               <div className="grid grid-cols-3 gap-2">
                 <button
                   type="button"
                   onClick={() => setSeverityScale(3)}
+                  aria-pressed={severityScale === 3}
                   className={`p-3 rounded-xl border text-center transition-all ${
                     severityScale !== null && severityScale <= 3
                       ? "bg-emerald-50 border-emerald-500 text-emerald-800 font-bold shadow-xs"
@@ -189,13 +201,14 @@ export default function SymptomCheckerPage() {
                   }`}
                 >
                   <Smile className="w-5 h-5 mx-auto mb-1 text-emerald-600" />
-                  <div className="text-xs">{tr("Mild")}</div>
-                  <div className="text-[10px] text-slate-400">{tr("1 &ndash; 3")}</div>
+                  <div className="text-xs">{copy.mild}</div>
+                  <div className="text-[10px] text-slate-400">1 &ndash; 3</div>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setSeverityScale(6)}
+                  aria-pressed={severityScale === 6}
                   className={`p-3 rounded-xl border text-center transition-all ${
                     severityScale !== null && severityScale > 3 && severityScale <= 7
                       ? "bg-amber-50 border-amber-500 text-amber-800 font-bold shadow-xs"
@@ -203,13 +216,14 @@ export default function SymptomCheckerPage() {
                   }`}
                 >
                   <Meh className="w-5 h-5 mx-auto mb-1 text-amber-600" />
-                  <div className="text-xs">{tr("Moderate")}</div>
-                  <div className="text-[10px] text-slate-400">{tr("4 &ndash; 7")}</div>
+                  <div className="text-xs">{copy.moderate}</div>
+                  <div className="text-[10px] text-slate-400">4 &ndash; 7</div>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setSeverityScale(9)}
+                  aria-pressed={severityScale === 9}
                   className={`p-3 rounded-xl border text-center transition-all ${
                     severityScale !== null && severityScale > 7
                       ? "bg-red-50 border-red-500 text-red-800 font-bold shadow-xs"
@@ -217,8 +231,8 @@ export default function SymptomCheckerPage() {
                   }`}
                 >
                   <Frown className="w-5 h-5 mx-auto mb-1 text-red-600" />
-                  <div className="text-xs">{tr("Severe")}</div>
-                  <div className="text-[10px] text-slate-400">{tr("8 &ndash; 10")}</div>
+                  <div className="text-xs">{copy.severe}</div>
+                  <div className="text-[10px] text-slate-400">8 &ndash; 10</div>
                 </button>
               </div>
             </div>
@@ -237,7 +251,7 @@ export default function SymptomCheckerPage() {
                 )
               }
             >
-              {pageState === "submitting" ? tr("Evaluating symptoms...") : tr("Submit for Triage")}
+              {pageState === "submitting" ? copy.busy : copy.send}
             </MedButton>
           </form>
 

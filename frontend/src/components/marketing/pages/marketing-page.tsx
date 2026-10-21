@@ -166,7 +166,8 @@ function ProductContent() {
       </Section>
       <Section id="healthcare-workers" label="CONTINUITY OF CARE" title="A place for authorized healthcare-worker involvement.">
         <p className={styles.intro}>The wider project scope includes assigned patient lists, patient-reported information, summaries, medication review, alerts, and follow-up management. Access must depend on patient consent and worker authorization.</p>
-        <p className={styles.note}>A dedicated healthcare-worker portal is not available in this frontend yet. This describes the approved project direction, not a connected clinical service.</p>
+        <p className={styles.note}>The healthcare-worker workspace supports authorized patient review, medication confirmation, and follow-up records. Accounts and patient assignments require administrator setup. These features do not establish clinical validation.</p>
+        <Link href="/hcw/patients">Open the protected worker workspace →</Link>
         <Link href="/technology#service-map" className={styles.learn}>Explore the service responsibilities <ArrowRight size={16} /></Link>
       </Section>
     </>

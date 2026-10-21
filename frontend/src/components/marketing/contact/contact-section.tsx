@@ -131,7 +131,7 @@ export const ContactSection: React.FC = () => {
               <CheckCircle2 className="w-10 h-10 mx-auto text-[#0F766E]" />
               <div className="font-serif text-xl font-bold">Message Received!</div>
               <p className="text-xs leading-relaxed text-slate-700">
-                Thank you for reaching out to MedGuide AI. Our team will review your query and respond shortly.
+                This is a demonstration. No message was sent and no response is promised.
               </p>
               <button
                 onClick={() => setSubmitted(false)}

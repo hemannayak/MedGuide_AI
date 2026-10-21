@@ -68,9 +68,9 @@ export function RagSection() {
           <strong>Relevant sources</strong>
           <div className={styles.sourceStack}>
             {[
-              ["WHO Guidelines", "Dizziness and Vertigo"],
-              ["ICMR Publication", "Common Causes of Dizziness"],
-              ["Medical Reference", "Evaluation and Management"],
+              ["Illustrative document A", "Example relevant passage"],
+              ["Illustrative document B", "Example source metadata"],
+              ["Illustrative document C", "Example retrieval result"],
             ].map(([title, subtitle]) => (
               <div key={title}>
                 <Files size={22} />

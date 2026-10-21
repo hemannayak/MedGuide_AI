@@ -4,7 +4,8 @@ import { api } from "@/lib/api/client";
 import { readSampleProfile } from "@/lib/profile/setup";
 import type { PatientProfile } from "@/types/user";
 export function usePatientProfile(){
+ const [revision,setRevision]=useState(0);
  const [profile,setProfile]=useState<PatientProfile|null>(null),[loading,setLoading]=useState(true),[error,setError]=useState('');
- useEffect(()=>{let active=true;api.getPatientProfile().then(result=>{if(!active)return;if(result.success&&result.data)setProfile(readSampleProfile() || result.data);else setError('Your profile could not be loaded. Please refresh to try again.');}).catch(()=>{if(active)setError('We could not connect to your profile. Please try again later.');}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[]);
- return {profile,loading,error};
+ useEffect(()=>{let active=true;api.getPatientProfile().then(result=>{if(!active)return;if(result.success&&result.data)setProfile(readSampleProfile() || result.data);else setError('Your profile could not be loaded. Please refresh to try again.');}).catch(()=>{if(active)setError('We could not connect to your profile. Please try again later.');}).finally(()=>{if(active)setLoading(false);});return()=>{active=false;};},[revision]);
+ return {profile,loading,error,refresh:()=>setRevision(value=>value+1)};
 }

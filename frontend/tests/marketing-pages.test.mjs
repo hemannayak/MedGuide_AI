@@ -60,13 +60,13 @@ test('service inventory matches the registered router modules without claiming l
  const published=[...html.replace(/<!--[\s\S]*?-->/g,'').matchAll(/<code>\/api\/v1([^<]+)<\/code>/g)].map(([,prefix])=>prefix).sort();
  assert.deepEqual(published,registered);
  assert.match(html,/not evidence that these services are deployed/);
- assert.match(html,/Speech and prescription routers are not registered/);
+ assert.match(html,/Speech and prescription routers are registered/);
  assert.doesNotMatch(html,/6,760|never hallucinates|ABDM Compliance/);
 });
-test('worker navigation explains its unavailable portal instead of linking to a missing route',()=>{
+test('worker navigation describes its protected workspace without claiming clinical validation',()=>{
  const html=page('product');
  assert.match(html,/id="healthcare-workers"/);
- assert.match(html,/dedicated healthcare-worker portal is not available/);
+ assert.match(html,/healthcare-worker workspace supports authorized patient review/);
  assert.match(page('index'),/href="\/product#healthcare-workers"/);
  assert.doesNotMatch(page('index'),/href="\/hcw"|href="\/admin\/activity"/);
 });

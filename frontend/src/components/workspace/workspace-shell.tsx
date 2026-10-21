@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { LayoutDashboard, MessageSquare, UserRound, LogOut, Menu, X, ArrowUpRight, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { Activity, FileText, Pill, Settings, LayoutDashboard, MessageSquare, UserRound, LogOut, Menu, X, ArrowUpRight, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { EmergencyBanner } from "@/components/common/emergency-banner";
 import { clearSession } from "@/lib/auth/session";
 import { isMockMode } from "@/lib/api/config";
@@ -12,27 +12,35 @@ import styles from "./workspace.module.css";
 const destinations = [
   {href:"/app/dashboard",label:"Home",Icon:LayoutDashboard},
   {href:"/app/chat",label:"Ask MedGuide",Icon:MessageSquare},
-  {href:"/app/information",label:"My information",Icon:UserRound},
+  {href:"/app/symptoms",label:"Symptom input",Icon:Activity},
+  {href:"/app/prescriptions",label:"Documents",Icon:FileText},
+  {href:"/app/medications",label:"Medications",Icon:Pill},
+  {href:"/app/timeline",label:"Health timeline",Icon:Activity},
+  {href:"/app/follow-ups",label:"Follow-ups",Icon:Activity},
+  {href:"/app/profile",label:"Profile",Icon:UserRound},
+  {href:"/app/settings",label:"Preferences",Icon:Settings},
 ];
-const informationRoutes = ["/app/guide","/app/profile", "/app/settings", "/app/prescriptions", "/app/medications", "/app/symptoms"];
-export function WorkspaceShell({children}:{children:ReactNode}) {
- const { tr } = useLanguage();
-
+const workerDestinations = [
+  { href: "/hcw/patients", label: "Authorized patients", Icon: UserRound },
+  { href: "/hcw/follow-ups", label: "Follow-ups", Icon: Activity },
+];
+export function WorkspaceShell({children, mode = "patient"}:{children:ReactNode;mode?:"patient"|"worker"}) {
+  const items = mode === "worker" ? workerDestinations : destinations;
   const pathname=usePathname(),router=useRouter();
-  const {language,setLanguage}=useLanguage();
+  const {language,setLanguage,tr}=useLanguage();
   const [collapsed,setCollapsed]=useState(false);
   const [open,setOpen]=useState(false);const trigger=useRef<HTMLButtonElement>(null);
   useEffect(()=>{if(!open)return;const escape=(event:KeyboardEvent)=>{if(event.key==='Escape'){setOpen(false);trigger.current?.focus();}};window.addEventListener('keydown',escape);return()=>window.removeEventListener('keydown',escape);},[open]);
-  const current=destinations.find(item=>pathname===item.href||pathname.startsWith(item.href+'/')) || (informationRoutes.some(route=>pathname===route||pathname.startsWith(route+'/'))?destinations[2]:undefined);
-  return <div lang={language} className={`${styles.workspace} ${collapsed?styles.collapsed:""}`}>
-    <a className={styles.skip} href="#workspace-content">{tr("Skip to workspace")}</a>
-    {open&&<button className={styles.backdrop} aria-label={tr("Close workspace navigation")} onClick={()=>setOpen(false)}/>}
-    <aside id="workspace-navigation" className={`${styles.sidebar} ${open?styles.open:''}`} aria-label={tr("Workspace navigation")}>
-      <Link href="/app/dashboard" aria-label={tr("MedGuide AI overview")} className={styles.brand} onClick={()=>setOpen(false)}><Image src="/medguide-mark.svg" alt="" width={32} height={32}/><span>MedGuide AI</span></Link>
+  const current=items.find(item=>pathname===item.href||pathname.startsWith(item.href+'/'));
+  return <div className={`${styles.workspace} ${collapsed?styles.collapsed:""}`}>
+    <a className={styles.skip} href="#workspace-content">Skip to workspace</a>
+    {open&&<button className={styles.backdrop} aria-label="Close workspace navigation" onClick={()=>setOpen(false)}/>}
+    <aside id="workspace-navigation" className={`${styles.sidebar} ${open?styles.open:''}`} aria-label="Workspace navigation">
+      <Link href={mode === "worker" ? "/hcw/patients" : "/app/dashboard"} aria-label="MedGuide AI overview" className={styles.brand} onClick={()=>setOpen(false)}><Image src="/medguide-mark.svg" alt="" width={32} height={32}/><span>MedGuide AI</span></Link>
 
-      <p className={styles.label}>{tr("YOUR HEALTH WORKSPACE")}</p>
-      <nav>{destinations.map(({href,label,Icon})=><Link key={href} href={href} aria-label={tr(label)} title={collapsed?tr(label):undefined} aria-current={current?.href===href?'page':undefined} onClick={()=>setOpen(false)}><Icon size={19} aria-hidden="true"/><span>{tr(label)}</span></Link>)}</nav>
-      <div className={styles.sidebarBottom}><Link href="/app/emergency" aria-label={tr("Emergency information")} title={collapsed?tr("Emergency information"):undefined}><ArrowUpRight size={18} aria-hidden="true"/><span>{tr("Emergency information")}</span></Link><Link href="/safety">{tr("Understand MedGuide’s limits")}</Link><button className={styles.collapseButton} type="button" aria-label={collapsed?tr("Expand sidebar"):tr("Collapse sidebar")} aria-expanded={!collapsed} aria-controls="workspace-navigation" onClick={()=>setCollapsed(!collapsed)}>{collapsed?<PanelLeftOpen size={20}/>:<PanelLeftClose size={20}/>}</button><button aria-label={tr("Sign out")} title={collapsed?tr("Sign out"):undefined} onClick={()=>{clearSession();router.replace('/login');}}><LogOut size={18} aria-hidden="true"/><span>{tr("Sign out")}</span></button></div>
+      <p className={styles.label}>{mode === "worker" ? "HEALTHCARE WORKER WORKSPACE" : "YOUR HEALTH WORKSPACE"}</p>
+      <nav>{items.map(({href,label,Icon})=><Link key={href} href={href} aria-label={label} title={collapsed?label:undefined} aria-current={current?.href===href?'page':undefined} onClick={()=>setOpen(false)}><Icon size={19} aria-hidden="true"/><span>{label}</span></Link>)}</nav>
+      <div className={styles.sidebarBottom}><Link href="/app/emergency" aria-label="Emergency information" title={collapsed?"Emergency information":undefined}><ArrowUpRight size={18} aria-hidden="true"/><span>Emergency information</span></Link><Link href="/safety">Understand MedGuide’s limits</Link><button className={styles.collapseButton} type="button" aria-label={collapsed?"Expand sidebar":"Collapse sidebar"} aria-expanded={!collapsed} aria-controls="workspace-navigation" onClick={()=>setCollapsed(!collapsed)}>{collapsed?<PanelLeftOpen size={20}/>:<PanelLeftClose size={20}/>}</button><button aria-label="Sign out" title={collapsed?"Sign out":undefined} onClick={()=>{clearSession();router.replace('/login');}}><LogOut size={18} aria-hidden="true"/><span>Sign out</span></button></div>
     </aside>
     <div className={styles.main}>
       <EmergencyBanner withinWorkspace />
