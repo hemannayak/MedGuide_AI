@@ -5,6 +5,12 @@
 **Version:** 3.1  
 **Status:** **M3 AUDITED & REVISED**  
 
+> Historical baseline: these implementation/test labels are not current release
+> evidence. Use [execution acceptance checklist](../testing/EXECUTION_ACCEPTANCE_CHECKLIST.md)
+> for the current web/Android gaps and named verification. In particular, an API
+> schedule test does not establish reminder delivery, and suite duration is not
+> a database latency benchmark.
+
 ---
 
 # 1. Executive Summary & Audit Correctness

@@ -1,0 +1,7 @@
+{
+  "status": "FAILED",
+  "error_type": "OSError",
+  "clinical_accuracy_evaluated": false,
+  "retrieval_accuracy_evaluated": false,
+  "live_index_modified": false
+}

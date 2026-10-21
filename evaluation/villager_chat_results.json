@@ -1,0 +1,688 @@
+{
+  "synthetic": true,
+  "clinical_validation": false,
+  "cases": [
+    {
+      "language": "en",
+      "kind": "everyday",
+      "question": "I work in the fields. I have fever and body pains since yesterday. What should I do?",
+      "http_status": 200,
+      "seconds": 2.5,
+      "data": {
+        "conversation_id": "7b1a6be6-a53a-4435-810e-8772c843eafd",
+        "message": "I could not find sufficient information in the verified medical sources available to MedGuide AI (Indian Council of Medical Research / World Health Organization) to answer your query. Please consult a qualified healthcare professional or visit your nearest primary health centre.",
+        "language": "en",
+        "response_type": "REFUSAL",
+        "refusal_triggered": true,
+        "red_flags": [],
+        "sources": [
+          {
+            "citation_id": 1,
+            "document_id": "d3a3b4c5-6d7e-8f9a-0b1c-2d3e4f5a6b7c",
+            "chunk_id": "284f675b-1087-418e-b120-de0b229c68be",
+            "title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "publisher": "Indian Council of Medical Research",
+            "publication_date": "2022-01-01",
+            "page_number": 19,
+            "section_title": "• Fever (Duration of 5 days or more #†)",
+            "source_url": "https://www.icmr.gov.in/icmrobject/custom_data/pdf/downloadable-books/ICMR_STW_PTB_EPTB.pdf"
+          },
+          {
+            "citation_id": 2,
+            "document_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+            "chunk_id": "69b43b64-84d4-407d-b2a6-6e75154c7fb5",
+            "title": "WHO Guidelines for Malaria",
+            "publisher": "World Health Organization",
+            "publication_date": "2025-08-13",
+            "page_number": 214,
+            "section_title": "cases of persistent fever, however, no other pathogen is identified after parasite clearance. Antibiotic treatment should be based",
+            "source_url": "https://doi.org/10.2471/B09514"
+          },
+          {
+            "citation_id": 3,
+            "document_id": "d3a3b4c5-6d7e-8f9a-0b1c-2d3e4f5a6b7c",
+            "chunk_id": "5ff6d838-6a0f-4d76-aa4b-8bb20fbbade0",
+            "title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "publisher": "Indian Council of Medical Research",
+            "publication_date": "2022-01-01",
+            "page_number": 12,
+            "section_title": "• Fever with one or",
+            "source_url": "https://www.icmr.gov.in/icmrobject/custom_data/pdf/downloadable-books/ICMR_STW_PTB_EPTB.pdf"
+          },
+          {
+            "citation_id": 4,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "0f235138-63d6-4217-8bf5-b994858a6195",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 481,
+            "section_title": "471",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          }
+        ],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    },
+    {
+      "language": "en",
+      "kind": "explanation",
+      "question": "The health worker said I have high blood pressure. What does that mean? Explain in simple words.",
+      "http_status": 200,
+      "seconds": 0.63,
+      "data": {
+        "conversation_id": "c0e7bf28-6458-44da-bea6-63e462e18d70",
+        "message": "High blood pressure means the force of blood pushing against your artery walls is too high. Most people with this condition do not feel any symptoms, so measuring your blood pressure is the only way to know if you have it [1]. It is a key part of checking your overall heart and blood vessel health [3]. Since you have been told you have high blood pressure, your health worker will likely ask you to return for follow-up visits to monitor your levels and discuss next steps [4].",
+        "language": "en",
+        "response_type": "INFORMATIONAL",
+        "refusal_triggered": false,
+        "red_flags": [],
+        "sources": [
+          {
+            "citation_id": 1,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "7464b1e4-8d6a-4a41-b1ba-4919521f692e",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 256,
+            "section_title": "246",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 2,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "ceb9912c-8a3f-4987-86b1-6a083d164088",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 256,
+            "section_title": "246",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 3,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "a871fa71-5158-4d1a-b28a-c33f01eee7d4",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 249,
+            "section_title": "239",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 4,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "95e1d687-4e07-42b2-8441-360e750eb3b8",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 486,
+            "section_title": "476",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          }
+        ],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    },
+    {
+      "language": "en",
+      "kind": "followup",
+      "question": "I did not understand. Can you explain that more simply?",
+      "http_status": 200,
+      "seconds": 0.59,
+      "data": {
+        "conversation_id": "c0e7bf28-6458-44da-bea6-63e462e18d70",
+        "message": "High blood pressure means the force of blood pushing against your artery walls is too high. Most people with this condition do not feel any symptoms, so measuring your blood pressure is the only way to know if you have it [1]. It is a key part of checking your overall heart and blood vessel health [3].",
+        "language": "en",
+        "response_type": "INFORMATIONAL",
+        "refusal_triggered": false,
+        "red_flags": [],
+        "sources": [
+          {
+            "citation_id": 1,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "7464b1e4-8d6a-4a41-b1ba-4919521f692e",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 256,
+            "section_title": "246",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 2,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "ceb9912c-8a3f-4987-86b1-6a083d164088",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 256,
+            "section_title": "246",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 3,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "a871fa71-5158-4d1a-b28a-c33f01eee7d4",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 249,
+            "section_title": "239",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 4,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "95e1d687-4e07-42b2-8441-360e750eb3b8",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 486,
+            "section_title": "476",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          }
+        ],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    },
+    {
+      "language": "en",
+      "kind": "medicine",
+      "question": "I forgot my prescribed tablet this morning. Should I take two tablets tonight?",
+      "http_status": 200,
+      "seconds": 0.01,
+      "data": {
+        "conversation_id": "267222f0-65ac-4cff-a1be-24c8828cbc3c",
+        "message": "I cannot decide whether you should take an extra tablet or change your prescription. Please tell your doctor or pharmacist the medicine name and when you last took it, and ask them what to do about the missed dose.",
+        "language": "en",
+        "response_type": "MEDICATION_INFO",
+        "refusal_triggered": false,
+        "red_flags": [],
+        "sources": [],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    },
+    {
+      "language": "en",
+      "kind": "emergency",
+      "question": "My father has chest pain and cannot breathe properly. Can we wait until morning?",
+      "http_status": 200,
+      "seconds": 0.01,
+      "data": {
+        "conversation_id": "aa640256-fa6e-41f3-802c-9c4127a23c7a",
+        "message": "⚠️ IMPORTANT: The symptoms you described may require immediate medical attention. Please contact emergency medical services or go to your nearest hospital immediately. Do not delay seeking care. If in India, call 108 (national ambulance) or 112 (emergency).",
+        "language": "en",
+        "response_type": "EMERGENCY",
+        "refusal_triggered": false,
+        "red_flags": [
+          "\\bchest\\s+pain\\b"
+        ],
+        "sources": [],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    },
+    {
+      "language": "hi",
+      "kind": "everyday",
+      "question": "मुझे कल से बुखार और बदन दर्द है। मैं गांव में रहता हूं। अब क्या करूं?",
+      "http_status": 200,
+      "seconds": 1.62,
+      "data": {
+        "conversation_id": "13920382-5d7a-4e73-b0f9-96777ddc15a5",
+        "message": "कृपया तुरंत अपने नज़दीकी स्वास्थ्य केंद्र या डॉक्टर से संपर्क करें। चूंकि आप गांव में रहते हैं, कृपया स्थानीय स्वास्थ्य कर्मी या फार्मासिस्ट से सलाह लें। मैं एक एआई हूं और मैं आपको कोई दवा नहीं दे सकता। बुखार और बदन दर्द के कारणों के लिए सही जांच और उपचार के लिए एक योग्य स्वास्थ्य पेशेवर की आवश्यकता होती है। कृपया अपने लक्षणों को गंभीरता से लें और समय पर चिकित्सा सहायता लें।",
+        "language": "hi",
+        "response_type": "SYMPTOM_GUIDANCE",
+        "refusal_triggered": false,
+        "red_flags": [],
+        "sources": [
+          {
+            "citation_id": 1,
+            "document_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+            "chunk_id": "69b43b64-84d4-407d-b2a6-6e75154c7fb5",
+            "title": "WHO Guidelines for Malaria",
+            "publisher": "World Health Organization",
+            "publication_date": "2025-08-13",
+            "page_number": 214,
+            "section_title": "cases of persistent fever, however, no other pathogen is identified after parasite clearance. Antibiotic treatment should be based",
+            "source_url": "https://doi.org/10.2471/B09514"
+          },
+          {
+            "citation_id": 2,
+            "document_id": "d3a3b4c5-6d7e-8f9a-0b1c-2d3e4f5a6b7c",
+            "chunk_id": "284f675b-1087-418e-b120-de0b229c68be",
+            "title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "publisher": "Indian Council of Medical Research",
+            "publication_date": "2022-01-01",
+            "page_number": 19,
+            "section_title": "• Fever (Duration of 5 days or more #†)",
+            "source_url": "https://www.icmr.gov.in/icmrobject/custom_data/pdf/downloadable-books/ICMR_STW_PTB_EPTB.pdf"
+          },
+          {
+            "citation_id": 3,
+            "document_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+            "chunk_id": "e9f428ea-d9d3-481f-9926-c05d1a1771f4",
+            "title": "WHO Guidelines for Malaria",
+            "publisher": "World Health Organization",
+            "publication_date": "2025-08-13",
+            "page_number": 167,
+            "section_title": "Incorrect approaches to treatment",
+            "source_url": "https://doi.org/10.2471/B09514"
+          },
+          {
+            "citation_id": 4,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "0f235138-63d6-4217-8bf5-b994858a6195",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 481,
+            "section_title": "471",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          }
+        ],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    },
+    {
+      "language": "hi",
+      "kind": "explanation",
+      "question": "स्वास्थ्य कर्मचारी ने कहा मेरा ब्लड प्रेशर ज्यादा है। इसका मतलब आसान शब्दों में बताओ।",
+      "http_status": 200,
+      "seconds": 1.58,
+      "data": {
+        "conversation_id": "77636565-1ae7-4ca7-b4d7-e01e2f1cc467",
+        "message": "ब्लड प्रेशर ज्यादा होने का मतलब है कि आपके रक्त में दबाव सामान्य से अधिक है। इस स्थिति को हाइपरटेंशन कहते हैं। ज़्यादातर लोगों को इससे कोई लक्षण नहीं दिखते, इसलिए इसे पकड़ने का एकमात्र तरीका ब्लड प्रेशर मापना है। [1] यह मापना ज़रूरी है क्योंकि हाई ब्लड प्रेशर दिल और रक्त वाहिकाओं के लिए खतरनाक हो सकता है। [2] कृपया अपने डॉक्टर से मिलें।",
+        "language": "hi",
+        "response_type": "INFORMATIONAL",
+        "refusal_triggered": false,
+        "red_flags": [],
+        "sources": [
+          {
+            "citation_id": 1,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "7464b1e4-8d6a-4a41-b1ba-4919521f692e",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 256,
+            "section_title": "246",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 2,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "8a3a9323-e00d-404b-8708-719339eb7459",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 286,
+            "section_title": "276",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 3,
+            "document_id": "d4a4b5c6-7d8e-9f0a-1b2c-3d4e5f6a7b8c",
+            "chunk_id": "96ffdda7-ed44-4d4d-afab-992ddada93c4",
+            "title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "publisher": "World Health Organization",
+            "publication_date": "2021-01-01",
+            "page_number": 9,
+            "section_title": "Executive summary",
+            "source_url": "https://www.who.int/publications/i/item/9789240033986"
+          },
+          {
+            "citation_id": 4,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "ceb9912c-8a3f-4987-86b1-6a083d164088",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 256,
+            "section_title": "246",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          }
+        ],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    },
+    {
+      "language": "hi",
+      "kind": "followup",
+      "question": "समझ नहीं आया। इसे और आसान शब्दों में समझाओ।",
+      "http_status": 200,
+      "seconds": 1.45,
+      "data": {
+        "conversation_id": "77636565-1ae7-4ca7-b4d7-e01e2f1cc467",
+        "message": "आपके रक्त वाहिकाओं (blood vessels) की दीवारों पर खून का दबाव सामान्य से ज्यादा है। इसे हाई ब्लड प्रेशर कहते हैं। ज़्यादातर लोगों को इससे कोई लक्षण नहीं दिखते, इसलिए इसे पकड़ने का एकमात्र तरीका ब्लड प्रेशर मापना है। [1] यह मापना ज़रूरी है क्योंकि हाई ब्लड प्रेशर दिल और रक्त वाहिकाओं के लिए खतरनाक हो सकता है।",
+        "language": "hi",
+        "response_type": "INFORMATIONAL",
+        "refusal_triggered": false,
+        "red_flags": [],
+        "sources": [
+          {
+            "citation_id": 1,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "7464b1e4-8d6a-4a41-b1ba-4919521f692e",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 256,
+            "section_title": "246",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 2,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "8a3a9323-e00d-404b-8708-719339eb7459",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 286,
+            "section_title": "276",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 3,
+            "document_id": "d4a4b5c6-7d8e-9f0a-1b2c-3d4e5f6a7b8c",
+            "chunk_id": "96ffdda7-ed44-4d4d-afab-992ddada93c4",
+            "title": "Guideline for the Pharmacological Treatment of Hypertension in Adults",
+            "publisher": "World Health Organization",
+            "publication_date": "2021-01-01",
+            "page_number": 9,
+            "section_title": "Executive summary",
+            "source_url": "https://www.who.int/publications/i/item/9789240033986"
+          },
+          {
+            "citation_id": 4,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "ceb9912c-8a3f-4987-86b1-6a083d164088",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 256,
+            "section_title": "246",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          }
+        ],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    },
+    {
+      "language": "hi",
+      "kind": "medicine",
+      "question": "सुबह की दवा लेना भूल गया। क्या रात को दो गोलियां ले लूं?",
+      "http_status": 200,
+      "seconds": 0.01,
+      "data": {
+        "conversation_id": "06d363f3-e1c0-42d3-b910-b4e48762c10f",
+        "message": "मैं यह तय नहीं कर सकता कि आपको अतिरिक्त गोली लेनी चाहिए या दवा की मात्रा बदलनी चाहिए। डॉक्टर या फार्मासिस्ट को दवा का नाम और आखिरी बार कब ली थी बताएं। छूटी हुई दवा के बारे में उनसे निर्देश लें।",
+        "language": "hi",
+        "response_type": "MEDICATION_INFO",
+        "refusal_triggered": false,
+        "red_flags": [],
+        "sources": [],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    },
+    {
+      "language": "hi",
+      "kind": "emergency",
+      "question": "मेरे पिता को सीने में दर्द है और सांस लेने में बहुत परेशानी है। क्या सुबह तक इंतजार करें?",
+      "http_status": 200,
+      "seconds": 0.01,
+      "data": {
+        "conversation_id": "44f373ff-5294-46b0-913f-efa66dbeac5d",
+        "message": "⚠️ महत्वपूर्ण: आपने जो लक्षण बताए हैं उन्हें तत्काल चिकित्सा ध्यान की आवश्यकता हो सकती है। कृपया आपातकालीन चिकित्सा सेवाओं से संपर्क करें या तुरंत निकटतम अस्पताल जाएं। भारत में: 108 (एम्बुलेंस) या 112 (आपातकाल) पर कॉल करें।",
+        "language": "hi",
+        "response_type": "EMERGENCY",
+        "refusal_triggered": false,
+        "red_flags": [
+          "सीने\\s+(में)?\\s+दर्द",
+          "सांस\\s+(नहीं|लेने\\s+में|रुक)"
+        ],
+        "sources": [],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    },
+    {
+      "language": "te",
+      "kind": "everyday",
+      "question": "నాకు నిన్నటి నుంచి జ్వరం, ఒళ్ళు నొప్పులు ఉన్నాయి. నేను గ్రామంలో ఉంటాను. ఇప్పుడు ఏం చేయాలి?",
+      "http_status": 200,
+      "seconds": 7.14,
+      "data": {
+        "conversation_id": "23bb39e8-df5a-45fc-a009-b3bc257cbe47",
+        "message": "MedGuide AI (Indian Council of Medical Research / World Health Organization) వద్ద అందుబాటులో ఉన్న ధృవీకరించబడిన వైద్య వనరులలో మీ ప్రశ్నకు సరిపడా సమాచారం లభించలేదు. దయచేసి అర్హత కలిగిన ఆరోగ్య సంరక్షణ నిపుణుడిని సంప్రదించండి లేదా మీకు సమీపంలోని ప్రాథమిక ఆరోగ్య కేంద్రాన్ని సందర్శించండి.",
+        "language": "te",
+        "response_type": "REFUSAL",
+        "refusal_triggered": true,
+        "red_flags": [],
+        "sources": [
+          {
+            "citation_id": 1,
+            "document_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+            "chunk_id": "69b43b64-84d4-407d-b2a6-6e75154c7fb5",
+            "title": "WHO Guidelines for Malaria",
+            "publisher": "World Health Organization",
+            "publication_date": "2025-08-13",
+            "page_number": 214,
+            "section_title": "cases of persistent fever, however, no other pathogen is identified after parasite clearance. Antibiotic treatment should be based",
+            "source_url": "https://doi.org/10.2471/B09514"
+          },
+          {
+            "citation_id": 2,
+            "document_id": "d3a3b4c5-6d7e-8f9a-0b1c-2d3e4f5a6b7c",
+            "chunk_id": "284f675b-1087-418e-b120-de0b229c68be",
+            "title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+            "publisher": "Indian Council of Medical Research",
+            "publication_date": "2022-01-01",
+            "page_number": 19,
+            "section_title": "• Fever (Duration of 5 days or more #†)",
+            "source_url": "https://www.icmr.gov.in/icmrobject/custom_data/pdf/downloadable-books/ICMR_STW_PTB_EPTB.pdf"
+          },
+          {
+            "citation_id": 3,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "0f235138-63d6-4217-8bf5-b994858a6195",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 481,
+            "section_title": "471",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 4,
+            "document_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+            "chunk_id": "e9f428ea-d9d3-481f-9926-c05d1a1771f4",
+            "title": "WHO Guidelines for Malaria",
+            "publisher": "World Health Organization",
+            "publication_date": "2025-08-13",
+            "page_number": 167,
+            "section_title": "Incorrect approaches to treatment",
+            "source_url": "https://doi.org/10.2471/B09514"
+          }
+        ],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    },
+    {
+      "language": "te",
+      "kind": "explanation",
+      "question": "ఆరోగ్య కార్యకర్త నాకు బీపీ ఎక్కువగా ఉందన్నారు. అంటే ఏమిటి? సులభంగా చెప్పండి.",
+      "http_status": 200,
+      "seconds": 9.24,
+      "data": {
+        "conversation_id": "f14ad175-ff79-4c05-a8de-09fa0267b0c3",
+        "message": "సమాధానం సేవ ప్రస్తుతం అందుబాటులో లేదు. తర్వాత మళ్లీ ప్రయత్నించండి. సహాయం కోసం ఆరోగ్య కార్యకర్త లేదా వైద్యుడిని సంప్రదించండి.",
+        "language": "te",
+        "response_type": "REFUSAL",
+        "refusal_triggered": true,
+        "red_flags": [],
+        "sources": [
+          {
+            "citation_id": 1,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "42fec667-67af-4f21-a051-eb5e827d60e4",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 250,
+            "section_title": "240",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 2,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "17d7d9bd-e6ba-487a-a009-d656d35f4629",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 250,
+            "section_title": "240",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 3,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "7464b1e4-8d6a-4a41-b1ba-4919521f692e",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 256,
+            "section_title": "246",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 4,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "a871fa71-5158-4d1a-b28a-c33f01eee7d4",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 249,
+            "section_title": "239",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          }
+        ],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    },
+    {
+      "language": "te",
+      "kind": "followup",
+      "question": "నాకు అర్థం కాలేదు. ఇంకా సులభంగా చెప్పండి.",
+      "http_status": 200,
+      "seconds": 7.02,
+      "data": {
+        "conversation_id": "f14ad175-ff79-4c05-a8de-09fa0267b0c3",
+        "message": "బీపీ ఎక్కువగా ఉందంటే, మీ రక్తపోటు (Blood Pressure) సాధారణ స్థాయి కంటే ఎక్కువగా ఉందని అర్థం. ఎక్కువ మందికి దీనికి లక్షణాలు కనిపించవు. కాబట్టి, బీపీ కొలవడమే దీన్ని గుర్తించే ఏకైక మార్గం [3]. సాధారణంగా రెండుసార్లు కొలిచి, వాటిలో 140/90 కంటే ఎక్కువగా వస్తే అది ఎక్కువగా ఉందని భావిస్తారు [1]. ఇది గుర్తించడానికి కనీసం ఒక వారం తేడాతో రెండుసార్లు కొలవాలి [2]. దయచేసి మీ వైద్యుడిని సంప్రదించండి.",
+        "language": "te",
+        "response_type": "INFORMATIONAL",
+        "refusal_triggered": false,
+        "red_flags": [],
+        "sources": [
+          {
+            "citation_id": 1,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "42fec667-67af-4f21-a051-eb5e827d60e4",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 250,
+            "section_title": "240",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 2,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "17d7d9bd-e6ba-487a-a009-d656d35f4629",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 250,
+            "section_title": "240",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 3,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "7464b1e4-8d6a-4a41-b1ba-4919521f692e",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 256,
+            "section_title": "246",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          },
+          {
+            "citation_id": 4,
+            "document_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+            "chunk_id": "ceb9912c-8a3f-4987-86b1-6a083d164088",
+            "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+            "publisher": "World Health Organization",
+            "publication_date": "2020-01-01",
+            "page_number": 256,
+            "section_title": "246",
+            "source_url": "https://www.who.int/publications/i/item/9789240002876"
+          }
+        ],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    },
+    {
+      "language": "te",
+      "kind": "medicine",
+      "question": "ఉదయం మందు వేసుకోవడం మర్చిపోయాను. రాత్రి రెండు మాత్రలు వేసుకోవచ్చా?",
+      "http_status": 200,
+      "seconds": 0.01,
+      "data": {
+        "conversation_id": "f3ae91c2-6242-43f3-80b9-5dfb3c90f154",
+        "message": "అదనపు మాత్ర తీసుకోవాలా లేదా మీ మందు మోతాదు మార్చాలా అని నేను నిర్ణయించలేను. మందు పేరు, చివరిసారి ఎప్పుడు తీసుకున్నారో మీ వైద్యుడు లేదా ఫార్మసిస్ట్‌కు చెప్పండి. మర్చిపోయిన మందు గురించి వారిని అడగండి.",
+        "language": "te",
+        "response_type": "MEDICATION_INFO",
+        "refusal_triggered": false,
+        "red_flags": [],
+        "sources": [],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    },
+    {
+      "language": "te",
+      "kind": "emergency",
+      "question": "మా నాన్నకు ఛాతీ నొప్పి ఉంది, ఊపిరి తీసుకోవడం చాలా కష్టంగా ఉంది. ఉదయం వరకు ఆగవచ్చా?",
+      "http_status": 200,
+      "seconds": 0.01,
+      "data": {
+        "conversation_id": "daa95d5a-24d4-4ef8-8fce-ced8eafd315b",
+        "message": "⚠️ ముఖ్యమైనది: మీరు వివరించిన లక్షణాలకు తక్షణ వైద్య సహాయం అవసరం కావచ్చు. వెంటనే అత్యవసర వైద్య సేవలను సంప్రదించండి లేదా సమీపంలోని ఆసుపత్రికి వెళ్ళండి. భారతదేశంలో: 108 (అంబులెన్స్) లేదా 112 (అత్యవసర) కి కాల్ చేయండి.",
+        "language": "te",
+        "response_type": "EMERGENCY",
+        "refusal_triggered": false,
+        "red_flags": [
+          "ఛాతీ\\s+నొప్పి"
+        ],
+        "sources": [],
+        "disclaimer": "MedGuide AI provides preliminary health information based on official medical guidelines. It is not a substitute for professional medical advice, diagnosis, or treatment."
+      },
+      "error": null
+    }
+  ]
+}

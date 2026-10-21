@@ -1,0 +1,8 @@
+{
+  "scope": "Rendered policy paragraph foreground and background only",
+  "foreground": "rgb(7,61,55)",
+  "background": "rgb(252,252,250)",
+  "contrast_ratio": 11.81,
+  "normal_text_4_5_threshold_passed": true,
+  "full_site_accessibility_certified": false
+}

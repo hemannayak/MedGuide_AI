@@ -1,0 +1,93 @@
+@startuml
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundCorner 10
+skinparam dpi 220
+skinparam ArrowColor #344B61
+skinparam LineColor #344B61
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam defaultTextAlignment center
+skinparam rectangleBackgroundColor #EFF4F8
+skinparam componentBackgroundColor #EFF4F8
+skinparam databaseBackgroundColor #EFF4F8
+skinparam entityBackgroundColor #EFF4F8
+skinparam sequenceParticipantBackgroundColor #EFF4F8
+skinparam sequenceGroupBackgroundColor #FFFFFF
+hide circle
+skinparam linetype ortho
+top to bottom direction
+entity users {
+ * user_id : SERIAL <<PK>>
+ --
+ email : VARCHAR(255) <<UQ>>
+ hashed_password : VARCHAR(255)
+ full_name : VARCHAR(120)
+ is_active : BOOLEAN
+}
+entity patient_profiles {
+ * profile_id : SERIAL <<PK>>
+ --
+ * user_id : INT <<FK, UQ>>
+ age : INT
+ biological_sex : VARCHAR(20)
+ known_allergies : TEXT
+ chronic_conditions : TEXT
+}
+entity symptom_records {
+ * record_id : SERIAL <<PK>>
+ --
+ * user_id : INT <<FK>>
+ raw_input_text : TEXT
+ extracted_symptoms : JSONB
+ duration_descriptor : VARCHAR(50)
+ perceived_severity : VARCHAR(20)
+ is_emergency_flagged : BOOLEAN
+}
+entity conversations {
+ * conversation_id : SERIAL <<PK>>
+ --
+ * user_id : INT <<FK>>
+ title : VARCHAR(200)
+ started_at : TIMESTAMPTZ
+ ended_at : TIMESTAMPTZ
+}
+entity messages {
+ * message_id : SERIAL <<PK>>
+ --
+ * conversation_id : INT <<FK>>
+ sender_type : VARCHAR(10)
+ content : TEXT
+ assigned_risk_tier : VARCHAR(50)
+ bypassed_ai : BOOLEAN
+ retrieval_latency_ms : INT
+}
+entity medical_documents {
+ * document_id : SERIAL <<PK>>
+ --
+ title : VARCHAR(255)
+ author_publisher : VARCHAR(255)
+ publication_year : INT
+ file_path : VARCHAR(512)
+}
+entity medical_knowledge_chunks {
+ * chunk_id : SERIAL <<PK>>
+ --
+ * document_id : INT <<FK>>
+ chapter : VARCHAR(150)
+ chunk_index : INT
+ chunk_text : TEXT
+ token_count : INT
+ embedding : vector(384)
+}
+users ||-right-o| patient_profiles
+users ||-down-o{ conversations
+users ||-down-o{ symptom_records
+conversations ||-down-o{ messages
+medical_documents ||-right-o{ medical_knowledge_chunks
+conversations -[hidden]right-> symptom_records
+messages -[hidden]down-> medical_documents
+
+@enduml

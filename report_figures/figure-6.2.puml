@@ -1,0 +1,54 @@
+@startuml
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundCorner 10
+skinparam dpi 220
+skinparam ArrowColor #344B61
+skinparam LineColor #344B61
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam defaultTextAlignment center
+skinparam rectangleBackgroundColor #EFF4F8
+skinparam componentBackgroundColor #EFF4F8
+skinparam databaseBackgroundColor #EFF4F8
+skinparam entityBackgroundColor #EFF4F8
+skinparam sequenceParticipantBackgroundColor #EFF4F8
+skinparam sequenceGroupBackgroundColor #FFFFFF
+hide footbox
+skinparam sequenceMessageAlign center
+skinparam maxMessageSize 170
+autonumber "[00]"
+participant "Next.js\nclient" as Client
+participant "FastAPI\ngateway" as API
+participant "Safety\ngate" as Gate
+database "PostgreSQL\n+ pgvector" as DB
+participant "Local Ollama\nLlama 3.2:3B" as LLM
+Client -> API : POST symptom input
+API -> Gate : Evaluate raw input
+alt Case A: Emergency override
+ Gate --> API : Red flags matched
+ API --> Client : Tier 1 emergency response\nBypass retrieval and inference
+else Case B: Non-emergency RAG
+ Gate --> API : No red flags
+ API -> API : Compute query embedding
+ API -> DB : Vector similarity search
+ DB --> API : Passages + source metadata
+ API -> API : Check evidence sufficiency
+ note right of API
+ Insufficient evidence:
+ return safe fallback;
+ skip model generation.
+ end note
+ group Sufficient evidence
+ API -> API : Assemble constrained prompt
+ API -> LLM : Prompt + retrieved context
+ LLM --> API : Generated response
+ API -> API : Validate and format response
+ API -> DB : Persist conversation and response
+ API --> Client : Guidance + risk + citations
+ end
+end
+
+@enduml

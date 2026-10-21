@@ -1,0 +1,27 @@
+@startuml
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundCorner 10
+skinparam dpi 220
+skinparam ArrowColor #344B61
+skinparam LineColor #344B61
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam defaultTextAlignment center
+skinparam rectangleBackgroundColor #EFF4F8
+skinparam componentBackgroundColor #EFF4F8
+skinparam databaseBackgroundColor #EFF4F8
+skinparam entityBackgroundColor #EFF4F8
+skinparam sequenceParticipantBackgroundColor #EFF4F8
+skinparam sequenceGroupBackgroundColor #FFFFFF
+start
+:Clinical PDF\nSource and provenance metadata;
+:Text extraction and cleaning\nNormalize whitespace and remove artifacts;
+:600-word chunks\n100-word overlap in Section 7.4 code;
+:384-dimensional embeddings\nEncode each chunk;
+:PostgreSQL + pgvector\nStore chunks, vectors and source metadata;
+stop
+
+@enduml

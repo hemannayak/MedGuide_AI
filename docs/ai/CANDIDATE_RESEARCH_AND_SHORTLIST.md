@@ -67,3 +67,14 @@ It evaluates candidates against the project's primary constraints:
 # 6. Benchmark & ADR Plan
 
 All shortlisted models will undergo formal evaluation on the datasets defined in `MODEL_SELECTION_AND_EVALUATION.md`. Results will be committed to `MODEL_REGISTRY.md` and finalized via individual ADRs (`docs/architecture/decisions/`).
+
+## Literature-derived candidates approved for evaluation (2026-10-03)
+
+The user approved evaluating MuRIL for intent/entity understanding, IndicSBERT
+and multilingual E5-small for retrieval, and distilled IndicTrans2 for local
+query translation. These are candidates, not production model selections.
+Their datasets, exact model IDs, inspected source/license information and
+integration criteria are in
+[Research resource adoption](../data/RESEARCH_RESOURCE_ADOPTION.md) and its
+[manifest](../data/research_resources.json). Existing runtime models remain the
+baseline until comparative evaluation and registry approval are completed.

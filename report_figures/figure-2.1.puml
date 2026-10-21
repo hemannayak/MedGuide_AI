@@ -1,0 +1,28 @@
+@startuml
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundCorner 10
+skinparam dpi 220
+skinparam ArrowColor #344B61
+skinparam LineColor #344B61
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam defaultTextAlignment center
+skinparam rectangleBackgroundColor #EFF4F8
+skinparam componentBackgroundColor #EFF4F8
+skinparam databaseBackgroundColor #EFF4F8
+skinparam entityBackgroundColor #EFF4F8
+skinparam sequenceParticipantBackgroundColor #EFF4F8
+skinparam sequenceGroupBackgroundColor #FFFFFF
+top to bottom direction
+rectangle "Traditional rule systems\nDeterministic pathways" as Rules
+rectangle "Commercial cloud LLMs\nConversational interaction" as Cloud
+rectangle "SAHA multilingual benchmark\nDialogue and semantic representation" as Saha
+rectangle "Proposed hybrid safety RAG\nDeterministic safety + retrieval\n+ local generation" as Hybrid #EAF4EF
+Rules --> Saha : Safety and structure
+Cloud --> Saha : Language interaction
+Saha --> Hybrid : Literature synthesis
+
+@enduml

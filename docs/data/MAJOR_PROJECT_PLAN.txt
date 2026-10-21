@@ -1,0 +1,89 @@
+MedGuide AI — Major Project Plan
+
+Build the verified knowledge base and symptom checker together, then use
+experiments to choose models. Keep the existing architecture and improve it
+incrementally.
+
+1. Define what the symptom checker supports
+
+List the symptom groups, patient populations, and information needed, such as
+duration, severity, and associated symptoms. Establish where the system can
+provide guidance, request clarification, or escalate.
+
+2. Collect and review authoritative documents
+
+Select relevant MoHFW, ICMR, and WHO publications. Record versions,
+applicability, permissions, and exact source sections. The proposed 40–60
+documents is a planning estimate; coverage determines the final number.
+
+3. Build two separate medical resources
+
+- RAG knowledge base: reviewed passages for explanations and citations.
+- Triage rule register: source-backed conditions and escalation actions.
+
+The model must not invent medical rules.
+
+4. Prepare the research datasets
+
+Use eligible IHQID examples for healthcare intent/entity understanding,
+permitted MedQuAD subsets for consumer QA, and IndicMSMARCO for general
+multilingual retrieval evaluation. Additional reviewed symptom-specific
+examples are needed because these datasets do not provide a complete triage
+checker.
+
+5. Compare models in isolation
+
+- Existing embeddings versus IndicSBERT and E5-small for retrieval.
+- MuRIL for intent/entity extraction after suitable training data is available.
+- IndicTrans2 for local Hindi/Telugu query translation.
+
+Keep separate indexes for different embedding models. Measure English, Hindi,
+and Telugu independently.
+
+6. Connect the symptom-checking flow
+
+Patient description
+    -> Extract symptoms and relevant context
+    -> Clarify missing or ambiguous information
+    -> Apply documented safety rules
+    -> Escalate, or retrieve supported general guidance
+    -> Validate the response and show sources
+
+7. Evaluate before promoting changes
+
+Measure missed red flags, false alarms, extraction errors, retrieval relevance,
+citation correctness, unsupported claims, translation errors, latency, and
+memory. Include negation, indirect descriptions, code-mixing, and unavailable
+services.
+
+8. Integrate successful candidates into the full platform
+
+Connect patient records, healthcare-worker review, alerts, and follow-ups.
+Verify the complete workflow.
+
+Current status
+
+The shortlist and adoption plan are recorded. Downloads, dataset preparation,
+model comparisons, and runtime integration for this shortlist have not happened
+yet.
+
+Next step
+
+The first source identity/currency/rights audit and symptom coverage map are now
+recorded. All four local PDF hashes match the registry, but that alone does not
+establish clinical validity or permission for reuse.
+
+Findings: the local PEN file is a 2018 training publication despite its 2020
+filename; the malaria edition is superseded by the WHO September 2026 edition;
+the ICMR document states prior permission for reproduction/transmission; and
+existing symptom rules need exact source sections and applicability mapping.
+
+Next: review exact emergency/respiratory source sections and current malaria
+material, resolve source permissions/metadata, and prepare source-linked labels.
+
+Related details
+
+docs/data/RESEARCH_RESOURCE_ADOPTION.md
+docs/data/research_resources.json
+docs/data/MEDICAL_SOURCE_AUDIT.md
+docs/data/SYMPTOM_COVERAGE_MAP.md

@@ -1,0 +1,66 @@
+{
+  "original_body_elements_unchanged": 1418,
+  "original_package_parts_byte_identical": 12,
+  "new_figures": 8,
+  "original_images_preserved": 5,
+  "max_width_cm": 15.5,
+  "figures": [
+    {
+      "figure": "1.1",
+      "width_cm": 15.5,
+      "height_cm": 10.851,
+      "anchor_paragraph": 53,
+      "existing_caption_reused": false
+    },
+    {
+      "figure": "2.1",
+      "width_cm": 15.5,
+      "height_cm": 11.737,
+      "anchor_paragraph": 137,
+      "existing_caption_reused": false
+    },
+    {
+      "figure": "4.2",
+      "width_cm": 15.5,
+      "height_cm": 19.901,
+      "anchor_paragraph": 237,
+      "existing_caption_reused": false
+    },
+    {
+      "figure": "6.1",
+      "width_cm": 15.5,
+      "height_cm": 11.447,
+      "anchor_paragraph": 544,
+      "existing_caption_reused": false
+    },
+    {
+      "figure": "6.2",
+      "width_cm": 14.114,
+      "height_cm": 21.0,
+      "anchor_paragraph": 586,
+      "existing_caption_reused": false
+    },
+    {
+      "figure": "7.1",
+      "width_cm": 15.5,
+      "height_cm": 15.741,
+      "anchor_paragraph": 953,
+      "existing_caption_reused": false
+    },
+    {
+      "figure": "7.2",
+      "width_cm": 15.5,
+      "height_cm": 15.741,
+      "anchor_paragraph": 1119,
+      "existing_caption_reused": false
+    },
+    {
+      "figure": "8.1",
+      "width_cm": 15.5,
+      "height_cm": 18.455,
+      "anchor_paragraph": 1195,
+      "existing_caption_reused": true
+    }
+  ],
+  "output": "C:\\Hemanth\\Projects\\MedGuide_AI\\report_figures\\Minor Project Report - Required Figures.docx"
+}

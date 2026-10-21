@@ -1,0 +1,48 @@
+{
+  "synthetic": true,
+  "clinical_accuracy_evaluated": false,
+  "results": [
+    {
+      "provider": "ollama",
+      "model": "qwen3:4b",
+      "language": "English",
+      "passed": true,
+      "seconds": 4.51
+    },
+    {
+      "provider": "ollama",
+      "model": "qwen3:4b",
+      "language": "Hindi",
+      "passed": true,
+      "seconds": 3.35
+    },
+    {
+      "provider": "ollama",
+      "model": "qwen3:4b",
+      "language": "Telugu",
+      "passed": true,
+      "seconds": 3.75
+    },
+    {
+      "provider": "sarvam",
+      "model": "sarvam-105b-conversations",
+      "language": "English",
+      "passed": true,
+      "seconds": 0.27
+    },
+    {
+      "provider": "sarvam",
+      "model": "sarvam-105b-conversations",
+      "language": "Hindi",
+      "passed": true,
+      "seconds": 0.19
+    },
+    {
+      "provider": "sarvam",
+      "model": "sarvam-105b-conversations",
+      "language": "Telugu",
+      "passed": true,
+      "seconds": 0.22
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+@startuml
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundCorner 10
+skinparam dpi 220
+skinparam ArrowColor #344B61
+skinparam LineColor #344B61
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam defaultTextAlignment center
+skinparam rectangleBackgroundColor #EFF4F8
+skinparam componentBackgroundColor #EFF4F8
+skinparam databaseBackgroundColor #EFF4F8
+skinparam entityBackgroundColor #EFF4F8
+skinparam sequenceParticipantBackgroundColor #EFF4F8
+skinparam sequenceGroupBackgroundColor #FFFFFF
+top to bottom direction
+package "Presentation tier" {
+ component "Next.js client\nChat | symptom input | risk display | citations" as Client
+}
+package "Application orchestration tier" {
+ component "FastAPI gateway\nAuthentication and validation" as API
+ component "Deterministic safety gate" as Gate
+ component "RAG orchestration\nQuery embedding | retrieval\nEvidence gate | prompt assembly" as Rag
+ API --> Gate
+ Gate --> Rag : Non-emergency
+}
+package "Persistence tier" {
+ database "PostgreSQL + pgvector\nRelational records\nClinical chunks and embeddings" as DB
+}
+package "Local inference tier" {
+ component "Ollama runtime\nLlama 3.2:3B" as Model
+}
+Client --> API : REST / JSON
+Gate --> Client : Emergency override
+Rag --> DB : SQL + vector search
+DB --> Rag : Retrieved evidence
+Rag --> Model : Grounded prompt
+Model --> Rag : Generated response
+
+@enduml

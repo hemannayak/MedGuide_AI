@@ -1,0 +1,42 @@
+[
+  {
+    "query": "SELECT current_database() AS database,\n       current_setting('server_version') AS postgres_version,\n       extversion AS pgvector_version\nFROM pg_extension WHERE extname = 'vector';",
+    "columns": [
+      "database",
+      "postgres_version",
+      "pgvector_version"
+    ],
+    "rows": [
+      [
+        "medguide_ai_dev",
+        "18.4",
+        "0.8.5"
+      ]
+    ]
+  },
+  {
+    "query": "SELECT u.login_identifier AS synthetic_account, u.status,\n       COUNT(DISTINCT c.id) AS conversations,\n       COUNT(m.id) AS stored_messages\nFROM users u\nJOIN patient_profiles p ON p.user_id = u.id\nLEFT JOIN conversations c ON c.patient_id = p.id\nLEFT JOIN conversation_messages m ON m.conversation_id = c.id\nWHERE u.login_identifier = 'SYN-report-20261014@example.invalid'\nGROUP BY u.login_identifier, u.status;",
+    "columns": [
+      "synthetic_account",
+      "status",
+      "conversations",
+      "stored_messages"
+    ],
+    "rows": [
+      [
+        "SYN-report-20261014@example.invalid",
+        "ACTIVE",
+        2,
+        8
+      ]
+    ]
+  },
+  {
+    "query": "SELECT m.sender_type, LEFT(m.content, 110) AS stored_input\nFROM conversation_messages m\nJOIN conversations c ON c.id = m.conversation_id\nJOIN patient_profiles p ON p.id = c.patient_id\nJOIN users u ON u.id = p.user_id\nWHERE u.login_identifier = 'SYN-report-20261014@example.invalid'\n  AND lower(m.sender_type) = 'user'\nORDER BY m.created_at DESC LIMIT 2;",
+    "columns": [
+      "sender_type",
+      "stored_input"
+    ],
+    "rows": []
+  }
+]

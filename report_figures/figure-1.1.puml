@@ -1,0 +1,33 @@
+@startuml
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundCorner 10
+skinparam dpi 220
+skinparam ArrowColor #344B61
+skinparam LineColor #344B61
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam defaultTextAlignment center
+skinparam rectangleBackgroundColor #EFF4F8
+skinparam componentBackgroundColor #EFF4F8
+skinparam databaseBackgroundColor #EFF4F8
+skinparam entityBackgroundColor #EFF4F8
+skinparam sequenceParticipantBackgroundColor #EFF4F8
+skinparam sequenceGroupBackgroundColor #FFFFFF
+top to bottom direction
+rectangle "Next.js client\nSymptom intake and response display" as Client
+rectangle "FastAPI gateway\nValidation and orchestration" as API
+rectangle "Deterministic red-flag safety gate" as Safety
+rectangle "Emergency override\nReturn emergency response" as Emergency #FBECEC
+database "PostgreSQL + pgvector\nClinical chunks and source metadata" as Store
+rectangle "Local Ollama runtime\nLlama 3.2:3B" as LLM
+Client --> API : Symptom input
+API --> Safety
+Safety -right-> Emergency : Red flags
+Safety --> Store : No red flags\nQuery embedding + retrieval
+Store --> LLM : Retrieved evidence\n+ constrained prompt
+LLM -left-> Client : Guidance, risk tier\nand source attribution
+
+@enduml

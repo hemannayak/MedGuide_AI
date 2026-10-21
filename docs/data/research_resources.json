@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-10-03",
+  "adoption_status": "USER_APPROVED_EVALUATION_SHORTLIST",
+  "runtime_integration": false,
+  "scope_languages": ["en", "hi", "te"],
+  "resources": [
+    {
+      "id": "ihqid",
+      "kind": "dataset",
+      "source_url": "https://github.com/indichealth/indic-health-demo",
+      "task": "healthcare_intent_and_entity_extraction",
+      "license": null,
+      "access_status": "PUBLIC_REPOSITORY_REUSE_PERMISSION_UNRESOLVED",
+      "restriction": "Not a triage or comprehensive symptom annotation dataset",
+      "pinned_revision": null,
+      "artifact_sha256": null,
+      "evaluated": false
+    },
+    {
+      "id": "medquad",
+      "kind": "dataset",
+      "source_url": "https://github.com/abachaa/MedQuAD",
+      "task": "selected_consumer_health_qa",
+      "license": "CC-BY-4.0",
+      "access_status": "PUBLIC_WITH_DOCUMENTED_COPYRIGHT_EXCLUSIONS",
+      "restriction": "Inspect allowed subsets, currency and jurisdiction; avoid evaluation leakage",
+      "pinned_revision": null,
+      "artifact_sha256": null,
+      "evaluated": false
+    },
+    {
+      "id": "ai4bharat/IndicMSMARCO",
+      "kind": "dataset",
+      "source_url": "https://huggingface.co/datasets/ai4bharat/IndicMSMARCO",
+      "task": "general_indic_retrieval_evaluation",
+      "license": "MIT (dataset-card declaration; upstream terms pending review)",
+      "access_status": "PUBLIC_UPSTREAM_TERMS_REVIEW_PENDING",
+      "restriction": "General benchmark; not approved medical evidence",
+      "pinned_revision": null,
+      "artifact_sha256": null,
+      "evaluated": false
+    },
+    {
+      "id": "google/muril-base-cased",
+      "kind": "model",
+      "source_url": "https://huggingface.co/google/muril-base-cased",
+      "task": "intent_and_entity_encoder_candidate",
+      "license": "Apache-2.0",
+      "access_status": "PUBLIC_MODEL_CARD",
+      "restriction": "Task-specific training and clinical extraction evaluation required",
+      "pinned_revision": null,
+      "artifact_sha256": null,
+      "evaluated": false
+    },
+    {
+      "id": "l3cube-pune/indic-sentence-bert-nli",
+      "kind": "model",
+      "source_url": "https://huggingface.co/l3cube-pune/indic-sentence-bert-nli",
+      "task": "retrieval_encoder_candidate",
+      "license": "CC-BY-4.0",
+      "access_status": "PUBLIC_MODEL_CARD",
+      "restriction": "Separate corpus embeddings; validate dimensions before experimental indexing",
+      "pinned_revision": null,
+      "artifact_sha256": null,
+      "evaluated": false
+    },
+    {
+      "id": "intfloat/multilingual-e5-small",
+      "kind": "model",
+      "source_url": "https://huggingface.co/intfloat/multilingual-e5-small",
+      "task": "retrieval_encoder_candidate",
+      "license": "MIT",
+      "access_status": "PUBLIC_MODEL_CARD",
+      "restriction": "Separate corpus embeddings; follow checkpoint-specific input conventions",
+      "pinned_revision": null,
+      "artifact_sha256": null,
+      "evaluated": false
+    },
+    {
+      "id": "ai4bharat/indictrans2-indic-en-dist-200M",
+      "kind": "model",
+      "source_url": "https://huggingface.co/ai4bharat/indictrans2-indic-en-dist-200M",
+      "task": "local_query_translation_candidate",
+      "license": "MIT",
+      "access_status": "GATED_FILES_USER_ACCEPTANCE_REQUIRED",
+      "restriction": "Indic-to-English only; evaluate medical meaning preservation",
+      "pinned_revision": null,
+      "artifact_sha256": null,
+      "evaluated": false
+    }
+  ]
+}

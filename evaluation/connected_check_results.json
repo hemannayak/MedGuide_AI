@@ -1,0 +1,46 @@
+{
+  "synthetic": true,
+  "accuracy_evaluated": false,
+  "checks": [
+    {
+      "check": "missing_speech_consent",
+      "passed": true
+    },
+    {
+      "check": "speech",
+      "language": "en",
+      "passed": true,
+      "stage": "stt",
+      "status": 200,
+      "audio_bytes": 36480
+    },
+    {
+      "check": "speech",
+      "language": "hi",
+      "passed": true,
+      "stage": "stt",
+      "status": 200,
+      "audio_bytes": 13056
+    },
+    {
+      "check": "speech",
+      "language": "te",
+      "passed": true,
+      "stage": "stt",
+      "status": 200,
+      "audio_bytes": 11904
+    },
+    {
+      "check": "chat",
+      "status": 200,
+      "response_type": "REFUSAL",
+      "sources": 4,
+      "transport_passed": true,
+      "clinical_validation": false
+    },
+    {
+      "check": "withdrawn_speech_consent",
+      "passed": true
+    }
+  ]
+}
