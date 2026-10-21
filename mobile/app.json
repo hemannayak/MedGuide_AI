@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "MedGuide AI",
+    "slug": "medguide-ai",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "org.medguide.ai"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      ["expo-image-picker", {"cameraPermission":"Allow MedGuide to take a prescription photo when you choose Take photo.","photosPermission":"Allow MedGuide to select a prescription image when you choose an image."}],
+      [
+        "expo-audio",
+        {
+          "recordAudioAndroid": true,
+          "enableBackgroundPlayback": false,
+          "enableBackgroundRecording": false,
+          "microphonePermission": "Allow MedGuide to record a concern when you press Record."
+        }
+      ]
+    ],
+    "scheme": "medguide"
+  }
+}
