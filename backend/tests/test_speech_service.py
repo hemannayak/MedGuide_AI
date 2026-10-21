@@ -26,7 +26,26 @@ from app.services.speech_service import (
 
 @pytest.fixture
 def client():
-    return TestClient(app)
+    # These endpoint contract tests isolate speech processing after consent.
+    # Authorization/withdrawal are exercised separately, never relaxed in app code.
+    from app.api.deps import require_speech_consent
+    previous = app.dependency_overrides.get(require_speech_consent)
+    app.dependency_overrides[require_speech_consent] = lambda: object()
+    try:
+        with TestClient(app) as test_client:
+            yield test_client
+    finally:
+        if previous is None:
+            app.dependency_overrides.pop(require_speech_consent, None)
+        else:
+            app.dependency_overrides[require_speech_consent] = previous
+
+
+def test_unauthenticated_speech_never_calls_provider():
+    with TestClient(app) as test_client, patch('app.api.v1.endpoints.speech.create_speech_gateway') as provider:
+        response = test_client.post('/api/v1/speech/tts', json={'text': 'SYN test', 'language': 'en'})
+        assert response.status_code == 401
+        provider.assert_not_called()
 
 
 # ---------------------------------------------------------------------------
@@ -168,3 +187,50 @@ def test_api_speech_offline_service_unavailable(client):
         response = client.post("/api/v1/speech/tts", json=payload)
         assert response.status_code == status.HTTP_503_SERVICE_UNAVAILABLE
         assert "unavailable" in response.json()["detail"].lower()
+
+
+@pytest.fixture(autouse=True)
+def authenticate_speech_api_tests(request):
+    if not request.node.name.startswith("test_api_"):
+        return
+    import uuid
+    client = request.getfixturevalue("client")
+    identifier = f"SYN-speech-{uuid.uuid4().hex}@example.invalid"
+    client.post("/api/v1/auth/register", json={"login_identifier": identifier, "password": "SyntheticTestOnly123!", "display_name": "SYN Speech Test", "preferred_language": "en"})
+    response = client.post("/api/v1/auth/login", json={"login_identifier": identifier, "password": "SyntheticTestOnly123!"})
+    client.headers["Authorization"] = "Bearer " + response.json()["data"]["access_token"]
+    assert client.post("/api/v1/consent", json={"consent_type": "SPEECH_PROCESSING"}).status_code == 201
+
+
+def test_speech_requires_authentication():
+    with TestClient(app) as client:
+        assert client.post("/api/v1/speech/tts", json={"text": "SYN test", "language": "en"}).status_code == 401
+        assert client.post("/api/v1/speech/stt", files={"file": ("SYN.webm", b"SYN", "audio/webm")}).status_code == 401
+
+
+def test_mock_speech_rejected_outside_tests(monkeypatch):
+    from app.core.config import settings
+    monkeypatch.setattr(settings, "APP_ENV", "production")
+    with pytest.raises(SpeechError):
+        create_speech_gateway(provider="mock")
+
+
+def test_sarvam_preserves_format_and_full_text():
+    from unittest.mock import MagicMock
+    gateway = SarvamSpeechGateway(api_key="SYN-key")
+    client = MagicMock()
+    client.__enter__.return_value = client
+    response = client.post.return_value
+    response.json.return_value = {"transcript": "SYN transcript", "language_code": "te-IN"}
+    with patch("httpx.Client", return_value=client):
+        result = gateway.stt(b"SYN audio", "recording.webm", "te")
+        assert client.post.call_args.kwargs["files"]["file"][2] == "audio/webm"
+        assert result.confidence is None
+        response.json.return_value = {"audios": ["U1lO"]}
+        text = "SYN explanation. " * 80
+        gateway.tts(text, "hi")
+        payload = client.post.call_args.kwargs["json"]
+        assert payload["text"] == text.strip()
+        assert payload["language_code"] == "hi-IN"
+        assert payload["output_audio_codec"] == "mp3"
+        assert "inputs" not in payload and "pitch" not in payload

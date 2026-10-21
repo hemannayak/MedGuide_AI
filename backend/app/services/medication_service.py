@@ -40,6 +40,10 @@ def create_medication(
     expose a verification_status field, and this service ignores any
     attempt to set it at the model level.
     """
+    if req.prescription_id:
+        from app.models.prescriptions import Prescription
+        if not db.query(Prescription).filter(Prescription.id == req.prescription_id, Prescription.patient_id == patient_profile.id).first():
+            raise HTTPException(status_code=404, detail="Prescription not found")
     med = Medication(
         patient_id=patient_profile.id,
         prescription_id=req.prescription_id,
@@ -81,6 +85,7 @@ def verify_medication(
     db: Session,
     patient_profile: PatientProfile,
     medication_id: str,
+    actor_user_id=None,
 ) -> Medication:
     """
     Explicitly verify a PENDING medication, promoting it to VERIFIED status.
@@ -93,6 +98,9 @@ def verify_medication(
     """
     med = get_medication_by_id(db, patient_profile, medication_id)
 
+    if not med.dosage or med.dosage == "Unspecified" or med.medicine_name == "Unknown Medicine":
+        raise HTTPException(status_code=422, detail="Incomplete medication details require professional review before verification")
+
     if med.verification_status == "VERIFIED":
         return med  # Idempotent
 
@@ -102,7 +110,7 @@ def verify_medication(
         db=db,
         action=audit_service.ACTION_MEDICATION_VERIFIED,
         resource_type=audit_service.RESOURCE_MEDICATION,
-        actor_user_id=patient_profile.user_id,
+        actor_user_id=actor_user_id or patient_profile.user_id,
         resource_id=med.id,
         metadata={"medicine_name": med.medicine_name},
     )

@@ -1,17 +1,17 @@
 import uuid
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 
 class ConsentGrantRequest(BaseModel):
-    consent_type: str = Field(..., description="Consent scope type e.g. DATA_SHARING, AI_PROCESSING")
-    version: str = Field(default="1.0", description="Policy document version")
-    status: str = Field(default="GRANTED", description="Consent status")
+    consent_type: Literal["AI_PROCESSING", "SPEECH_PROCESSING", "DATA_SHARING"]
+    version: Literal["1.0"] = "1.0"
+    status: Literal["GRANTED"] = "GRANTED"
 
 
 class ConsentWithdrawRequest(BaseModel):
-    status: str = Field(default="WITHDRAWN", description="Target consent status")
+    status: Literal["WITHDRAWN"] = "WITHDRAWN"
 
 
 class ConsentResponse(BaseModel):

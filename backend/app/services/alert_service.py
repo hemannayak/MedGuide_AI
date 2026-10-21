@@ -44,16 +44,12 @@ def get_alert_by_id(
 
 def update_alert_status(
     db: Session,
+    patient_profile: PatientProfile,
     alert_id: str,
     target_status: str,
 ) -> Alert:
     """Acknowledge or resolve a safety alert."""
-    alert = db.query(Alert).filter(Alert.id == alert_id).first()
-    if not alert:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Alert not found",
-        )
+    alert = get_alert_by_id(db, patient_profile, alert_id)
 
     alert.status = target_status
     if target_status == "ACKNOWLEDGED":

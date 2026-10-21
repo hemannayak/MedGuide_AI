@@ -32,6 +32,7 @@ def create_test_user_session(role: str = "PATIENT"):
     assert login_resp.status_code == 200
     token = login_resp.json()["data"]["access_token"]
     headers = {"Authorization": f"Bearer {token}"}
+    assert client.post("/api/v1/consent", json={"consent_type": "AI_PROCESSING"}, headers=headers).status_code == 201
     return email, token, headers, uid
 
 

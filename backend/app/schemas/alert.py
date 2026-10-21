@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -18,4 +18,4 @@ class AlertResponse(BaseModel):
 
 
 class AlertUpdateRequest(BaseModel):
-    status: str = Field(..., description="Target alert status: ACKNOWLEDGED, RESOLVED")
+    status: Literal["ACKNOWLEDGED", "RESOLVED"]

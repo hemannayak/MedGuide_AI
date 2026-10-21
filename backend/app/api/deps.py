@@ -4,11 +4,12 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 
+from app.core.config import settings
 from app.core.security import decode_access_token
 from app.db.session import SessionLocal
 from app.models.users import User
 
-security_scheme = HTTPBearer()
+security_scheme = HTTPBearer(auto_error=False)
 
 
 def get_db() -> Generator[Session, None, None]:
@@ -21,11 +22,19 @@ def get_db() -> Generator[Session, None, None]:
 
 
 def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security_scheme),
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_scheme),
     db: Session = Depends(get_db),
 ) -> User:
     """Validate bearer JWT token and return current authenticated User model."""
-    token = credentials.credentials
+    token = credentials.credentials if credentials else None
+
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication token required",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
     payload = decode_access_token(token)
     if not payload:
         raise HTTPException(
@@ -70,3 +79,12 @@ def require_roles(allowed_roles: List[str]):
         return current_user
 
     return role_checker
+
+
+def require_speech_consent(current_user: User = Depends(get_current_user),
+                           db: Session = Depends(get_db)) -> User:
+    from app.services.patient_service import get_patient_profile_by_user
+    from app.services.consent_service import require_patient_consent
+    profile = get_patient_profile_by_user(db, current_user)
+    require_patient_consent(db, profile, "SPEECH_PROCESSING")
+    return current_user

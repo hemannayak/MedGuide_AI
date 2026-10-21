@@ -45,7 +45,7 @@ class SpeechGateway(ABC):
         self,
         text: str,
         language: str = "te",
-        speaker: str = "meera",
+        speaker: Optional[str] = None,
     ) -> TTSResponse:
         """
         Synthesize text into spoken audio.
@@ -68,6 +68,10 @@ class SpeechGateway(ABC):
 class SpeechError(Exception):
     """Raised when speech processing fails."""
     pass
+
+
+class NoSpeechRecognizedError(SpeechError):
+    """Provider completed processing but returned no usable spoken words."""
 
 
 # ---------------------------------------------------------------------------
@@ -113,7 +117,7 @@ class MockSpeechGateway(SpeechGateway):
         self,
         text: str,
         language: str = "te",
-        speaker: str = "meera",
+        speaker: Optional[str] = None,
     ) -> TTSResponse:
         logger.debug("[MockSpeechGateway] Performing deterministic voice synthesis")
         # Return dummy base64 MP3 frame (16 bytes)
@@ -140,6 +144,13 @@ LANGUAGE_CODE_MAP = {
 }
 
 
+DEFAULT_SPEAKERS = {
+    "te": "shubh",
+    "hi": "shubh",
+    "en": "shubh",
+}
+
+
 class SarvamSpeechGateway(SpeechGateway):
     """
     Online STT & TTS gateway via Sarvam AI REST API.
@@ -152,11 +163,18 @@ class SarvamSpeechGateway(SpeechGateway):
         stt_url: str = SARVAM_STT_URL,
         tts_url: str = SARVAM_TTS_URL,
         timeout_seconds: float = SARVAM_SPEECH_TIMEOUT_SECONDS,
+        pace: Optional[float] = None,
     ):
-        self.api_key = api_key or os.getenv("SARVAM_API_KEY", "")
+        self.api_key = os.getenv("SARVAM_API_KEY", "") if api_key is None else api_key
         self.stt_url = stt_url
         self.tts_url = tts_url
         self.timeout_seconds = timeout_seconds
+        try:
+            self.pace = float(os.getenv("SARVAM_TTS_PACE", "1.0") if pace is None else pace)
+        except (TypeError, ValueError) as exc:
+            raise SpeechError("Sarvam speech pace must be a number between 0.5 and 2.0.") from exc
+        if not 0.5 <= self.pace <= 2.0:
+            raise SpeechError("Sarvam speech pace must be between 0.5 and 2.0.")
 
         if not self.api_key:
             logger.warning("[SarvamSpeechGateway] Initialized without SARVAM_API_KEY. Online calls will fail closed.")
@@ -194,10 +212,12 @@ class SarvamSpeechGateway(SpeechGateway):
             "api-subscription-key": self.api_key,
         }
         files = {
-            "file": (filename or "audio.wav", audio_bytes, "audio/wav"),
+            "file": (filename or "audio.wav", audio_bytes, {".webm": "audio/webm", ".mp4": "audio/mp4", ".m4a": "audio/mp4", ".ogg": "audio/ogg", ".wav": "audio/wav", ".mp3": "audio/mpeg"}.get(os.path.splitext(filename)[1].lower(), "application/octet-stream")),
         }
+        SARVAM_STT_MODEL = os.getenv("SARVAM_STT_MODEL", "saaras:v3")
         data = {
-            "model": "saaras:v2",
+            "model": SARVAM_STT_MODEL,
+            "mode": "transcribe",
         }
         if lang_tag != "unknown":
             data["language_code"] = lang_tag
@@ -212,15 +232,21 @@ class SarvamSpeechGateway(SpeechGateway):
                 )
                 response.raise_for_status()
                 res_data = response.json()
-                transcript = res_data.get("transcript", "").strip()
-                detected_lang = res_data.get("language_code", lang_tag).split("-")[0]
+                transcript_value = res_data.get("transcript")
+                if not isinstance(transcript_value, str) or not transcript_value.strip():
+                    raise NoSpeechRecognizedError("No speech was recognized. Please record again or type your concern.")
+                transcript = transcript_value.strip()
+                detected_value = res_data.get("language_code")
+                detected_lang = (detected_value if isinstance(detected_value, str) else lang_tag).split("-")[0]
 
                 return STTResponse(
                     transcript=transcript,
                     language_detected=detected_lang,
-                    confidence=float(res_data.get("confidence", 0.95)),
+                    confidence=res_data.get("confidence"),
                     provider="sarvam",
                 )
+        except NoSpeechRecognizedError:
+            raise
         except httpx.TimeoutException as e:
             logger.error(f"[SarvamSpeechGateway] STT timed out after {self.timeout_seconds}s")
             raise SpeechError(f"Sarvam STT timed out: {e}") from e
@@ -235,7 +261,7 @@ class SarvamSpeechGateway(SpeechGateway):
         self,
         text: str,
         language: str = "te",
-        speaker: str = "kavitha",
+        speaker: Optional[str] = None,
     ) -> TTSResponse:
         if not self.api_key:
             raise SpeechError("SARVAM_API_KEY is not configured. Online TTS unavailable.")
@@ -248,22 +274,22 @@ class SarvamSpeechGateway(SpeechGateway):
         except ImportError:
             raise SpeechError("httpx is required for SarvamSpeechGateway.")
 
-        lang_tag = LANGUAGE_CODE_MAP.get(language.lower(), "te-IN")
+        lang_code = language.lower() if language else "te"
+        lang_tag = LANGUAGE_CODE_MAP.get(lang_code, "te-IN")
+        resolved_speaker = speaker or DEFAULT_SPEAKERS.get(lang_code, "kavitha")
 
         headers = {
             "api-subscription-key": self.api_key,
             "Content-Type": "application/json",
         }
         payload = {
-            "inputs": [clean_text[:500]], # Synthesize up to 500 characters per utterance
-            "target_language_code": lang_tag,
-            "speaker": speaker or "kavitha",
-            "pitch": 0,
-            "pace": 1.0,
-            "loudness": 1.0,
-            "speech_sample_rate": 8000,
-            "enable_preprocessing": True,
-            "model": "bulbul:v3",
+            "text": clean_text,
+            "language_code": lang_tag,
+            "speaker": resolved_speaker,
+            "pace": self.pace,
+            "speech_sample_rate": 24000,
+            "model": os.getenv("SARVAM_TTS_MODEL", "bulbul:v3"),
+            "output_audio_codec": "mp3",
         }
 
         try:
@@ -315,7 +341,7 @@ class DisabledSpeechGateway(SpeechGateway):
     def stt(self, audio_bytes: bytes, filename: str = "audio.wav", language_code: Optional[str] = None) -> STTResponse:
         raise SpeechError("Speech-to-text service is offline or disabled.")
 
-    def tts(self, text: str, language: str = "te", speaker: str = "meera") -> TTSResponse:
+    def tts(self, text: str, language: str = "te", speaker: Optional[str] = None) -> TTSResponse:
         raise SpeechError("Text-to-speech service is offline or disabled.")
 
 
@@ -338,10 +364,13 @@ def create_speech_gateway(
         elif os.getenv("SARVAM_API_KEY"):
             provider = "sarvam"
         else:
-            provider = "mock"
+            provider = "disabled"
 
     provider = provider.lower().strip()
     if provider == "mock":
+        from app.core.config import settings
+        if settings.APP_ENV != "test":
+            raise SpeechError("Mock speech is restricted to automated tests")
         return MockSpeechGateway()
     elif provider == "sarvam":
         return SarvamSpeechGateway(api_key=api_key)

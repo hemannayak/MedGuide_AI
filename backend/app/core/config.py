@@ -1,6 +1,17 @@
-from typing import Optional
+import os
 from pathlib import Path
+from typing import Optional
+from dotenv import load_dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import model_validator
+from sqlalchemy.engine import URL
+
+# Ensure .env is explicitly loaded into os.environ
+backend_dir = Path(__file__).resolve().parent.parent.parent
+for env_candidate in [backend_dir / ".env", Path(".env"), backend_dir.parent / ".env"]:
+    if env_candidate.exists():
+        load_dotenv(env_candidate, override=False)
+        break
 
 
 class Settings(BaseSettings):
@@ -25,21 +36,47 @@ class Settings(BaseSettings):
     POSTGRES_DB: str = "medguide_ai_dev"
     DATABASE_URL: Optional[str] = None
 
+    # AI & Gateway Configuration
+    AI_PROVIDER: str = "mock"
+    AI_MODEL: str = ""
+    GROQ_API_KEY: Optional[str] = None
+    OLLAMA_BASE_URL: str = "http://localhost:11434"
+    HF_TOKEN: Optional[str] = None
+    TRANSLATION_PROVIDER: str = "mock"
+    SARVAM_API_KEY: Optional[str] = None
+
     model_config = SettingsConfigDict(
-        env_file=Path(__file__).resolve().parents[2] / ".env",
+        env_file=".env",
         env_file_encoding="utf-8",
         extra="ignore",
     )
+
+    @model_validator(mode="after")
+    def validate_production(self):
+        if "*" in self.CORS_ORIGINS:
+            raise ValueError("CORS_ORIGINS must contain explicit frontend origins")
+        if self.APP_ENV.lower() == "production":
+            if self.DEBUG:
+                raise ValueError("DEBUG must be false in production")
+            if len(self.SECRET_KEY) < 32 or self.SECRET_KEY in {
+                "change-this-in-production-super-secret-key-32bytes",
+                "your-secret-key-at-least-32-bytes-long",
+            }:
+                raise ValueError("Set a strong, unique SECRET_KEY in production")
+            if self.AI_PROVIDER == "mock" or self.TRANSLATION_PROVIDER == "mock":
+                raise ValueError("Mock providers must not be used in production")
+        return self
 
     @property
     def sqlalchemy_database_url(self) -> str:
         """Construct SQLAlchemy Database URL if not directly specified."""
         if self.DATABASE_URL:
             return self.DATABASE_URL
-        return (
-            f"postgresql+psycopg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
-            f"@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
-        )
+        return URL.create(
+            "postgresql+psycopg", username=self.POSTGRES_USER,
+            password=self.POSTGRES_PASSWORD, host=self.POSTGRES_SERVER,
+            port=self.POSTGRES_PORT, database=self.POSTGRES_DB,
+        ).render_as_string(hide_password=False)
 
 
 settings = Settings()

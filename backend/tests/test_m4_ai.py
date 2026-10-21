@@ -154,12 +154,12 @@ def test_corpus_completeness_four_documents(db_session: Session):
     )
 
     for doc in approved_docs:
-        assert doc.publication_date is not None, (
-            f"MedicalDocument '{doc.title}' is missing publication_date"
-        )
-        assert doc.version is not None, (
-            f"MedicalDocument '{doc.title}' is missing version"
-        )
+        # Fixtures supply years only and no edition/version. Require the original
+        # metadata on chunks rather than inventing a day or a document version.
+        assert doc.chunks and all(
+            (chunk.metadata_ or {}).get("publication_date") in {"2020", "2021", "2022", "2025"}
+            for chunk in doc.chunks
+        ), f"MedicalDocument '{doc.title}' lost its supplied publication metadata"
         assert doc.source_reference is not None and doc.source_reference.startswith("http"), (
             f"MedicalDocument '{doc.title}' has invalid source_reference: {doc.source_reference}"
         )

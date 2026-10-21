@@ -31,3 +31,30 @@ def test_health_check_endpoint(client):
     assert "environment" in data
     assert "database" in data
     assert data["database"]["status"] == "connected"
+
+
+def test_health_returns_503_when_database_unavailable(client):
+    with patch("app.main.check_database_connection", return_value={"status": "disconnected", "details": "Database unavailable"}):
+        response = client.get("/api/v1/health")
+    assert response.status_code == 503
+    assert response.json()["status"] == "unavailable"
+
+
+def test_cors_allows_configured_frontend(client):
+    from app.core.config import settings
+    response = client.options("/api/v1/auth/login", headers={
+        "Origin": settings.CORS_ORIGINS[0],
+        "Access-Control-Request-Method": "POST",
+        "Access-Control-Request-Headers": "authorization,content-type",
+    })
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == settings.CORS_ORIGINS[0]
+
+
+def test_cors_rejects_unknown_origin(client):
+    response = client.options("/api/v1/auth/login", headers={
+        "Origin": "https://untrusted.example",
+        "Access-Control-Request-Method": "POST",
+    })
+    assert response.status_code == 400
+    assert "access-control-allow-origin" not in response.headers

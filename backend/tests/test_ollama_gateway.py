@@ -54,6 +54,19 @@ class TestOllamaPayload:
 
 
 class TestOllamaGatewayGenerate:
+    @patch("httpx.Client")
+    def test_json_mode_requires_answer_and_rejects_truncation(self, client):
+        response = MagicMock()
+        response.json.return_value = {"message": {"content": '{"answer":"hello"}'}, "done_reason": "stop"}
+        post = client.return_value.__enter__.return_value.post
+        post.return_value = response
+        gateway = OllamaGateway("qwen3:4b")
+        assert gateway.generate("system", "user", format="json") == '{"answer":"hello"}'
+        assert post.call_args.kwargs["json"]["format"]["required"] == ["answer"]
+        response.json.return_value["done_reason"] = "length"
+        with pytest.raises(AIGatewayError, match="output budget"):
+            gateway.generate("system", "user", format="json")
+
     def _mock_response(self, json_data: dict, status_code: int = 200):
         mock_resp = MagicMock()
         mock_resp.status_code = status_code

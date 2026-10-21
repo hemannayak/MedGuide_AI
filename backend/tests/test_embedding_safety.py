@@ -6,6 +6,14 @@ from app.services.ai_service import retrieve_relevant_chunks
 from app.services.knowledge_service import EmbeddingUnavailableError, generate_embedding
 
 
+@pytest.fixture(autouse=True)
+def isolate_secondary_embedding_backend():
+    # These tests exercise failure of SentenceTransformer; disable the independent
+    # local ONNX provider so a cached healthy model cannot mask that failure.
+    with patch("app.services.knowledge_service._load_onnx_embedding_engine", return_value=(None, None)):
+        yield
+
+
 def test_missing_model_never_returns_synthetic_embeddings():
     with patch("app.services.knowledge_service.get_embedding_model", return_value=None):
         with pytest.raises(EmbeddingUnavailableError):

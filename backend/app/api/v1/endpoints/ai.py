@@ -9,6 +9,8 @@ from app.schemas.ai import AIChatRequest, ConversationResponse
 from app.schemas.auth import StandardResponse
 from app.services.ai_service import process_ai_chat_query
 from app.services.patient_service import get_patient_profile_by_user
+from app.services.consent_service import require_patient_consent
+from app.services.ai_service import detect_red_flags
 
 router = APIRouter()
 
@@ -24,6 +26,9 @@ def ai_chat(
     db: Session = Depends(get_db),
 ) -> Any:
     profile = get_patient_profile_by_user(db, current_user)
+    # Existing deterministic emergency escalation remains available without cloud consent.
+    if not detect_red_flags(req.message):
+        require_patient_consent(db, profile, "AI_PROCESSING")
     res = process_ai_chat_query(db, profile, req)
     return StandardResponse(
         success=True,

@@ -23,6 +23,8 @@ import os
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
+from app.core.config import settings
+
 logger = logging.getLogger(__name__)
 
 

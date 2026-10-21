@@ -1,5 +1,11 @@
 # Backend
 
+Integration verification uses `./.venv/Scripts/python.exe verify_backend.py`
+from this directory. It creates/reuses the synthetic `medguide_ai_test` database,
+applies migrations, and runs the backend suite without changing application
+records. The first run requires CREATE DATABASE permission. See
+`docs/testing/FRONTEND_REDESIGN_INTEGRATION.md` for the latest UI sync and results.
+
 Existing FastAPI REST API with SQLAlchemy models, Alembic migrations, and
 patient/healthcare-worker routes. Use synthetic data for development.
 
@@ -98,3 +104,8 @@ Frontend installation audit reports 8 high and 1 critical dependency
 vulnerabilities, including the installed Next.js version. These remain
 unresolved; review compatible security patches before deployment. Development
 servers are bound to loopback for this local verification.
+
+
+## Connected care workflows
+
+See [care validation and staff setup](../docs/testing/CARE_WORKFLOWS.md) and [API contracts](../docs/api/CARE_WORKFLOWS.md). Staff provisioning uses `provision_account.py`; public registration remains patient-only. Install local Tesseract and configure `TESSERACT_CMD` for real prescription OCR. PDF processing and notification delivery are not implemented by the connected care pages.

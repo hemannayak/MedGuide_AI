@@ -1,4 +1,4 @@
-from fastapi import APIRouter, FastAPI
+from fastapi import APIRouter, FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
@@ -18,8 +18,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type"],
 )
 
 from app.api.v1.router import api_router
@@ -29,11 +29,14 @@ api_v1_router = APIRouter(prefix=settings.API_V1_PREFIX)
 
 
 @api_v1_router.get("/health", tags=["Health Check"])
-def health_check():
+def health_check(response: Response):
     """Health check endpoint exposing application operational status and DB connection state."""
     db_status = check_database_connection()
+    connected = db_status["status"] == "connected"
+    if not connected:
+        response.status_code = 503
     return {
-        "status": "ok",
+        "status": "ok" if connected else "unavailable",
         "app_name": settings.APP_NAME,
         "environment": settings.APP_ENV,
         "api_version": "v1",

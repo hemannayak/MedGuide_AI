@@ -15,7 +15,7 @@ class OCRError(Exception):
 @dataclass
 class OCRRawOutput:
     raw_text: str
-    confidence: float
+    confidence: Optional[float]
     engine: str
     model_version: str
     status: str = "COMPLETED"
@@ -157,6 +157,9 @@ class TesseractOCRGateway(OCRGateway):
             from PIL import Image
             self.pytesseract = pytesseract
             self.Image = Image
+            command = os.getenv("TESSERACT_CMD")
+            if command:
+                self.pytesseract.pytesseract.tesseract_cmd = command
         except ImportError:
             raise OCRError("pytesseract or Pillow is not installed in the environment.")
 
@@ -168,16 +171,25 @@ class TesseractOCRGateway(OCRGateway):
             if image.mode not in ("RGB", "L"):
                 image = image.convert("RGB")
             
-            raw_text = self.pytesseract.image_to_string(image)
+            extracted_text = self.pytesseract.image_to_string(image, timeout=30)
+            if isinstance(extracted_text, dict):
+                raw_text_str = str(extracted_text.get("text", "")).strip()
+            elif isinstance(extracted_text, bytes):
+                raw_text_str = extracted_text.decode("utf-8", errors="replace").strip()
+            else:
+                raw_text_str = str(extracted_text).strip()
+
+            data = self.pytesseract.image_to_data(image, output_type=self.pytesseract.Output.DICT, timeout=30)
+            scores = [float(score) for score, word in zip(data["conf"], data["text"]) if word.strip() and float(score) >= 0]
             return OCRRawOutput(
-                raw_text=raw_text.strip(),
-                confidence=0.88,
+                raw_text=raw_text_str,
+                confidence=sum(scores) / (100 * len(scores)) if scores else None,
                 engine="tesseract_ocr",
-                model_version="5.0",
+                model_version=str(self.pytesseract.get_tesseract_version()),
                 status="COMPLETED",
             )
-        except Exception as e:
-            raise OCRError(f"Tesseract OCR processing failed: {str(e)}")
+        except Exception:
+            raise OCRError("OCR could not read this image. Check the file or the local OCR installation.") from None
 
 
 class DisabledOCRGateway(OCRGateway):
@@ -189,15 +201,15 @@ class DisabledOCRGateway(OCRGateway):
 
 def create_ocr_gateway() -> OCRGateway:
     """Factory to instantiate the configured OCRGateway."""
-    provider = os.getenv("OCR_PROVIDER", "mock").lower().strip()
+    from app.core.config import settings
+    provider = os.getenv("OCR_PROVIDER", "tesseract").lower().strip()
     if provider == "tesseract":
-        try:
-            return TesseractOCRGateway()
-        except OCRError:
-            return MockOCRGateway()
+        return TesseractOCRGateway()
     elif provider == "disabled":
         return DisabledOCRGateway()
-    return MockOCRGateway()
+    if provider == "mock" and settings.APP_ENV == "test":
+        return MockOCRGateway()
+    raise OCRError("Configure a real OCR provider. Mock OCR is restricted to tests.")
 
 
 # ---------------------------------------------------------------------------
@@ -229,6 +241,15 @@ INSTRUCTION_PATTERNS = re.compile(
 # Noise tokens to strip from line beginnings
 HEADER_TOKENS = re.compile(r"^(?:Rx|Dr\.?|Date:|Patient:|Name:|Tab(?:let)?\.?|Cap(?:sule)?\.?|Syr(?:up)?\.?|Inj(?:ection)?\.?)\s*", re.IGNORECASE)
 
+# Document-layout filtering, not a medicine dictionary or a clinical rule.
+# Preserve excluded text in raw OCR for human review.
+DOCUMENT_METADATA = re.compile(
+    r"^(?:patient\b|name\s*:|date\b|doctor\b|dr\.|clinic\b|hospital\b|"
+    r"signature\b|address\s*:|age\s*:|sex\s*:|phone\s*:|"
+    r"synthetic\b|this\s+is\b|test\s+document\b|generated\s+.+test\b)",
+    re.IGNORECASE,
+)
+
 
 def extract_medication_entities(raw_text: str) -> List[ExtractedMedicationCandidate]:
     """
@@ -245,6 +266,9 @@ def extract_medication_entities(raw_text: str) -> List[ExtractedMedicationCandid
     i = 0
     while i < len(lines):
         line = lines[i]
+        if DOCUMENT_METADATA.match(line):
+            i += 1
+            continue
         
         # Skip pure header/date lines
         cleaned_line = HEADER_TOKENS.sub("", line).strip()

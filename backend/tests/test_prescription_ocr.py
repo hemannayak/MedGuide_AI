@@ -12,7 +12,30 @@ from app.models.users import User
 from app.schemas.auth import UserRegisterRequest
 from app.services.auth_service import register_patient_user
 from app.services.ocr_service import MockOCRGateway, extract_medication_entities
+
+
+def test_ocr_metadata_is_not_promoted_to_medication():
+    text = ('SYNTHETIC TEST DOCUMENT - NOT FOR TREATMENT\n'
+            'Patient: SYN-P001\nParacetamol 500 mg\n'
+            'This is generated OCR test data only.\nDate: 2026-10-11\n')
+    candidates = extract_medication_entities(text)
+    assert len(candidates) == 1
+    assert candidates[0].medicine_name.value == 'Paracetamol'
+    assert candidates[0].dosage is not None
+    assert candidates[0].dosage.value == '500 mg'
+    assert candidates[0].verification_status == 'PENDING'
+
+
+def test_ocr_skips_demographic_strength_like_values():
+    candidates = extract_medication_entities('Patient: SYN\nAge: 50\nPhone: 500123\nName: SYN\nTab Metformin 500mg')
+    assert [item.medicine_name.value for item in candidates] == ['Metformin']
 from app.services.patient_service import get_patient_profile_by_user
+
+
+@pytest.fixture(autouse=True)
+def synthetic_ocr_gateway(monkeypatch):
+    """These fixture-based API tests must not depend on the live OCR provider."""
+    monkeypatch.setattr('app.services.prescription_service.create_ocr_gateway', MockOCRGateway)
 
 
 def _create_test_patient(db) -> tuple[User, PatientProfile, str]:
@@ -37,6 +60,7 @@ def test_mock_ocr_fixtures_coverage():
     for fix in fixtures:
         output = gateway.process_image(b"fake_image_bytes", filename=f"prescription_{fix}.png")
         assert output.raw_text, f"Fixture '{fix}' produced empty raw text"
+        assert output.confidence is not None
         assert output.confidence >= 0.85
         assert output.engine == "mock_ocr"
 

@@ -58,7 +58,8 @@ def patch_alert(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> Any:
-    alert = update_alert_status(db, alert_id, req.status)
+    profile = get_patient_profile_by_user(db, current_user)
+    alert = update_alert_status(db, profile, alert_id, req.status)
     return StandardResponse(
         success=True,
         data=AlertResponse.model_validate(alert),

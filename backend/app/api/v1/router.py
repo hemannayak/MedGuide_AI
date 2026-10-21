@@ -29,3 +29,6 @@ api_router.include_router(alerts.router, prefix="/alerts", tags=["Safety Alerts"
 api_router.include_router(consent.router, prefix="/consent", tags=["Consent Management"])
 api_router.include_router(healthcare_workers.router, prefix="/healthcare-workers", tags=["Healthcare Worker"])
 api_router.include_router(follow_ups.router, prefix="/follow-ups", tags=["Care Follow-Ups"])
+
+from app.api.v1.endpoints import wellness
+api_router.include_router(wellness.router, prefix='/wellness', tags=['Patient wellness'])

@@ -29,13 +29,15 @@ def update_patient_profile(
     """Update patient profile information."""
     if req.display_name is not None:
         patient_profile.display_name = req.display_name
-    if req.date_of_birth is not None:
+    if 'date_of_birth' in req.model_fields_set:
         patient_profile.date_of_birth = req.date_of_birth
     if req.preferred_language is not None:
         patient_profile.preferred_language = req.preferred_language
-    if req.contact_reference is not None:
+    if 'contact_reference' in req.model_fields_set:
         patient_profile.contact_reference = req.contact_reference
 
+    from app.services.audit_service import log_audit_event
+    log_audit_event(db, action="PATIENT_PROFILE_MODIFIED", resource_type="PATIENT", actor_user_id=patient_profile.user_id, resource_id=patient_profile.id, metadata={"fields": list(req.model_fields_set)})
     db.commit()
     db.refresh(patient_profile)
     return patient_profile

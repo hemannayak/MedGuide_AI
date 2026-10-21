@@ -202,6 +202,14 @@ def ingest_official_medical_document(
     )
 
     if existing_doc:
+        for chunk in existing_doc.chunks:
+            metadata = dict(chunk.metadata_ or {})
+            if doc_metadata.get("publication_date") is not None:
+                metadata["publication_date"] = doc_metadata["publication_date"]
+            if doc_metadata.get("version") is not None:
+                metadata["version"] = doc_metadata["version"]
+            chunk.metadata_ = metadata
+        db.commit()
         return {
             "status": "SKIPPED_DUPLICATE",
             "document_id": str(existing_doc.id),
@@ -245,6 +253,8 @@ def ingest_official_medical_document(
                 "source_url": doc_metadata.get("source_url"),
                 "publisher": publisher,
                 "document_id": str(med_doc.id),
+                "publication_date": doc_metadata.get("publication_date"),
+                "version": doc_metadata.get("version"),
             },
         )
         db.add(chunk_entity)

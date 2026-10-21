@@ -13,7 +13,7 @@ from typing import List
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.models.medications import Medication
+from app.models.medications import Medication, MedicationSchedule
 from app.models.profiles import PatientProfile
 from app.models.symptoms import SymptomRecord
 from app.models.timeline import Alert
@@ -83,7 +83,9 @@ def get_patient_summary_for_worker(
     )
     med_count = (
         db.query(Medication)
-        .filter(Medication.patient_id == patient.id)
+        .join(MedicationSchedule)
+        .filter(Medication.patient_id == patient.id, Medication.verification_status == "VERIFIED", MedicationSchedule.status == "ACTIVE")
+        .distinct()
         .count()
     )
     alert_count = (

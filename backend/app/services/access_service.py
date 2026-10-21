@@ -33,7 +33,7 @@ def _get_worker_profile(db: Session, worker_user: User) -> HealthcareWorkerProfi
         .filter(HealthcareWorkerProfile.user_id == worker_user.id)
         .first()
     )
-    if not profile:
+    if not profile or profile.status != "ACTIVE":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Healthcare worker profile not found for this account.",
@@ -111,6 +111,7 @@ def grant_worker_patient_access(
     db: Session,
     worker_user: User,
     patient_profile_id: uuid.UUID,
+    actor_user_id=None,
 ) -> PatientWorkerAccess:
     """
     Create or reactivate an access grant for a worker → patient relationship.
@@ -154,7 +155,7 @@ def grant_worker_patient_access(
             db=db,
             action=audit_service.ACTION_WORKER_ACCESS_GRANTED,
             resource_type=audit_service.RESOURCE_WORKER_ACCESS,
-            actor_user_id=worker_user.id,
+            actor_user_id=actor_user_id or worker_user.id,
             resource_id=existing.id,
             metadata={"patient_profile_id": str(patient_profile_id), "reactivated": True},
         )
@@ -175,7 +176,7 @@ def grant_worker_patient_access(
         db=db,
         action=audit_service.ACTION_WORKER_ACCESS_GRANTED,
         resource_type=audit_service.RESOURCE_WORKER_ACCESS,
-        actor_user_id=worker_user.id,
+        actor_user_id=actor_user_id or worker_user.id,
         resource_id=access.id,
         metadata={"patient_profile_id": str(patient_profile_id)},
     )
@@ -188,6 +189,7 @@ def revoke_worker_patient_access(
     db: Session,
     worker_user: User,
     patient_profile_id: uuid.UUID,
+    actor_user_id=None,
 ) -> None:
     """
     Revoke an existing ACTIVE access grant. Idempotent if already revoked.
@@ -214,7 +216,7 @@ def revoke_worker_patient_access(
         db=db,
         action=audit_service.ACTION_WORKER_ACCESS_REVOKED,
         resource_type=audit_service.RESOURCE_WORKER_ACCESS,
-        actor_user_id=worker_user.id,
+        actor_user_id=actor_user_id or worker_user.id,
         resource_id=existing.id,
         metadata={"patient_profile_id": str(patient_profile_id)},
     )

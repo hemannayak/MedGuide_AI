@@ -9,7 +9,7 @@ with concrete providers:
   - HuggingFaceGateway : Serverless inference via Hugging Face Router API (OpenAI compatible).
 
 Configuration (via environment variables):
-  AI_PROVIDER=ollama | groq | huggingface | mock
+  AI_PROVIDER=ollama | sarvam | groq | huggingface | mock
   AI_MODEL=llama3.2:3b | Qwen/Qwen2.5-7B-Instruct | Qwen/Qwen3-4B:featherless-ai
   GROQ_API_KEY=               # required when AI_PROVIDER=groq
   HF_TOKEN=                   # required when AI_PROVIDER=huggingface
@@ -224,6 +224,12 @@ class OllamaGateway(AIGateway):
             temperature=temperature,
             format=format,
         )
+        if format == "json":
+            # JSON syntax alone does not require the field consumed by our RAG parser.
+            payload["format"] = {
+                "type": "object", "properties": {"answer": {"type": "string", "minLength": 1}},
+                "required": ["answer"],
+            }
 
         try:
             with httpx.Client(timeout=self.timeout_seconds) as client:
@@ -233,6 +239,8 @@ class OllamaGateway(AIGateway):
                 )
                 response.raise_for_status()
                 data = response.json()
+                if data.get("done_reason") == "length":
+                    raise AIGatewayError("Ollama response exceeded the output budget")
                 content = extract_ollama_message_content(data)
 
                 # Defensive sanitization: remove any <think>...</think> tags if leaked into content
@@ -314,19 +322,34 @@ class GroqGateway(AIGateway):
         if format == "json":
             payload["response_format"] = {"type": "json_object"}
 
-        try:
-            with httpx.Client(timeout=60.0) as client:
-                response = client.post(
-                    "https://api.groq.com/openai/v1/chat/completions",
-                    headers=headers,
-                    json=payload,
-                )
-                response.raise_for_status()
-                data = response.json()
-                return data["choices"][0]["message"]["content"]
-        except Exception as e:
-            logger.error(f"[GroqGateway] Generation failed: {e}")
-            raise AIGatewayError(f"Groq inference failed: {e}") from e
+        import time
+        max_retries = 2
+        for attempt in range(max_retries + 1):
+            try:
+                with httpx.Client(timeout=60.0) as client:
+                    response = client.post(
+                        "https://api.groq.com/openai/v1/chat/completions",
+                        headers=headers,
+                        json=payload,
+                    )
+                    if response.status_code == 429 and attempt < max_retries:
+                        retry_after = float(response.headers.get("retry-after", "2.0"))
+                        logger.warning(f"[GroqGateway] Rate limited (429). Retrying in {retry_after}s (attempt {attempt + 1}/{max_retries})...")
+                        time.sleep(min(retry_after, 4.0))
+                        continue
+                    if response.is_error:
+                        logger.error(f"[GroqGateway] Error response {response.status_code}: {response.text}")
+                    response.raise_for_status()
+                    data = response.json()
+                    return data["choices"][0]["message"]["content"]
+            except Exception as e:
+                if attempt < max_retries and "429" in str(e):
+                    time.sleep(2.0)
+                    continue
+                logger.error(f"[GroqGateway] Generation failed: {e}")
+                raise AIGatewayError(f"Groq inference failed: {e}") from e
+
+        raise AIGatewayError("Groq inference failed: Maximum retries exceeded.")
 
 
 # ---------------------------------------------------------------------------
@@ -398,6 +421,57 @@ class HuggingFaceGateway(AIGateway):
 # ---------------------------------------------------------------------------
 # Factory — create gateway from environment configuration
 # ---------------------------------------------------------------------------
+class SarvamGateway(AIGateway):
+    """Optional Sarvam chat adapter; all RAG/safety validation stays upstream."""
+
+    def __init__(self, model: str, api_key: str, timeout_seconds: float = 90):
+        self.model = model
+        self.api_key = api_key
+        self.timeout_seconds = timeout_seconds
+
+    @property
+    def provider_name(self) -> str:
+        return f"sarvam/{self.model}"
+
+    def generate(self, system_prompt: str, user_prompt: str, max_tokens: int = 800,
+                 temperature: float = 0.2, format: Optional[str] = None) -> str:
+        import httpx
+
+        payload: Dict[str, Any] = {
+            "model": self.model,
+            "messages": [{"role": "system", "content": system_prompt},
+                         {"role": "user", "content": user_prompt}],
+            "max_tokens": max_tokens, "temperature": temperature,
+            "stream": False, "reasoning_effort": None,
+        }
+        if format == "json":
+            payload["response_format"] = {"type": "json_object"}
+        try:
+            with httpx.Client(timeout=self.timeout_seconds) as client:
+                response = client.post(
+                    "https://api.sarvam.ai/v1/chat/completions",
+                    headers={"api-subscription-key": self.api_key}, json=payload,
+                )
+                response.raise_for_status()
+                data = response.json()
+            choice = data["choices"][0]
+            if choice.get("finish_reason") == "length":
+                raise AIGatewayError("Sarvam response exceeded the output budget")
+            content = choice["message"].get("content")
+            if not isinstance(content, str) or not content.strip():
+                raise AIGatewayError("Sarvam returned no assistant answer")
+            return content.strip()
+        except AIGatewayError:
+            raise
+        except httpx.TimeoutException:
+            raise AIGatewayError("Sarvam inference timed out") from None
+        except httpx.HTTPStatusError as exc:
+            # Never include provider response bodies: they may echo private prompts.
+            raise AIGatewayError(f"Sarvam inference failed (HTTP {exc.response.status_code})") from None
+        except (httpx.HTTPError, ValueError, KeyError, IndexError, TypeError):
+            raise AIGatewayError("Sarvam inference returned an invalid response or connection failed") from None
+
+
 def create_ai_gateway(
     provider: Optional[str] = None,
     model: Optional[str] = None,
@@ -406,7 +480,7 @@ def create_ai_gateway(
     Create the appropriate AIGateway based on environment configuration.
 
     Configuration:
-        AI_PROVIDER: ollama | groq | huggingface (hf) | mock  (default: mock)
+        AI_PROVIDER: ollama | sarvam | groq | huggingface (hf) | mock (default: mock)
         AI_MODEL: provider-specific model identifier
         GROQ_API_KEY: required when AI_PROVIDER=groq
         HF_TOKEN / HUGGINGFACE_API_KEY: required when AI_PROVIDER=huggingface
@@ -427,6 +501,12 @@ def create_ai_gateway(
         ollama_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
         logger.info(f"[AIGateway] Using OllamaGateway: {ollama_model} @ {ollama_url}")
         return OllamaGateway(model=ollama_model, base_url=ollama_url)
+
+    elif provider == "sarvam":
+        sarvam_key = os.getenv("SARVAM_API_KEY", "")
+        if not sarvam_key:
+            raise AIGatewayError("SARVAM_API_KEY is required when AI_PROVIDER=sarvam")
+        return SarvamGateway(model=model or "sarvam-105b-conversations", api_key=sarvam_key)
 
     elif provider == "groq":
         groq_model = model or "llama-3.1-8b-instant"
@@ -451,5 +531,5 @@ def create_ai_gateway(
 
     else:
         raise AIGatewayError(
-            f"Unknown AI_PROVIDER: '{provider}'. Supported: ollama | groq | huggingface (hf) | mock"
+            f"Unknown AI_PROVIDER: '{provider}'. Supported: ollama | sarvam | groq | huggingface (hf) | mock"
         )

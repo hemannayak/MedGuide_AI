@@ -1,15 +1,34 @@
 import uuid
 from datetime import date, datetime
-from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, ConfigDict, Field
+from typing import Any, Dict, List, Optional, Literal
+from pydantic import BaseModel, ConfigDict, Field, model_validator, AwareDatetime
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
+import re
 
 
 class MedicationScheduleCreateRequest(BaseModel):
-    frequency: str = Field(..., description="Schedule frequency (e.g., ONCE_DAILY, TWICE_DAILY)")
+    frequency: str = Field(..., min_length=1, max_length=100, description="Frequency copied from the prescription")
     schedule_data: Dict[str, Any] = Field(..., description="Structured timing data e.g. {'times': ['08:00', '20:00']}")
     start_date: date
     end_date: Optional[date] = None
     timezone: str = Field(default="UTC")
+
+    @model_validator(mode="after")
+    def validate_schedule(self):
+        times = self.schedule_data.get("times")
+        if not isinstance(times, list) or not times or not all(isinstance(t, str) and re.fullmatch(r"(?:[01]\d|2[0-3]):[0-5]\d", t) for t in times):
+            raise ValueError("Schedule requires times in HH:MM format")
+        if len(times) != len(set(times)):
+            raise ValueError("Schedule times must be unique")
+        if self.end_date and self.end_date < self.start_date:
+            raise ValueError("End date must not precede start date")
+        try:
+            ZoneInfo(self.timezone)
+        except (ZoneInfoNotFoundError, ValueError):
+            raise ValueError("Use a valid IANA timezone") from None
+        if not self.frequency.strip():
+            raise ValueError("Frequency must be provided from the prescription")
+        return self
 
 
 class MedicationScheduleResponse(BaseModel):
@@ -50,8 +69,8 @@ class MedicationResponse(BaseModel):
 
 
 class MedicationAdherenceRecordRequest(BaseModel):
-    scheduled_at: datetime = Field(..., description="Scheduled intake timestamp")
-    status: str = Field(..., description="Intake status: TAKEN, MISSED, SKIPPED")
+    scheduled_at: AwareDatetime
+    status: Literal["TAKEN", "MISSED", "SKIPPED"]
     source: str = Field(default="PATIENT_REPORTED", description="Reporting source")
 
 

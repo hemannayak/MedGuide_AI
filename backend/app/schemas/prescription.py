@@ -8,6 +8,7 @@ class FieldConfidence(BaseModel):
     """Field value alongside entity-level confidence score."""
     value: Optional[str] = Field(None, description="Extracted textual value")
     confidence: float = Field(..., ge=0.0, le=1.0, description="Field-level extraction confidence score")
+    confidence_kind: str = "heuristic_unvalidated"
 
 
 class ExtractedMedicationCandidate(BaseModel):
@@ -35,7 +36,6 @@ class OCRResultResponse(BaseModel):
 class PrescriptionImageResponse(BaseModel):
     """Prescription image metadata."""
     id: uuid.UUID
-    storage_reference: str
     file_type: str
     file_size: int
     checksum: Optional[str] = None

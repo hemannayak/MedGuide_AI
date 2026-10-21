@@ -1,18 +1,18 @@
 import uuid
 from datetime import datetime
-from typing import Optional
-from pydantic import BaseModel, ConfigDict, Field
+from typing import Optional, Literal
+from pydantic import BaseModel, ConfigDict, Field, AwareDatetime
 
 
 class FollowUpCreateRequest(BaseModel):
     patient_id: uuid.UUID
-    reason: str = Field(..., description="Reason for care follow-up")
-    scheduled_at: datetime = Field(..., description="Target follow-up timestamp")
+    reason: str = Field(..., min_length=1, max_length=255)
+    scheduled_at: AwareDatetime
     notes: Optional[str] = Field(None, description="Clinical notes")
 
 
 class FollowUpUpdateRequest(BaseModel):
-    status: Optional[str] = Field(None, description="Status: PENDING, COMPLETED, CANCELLED")
+    status: Optional[Literal["PENDING", "COMPLETED", "CANCELLED"]] = None
     notes: Optional[str] = Field(None, description="Updated notes")
 
 
