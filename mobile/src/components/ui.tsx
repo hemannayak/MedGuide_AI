@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import Svg, { Path } from "react-native-svg";
 export const colors = {
   forest: "#073d37",
@@ -21,7 +20,7 @@ export const colors = {
   line: "#e4e1d6",
   sage: "#e8ecdf",
 };
-export type IconName = React.ComponentProps<typeof Ionicons>["name"];
+export type IconName = string;
 export function Icon({
   name,
   size = 25,
@@ -31,7 +30,35 @@ export function Icon({
   size?: number;
   color?: string;
 }) {
-  return <Ionicons name={name} size={size} color={color} accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" />;
+  const glyphMap: Record<string, string> = {
+    "mic-outline": "🎙",
+    "chatbubble-outline": "💬",
+    "document-text-outline": "📄",
+    "medkit-outline": "💊",
+    "home-outline": "⌂",
+    "calendar-outline": "📅",
+    "time-outline": "⏱",
+    "settings-outline": "⚙",
+    "person-outline": "👤",
+    "chevron-forward": "❯",
+    "chevron-back": "❮",
+    "arrow-back": "←",
+    "play-outline": "▶",
+    "checkmark-circle": "✓",
+    "alert-circle": "⚠️",
+    "shield-checkmark-outline": "🛡",
+  };
+  const symbol = glyphMap[name] || "●";
+  return (
+    <Text
+      style={{ fontSize: size * 0.85, color, textAlign: "center" }}
+      accessible={false}
+      accessibilityElementsHidden
+      importantForAccessibility="no-hide-descendants"
+    >
+      {symbol}
+    </Text>
+  );
 }
 export function Mark() {
   return (

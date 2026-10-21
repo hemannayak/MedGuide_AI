@@ -9,17 +9,17 @@ export const translations = {
     introSubtitle: 'A student-led primary healthcare platform bridging language, literacy, and access barriers in rural India.',
     
     // Slide titles & details
-    slide1Title: 'Primary Guidance Anywhere',
-    slide1Desc: 'Structured symptom triage and trusted medical information without replacing qualified doctors.',
+    slide1Title: 'Understand Your Health',
+    slide1Desc: 'Express your health concerns in your preferred language to receive safe, preliminary health guidance.',
     
-    slide2Title: 'Speak In Your Language',
-    slide2Desc: 'Ask health questions naturally in Telugu, Hindi, or English using voice or text.',
+    slide2Title: 'Understand Prescriptions',
+    slide2Desc: 'Scan doctor prescriptions to organize medicines, dosages, and schedules with assisted OCR.',
     
-    slide3Title: 'Prescription OCR & Care',
-    slide3Desc: 'Take a photo of doctor prescriptions to extract medicines and track adherence securely.',
+    slide3Title: 'Keep Your Health Records Together',
+    slide3Desc: 'Access your health records, timeline, prescriptions, and follow-ups in one secure place.',
     
-    slide4Title: 'Rural Clinic Continuity',
-    slide4Desc: 'Summaries ready for local ASHA workers and community clinics for follow-up.',
+    slide4Title: 'Care in Your Language',
+    slide4Desc: 'Speak or type naturally in English, हिन्दी, or తెలుగు with voice-enabled accessibility.',
 
     // Audio Guide
     audioGuideBtn: '🔊 Audio Guide',
@@ -89,17 +89,17 @@ export const translations = {
     introTitle: 'हर समुदाय के लिए सुलभ स्वास्थ्य जानकारी।',
     introSubtitle: 'ग्रामीण भारत में भाषा और डिजिटल साक्षरता की बाधाओं को दूर करने वाला डिजिटल स्वास्थ्य मंच।',
     
-    slide1Title: 'प्राथमिक स्वास्थ्य मार्गदर्शन',
-    slide1Desc: 'लक्षणों की शुरुआती जांच और भरोसेमंद चिकित्सा जानकारी, जो डॉक्टर की जगह नहीं लेती।',
+    slide1Title: 'अपना स्वास्थ्य समझें',
+    slide1Desc: 'सुरक्षित प्रारंभिक मार्गदर्शन प्राप्त करने के लिए अपनी पसंदीदा भाषा में स्वास्थ्य संबंधी चिंता व्यक्त करें।',
     
-    slide2Title: 'अपनी भाषा में बोलें',
-    slide2Desc: 'हिंदी, तेलुगु या अंग्रेजी में बोलकर या लिखकर अपने स्वास्थ्य संबंधी प्रश्न पूछें।',
+    slide2Title: 'दवा के पर्चे को समझें',
+    slide2Desc: 'दवाइयों, खुराक और समय सारणी को व्यवस्थित करने के लिए डॉक्टर के पर्चे को स्कैन करें।',
     
-    slide3Title: 'पर्चा स्कैनर और दवाएं',
-    slide3Desc: 'दवा के पर्चे की फोटो खींचकर दवाइयों का विवरण और समय सारणी सुरक्षित रूप से समझें।',
+    slide3Title: 'स्वास्थ्य रिकॉर्ड एक साथ रखें',
+    slide3Desc: 'अपने स्वास्थ्य रिकॉर्ड, समयरेखा, पर्चे और फॉलो-अप को एक सुरक्षित स्थान पर रखें।',
     
-    slide4Title: 'स्थानीय स्वास्थ्य कार्यकर्ता सहायता',
-    slide4Desc: 'आशा कार्यकर्ताओं और प्राथमिक स्वास्थ्य केंद्रों के लिए सुव्यवस्थित सारांश।',
+    slide4Title: 'आपकी अपनी भाषा में देखभाल',
+    slide4Desc: 'हिंदी, तेलुगु या अंग्रेजी में बोलकर या लिखकर सहजता से स्वास्थ्य संबंधी जानकारी पाएं।',
 
     // Audio Guide
     audioGuideBtn: '🔊 ऑडियो गाइड',
@@ -170,17 +170,17 @@ export const translations = {
     introTitle: 'ప్రతి గ్రామానికి ప్రాథమిక ఆరోగ్య సమాచారం.',
     introSubtitle: 'గ్రామీణ ప్రాంతాలలో భాష మరియు అక్షరాస్యత అవరోధాలను తొలగించే డిజిటల్ ఆరోగ్య వేదిక.',
     
-    slide1Title: 'ప్రాథమిక ఆరోగ్య మార్గదర్శకత్వం',
-    slide1Desc: 'లక్షణాల ప్రాథమిక విశ్లేషణ మరియు విశ్వసనీయ సమాచారం, ఇది వైద్యునికి ప్రత్యామ్నాయం కాదు.',
+    slide1Title: 'మీ ఆరోగ్యాన్ని అర్థం చేసుకోండి',
+    slide1Desc: 'సురక్షితమైన ప్రాథమిక మార్గదర్శకత్వం పొందడానికి మీ ప్రాధాన్య భాషలో ఆరోగ్య సమస్యలను వ్యక్తపరచండి.',
     
-    slide2Title: 'మీ సొంత భాషలోనే మాట్లాడండి',
-    slide2Desc: 'తెలుగు, హిందీ లేదా ఇంగ్లీషులో సులభంగా మీ ఆరోగ్య సమస్యలను అడగండి.',
+    slide2Title: 'ప్రిస్క్రిప్షన్లను అర్థం చేసుకోండి',
+    slide2Desc: 'మందులు, మోతాదులు మరియు సమయాలను నిర్వహించడానికి డాక్టర్ ప్రిస్క్రిప్షన్‌ను స్కాన్ చేయండి.',
     
-    slide3Title: 'ప్రిస్క్రిప్షన్ స్కానర్ & మందులు',
-    slide3Desc: 'డాక్టర్ రాసిన మందుల చీటీ ఫోటో తీసి, సరైన మోతాదు మరియు సమయాలను సులభంగా తెలుసుకోండి.',
+    slide3Title: 'ఆరోగ్య రికార్డులను భద్రపరచండి',
+    slide3Desc: 'మీ ఆరోగ్య రికార్డులు, కాలక్రమం, ప్రిస్క్రిప్షన్లు మరియు ఫాలో-అప్‌లను ఒకే సురక్షిత ప్రదేశంలో ఉంచండి.',
     
-    slide4Title: 'గ్రామీణ ఆరోగ్య కార్యకర్తల అనుసంధానం',
-    slide4Desc: 'ఆశా కార్యకర్తలు మరియు ప్రాథమిక ఆరోగ్య కేంద్రాల కోసం సమగ్ర సమాచారం.',
+    slide4Title: 'మీ భాషలోనే సంరక్షణ',
+    slide4Desc: 'తెలుగు, హిందీ లేదా ఇంగ్లీషులో వాయిస్ లేదా టెక్స్ట్ ద్వారా సులభంగా సంభాషించండి.',
 
     // Audio Guide
     audioGuideBtn: '🔊 ఆడియో గైడ్',

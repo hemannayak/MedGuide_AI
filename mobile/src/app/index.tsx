@@ -52,12 +52,23 @@ export default function Login() {
   }
 
 
-  if (showIntroduction) return <SafeAreaView edges={['top']} style={{flex:1,backgroundColor:palette.sage}}><BrandIntroduction onContinue={() => {setShowIntroduction(false);void finishIntro().catch(() => undefined);}} /></SafeAreaView>;
+  if (showIntroduction) {
+    return (
+      <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: '#073d37' }}>
+        <BrandIntroduction
+          onContinue={() => {
+            setShowIntroduction(false);
+            setShowWelcome(false);
+            void finishIntro().catch(() => undefined);
+          }}
+        />
+      </SafeAreaView>
+    );
+  }
 
   if (showWelcome) {
     return (
       <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: palette.cream }}>
-        
         <WelcomeFlow
           initialLanguage={language}
           onLanguageChange={setLanguage}

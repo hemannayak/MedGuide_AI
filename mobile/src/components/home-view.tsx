@@ -7,7 +7,7 @@ import { RuralScene } from './rural-scene';
 import { VoiceMicWaveSvg, PrescriptionScannerSvg, MedicineBottleSvg } from './illustrations';
 import { WalkthroughTip } from './walkthrough-tip';
 import { stopGuidance } from '../lib/audio-guide';
-type Destination = '/home' | '/chat' | '/care' | '/settings' | '/timeline' | '/prescriptions/upload' | '/profile';
+type Destination = '/home' | '/chat' | '/care' | '/settings' | '/timeline' | '/prescriptions/upload' | '/profile' | '/symptoms';
 /** Keep daily tracking between the conversation actions and care shortcuts. */
 export function HomeView({ onNavigate, children, dailyDashboard, walkthrough=false, onWalkthroughDone }: { onNavigate: (route: Destination) => void; children?: ReactNode; dailyDashboard?: ReactNode; walkthrough?:boolean; onWalkthroughDone?:()=>Promise<void> }) {
   const [tip,setTip]=useState<number|null>(walkthrough?0:null);
@@ -60,6 +60,7 @@ export function HomeView({ onNavigate, children, dailyDashboard, walkthrough=fal
         </Pressable>
       </View>
       </View>
+      <Button variant="quiet" title="Symptom safety triage →" onPress={() => onNavigate('/symptoms')} />
       <Button variant="quiet" title="View health timeline →" onPress={() => onNavigate('/timeline')} />
       <Text style={styles.safety}>Health information, not a diagnosis. For emergencies, seek immediate professional help.</Text>
     </ScrollView>

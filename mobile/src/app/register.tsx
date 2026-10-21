@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import { router } from 'expo-router';
 import { Brand, Button, palette } from '../components/brand-ui';
-import { registerPatient } from '../lib/api';
+import { registerPatient, signIn } from '../lib/api';
 import { Language, t } from '../lib/i18n';
 import { speakGuidance, stopGuidance } from '../lib/audio-guide';
 import { RuralScene } from '../components/rural-scene';
@@ -60,6 +60,11 @@ export default function Register() {
     setError('');
     try {
       await registerPatient(identifier, password, name, language);
+      try {
+        await signIn(identifier, password);
+      } catch {
+        // Fallback if network interruption occurs right after account creation
+      }
       if (active.current) {
         setPassword('');
         setConfirmation('');
@@ -123,9 +128,10 @@ export default function Register() {
             <DoctorConsultSvg size={54} />
             <Text style={styles.successTitle}>Welcome, {name}!</Text>
             <Text style={styles.body}>
-              Your MedGuide AI account is ready. Next, review permissions to start using voice questions and prescription scanning.
+              Your MedGuide AI account is ready and your session is established. Next, review permissions to start using voice questions, activity tracking, and prescription scanning.
             </Text>
-            <Button title="Go to sign in" onPress={() => router.replace('/')} />
+            <Button title="Continue to permissions →" onPress={() => router.replace('/permissions')} />
+            <Button variant="secondary" title="Go to sign in" onPress={() => router.replace('/')} />
           </View>
         ) : (
           <View style={styles.card}>

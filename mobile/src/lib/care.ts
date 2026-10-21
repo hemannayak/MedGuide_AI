@@ -36,3 +36,28 @@ export const confirmMedication = (med: Medication, checkedOriginal: boolean) => 
   if (!checkedOriginal || !canConfirmMedication(med)) throw new Error('Check complete details against the original prescription before confirming.');
   return request<Medication>(`/medications/${resourceId(med.id)}/verify`, undefined, 'POST');
 };
+
+export type SymptomTriageResult = {
+  symptom_record_id: string;
+  risk_level: 'ROUTINE' | 'URGENT' | 'EMERGENCY';
+  red_flags: string[];
+  guidance: string;
+  escalation_required: boolean;
+  created_alert_id?: string | null;
+};
+
+export async function submitAndAnalyzeSymptoms(
+  text: string,
+  language: Language
+): Promise<SymptomTriageResult> {
+  const clean = text.trim();
+  if (!clean || clean.length < 5) throw new Error('Enter a symptom description of at least 5 characters.');
+  const record = await request<{ symptom_record_id: string }>('/symptoms', {
+    text: clean,
+    language,
+    input_type: 'text',
+  }, 'POST');
+  return request<SymptomTriageResult>('/symptoms/analyze', {
+    symptom_record_id: record.symptom_record_id,
+  }, 'POST');
+}
