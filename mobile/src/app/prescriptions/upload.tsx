@@ -136,6 +136,7 @@ export default function UploadPrescription() {
           <Button variant="secondary" title="Choose a prescription image" disabled={busy} onPress={() => void choose(false)} />
         </View>
         <Text style={styles.formatHint}>Supports JPEG, PNG or WebP · Maximum 10 MB.</Text>
+        <Text style={styles.formatHint}>Place the paper flat in good light. Include every edge, keep the phone steady and avoid glare. Check that the medicine names are readable before uploading.</Text>
 
         {image ? (
           <View style={styles.previewBox}>

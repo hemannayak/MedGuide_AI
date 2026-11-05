@@ -14,6 +14,7 @@ function permissionHarness(preview=false){
  if(name==='expo-audio')return {AudioModule:{requestRecordingPermissionsAsync:async()=>{calls.push('OS microphone');return result;}}};
  if(name==='expo-image-picker')return {requestCameraPermissionsAsync:async()=>{calls.push('OS camera');return result;}};
  if(name==='./brand-ui')return {Brand:'Brand',Button:'Button',palette:{}};
+ if(name==='../lib/notifications')return {reminderPermissionStatus:async()=>'Not requested',allowReminders:async()=>{calls.push('OS notifications');return {granted:true};}};
  if(name==='./illustrations')return {VoiceMicWaveSvg:'Art',PrescriptionScannerSvg:'Art',MedicalShieldSvg:'Art'};
  throw Error(name);
  });

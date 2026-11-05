@@ -4,6 +4,7 @@ import { AudioModule, createAudioPlayer, RecordingPresets, setAudioModeAsync, us
 import { File, Paths } from 'expo-file-system';
 import { Language, request, synthesizeSpeech, transcribeRecording } from '../lib/api';
 import { decodeAudio, speechSegments } from '../lib/voice';
+import { getSpokenChoice } from '../lib/spoken-consent';
 
 type Phase = 'idle' | 'preparing' | 'recording' | 'transcribing' | 'speaking';
 export function useVoice(language: Language, onTranscript: (text: string) => void) {
@@ -79,6 +80,8 @@ export function useVoice(language: Language, onTranscript: (text: string) => voi
   async function speak(text: string, replyLanguage: Language = language) {
     cancel(); const current = generation.current; setError(''); setPhase('speaking');
     try {
+      if (await getSpokenChoice() !== 'GRANTED') throw new Error('Read-aloud is off. Choose read-aloud in setup on Home. Your text answer is available.');
+      if (!active.current || current !== generation.current) return;
       await setAudioModeAsync({ allowsRecording: false, playsInSilentMode: true, shouldPlayInBackground: false });
       for (const segment of speechSegments(text)) {
         const audio = await synthesizeSpeech(segment, replyLanguage);

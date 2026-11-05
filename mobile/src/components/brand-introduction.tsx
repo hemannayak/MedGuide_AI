@@ -31,15 +31,19 @@ export function BrandIntroduction({ onContinue }: { onContinue: () => void }) {
         animation = Animated.timing(anim, {
           toValue: 1,
           duration: 1800,
-          useNativeDriver: Platform.OS !== 'web',
+          useNativeDriver: false,
         });
         animation.start();
       }
     };
 
+    startSequence(false);
+
     void AccessibilityInfo.isReduceMotionEnabled()
-      .then(startSequence)
-      .catch(() => startSequence(true));
+      .then((reduced) => {
+        if (reduced) anim.setValue(1);
+      })
+      .catch(() => undefined);
 
     const sub = AccessibilityInfo.addEventListener('reduceMotionChanged', startSequence);
     return () => {

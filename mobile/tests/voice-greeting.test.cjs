@@ -17,7 +17,8 @@ function harness(language,profileLanguage=language){
   if(name==='expo-router')return {router:{}};
   if(name==='../lib/api')return {hasSession:async()=>true};
   if(name==='../lib/care')return {getProfile:async()=>({preferred_language:profileLanguage}),updatePreferredLanguage:async code=>({preferred_language:code})};
-  throw Error(name);
+    if(name==='../components/recording-indicator')return {RecordingIndicator:'RecordingIndicator'};
+    throw Error(name);
  }};
  vm.runInNewContext(ts.transpileModule(readFileSync('src/app/chat.tsx','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText,context);
  const flatten=n=>Array.isArray(n)?n.flatMap(flatten):n&&typeof n==='object'?[n,...flatten(n.props?.children)]:[];

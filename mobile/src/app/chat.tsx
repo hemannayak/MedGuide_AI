@@ -8,14 +8,9 @@ import { useVoice } from '../hooks/use-voice';
 import { getProfile, updatePreferredLanguage } from '../lib/care';
 import { DoctorConsultSvg, VoiceMicWaveSvg, MedicalShieldSvg } from '../components/illustrations';
 import { playAudioGuide, stopAudioGuide } from '../lib/audio-guide';
-import { isGuidanceCommand } from '../lib/accessibility-command';
 import { t } from '../lib/i18n';
+import { RecordingIndicator } from '../components/recording-indicator';
 
-const spokenHelp = {
-  en: 'You are in Talk. Choose Record your concern, speak, then choose Stop. Check the transcript before Send. Read aloud plays an answer. You can type instead. Home returns to the main choices. No recording starts automatically.',
-  hi: 'आप टॉक में हैं। रिकॉर्ड चुनें, बोलें, फिर रोकें। भेजने से पहले लिखे शब्द जाँचें। उत्तर सुनने के लिए रीड अलाउड चुनें। आप टाइप भी कर सकते हैं। होम मुख्य विकल्पों पर वापस लाता है। रिकॉर्डिंग अपने आप शुरू नहीं होती।',
-  te: 'మీరు టాక్‌లో ఉన్నారు. రికార్డ్ ఎంచుకుని మాట్లాడి ఆపండి. పంపే ముందు పదాలు సరిచూడండి. సమాధానం వినడానికి రీడ్ అలౌడ్ ఎంచుకోండి. టైప్ కూడా చేయవచ్చు. హోమ్ ప్రధాన ఎంపికలకు తీసుకువెళ్తుంది. రికార్డింగ్ దానంతట అదే ప్రారంభం కాదు.',
-};
 const voiceGreetings = {
   en: 'Hello! I’m MedGuide, your AI health assistant. What is worrying you today? Tap Record when you’re ready.',
   hi: 'नमस्ते! मैं मेडगाइड, आपका एआई स्वास्थ्य सहायक हूँ। आज आपको क्या परेशानी है? तैयार होने पर रिकॉर्ड दबाएँ।',
@@ -33,7 +28,7 @@ export default function Chat() {
   const languageChosen = useRef(false);
   const [reviewingVoice, setReviewingVoice] = useState(false);
   const [voiceMode, setVoiceMode] = useState(false);
-  const voice = useVoice(language, text => { if (isGuidanceCommand(text)) { setVoiceMode(true); playAudioGuide(spokenHelp[language], language); return; } setQuestion(text); setReviewingVoice(true); });
+  const voice = useVoice(language, text => { setQuestion(text); setReviewingVoice(true); });
   const greetingLock = useRef(false);
 
   async function chooseLanguage(code: Language) {
@@ -108,7 +103,7 @@ export default function Chat() {
       setQuestion('');
       if (reviewingVoice) {
         setReviewingVoice(false);
-        await voice.speak(reply.message, language);
+        // Replies remain text until the user explicitly taps Listen.
       }
     } catch (failure) {
       setError(failure instanceof Error ? failure.message : 'Connection failed.');
@@ -122,7 +117,7 @@ export default function Chat() {
       <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.content}>
         <Brand />
         <Button title={voiceMode ? "Replay spoken guidance" : "Start voice mode"} onPress={() => void enterVoiceMode()} disabled={busy || voice.phase !== 'idle'} />
-        {voiceMode ? <Text accessibilityLiveRegion="polite">Spoken guidance enabled. Record “MedGuide help” for help. Recording only starts when you choose Record.</Text> : null}
+        {voiceMode ? <Text accessibilityLiveRegion="polite">Recording only starts when you choose Record. Review your words before sending.</Text> : null}
 
         {/* Accessibility & Language bar */}
         <View style={styles.topRow}>
@@ -189,6 +184,7 @@ export default function Chat() {
                   <MedicalShieldSvg width={20} height={20} />
                   <Text style={styles.aiLabel}>MedGuide AI</Text>
                 </View>
+                {turn.reply.response_type==='EMERGENCY'?<Text accessibilityRole="alert" style={{color:palette.error,fontSize:18,fontWeight:'700'}}>Emergency guidance · seek immediate professional help</Text>:<Text style={{color:palette.teal}}>Preliminary health information · not a diagnosis</Text>}
                 <Text style={styles.reply} selectable>{turn.reply.message}</Text>
                 <Button
                   variant="secondary"
@@ -212,6 +208,7 @@ export default function Chat() {
 
         {/* Voice Interaction Card */}
         <View style={styles.voicePanel}>
+          {voice.phase==='recording'?<RecordingIndicator/>:null}
           <View style={styles.voiceHeader}>
             <VoiceMicWaveSvg width={48} height={48} />
             <View style={{ flex: 1 }}>

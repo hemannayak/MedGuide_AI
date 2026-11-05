@@ -1,6 +1,6 @@
 import { Language, request } from './api';
 export type Profile = { id: string; display_name: string; preferred_language: Language; date_of_birth?: string | null; contact_reference?: string | null };
-export type Medication = { id: string; medicine_name: string; dosage: string; verification_status: string; instructions?: string };
+export type Medication = { id: string; medicine_name: string; dosage: string; verification_status: string; updated_at?:string; instructions?: string; schedules?: {id:string;frequency:string;schedule_data:{times:string[]};start_date:string;end_date?:string|null;timezone:string;status:string}[] };
 export type FollowUp = { id: string; reason: string; scheduled_at: string; status: string };
 export type Prescription = { id: string; status: string; verification_status: string; prescribed_date?: string; created_at: string; medications_count: number };
 export type PrescriptionDetail = Omit<Prescription, 'medications_count'> & {
@@ -34,7 +34,12 @@ export const canConfirmMedication = (med: Medication) => med.verification_status
   Boolean(med.dosage?.trim()) && med.dosage !== 'Unspecified';
 export const confirmMedication = (med: Medication, checkedOriginal: boolean) => {
   if (!checkedOriginal || !canConfirmMedication(med)) throw new Error('Check complete details against the original prescription before confirming.');
-  return request<Medication>(`/medications/${resourceId(med.id)}/verify`, undefined, 'POST');
+  return request<Medication>(`/medications/${resourceId(med.id)}/verify`, med.updated_at?{expected_updated_at:med.updated_at}:undefined, 'POST');
+};
+export const correctOCRMedication = (med: Medication, fields: {medicine_name:string;dosage:string;instructions:string}, checkedOriginal:boolean) => {
+  if(med.verification_status!=='PENDING'||!checkedOriginal)throw new Error('Compare pending OCR details with the original prescription first.');
+  if(!fields.medicine_name.trim()||!fields.dosage.trim())throw new Error('Copy the medicine name and dosage from the prescription.');
+  return request<Medication>(`/medications/${resourceId(med.id)}/ocr-correction`,{...fields,checked_original:true},'PATCH');
 };
 
 export type SymptomTriageResult = {

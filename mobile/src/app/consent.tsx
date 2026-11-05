@@ -1,3 +1,4 @@
+import { SpokenConsentCard } from '../components/spoken-consent-card';
 import { useEffect, useState } from 'react';
 import { ScrollView, Text, View, StyleSheet, Pressable } from 'react-native';
 import { router } from 'expo-router';
@@ -115,6 +116,7 @@ export default function ConsentScreen() {
         </View>
       ) : null}
 
+      <SpokenConsentCard language={lang} edit/>
       {/* Processing Consent Cards */}
       {['AI_PROCESSING', 'SPEECH_PROCESSING'].map(scope => {
         const latest = records

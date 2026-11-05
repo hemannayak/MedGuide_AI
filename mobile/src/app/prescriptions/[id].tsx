@@ -1,9 +1,9 @@
 import { Button, palette } from '../../components/brand-ui';
 import { useEffect, useRef, useState } from 'react';
-import { ScrollView, Switch, Text, View } from 'react-native';
+import { ScrollView, Switch, Text, TextInput, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { canConfirmMedication, confirmMedication, getPrescription, Medication, PrescriptionDetail } from '../../lib/care';
-import { PrescriptionScannerSvg, MedicineBottleSvg } from '../../components/illustrations';
+import { canConfirmMedication, confirmMedication, correctOCRMedication, getPrescription, Medication, PrescriptionDetail } from '../../lib/care';
+import { PrescriptionScannerSvg } from '../../components/illustrations';
 
 export default function PrescriptionScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -17,6 +17,9 @@ function PrescriptionReview({ id }: { id: string }) {
   const [revision, setRevision] = useState(0);
   const [confirmed, setConfirmed] = useState<Record<string, boolean>>({});
   const [saving, setSaving] = useState('');
+  const [editing,setEditing]=useState<string|null>(null);
+  const [draft,setDraft]=useState({medicine_name:'',dosage:'',instructions:''});
+  const [checkedCorrection,setCheckedCorrection]=useState(false);
   const generation = useRef(0);
   const savingRef = useRef(false);
   useEffect(() => {
@@ -46,6 +49,16 @@ function PrescriptionReview({ id }: { id: string }) {
       if (current === generation.current) setSaving('');
     }
   }
+  async function correct(med:Medication){
+    if(savingRef.current)return;
+    savingRef.current=true;setSaving(med.id);setError('');
+    const current=generation.current;
+    try{
+      const updated=await correctOCRMedication(med,draft,checkedCorrection);
+      if(current===generation.current){setRecord(value=>value&&({...value,medications:value.medications.map(item=>item.id===updated.id?updated:item)}));setEditing(null);setConfirmed(value=>({...value,[med.id]:false}));}
+    }catch(failure){if(current===generation.current)setError(failure instanceof Error?failure.message:'Correction could not save.');}
+    finally{savingRef.current=false;if(current===generation.current)setSaving('');}
+  }
   return <ScrollView contentContainerStyle={{ padding: 18, gap: 14, backgroundColor: palette.cream, flexGrow: 1 }}>
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
       <PrescriptionScannerSvg size={40} />
@@ -70,7 +83,16 @@ function PrescriptionReview({ id }: { id: string }) {
         <Text>Recorded dosage: {med.dosage || 'Not recorded'}</Text>
         <Text>Recorded instructions: {med.instructions || 'Not recorded'}</Text>
         <Text>Verification: {med.verification_status}</Text>
-        {canConfirmMedication(med) ? <>
+        {med.verification_status==='PENDING'?<Button variant="secondary" title="Correct OCR details from original" disabled={Boolean(saving)} onPress={()=>{setEditing(med.id);setDraft({medicine_name:med.medicine_name,dosage:med.dosage||'',instructions:med.instructions||''});setCheckedCorrection(false);setConfirmed(value=>({...value,[med.id]:false}));}}/>:null}
+        {editing===med.id?<View style={{gap:10}}>
+          <Text>Copy only what is written on the original. Ask a pharmacist or healthcare worker if it is unclear. Saving does not verify or schedule this medicine.</Text>
+          {(['medicine_name','dosage','instructions']as const).map(field=><View key={field}><Text>{field==='medicine_name'?'Medicine name':field==='dosage'?'Dosage from prescription':'Instructions from prescription'}</Text><TextInput accessibilityLabel={`Correct ${field}`} value={draft[field]} editable={!saving} maxLength={field==='instructions'?2000:field==='dosage'?100:255} onChangeText={text=>{setDraft(value=>({...value,[field]:text}));setCheckedCorrection(false);}} style={{borderWidth:1,borderColor:palette.line,padding:14,borderRadius:12,backgroundColor:palette.white}}/></View>)}
+          <Text>I compared these corrections with my original prescription.</Text>
+          <Switch accessibilityLabel="Corrections match original prescription" value={checkedCorrection} disabled={Boolean(saving)} onValueChange={setCheckedCorrection}/>
+          <Button title="Save pending correction" disabled={Boolean(saving)||!checkedCorrection||!draft.medicine_name.trim()||!draft.dosage.trim()} onPress={()=>void correct(med)}/>
+          <Button variant="quiet" title="Cancel correction" disabled={Boolean(saving)} onPress={()=>setEditing(null)}/>
+        </View>:null}
+        {canConfirmMedication(med)&&editing!==med.id ? <>
           <Text>I checked the medicine name, dosage and any instructions against my original prescription and they match.</Text>
           <Switch accessibilityLabel={`Details match the original prescription for ${med.medicine_name}`} disabled={Boolean(saving)} value={Boolean(confirmed[med.id])} onValueChange={value => setConfirmed(previous => ({ ...previous, [med.id]: value }))} />
           <Button title={saving === med.id ? 'Saving confirmation…' : 'Confirm matching details'} disabled={Boolean(saving) || !confirmed[med.id]} onPress={() => void verify(med)} />

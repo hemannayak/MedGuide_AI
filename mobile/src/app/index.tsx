@@ -1,100 +1,80 @@
 import { useEffect, useState } from 'react';
-import { palette } from '../components/brand-ui';
-import { SignInView } from '../components/sign-in-view';
+import { View } from 'react-native';
 import { router } from 'expo-router';
-import { hasSession, request, signIn, signOut } from '../lib/api';
+import { hasSession, request, signOut } from '../lib/api';
 import { BrandIntroduction } from '../components/brand-introduction';
 import { WelcomeFlow } from '../components/welcome-flow';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { introSeen, finishIntro } from '../lib/introduction';
+import { SignInView } from '../components/sign-in-view';
+import { finishIntro, introSeen } from '../lib/introduction';
 import { Language } from '../lib/i18n';
 
 export default function Login() {
-  const [identifier, setIdentifier] = useState('');
-  const [password, setPassword] = useState('');
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState('');
   const [showIntroduction, setShowIntroduction] = useState(true);
   const [showWelcome, setShowWelcome] = useState(true);
   const [language, setLanguage] = useState<Language>('en');
 
   useEffect(() => {
     let active = true;
-    void introSeen().then(seen => {if(active)setShowIntroduction(!seen);}).catch(() => undefined);
+    void introSeen()
+      .then(seen => {
+        if (active) setShowIntroduction(!seen);
+      })
+      .catch(() => undefined);
+
     void (async () => {
       try {
         if (await hasSession()) {
           await request('/auth/me');
           if (active) router.replace('/home');
         }
-      } catch {
-        await signOut();
+      } catch (failure) {
+        if(failure instanceof Error&&['TypeError','AbortError'].includes(failure.name)){
+          if(active)router.replace('/care');
+        }else await signOut();
       }
     })();
+
     return () => {
       active = false;
     };
   }, []);
 
-  async function login() {
-    setBusy(true);
-    setError('');
-    try {
-      await signIn(identifier, password);
-      setPassword('');
-      // Navigate to permissions check before home
-      router.replace('/home');
-    } catch (failure) {
-      setError(failure instanceof Error ? failure.message : 'Unable to connect.');
-    } finally {
-      setBusy(false);
-    }
-  }
-
-
   if (showIntroduction) {
     return (
-      <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: '#073d37' }}>
+      <View style={{ flex: 1, backgroundColor: '#073d37' }}>
         <BrandIntroduction
           onContinue={() => {
             setShowIntroduction(false);
-            setShowWelcome(false);
+            setShowWelcome(true);
             void finishIntro().catch(() => undefined);
           }}
         />
-      </SafeAreaView>
+      </View>
     );
   }
 
   if (showWelcome) {
     return (
-      <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: palette.cream }}>
+      <View style={{ flex: 1, backgroundColor: '#f6f1e8' }}>
         <WelcomeFlow
           initialLanguage={language}
           onLanguageChange={setLanguage}
           onSignIn={() => setShowWelcome(false)}
           onRegister={() => router.push('/register')}
         />
-      </SafeAreaView>
+      </View>
     );
   }
 
   return (
-    <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: palette.cream }}>
-      
+    <View style={{ flex: 1, backgroundColor: '#f6f1e8' }}>
       <SignInView
-        identifier={identifier}
-        password={password}
-        busy={busy}
-        error={error}
         currentLanguage={language}
         onLanguageChange={setLanguage}
-        onIdentifierChange={setIdentifier}
-        onPasswordChange={setPassword}
-        onSubmit={() => void login()}
+        onSubmit={() => router.replace('/home')}
         onRegister={() => router.push('/register')}
         onBackToIntro={() => setShowWelcome(true)}
       />
-    </SafeAreaView>
+    </View>
   );
 }

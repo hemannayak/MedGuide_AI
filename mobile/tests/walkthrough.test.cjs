@@ -2,10 +2,11 @@ const test=require('node:test'),assert=require('node:assert/strict'),vm=require(
 const flat=n=>Array.isArray(n)?n.flatMap(flat):n&&typeof n==='object'?[n,...flat(n.props?.children)]:[];
 test('contextual tips support next, previous, skip, finish and explicit spoken help',()=>{
  const calls=[],c={exports:{},require:name=>{
+ if(name==='react')return {useSyncExternalStore:(_,snapshot)=>snapshot()};
  if(name==='react/jsx-runtime')return{jsx:(type,props)=>({type,props}),jsxs:(type,props)=>({type,props})};
  if(name==='react-native')return{Text:'Text',View:'View'};
  if(name==='./brand-ui')return{Button:'Button',palette:{}};
- if(name==='../lib/audio-guide')return{speakGuidance:text=>calls.push(text),stopGuidance:()=>{}};
+ if(name==='../lib/audio-guide')return{audioSnapshot:()=>({phase:'idle'}),subscribeAudio:()=>()=>{},speakGuidance:text=>calls.push(text),stopGuidance:()=>{}};
  throw Error(name);
  }};
  vm.runInNewContext(ts.transpileModule(readFileSync('src/components/walkthrough-tip.tsx','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText,c);

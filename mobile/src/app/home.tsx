@@ -1,3 +1,4 @@
+import { SpokenConsentCard } from '../components/spoken-consent-card';
 import { useCallback, useEffect, useState } from 'react';
 import { router, useLocalSearchParams, useFocusEffect } from 'expo-router';
 import { Text, View } from 'react-native';
@@ -18,7 +19,8 @@ export default function Home() {
  if(!profile||!settings)return <View style={{flex:1,padding:24,justifyContent:'center',backgroundColor:palette.cream}}><Text accessibilityRole={error?'alert':'text'}>{error||'Loading your care…'}</Text>{error?<Button title="Retry" onPress={()=>void load()}/>:null}</View>;
  const hour = new Date().getHours();
  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
- return <HomeView onNavigate={route=>router.push(route)} walkthrough={!settings.onboarding_complete&&settings.onboarding_step===3} onWalkthroughDone={async()=>{setSettings(await saveWellness({onboarding_complete:true}));}} dailyDashboard={<DailyDashboard patientId={profile.id} settings={settings}/>}>
+ return <HomeView language={profile.preferred_language} onNavigate={route=>router.push(route)} walkthrough={!settings.onboarding_complete&&settings.onboarding_step===3} onWalkthroughDone={async()=>{setSettings(await saveWellness({onboarding_complete:true}));}} dailyDashboard={<DailyDashboard patientId={profile.id} settings={settings}/>}>
+  <SpokenConsentCard language={profile.preferred_language} edit={params.setup==='audio'}/>
   <View style={{ gap: 2, marginVertical: 2 }}>
    <Text style={{ fontSize: 14, color: palette.muted, fontWeight: '600' }}>{greeting}, {profile.display_name}</Text>
    <Text accessibilityRole="header" style={{ fontSize: 24, fontWeight: '800', color: palette.ink, letterSpacing: -0.3 }}>How are you today?</Text>

@@ -10,6 +10,7 @@ function harness({consent=true,permission=true,transcribe=async()=> 'SYN transcr
     if(name==='expo-audio')return {useAudioRecorder:()=>recorder,RecordingPresets:{HIGH_QUALITY:{}},AudioModule:{requestRecordingPermissionsAsync:async()=>{permissions++;return {granted:permission};}},setAudioModeAsync:async()=>{}};
     if(name==='expo-file-system')return {File,Paths:{cache:'file://cache'}};
     if(name==='../lib/api')return {request:async()=>consent?[{consent_type:'SPEECH_PROCESSING',status:'GRANTED',created_at:'2026-10-11'}]:[],transcribeRecording:transcribe};
+    if(name==='../lib/spoken-consent')return {getSpokenChoice:async()=> 'GRANTED'};
     if(name==='../lib/voice')return {};
     throw Error(name);
   }};

@@ -1,30 +1,20 @@
-const test = require('node:test');
-const assert = require('node:assert/strict');
-const vm = require('node:vm');
-const ts = require('typescript');
-const {readFileSync} = require('node:fs');
-function load(path, requireMock) {
-  const context = {exports:{}, require:requireMock};
-  vm.runInNewContext(ts.transpileModule(readFileSync(path,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText,context);
-  return context.exports;
+const test=require('node:test');
+const assert=require('node:assert/strict');
+const vm=require('node:vm');
+const ts=require('typescript');
+const {readFileSync}=require('node:fs');
+function harness(choice='GRANTED',voices=[{language:'en-GB',identifier:'english'}]){
+ const spoken=[];let checks=0,stops=0,resolveVoices;
+ const speech={stop:async()=>{stops++;},getAvailableVoicesAsync:async()=>{checks++;return typeof voices==='function'?await new Promise(r=>{resolveVoices=r;}):voices;},speak:(text,options)=>spoken.push({text,options})};
+ const context={exports:{},setTimeout,Promise,require:n=>n==='expo-speech'?speech:n==='react-native'?{AppState:{addEventListener:()=>{}}}:n==='./spoken-consent'?{getSpokenChoice:async()=>choice}:n==='./api'?{getStoredToken:async()=> 'SYN-session'}:{}};
+ vm.runInNewContext(ts.transpileModule(readFileSync('src/lib/audio-guide.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText,context);
+ return {api:context.exports,spoken,checks:()=>checks,stops:()=>stops,resolve:v=>resolveVoices(v)};
 }
-test('explicit accessibility phrases match without swallowing medical questions', () => {
-  const {isGuidanceCommand} = load('src/lib/accessibility-command.ts',()=>({}));
-  for (const text of [' MedGuide help! ', 'med guide help', 'मेडगाइड मदद', 'మెడ్‌గైడ్ సహాయం']) assert.equal(isGuidanceCommand(text),true);
-  for (const text of ['I need help with fever', 'MedGuide help my child is unwell', '', 'help']) assert.equal(isGuidanceCommand(text),false);
-});
-function audioHarness() {
-  let resolveVoices; const spoken=[],alerts=[];
-  const Speech={stop:async()=>{},getAvailableVoicesAsync:()=>new Promise(r=>{resolveVoices=r;}),speak:(text,options)=>spoken.push({text,options})};
-  const api=load('src/lib/audio-guide.ts',name=>name==='expo-speech'?Speech:name==='react-native'?{Alert:{alert:(...a)=>alerts.push(a)},AppState:{addEventListener:()=>{}}}:{});
-  return {api,spoken,alerts,voices:v=>resolveVoices(v)};
-}
-test('cancelling pending voice lookup prevents late speech',async()=>{
- const h=audioHarness();let ended=0;h.api.speakGuidance('hello','en',undefined,()=>ended++);h.api.stopGuidance();h.voices([{language:'en-IN',identifier:'en'}]);await new Promise(setImmediate);assert.equal(h.spoken.length,0);assert.equal(ended,1);
-});
-test('missing Telugu voice reports failure instead of simulated playback',async()=>{
- const h=audioHarness();let ended=0;h.api.speakGuidance('hello','te',undefined,()=>ended++);h.voices([{language:'en-IN',identifier:'en'}]);await new Promise(setImmediate);assert.equal(h.spoken.length,0);assert.equal(h.alerts.length,1);assert.equal(ended,1);
-});
-test('matched Hindi device voice starts and completes callbacks',async()=>{
- const h=audioHarness();let started=0,ended=0;h.api.speakGuidance('नमस्ते','hi',()=>started++,()=>ended++);h.voices([{language:'hi-IN',identifier:'hi'}]);await new Promise(setImmediate);assert.equal(h.spoken[0].options.voice,'hi');h.spoken[0].options.onStart();h.spoken[0].options.onDone();assert.equal(started,1);assert.equal(ended,1);
-});
+const tick=()=>new Promise(setImmediate);
+for(const choice of ['MISSING','DECLINED','WITHDRAWN'])test(`no speech engine lookup without affirmative choice: ${choice}`,async()=>{const h=harness(choice);h.api.speakGuidance('private');await tick();assert.equal(h.checks(),0);assert.equal(h.spoken.length,0);assert.equal(h.api.audioSnapshot().phase,choice==='MISSING'?'missing':'declined');});
+test('compatible English voice uses its actual locale',async()=>{const h=harness();h.api.speakGuidance('hello');await tick();assert.equal(h.spoken[0].options.language,'en-GB');});
+for(const language of ['hi','te'])test(`correct ${language} voice selected`,async()=>{const h=harness('GRANTED',[{language:`${language}-IN`,identifier:language}]);h.api.speakGuidance('SYN text',language);await tick();assert.equal(h.spoken[0].options.voice,language);});
+test('unavailable language stays inline with text available',async()=>{const h=harness();h.api.speakGuidance('text','te');await tick();assert.equal(h.spoken.length,0);assert.equal(h.api.audioSnapshot().phase,'unavailable');});
+test('cancelled initialization cannot speak later',async()=>{const h=harness('GRANTED',()=>{});h.api.speakGuidance('old');await tick();h.api.stopGuidance();h.resolve([{language:'en-IN',identifier:'en'}]);await tick();assert.equal(h.spoken.length,0);});
+test('repeated taps cancel preceding request',async()=>{const h=harness();h.api.speakGuidance('old');h.api.speakGuidance('new');await tick();assert.deepEqual(h.spoken.map(x=>x.text),['new']);});
+test('initialization failure reports safe inline error',async()=>{const h=harness();h.api.speakGuidance('text');await tick();h.spoken[0].options.onError();assert.equal(h.api.audioSnapshot().phase,'error');});

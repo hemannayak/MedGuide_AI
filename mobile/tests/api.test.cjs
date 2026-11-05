@@ -4,12 +4,12 @@ const ts=require('typescript');
 const assert=require('node:assert/strict');
 const test=require('node:test');
 function harness(status=200) {
-  const saved=new Map();const calls=[];
+  const saved=new Map();const calls=[];const alerts=[];
   const storage={getItemAsync:async key=>saved.get(key),setItemAsync:async(key,value)=>saved.set(key,value),deleteItemAsync:async key=>saved.delete(key)};
   const context={exports:{},__DEV__:false,process:{env:{EXPO_PUBLIC_API_BASE_URL:'https://synthetic.example/api/v1'}},AbortController,FormData,setTimeout,clearTimeout,
-    require:name=>name==='react-native'?{Platform:{OS:'android'}}:storage,fetch:async(url,options)=>{calls.push({url,options});return {status,ok:status===200,json:async()=>({success:true,data:url.endsWith('/login')?{access_token:'SYN-token'}:{message:'SYN-response'}})};}};
+    require:name=>name==='react-native'?{Platform:{OS:'android'},Alert:{alert:(...args)=>alerts.push(args)}}:storage,fetch:async(url,options)=>{calls.push({url,options});return {status,ok:status===200,json:async()=>({success:true,data:url.endsWith('/login')?{access_token:'SYN-token'}:{message:'SYN-response'}})};}};
   vm.runInNewContext(ts.transpileModule(readFileSync('src/lib/api.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText,context);
-  return {api:context.exports,saved,calls,context};
+  return {api:context.exports,saved,calls,context,alerts};
 }
 test('login stores token securely and chat uses the shared API contract',async()=>{
   const h=harness();await h.api.signIn(' SYN@example.invalid ','SYN-password');
@@ -64,4 +64,19 @@ test('invalid registration and rejected backend response never create a session'
   assert.equal(h.calls.length,0);
   const failed=harness(409);await assert.rejects(failed.api.registerPatient('SYN@example.invalid','SyntheticTestOnly123!','SYN','en'));
   assert.equal(failed.saved.size,0);
+});
+
+test('sign out revokes the presented token before clearing storage',async()=>{
+  const h=harness();h.saved.set('medguide-session','SYN-token');
+  await h.api.signOut();
+  assert.equal(h.calls[0].url,'https://synthetic.example/api/v1/auth/logout');
+  assert.equal(h.calls[0].options.headers.Authorization,'Bearer SYN-token');
+  assert.equal(h.saved.size,0);assert.equal(h.alerts.length,0);
+});
+test('offline sign out clears local access and explains unconfirmed revocation',async()=>{
+  const h=harness();h.saved.set('medguide-session','SYN-token');
+  h.context.fetch=async()=>{throw Error('offline');};
+  await h.api.signOut();
+  assert.equal(h.saved.size,0);assert.equal(h.alerts.length,1);
+  assert.match(h.alerts[0][1],/could not confirm server sign-out/);
 });

@@ -1,0 +1,13 @@
+// Optional init script for Windows builds that exceed native tool path limits.
+// Use a short GRADLE_USER_HOME as well; do not change OS security settings.
+gradle.beforeProject { project ->
+    ['com.android.application', 'com.android.library'].each { pluginId ->
+        project.pluginManager.withPlugin(pluginId) {
+            def android = project.extensions.getByName('android')
+            android.defaultConfig.externalNativeBuild.cmake.arguments.add('-DCMAKE_OBJECT_PATH_MAX=240')
+            if (pluginId == 'com.android.application') {
+                android.externalNativeBuild.cmake.buildStagingDirectory = new File(project.rootDir, '../../.g/cxx/app')
+            }
+        }
+    }
+}

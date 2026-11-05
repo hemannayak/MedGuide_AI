@@ -8,6 +8,7 @@ function harness(){
  if(name==='react-native')return {View:'View',Text:'Text',ScrollView:'ScrollView',Pressable:'Pressable',StyleSheet:{create:x=>x}};
  if(name==='./brand-ui')return {Brand:'Brand',Button:'Button',palette:{}};
  if(name==='./rural-scene')return {RuralScene:'RuralScene'};
+ if(name==='./auth-carousel')return {AuthCarousel:'AuthCarousel'};
  if(name==='./illustrations')return {MedicalShieldSvg:'Art',VoiceMicWaveSvg:'Art',PrescriptionScannerSvg:'Art',RuralClinicSvg:'Art'};
  if(name==='../lib/i18n')return {t:key=>key};
  if(name==='../lib/audio-guide')return {speakGuidance:()=>calls.push('speak'),stopGuidance:()=>calls.push('stop')};
