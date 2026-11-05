@@ -1,0 +1,202 @@
+[
+  {
+    "id": "IND-PH-01",
+    "title": "Andhra Pradesh disease burden profile (historical; period requires verification)",
+    "source_url": "https://www.icmr.gov.in/icmrobject/static/icmr/dist/images/pdf/reports/Andhra_Pradesh_Disease_Burden_Profile.pdf",
+    "discovered_from": "https://www.icmr.gov.in/reports?q=AMR",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-02",
+    "title": "Assam disease burden profile (historical; period requires verification)",
+    "source_url": "https://www.icmr.gov.in/icmrobject/custom_data/1720317833_assam_disease_burden_profile.pdf",
+    "discovered_from": "https://www.icmr.gov.in/reports?q=AMR",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-03",
+    "title": "Bihar disease burden profile (historical; period requires verification)",
+    "source_url": "https://www.icmr.gov.in/icmrobject/custom_data/1720317873_bihar_disease_burden_profile.pdf",
+    "discovered_from": "https://www.icmr.gov.in/reports?q=AMR",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-04",
+    "title": "WHO SEARO epidemiological bulletin 2025_04",
+    "source_url": "https://cdn.who.int/media/docs/default-source/searo/whe/wherepib/2025_04_searo_epi_bulletin.pdf",
+    "discovered_from": "https://cdn.who.int/media/docs/default-source/searo/whe/wherepib/2025_04_searo_epi_bulletin.pdf",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-05",
+    "title": "Karnataka disease burden profile (historical; period requires verification)",
+    "source_url": "https://www.icmr.gov.in/icmrobject/static/icmr/dist/images/pdf/reports/Karnataka_Disease_Burden_Profile.pdf",
+    "discovered_from": "https://www.icmr.gov.in/reports?q=AMR",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-06",
+    "title": "Kerala disease burden profile (historical; period requires verification)",
+    "source_url": "https://www.icmr.gov.in/icmrobject/static/icmr/dist/images/pdf/reports/Kerala_Disease_Burden_Profile.pdf",
+    "discovered_from": "https://www.icmr.gov.in/reports?q=AMR",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-07",
+    "title": "WHO SEARO epidemiological bulletin 2025_12",
+    "source_url": "https://cdn.who.int/media/docs/default-source/searo/whe/wherepib/2025_12_searo_epi_bulletin.pdf",
+    "discovered_from": "https://cdn.who.int/media/docs/default-source/searo/whe/wherepib/2025_12_searo_epi_bulletin.pdf",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-08",
+    "title": "WHO SEARO epidemiological bulletin 2025_23",
+    "source_url": "https://cdn.who.int/media/docs/default-source/searo/whe/wherepib/2025_23_searo_epi_bulletin.pdf",
+    "discovered_from": "https://cdn.who.int/media/docs/default-source/searo/whe/wherepib/2025_23_searo_epi_bulletin.pdf",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-09",
+    "title": "WHO SEARO epidemiological bulletin 2025_25",
+    "source_url": "https://cdn.who.int/media/docs/default-source/searo/whe/wherepib/2025_25_searo_epi_bulletin.pdf",
+    "discovered_from": "https://cdn.who.int/media/docs/default-source/searo/whe/wherepib/2025_25_searo_epi_bulletin.pdf",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-10",
+    "title": "WHO SEARO epidemiological bulletin 2026_01",
+    "source_url": "https://cdn.who.int/media/docs/default-source/searo/whe/wherepib/2026_01_searo_epi_bulletin.pdf",
+    "discovered_from": "https://cdn.who.int/media/docs/default-source/searo/whe/wherepib/2026_01_searo_epi_bulletin.pdf",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-11",
+    "title": "Tamil Nadu disease burden profile (historical; period requires verification)",
+    "source_url": "https://www.icmr.gov.in/icmrobject/custom_data/1720318501_tamil_nadu_disease_burden_profile.pdf",
+    "discovered_from": "https://www.icmr.gov.in/reports?q=AMR",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-12",
+    "title": "WHO SEARO epidemiological bulletin 2026_02",
+    "source_url": "https://cdn.who.int/media/docs/default-source/searo/whe/wherepib/2026_02_searo_epi_bulletin.pdf",
+    "discovered_from": "https://cdn.who.int/media/docs/default-source/searo/whe/wherepib/2026_02_searo_epi_bulletin.pdf",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-13",
+    "title": "1763981012_icmramrsnannualreport2024",
+    "source_url": "https://www.icmr.gov.in/icmrobject/uploads/Report/1763981012_icmramrsnannualreport2024.pdf",
+    "discovered_from": "https://www.icmr.gov.in/reports?q=AMR",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-14",
+    "title": "1725536060_annual_report_2023",
+    "source_url": "https://www.icmr.gov.in/icmrobject/uploads/Documents/1725536060_annual_report_2023.pdf",
+    "discovered_from": "https://www.icmr.gov.in/reports?q=AMR",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-15",
+    "title": "AMRSN_Annual_Report_2022",
+    "source_url": "https://www.icmr.gov.in/icmrobject/custom_data/pdf/resource-guidelines/AMRSN_Annual_Report_2022.pdf",
+    "discovered_from": "https://www.icmr.gov.in/reports?q=AMR",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-16",
+    "title": "ICMR_INDIAB_PHASE_I_FINAL_REPORT",
+    "source_url": "https://www.icmr.gov.in/icmrobject/static/icmr/dist/images/pdf/reports/ICMR_INDIAB_PHASE_I_FINAL_REPORT.pdf",
+    "discovered_from": "https://www.icmr.gov.in/reports?q=AMR",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-17",
+    "title": "2017_India_State_Level_Disease_Burden_Initiative_Full_Report",
+    "source_url": "https://www.icmr.gov.in/icmrobject/static/icmr/dist/images/pdf/reports/2017_India_State_Level_Disease_Burden_Initiative_Full_Report.pdf",
+    "discovered_from": "https://www.icmr.gov.in/reports?q=AMR",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-18",
+    "title": "National AMR Surveillance Network (NARS-Net) Annual Report 2025",
+    "source_url": "https://ncdc.mohfw.gov.in/uploads/pdf/amr301.pdf",
+    "discovered_from": "https://ncdc.mohfw.gov.in/includes/About/CentresAndDivision/amr.php",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-19",
+    "title": "National AMR Surveillance Network (NARS-Net) Annual Report 2024",
+    "source_url": "https://ncdc.mohfw.gov.in/uploads/pdf/amr30.pdf",
+    "discovered_from": "https://ncdc.mohfw.gov.in/includes/About/CentresAndDivision/amr.php",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-20",
+    "title": "National AMR Surveillance Network (NARS-Net) Annual Report 2023",
+    "source_url": "https://ncdc.mohfw.gov.in/uploads/pdf/amr32.pdf",
+    "discovered_from": "https://ncdc.mohfw.gov.in/includes/About/CentresAndDivision/amr.php",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-21",
+    "title": "Antimicrobial Consumption Surveillance report 2024",
+    "source_url": "https://ncdc.mohfw.gov.in/uploads/pdf/amr26.pdf",
+    "discovered_from": "https://ncdc.mohfw.gov.in/includes/About/CentresAndDivision/amr.php",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-22",
+    "title": "Semi Annual Bulletin Issue 07 (Jan - June 2026) NEW",
+    "source_url": "https://ncdc.mohfw.gov.in/uploads/pdf/SemiAnnual_Bulletin_January-June_2026.pdf",
+    "discovered_from": "https://ncdc.mohfw.gov.in/includes/About/CentresAndDivision/amr.php",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-23",
+    "title": "WHO malaria 2025 India country profile",
+    "source_url": "https://cdn.who.int/media/docs/default-source/malaria/country-profiles/2025/malaria-2025-ind.pdf?sfvrsn=393ca6b0_4&download=true",
+    "discovered_from": "https://www.who.int/publications/m/item/malaria-2025-india-country-profile",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-24",
+    "title": "WHO Global tuberculosis report 2025 factsheet",
+    "source_url": "https://cdn.who.int/media/docs/default-source/global-tuberculosis-report-2025/global-tb-report-2025_factsheet.pdf",
+    "discovered_from": "https://www.who.int/teams/global-programme-on-tuberculosis-and-lung-health/tb-reports",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  },
+  {
+    "id": "IND-PH-25",
+    "title": "IDSP weekly outbreak report week 30, 2025",
+    "source_url": "https://ncdc.mohfw.gov.in/uploads/weekly_outbreaks/2025/week30_1788950862.pdf",
+    "discovered_from": "https://ncdc.mohfw.gov.in/uploads/weekly_outbreaks/2025/",
+    "scope": "population_surveillance",
+    "review_status": "PENDING"
+  }
+]

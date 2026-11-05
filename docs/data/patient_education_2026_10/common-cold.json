@@ -1,0 +1,174 @@
+{
+  "topic": "common-cold",
+  "source_url": "https://www.cdc.gov/common-cold/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "About Common Cold",
+  "sections": [
+    {
+      "heading": "Overview",
+      "text": "A cold is a viral infection of the upper respiratory tract (also called an upper respiratory infection or URI). Colds usually last less than a week and are caused by different respiratory viruses. They are also one of the most frequent reasons for missed school and work. Every year in the United States, adults have an average of two to three colds, and children often have more."
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "The signs and symptoms of a cold usually peak within 2 to 3 days of infection and can include:"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Runny nose"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Nasal congestion"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Cough"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Sneezing"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Sore throat"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Headache"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Mild body aches"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Fever (usually low grade in older children and adults)"
+    },
+    {
+      "heading": "Complications",
+      "text": "Complications from infection with respiratory viruses can include:"
+    },
+    {
+      "heading": "Mild to moderate:",
+      "text": "Middle ear infections (infection behind the ear drum)"
+    },
+    {
+      "heading": "Mild to moderate:",
+      "text": "Sinus infections"
+    },
+    {
+      "heading": "Potentially severe:",
+      "text": "Asthma attacks (wheezing, difficulty breathing)"
+    },
+    {
+      "heading": "Potentially severe:",
+      "text": "Bronchiolitis (infection of the small airways)"
+    },
+    {
+      "heading": "Potentially severe:",
+      "text": "Bronchitis (infection of the large airways)"
+    },
+    {
+      "heading": "Potentially severe:",
+      "text": "Pneumonia (infection of the lungs)"
+    },
+    {
+      "heading": "Potentially severe:",
+      "text": "Worsening of chronic medical conditions (for example, chronic obstructive pulmonary disease, heart failure)"
+    },
+    {
+      "heading": "Causes",
+      "text": "More than 200 respiratory viruses can cause colds. Rhinoviruses are the most frequent cause of colds in the United States. Other respiratory viruses that can cause colds in the United States include common human coronaviruses, parainfluenza viruses, adenoviruses, enteroviruses (including EV-D68), and human metapneumovirus."
+    },
+    {
+      "heading": "Causes",
+      "text": "SARS-CoV-2 (the virus that causes COVID-19), influenza virus (the virus that causes flu), and respiratory syncytial virus (the virus that causes RSV) can also cause cold-like symptoms but do not cause colds. These respiratory viruses are more likely to cause severe illness. Outcomes can include hospitalization or death, especially among groups at increased risk for severe illness. These include infants, older adults, or those with underlying medical conditions or weakened immune systems."
+    },
+    {
+      "heading": "Causes",
+      "text": "If you have cold-like symptoms and suspect you have COVID-19 or flu, get tested, especially if you're at higher risk for severe illness. Antiviral treatments are available for COVID-19 and flu and work best when started very soon after symptoms begin."
+    },
+    {
+      "heading": "Spread",
+      "text": "Different respiratory viruses spread in different ways. Most respiratory viruses are spread through droplets that an infected person releases when they cough or sneeze. These droplets can enter your body if you breathe them in or touch a contaminated surface and then touch your eyes, nose, or mouth. Some viruses can also spread through close personal contact, such as shaking hands with an infected person and then touching your eyes, nose, or mouth."
+    },
+    {
+      "heading": "Spread",
+      "text": "You can get a cold any time of year. Many respiratory viruses, like influenza virus and RSV, usually circulate during winter, but other viruses that can also cause cold symptoms circulate during spring, summer, or fall."
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "6c8bd92a07a0c56e38df2b93894762d1361bc55bf05359c340f992ff1bcf2dbf",
+  "resolved_url": "https://www.cdc.gov/common-cold/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:09.284434+00:00",
+  "html_sha256": "c30c5eb1e6bde9c76ad3ce8dc4efa98d9025baa1f663219bcd9bf2124a9bd535",
+  "chunks": [
+    {
+      "content": "A cold is a viral infection of the upper respiratory tract (also called an upper respiratory infection or URI). Colds usually last less than a week and are caused by different respiratory viruses. They are also one of the most frequent reasons for missed school and work. Every year in the United States, adults have an average of two to three colds, and children often have more.",
+      "section_title": "Overview",
+      "content_sha256": "72e4329a2e4d945b69f69c8806c161fc1213cd3b6232ef1a1a01fe45e8f8bbf5",
+      "chunk_index": 0
+    },
+    {
+      "content": "The signs and symptoms of a cold usually peak within 2 to 3 days of infection and can include: Runny nose Nasal congestion Cough Sneezing Sore throat Headache Mild body aches Fever (usually low grade in older children and adults)",
+      "section_title": "Signs and symptoms",
+      "content_sha256": "cc5d1cf356e6a18bf9e137607759edc04f92dc08e3af2914b24257654d3e23dc",
+      "chunk_index": 1
+    },
+    {
+      "content": "Complications from infection with respiratory viruses can include:",
+      "section_title": "Complications",
+      "content_sha256": "d3db7cb6d54d534327401dc5060e4cae294e159b971644e95840d384825f450a",
+      "chunk_index": 2
+    },
+    {
+      "content": "Middle ear infections (infection behind the ear drum) Sinus infections",
+      "section_title": "Mild to moderate:",
+      "content_sha256": "4a92f2224592addb2b94351dde924eca23c38e2872fee53444215fc55ffdbb1a",
+      "chunk_index": 3
+    },
+    {
+      "content": "Asthma attacks (wheezing, difficulty breathing) Bronchiolitis (infection of the small airways) Bronchitis (infection of the large airways) Pneumonia (infection of the lungs) Worsening of chronic medical conditions (for example, chronic obstructive pulmonary disease, heart failure)",
+      "section_title": "Potentially severe:",
+      "content_sha256": "e37731599d61cbfad2dfc211c0aee88bd670a3e0316e83c290c21a6f1d4a84db",
+      "chunk_index": 4
+    },
+    {
+      "content": "More than 200 respiratory viruses can cause colds. Rhinoviruses are the most frequent cause of colds in the United States. Other respiratory viruses that can cause colds in the United States include common human coronaviruses, parainfluenza viruses, adenoviruses, enteroviruses (including EV-D68), and human metapneumovirus. SARS-CoV-2 (the virus that causes COVID-19), influenza virus (the virus that causes flu), and respiratory syncytial virus (the virus that causes RSV) can also cause cold-like",
+      "section_title": "Causes",
+      "content_sha256": "16117111a5f7fa4267a60f72744020730d4f2ac67a88fc1953b05ecd86ef42e0",
+      "chunk_index": 5
+    },
+    {
+      "content": "symptoms but do not cause colds. These respiratory viruses are more likely to cause severe illness. Outcomes can include hospitalization or death, especially among groups at increased risk for severe illness. These include infants, older adults, or those with underlying medical conditions or weakened immune systems. If you have cold-like symptoms and suspect you have COVID-19 or flu, get tested, especially if you're at higher risk for severe illness. Antiviral treatments are available for",
+      "section_title": "Causes",
+      "content_sha256": "4d749ede3206c90798cefca8b5b36c89630ca9149e55b62ffcbb383e34ba1b27",
+      "chunk_index": 6
+    },
+    {
+      "content": "COVID-19 and flu and work best when started very soon after symptoms begin.",
+      "section_title": "Causes",
+      "content_sha256": "81396b66da8a500a5a55d78dd1dd2725fc831e2ee5863d3d33d2bb1323e325a1",
+      "chunk_index": 7
+    },
+    {
+      "content": "Different respiratory viruses spread in different ways. Most respiratory viruses are spread through droplets that an infected person releases when they cough or sneeze. These droplets can enter your body if you breathe them in or touch a contaminated surface and then touch your eyes, nose, or mouth. Some viruses can also spread through close personal contact, such as shaking hands with an infected person and then touching your eyes, nose, or mouth. You can get a cold any time of year. Many",
+      "section_title": "Spread",
+      "content_sha256": "2da462d0e3009b8d7f90083b7aa77ad3b2fa95d2e93d20d0fe7d7f0c550b9fbe",
+      "chunk_index": 8
+    },
+    {
+      "content": "respiratory viruses, like influenza virus and RSV, usually circulate during winter, but other viruses that can also cause cold symptoms circulate during spring, summer, or fall.",
+      "section_title": "Spread",
+      "content_sha256": "8f76c66f5473006c208338a72e3d01deb93098e8bc0e578128dc7fe6fc713493",
+      "chunk_index": 9
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "9d30deb5-9f5d-571f-b2ad-ef9a04213a0d"
+}

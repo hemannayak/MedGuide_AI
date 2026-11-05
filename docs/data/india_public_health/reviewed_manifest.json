@@ -1,0 +1,49 @@
+[
+  {
+    "source": {
+      "title": "India: Health of the Nation's States — India State-Level Disease Burden Initiative (2017)",
+      "publisher": "ICMR; Public Health Foundation of India; Institute for Health Metrics and Evaluation",
+      "source_url": "https://www.icmr.gov.in/icmrobject/static/icmr/dist/images/pdf/reports/2017_India_State_Level_Disease_Burden_Initiative_Full_Report.pdf",
+      "geography": "India",
+      "population": "State and national population estimates, GBD 2016",
+      "reporting_start": "1990-01-01",
+      "reporting_end": "2016-12-31",
+      "retrieved_at": "2026-11-03T13:02:36.457257+00:00",
+      "sha256": "85ffbdd7c8c170856afdce62dd43293358ad9d3bf2c799562f15f0091c1d6626",
+      "license": "CC BY 4.0; acknowledge ICMR, PHFI and IHME",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "reviewed_by": "Codex technical source and rendered-page review; not clinical validation",
+      "limitations": "Historical modeled disease-burden estimates, not current prevalence or individual risk. Selected narrative passages only; entire report not approved.",
+      "scope": "population_surveillance",
+      "extraction_review": "APPROVED",
+      "reuse_review": "APPROVED",
+      "contains_tables": false,
+      "license_evidence_page": 2,
+      "reviewed_pages": [
+        21,
+        22
+      ]
+    },
+    "local_pdf": "C:\\Hemanth\\Projects\\MedGuide_AI\\backend\\.model-cache\\public-health-sources\\85ffbdd7c8c170856afdce62dd43293358ad9d3bf2c799562f15f0091c1d6626.pdf",
+    "passages": [
+      {
+        "page": 21,
+        "content": "The estimates were produced as part of the Global Burden of Disease Study 2016. The analytical methods of this study have been standardised over two decades of scientific work, which has been reported in over 16,000 peer-reviewed publications, making it the most widely used approach globally for disease burden estimation. These methods enable standardised comparisons of health loss caused by different diseases and risk factors, between geographic units, sexes, and age groups, and over time in a unified framework. The key metric used for this comparison is disability-adjusted life years (DALYs), which is the sum of the number of years of life lost due to premature death and a weighted measure of the years lived with disability due to a disease or injury. The use of DALYs to track disease burden is recommended by India’s National Health Policy of 2017.",
+        "section_title": "Methods and data",
+        "verbatim_verified": true
+      },
+      {
+        "page": 21,
+        "content": "Life expectancy at birth improved in India from 59.7 years in 1990 to 70.3 years in 2016 for females, and from 58.3 years to 66.9 years for males. There were, however, continuing inequalities between states, with a range of 66.8 years in Uttar Pradesh to 78.7 years in Kerala for females, and from 63.6 years in Assam to 73.8 years in Kerala for males in 2016. The per person disease burden measured as DALY rate dropped by 36% from 1990 to 2016 in India, after adjusting for the changes in the population age structure during this period. But there was an almost two-fold difference in this disease burden rate between the states in 2016, with Assam, Uttar Pradesh, and Chhattisgarh having the highest rates, and Kerala and Goa the lowest rates. While the disease burden rate in India has improved since 1990, it was 72% higher per person than in Sri Lanka or China in 2016. The under-5 mortality rate has reduced substantially from 1990 in all states, but there was a 4-fold difference in this rate between the highest in Assam and Uttar Pradesh as compared with the lowest in Kerala in 2016, highlighting the vast health inequalities between the states.",
+        "section_title": "Health inequalities between states",
+        "verbatim_verified": true
+      },
+      {
+        "page": 22,
+        "content": "The burden of most infectious and associated diseases reduced in India from 1990 to 2016, but five of the ten individual leading causes of disease burden in India in 2016 still belonged to this group: diarrhoeal diseases, lower respiratory infections, iron-deficiency anaemia, preterm birth complications, and tuberculosis. The burden caused by these conditions generally continues to be much higher in the Empowered Action Group (EAG) and North-East state groups than in the other states, but there were notable variations between the states within these groups as well. The range of disease burden or DALY rate among the states of India was 9-fold for diar - rhoeal disease, 7-fold for lower respiratory infections, and 9-fold for tuberculosis in 2016, highlighting the need for targeted efforts based on the specific trends in each state. The burden also differed between the sexes, with diarrhoeal disease, iron-deficiency anaemia, and lower respiratory infections higher among females, and tuber - culosis higher among males. The proportion of total disease burden caused by infectious and associated diseases was highest among children, which contributed to the disproportionately higher overall disease burden suffered by the under-5 years age group. For India as whole, the disease burden or DALY rate for diarrhoeal diseases, iron-deficiency anaemia, and tuberculosis was 2.5 to 3.5 times higher than the average globally for other geogra - phies at a similar level of development, indicating that this burden can be brought down substantially.",
+        "section_title": "Infectious and associated diseases",
+        "verbatim_verified": true
+      }
+    ]
+  }
+]

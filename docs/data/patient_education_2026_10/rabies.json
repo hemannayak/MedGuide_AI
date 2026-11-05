@@ -1,0 +1,266 @@
+{
+  "topic": "rabies",
+  "source_url": "https://www.cdc.gov/rabies/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "About Rabies",
+  "sections": [
+    {
+      "heading": "Overview",
+      "text": "Rabies is a fatal but preventable viral disease. It can be spread to people and pets through the bites and scratches of an infected animal. Rabies primarily affects the central nervous system, leading to severe brain disease and death if medical care is not received before symptoms start."
+    },
+    {
+      "heading": "Overview",
+      "text": "If you may have been exposed to rabies, you should urgently seek medical attention. Medical care following a rabies exposure is called post-exposure prophylaxis (PEP). PEP includes wound care, human rabies immune globulin (HRIG), and a series of four or five rabies vaccines, which must be given as soon as possible after an exposure. You must get this care to prevent the disease from developing, and it's nearly 100% effective if you get it after exposure."
+    },
+    {
+      "heading": "Overview",
+      "text": "The disease is rare in people in the United States, with fewer than 10 deaths reported each year. But because it's found in wildlife throughout the country (except for Hawaii), rabies poses a serious public health threat."
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "After a rabies exposure, the rabies virus must travel to the brain before it can cause symptoms. This time between exposure and the appearance of symptoms is the incubation period, which may last for weeks to months. Once clinical signs of rabies appear, the disease is nearly always fatal."
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "The first symptoms of rabies may include:"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Flu-like illness including weakness or discomfort, fever, or headache"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Discomfort, prickling, or an itching sensation at the site of the bite"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Usually, severe disease appears within 2 weeks of the first symptoms. People are more familiar with the \"classic\" symptoms of advanced rabies, which include:"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Anxiety"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Confusion"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Agitation"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Hallucinations"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Being very thirsty but panicked by fluids"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Having lots of saliva"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Aggressive behavior like thrashing and biting"
+    },
+    {
+      "heading": "Animals that carry rabies",
+      "text": "In the United States, more than 90% of reported cases of rabies in animals occur in wildlife. Rabies is found in many wildlife species, which include:"
+    },
+    {
+      "heading": "Animals that carry rabies",
+      "text": "Bats"
+    },
+    {
+      "heading": "Animals that carry rabies",
+      "text": "Raccoons"
+    },
+    {
+      "heading": "Animals that carry rabies",
+      "text": "Skunks"
+    },
+    {
+      "heading": "Animals that carry rabies",
+      "text": "Foxes"
+    },
+    {
+      "heading": "Animals that carry rabies",
+      "text": "Nearly 3 out of 4 Americans live in a community where animals carry rabies. Contact with infected bats is the leading cause of human rabies deaths in this country; at least 7 out of 10 people who die from rabies in the United States were infected by bats."
+    },
+    {
+      "heading": "Rabies in dogs",
+      "text": "Rabid dogs in the U.S. are uncommon because of effective rabies prevention and control programs. Around the world, domestic dogs are responsible for more than 95% of the estimated 70,000 human deaths each year."
+    },
+    {
+      "heading": "People at risk",
+      "text": "People who are at increased risk for rabies exposures may want to consider pre-exposure vaccination for increased protection."
+    },
+    {
+      "heading": "Travelers",
+      "text": "Since 1990, more than 80 people in the United States have died after being infected with rabies during travel. In Africa, Asia, and specific areas of Central and South America, rabies in dogs is still a major problem. Additionally, access to PEP may be hard to get in those places. As a result, tens of thousands of people die of the disease each year."
+    },
+    {
+      "heading": "Travelers",
+      "text": "When you're traveling, it is important to keep your distance from wild and unfamiliar animals, including dogs and cats."
+    },
+    {
+      "heading": "Travelers",
+      "text": "Before you travel abroad, consult your doctor, a travel clinic, or your local or state health department to find out your risk rabies exposure."
+    },
+    {
+      "heading": "Outdoor enthusiasts",
+      "text": "People who enjoy certain outdoor activities that may lead to contact with wildlife, like spelunking, camping, and hunting are at higher risk of being exposed to rabies."
+    },
+    {
+      "heading": "Jobs with animals",
+      "text": "People with jobs that involve frequent animal contact are at increased risk of a rabies exposure. These include:"
+    },
+    {
+      "heading": "Jobs with animals",
+      "text": "Veterinary professionals, including technicians"
+    },
+    {
+      "heading": "Jobs with animals",
+      "text": "Animal control workers"
+    },
+    {
+      "heading": "Jobs with animals",
+      "text": "Wildlife researchers or rehabilitation workers"
+    },
+    {
+      "heading": "Jobs with animals",
+      "text": "Agricultural workers who work closely with animals"
+    },
+    {
+      "heading": "Prevention",
+      "text": "Rabies prevention efforts by veterinary, wildlife management, and public health professionals mean that human cases of rabies in the U.S. are rare. Every year, wildlife management professionals distribute more than 5 million oral vaccines to wildlife through baits to control rabies at its source. Veterinarians vaccinate more than 90 million cats and dogs each year. These vaccinations significantly reduce the risk that you or your pets get rabies."
+    },
+    {
+      "heading": "Prevention",
+      "text": "You can help prevent rabies by:"
+    },
+    {
+      "heading": "Prevention",
+      "text": "Making sure your pets are up to date on their rabies vaccines"
+    },
+    {
+      "heading": "Prevention",
+      "text": "Keeping wildlife wild - stay away from wildlife for both human and animal safety"
+    },
+    {
+      "heading": "Prevention",
+      "text": "Calling animal control to remove stray animals from your neighborhood"
+    },
+    {
+      "heading": "Prevention",
+      "text": "Washing bites or scratches immediately with soap and water after possible rabies exposure"
+    },
+    {
+      "heading": "Prevention",
+      "text": "Seeking medical care urgently if you may have been exposed to rabies"
+    },
+    {
+      "heading": "Prevention",
+      "text": "Around the world, large-scale dog vaccination programs are the most effective way to prevent rabies. However, in many countries, there aren't enough resources to reach all the dogs that need it. CDC works with public and private partners to improve international vaccine access for people and animals, making travel safer and improving global health."
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "5371dc940f0329eb62bec8482ea3d30cf73d7f38dbfe1b2f2c4bc4ff9bfa7160",
+  "resolved_url": "https://www.cdc.gov/rabies/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:12.731071+00:00",
+  "html_sha256": "bba8a5afe70cb59d36bb3c5f72a20f632432c23548fb6d46d8707138ba23a5fd",
+  "chunks": [
+    {
+      "content": "Rabies is a fatal but preventable viral disease. It can be spread to people and pets through the bites and scratches of an infected animal. Rabies primarily affects the central nervous system, leading to severe brain disease and death if medical care is not received before symptoms start. If you may have been exposed to rabies, you should urgently seek medical attention. Medical care following a rabies exposure is called post-exposure prophylaxis (PEP). PEP includes wound care, human rabies",
+      "section_title": "Overview",
+      "content_sha256": "7a7bc07fd09ba2e94fbe2c26066163f1e8475033531bce44b36b963f89044380",
+      "chunk_index": 0
+    },
+    {
+      "content": "immune globulin (HRIG), and a series of four or five rabies vaccines, which must be given as soon as possible after an exposure. You must get this care to prevent the disease from developing, and it's nearly 100% effective if you get it after exposure. The disease is rare in people in the United States, with fewer than 10 deaths reported each year. But because it's found in wildlife throughout the country (except for Hawaii), rabies poses a serious public health threat.",
+      "section_title": "Overview",
+      "content_sha256": "f7b74059240669178f7064c18beb53c776a952e1e470348993fcd8672f5f2f8e",
+      "chunk_index": 1
+    },
+    {
+      "content": "After a rabies exposure, the rabies virus must travel to the brain before it can cause symptoms. This time between exposure and the appearance of symptoms is the incubation period, which may last for weeks to months. Once clinical signs of rabies appear, the disease is nearly always fatal. The first symptoms of rabies may include: Flu-like illness including weakness or discomfort, fever, or headache Discomfort, prickling, or an itching sensation at the site of the bite Usually, severe disease",
+      "section_title": "Signs and symptoms",
+      "content_sha256": "52751998688743a77a853f99e193b525bec66777f2256dd90e92036f5bfa3ced",
+      "chunk_index": 2
+    },
+    {
+      "content": "appears within 2 weeks of the first symptoms. People are more familiar with the \"classic\" symptoms of advanced rabies, which include: Anxiety Confusion Agitation Hallucinations Being very thirsty but panicked by fluids Having lots of saliva Aggressive behavior like thrashing and biting",
+      "section_title": "Signs and symptoms",
+      "content_sha256": "94bafc3e5d784c7a8973d1b2359f002dd37f8dec736cc067f02b9b527b26641e",
+      "chunk_index": 3
+    },
+    {
+      "content": "In the United States, more than 90% of reported cases of rabies in animals occur in wildlife. Rabies is found in many wildlife species, which include: Bats Raccoons Skunks Foxes Nearly 3 out of 4 Americans live in a community where animals carry rabies. Contact with infected bats is the leading cause of human rabies deaths in this country; at least 7 out of 10 people who die from rabies in the United States were infected by bats.",
+      "section_title": "Animals that carry rabies",
+      "content_sha256": "cf1d1aa22dae4e2ee0a6c8429d1ff23893e2d66c323f8f0e80b62c2766451f7b",
+      "chunk_index": 4
+    },
+    {
+      "content": "Rabid dogs in the U.S. are uncommon because of effective rabies prevention and control programs. Around the world, domestic dogs are responsible for more than 95% of the estimated 70,000 human deaths each year.",
+      "section_title": "Rabies in dogs",
+      "content_sha256": "16e861521f891544bd8f49cbebcded8f5d712537b468659f9ac8503141383b5e",
+      "chunk_index": 5
+    },
+    {
+      "content": "People who are at increased risk for rabies exposures may want to consider pre-exposure vaccination for increased protection.",
+      "section_title": "People at risk",
+      "content_sha256": "bf6ec3eab7ad19cc95aacf3ee47d76423bc7441e3c3e6094b2bcf40cffecda9c",
+      "chunk_index": 6
+    },
+    {
+      "content": "Since 1990, more than 80 people in the United States have died after being infected with rabies during travel. In Africa, Asia, and specific areas of Central and South America, rabies in dogs is still a major problem. Additionally, access to PEP may be hard to get in those places. As a result, tens of thousands of people die of the disease each year. When you're traveling, it is important to keep your distance from wild and unfamiliar animals, including dogs and cats. Before you travel abroad,",
+      "section_title": "Travelers",
+      "content_sha256": "568d0417daacb8e2ffd1c3d6e8ad3ce77360bb39c7d9355641ef0114193bca87",
+      "chunk_index": 7
+    },
+    {
+      "content": "consult your doctor, a travel clinic, or your local or state health department to find out your risk rabies exposure.",
+      "section_title": "Travelers",
+      "content_sha256": "dbc305d603c94c89b698465039e9cadd2d23213901d72f3505ef8a22d7f102dd",
+      "chunk_index": 8
+    },
+    {
+      "content": "People who enjoy certain outdoor activities that may lead to contact with wildlife, like spelunking, camping, and hunting are at higher risk of being exposed to rabies.",
+      "section_title": "Outdoor enthusiasts",
+      "content_sha256": "8b068771f5373bcc1b099aa60b4463583022c71f71b2d6ffeb10fe3ce8d3916c",
+      "chunk_index": 9
+    },
+    {
+      "content": "People with jobs that involve frequent animal contact are at increased risk of a rabies exposure. These include: Veterinary professionals, including technicians Animal control workers Wildlife researchers or rehabilitation workers Agricultural workers who work closely with animals",
+      "section_title": "Jobs with animals",
+      "content_sha256": "a0ef700058211772f89767173858ff2a1c43c3ab2eae1ae8ab10d8a8ceb43291",
+      "chunk_index": 10
+    },
+    {
+      "content": "Rabies prevention efforts by veterinary, wildlife management, and public health professionals mean that human cases of rabies in the U.S. are rare. Every year, wildlife management professionals distribute more than 5 million oral vaccines to wildlife through baits to control rabies at its source. Veterinarians vaccinate more than 90 million cats and dogs each year. These vaccinations significantly reduce the risk that you or your pets get rabies. You can help prevent rabies by: Making sure your",
+      "section_title": "Prevention",
+      "content_sha256": "51367e7b9e2caedf34c789b3e3bcd24e6233bac7bdaca4eb035bddde8f722813",
+      "chunk_index": 11
+    },
+    {
+      "content": "pets are up to date on their rabies vaccines Keeping wildlife wild - stay away from wildlife for both human and animal safety Calling animal control to remove stray animals from your neighborhood Washing bites or scratches immediately with soap and water after possible rabies exposure Seeking medical care urgently if you may have been exposed to rabies Around the world, large-scale dog vaccination programs are the most effective way to prevent rabies. However, in many countries, there aren't",
+      "section_title": "Prevention",
+      "content_sha256": "8e3877c200f588100861b369a3d2968885c221b1af42bd5e3dd63842ad4b3669",
+      "chunk_index": 12
+    },
+    {
+      "content": "enough resources to reach all the dogs that need it. CDC works with public and private partners to improve international vaccine access for people and animals, making travel safer and improving global health.",
+      "section_title": "Prevention",
+      "content_sha256": "30e540f4a7591e43e5265f34268a9d073e3b1b902eb0698c8c93dcb4e7d24c44",
+      "chunk_index": 13
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "3c3a746e-bbb4-5d7a-b98a-63d5694015fd"
+}

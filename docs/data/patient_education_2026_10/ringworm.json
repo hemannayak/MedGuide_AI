@@ -1,0 +1,190 @@
+{
+  "topic": "ringworm",
+  "source_url": "https://www.cdc.gov/ringworm/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "Ringworm Basics",
+  "sections": [
+    {
+      "heading": "What it is",
+      "text": "Ringworm is a common fungal infection of the scalp, skin, or nails (onychomycosis). It gets its name because it causes a ring-shaped, itchy rash. It typically looks red on light skin and appears gray or brown on darker skin."
+    },
+    {
+      "heading": "Skin and scalp infections",
+      "text": "Skin infections are more common on certain parts of the body like on the foot or groin. Ringworm on feet (tinea pedis) is often referred to as athlete's foot. Ringworm on the groin (tinea cruris) is often called jock itch. Tinea of the scalp, tinea capitis, is also common. The medical term for each type of ringworm starts with 'tinea' followed by the Latin name for the part of the body infected."
+    },
+    {
+      "heading": "Nail infections",
+      "text": "Ringworm is also a common type of fungal nail infection (onychomycosis). It can cause nails to change colors, become thick, and break easily. Although infections are much more common in toenails, fingernails can get infected."
+    },
+    {
+      "heading": "Emerging ringworm",
+      "text": "Emerging types of ringworm can cause severe infections. These includes drug-resistant ringworm and ringworm spread through sexual contact."
+    },
+    {
+      "heading": "Emerging ringworm",
+      "text": "Healthcare providers can refer to clinical information on emerging ringworm."
+    },
+    {
+      "heading": "Causes",
+      "text": "Ringworm is caused by fungi (not a worm). The scientific names for the most common fungi that cause ringworm are Trichophyton, Microsporum, and Epidermophyton."
+    },
+    {
+      "heading": "Ringworm is very common and can be spread by:",
+      "text": "Skin-to-skin contact with people or animals with the infection."
+    },
+    {
+      "heading": "Ringworm is very common and can be spread by:",
+      "text": "Shared objects like towels and bedsheets."
+    },
+    {
+      "heading": "Ringworm is very common and can be spread by:",
+      "text": "Shared surfaces like locker room or public bathroom floors."
+    },
+    {
+      "heading": "Ringworm is very common and can be spread by:",
+      "text": "Recently, there have been reports of ringworm linked to sexual contact."
+    },
+    {
+      "heading": "Risk factors include:",
+      "text": "Use of public showers or locker rooms without protective footwear."
+    },
+    {
+      "heading": "Risk factors include:",
+      "text": "Participating in contact sports like wrestling."
+    },
+    {
+      "heading": "Risk factors include:",
+      "text": "Wearing tight shoes and socks."
+    },
+    {
+      "heading": "Risk factors include:",
+      "text": "Excessive sweating."
+    },
+    {
+      "heading": "Risk factors include:",
+      "text": "Close contact with infected animals."
+    },
+    {
+      "heading": "Risk factors include:",
+      "text": "Anyone can get ringworm, but people who have weakened immune systems may be especially at risk for infection. They may also have problems fighting off a ringworm infection. Learn more about how to prevent ringworm."
+    },
+    {
+      "heading": "Prevention",
+      "text": "Ringworm spreads easily but there are simple ways to help prevent ringworm:"
+    },
+    {
+      "heading": "Prevention",
+      "text": "Keep skin clean and dry"
+    },
+    {
+      "heading": "Prevention",
+      "text": "Wear protective footwear in areas like public showers or locker rooms."
+    },
+    {
+      "heading": "Prevention",
+      "text": "Wash your hands after touching pets."
+    },
+    {
+      "heading": "Prevention",
+      "text": "Do not share sports gear or other personal items (like towels or socks)."
+    },
+    {
+      "heading": "Prevention",
+      "text": "Change socks and underwear every day."
+    },
+    {
+      "heading": "Prevention",
+      "text": "Keep fingernails short and clean."
+    },
+    {
+      "heading": "Prevention",
+      "text": "It is also important to avoid skin-to-skin contact, including intimate or sexual contact, with anyone with known or suspected ringworm."
+    },
+    {
+      "heading": "Testing",
+      "text": "If you have a rash, nail infection, or symptoms of ringworm, go to a healthcare provider for testing. You may go to your primary care provider, dermatologist, or podiatrist. Symptoms of ringworm are similar to symptoms for other skin or nail conditions. Testing can help make sure you get the right treatment."
+    },
+    {
+      "heading": "Testing",
+      "text": "Healthcare providers may take a small skin scraping or nail sample for testing."
+    },
+    {
+      "heading": "Treatment",
+      "text": "The treatment for ringworm depends on its location on the body and how serious the infection is. Some forms of ringworm can be treated with non-prescription (over-the-counter) antifungal medications. However, other forms of ringworm need treatment with prescription antifungal medication."
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "e89549f952bb70dbd59ecae0b3870455a32f674964ee614d8d0f3a81261e4bb8",
+  "resolved_url": "https://www.cdc.gov/ringworm/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:16.499921+00:00",
+  "html_sha256": "a7912b53cf27ec99e762a7d804d58a121b8c5129bb36ea74be237fd9cb4d01bf",
+  "chunks": [
+    {
+      "content": "Ringworm is a common fungal infection of the scalp, skin, or nails (onychomycosis). It gets its name because it causes a ring-shaped, itchy rash. It typically looks red on light skin and appears gray or brown on darker skin.",
+      "section_title": "What it is",
+      "content_sha256": "f04a4ac7ebe4741bf7f226ba021696d6fb1c8baa9f3f0a424ce000acb05a67db",
+      "chunk_index": 0
+    },
+    {
+      "content": "Skin infections are more common on certain parts of the body like on the foot or groin. Ringworm on feet (tinea pedis) is often referred to as athlete's foot. Ringworm on the groin (tinea cruris) is often called jock itch. Tinea of the scalp, tinea capitis, is also common. The medical term for each type of ringworm starts with 'tinea' followed by the Latin name for the part of the body infected.",
+      "section_title": "Skin and scalp infections",
+      "content_sha256": "9c1b572b2dee59f6df7ffd2041ab780b9b5977712cc2e113d516c86d3f7e9d4f",
+      "chunk_index": 1
+    },
+    {
+      "content": "Ringworm is also a common type of fungal nail infection (onychomycosis). It can cause nails to change colors, become thick, and break easily. Although infections are much more common in toenails, fingernails can get infected.",
+      "section_title": "Nail infections",
+      "content_sha256": "89e7e5acd7e8275f8e76d47411ab69ac18a885ba85cd0fc4edaf263c7514f363",
+      "chunk_index": 2
+    },
+    {
+      "content": "Emerging types of ringworm can cause severe infections. These includes drug-resistant ringworm and ringworm spread through sexual contact. Healthcare providers can refer to clinical information on emerging ringworm.",
+      "section_title": "Emerging ringworm",
+      "content_sha256": "b9e513eebac1acc42978efa67e2ee8fb1c7e2bc8391bd4c07f97452742d543a9",
+      "chunk_index": 3
+    },
+    {
+      "content": "Ringworm is caused by fungi (not a worm). The scientific names for the most common fungi that cause ringworm are Trichophyton, Microsporum, and Epidermophyton.",
+      "section_title": "Causes",
+      "content_sha256": "d75dfecc8b83df37397558a80d2bc098328dadf3320de94752813fa56106b0c3",
+      "chunk_index": 4
+    },
+    {
+      "content": "Skin-to-skin contact with people or animals with the infection. Shared objects like towels and bedsheets. Shared surfaces like locker room or public bathroom floors. Recently, there have been reports of ringworm linked to sexual contact.",
+      "section_title": "Ringworm is very common and can be spread by:",
+      "content_sha256": "1f425bccd8b4fbec162f943c09616bd868908cd4fb6a2b5f2b9d2f60a7a8bcd9",
+      "chunk_index": 5
+    },
+    {
+      "content": "Use of public showers or locker rooms without protective footwear. Participating in contact sports like wrestling. Wearing tight shoes and socks. Excessive sweating. Close contact with infected animals. Anyone can get ringworm, but people who have weakened immune systems may be especially at risk for infection. They may also have problems fighting off a ringworm infection. Learn more about how to prevent ringworm.",
+      "section_title": "Risk factors include:",
+      "content_sha256": "13ec782bcf76e14f811caaa979bd32749076def0eb9f3b2bfcdb4399dc5e59ca",
+      "chunk_index": 6
+    },
+    {
+      "content": "Ringworm spreads easily but there are simple ways to help prevent ringworm: Keep skin clean and dry Wear protective footwear in areas like public showers or locker rooms. Wash your hands after touching pets. Do not share sports gear or other personal items (like towels or socks). Change socks and underwear every day. Keep fingernails short and clean. It is also important to avoid skin-to-skin contact, including intimate or sexual contact, with anyone with known or suspected ringworm.",
+      "section_title": "Prevention",
+      "content_sha256": "b8c990aebdf361d59c6b5303a483e5f3b610ff7e52c22bd866b80d9f2b72b277",
+      "chunk_index": 7
+    },
+    {
+      "content": "If you have a rash, nail infection, or symptoms of ringworm, go to a healthcare provider for testing. You may go to your primary care provider, dermatologist, or podiatrist. Symptoms of ringworm are similar to symptoms for other skin or nail conditions. Testing can help make sure you get the right treatment. Healthcare providers may take a small skin scraping or nail sample for testing.",
+      "section_title": "Testing",
+      "content_sha256": "eed46bcb570066cc0ed1af1329bd8e6b3fdeb04733bd6ea27075b6731e399051",
+      "chunk_index": 8
+    },
+    {
+      "content": "The treatment for ringworm depends on its location on the body and how serious the infection is. Some forms of ringworm can be treated with non-prescription (over-the-counter) antifungal medications. However, other forms of ringworm need treatment with prescription antifungal medication.",
+      "section_title": "Treatment",
+      "content_sha256": "304072a0f788eeee47b780182e952c6745e329a0b10c7b2c8d4cafa434f4aefe",
+      "chunk_index": 9
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "c29af649-c669-5aad-b688-fc4e679d8c28"
+}

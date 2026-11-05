@@ -1,0 +1,9 @@
+{
+  "committed_at": "2026-10-23T16:30:13.336219+00:00",
+  "documents_added": 29,
+  "chunks_added": 347,
+  "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+  "preserved_existing_corpus": true,
+  "clinical_validation": false
+}

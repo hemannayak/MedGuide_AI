@@ -1,0 +1,228 @@
+{
+  "topic": "drinking-water",
+  "source_url": "https://www.cdc.gov/drinking-water/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "About Drinking Water",
+  "sections": [
+    {
+      "heading": "Overview",
+      "text": "Knowing where your drinking water comes from and how it has been treated can help you take steps to avoid getting sick."
+    },
+    {
+      "heading": "Overview",
+      "text": "In the United States, 9 out of 10 people get their tap water from a public water system. The utilities that provide this water are required to meet safe water standards set by the U.S. Environmental Protection Agency (EPA). Utilities treat water to remove harmful germs and chemicals and meet safety standards. If you are served by a public water system, your utility must tell you if your water quality does not meet EPA standards."
+    },
+    {
+      "heading": "Overview",
+      "text": "If you get your water from a private well, you are responsible for making sure it is safe to drink. Learn how to test your water and who can help you."
+    },
+    {
+      "heading": "Where tap water comes from",
+      "text": "Most tap water in the United States comes from reservoirs, lakes, rivers, or water under the ground. We get water that is under the ground by drilling wells and pumping it out."
+    },
+    {
+      "heading": "Where tap water comes from",
+      "text": "Water usually gets to your tap through your local water utility or from a private well."
+    },
+    {
+      "heading": "Contamination",
+      "text": "Harmful germs and chemicals can get into drinking water at the water's source or while the water is being piped to homes and businesses."
+    },
+    {
+      "heading": "Health effects",
+      "text": "Harmful germs or chemicals in drinking water cause a variety of mild to serious health issues. Symptoms depend on the type of germ or chemical in the unsafe water. For example, germs like Giardia or norovirus can cause diarrhea, whereas the chemical radon can cause lung cancer over time."
+    },
+    {
+      "heading": "Who is at risk",
+      "text": "Anyone can get sick from drinking unsafe water. However, infants and young children are more likely to get sick than adults."
+    },
+    {
+      "heading": "Who is at risk",
+      "text": "You are more likely to get sick if you:"
+    },
+    {
+      "heading": "Who is at risk",
+      "text": "Are pregnant"
+    },
+    {
+      "heading": "Who is at risk",
+      "text": "Are 65 years or older"
+    },
+    {
+      "heading": "Who is at risk",
+      "text": "Have a weakened immune system"
+    },
+    {
+      "heading": "Understand your water quality",
+      "text": "If you get tap water from a public water system, review the water quality report that your utility must provide every year."
+    },
+    {
+      "heading": "Understand your water quality",
+      "text": "Learn how to read this report."
+    },
+    {
+      "heading": "Understand your water quality",
+      "text": "Find your local report on EPA's webpage."
+    },
+    {
+      "heading": "Understand your water quality",
+      "text": "If you get tap water from a private well, test your water at least once each year for harmful germs and chemicals."
+    },
+    {
+      "heading": "Know who to contact",
+      "text": "Contact your health department if you:"
+    },
+    {
+      "heading": "Know who to contact",
+      "text": "Think you got sick from water"
+    },
+    {
+      "heading": "Know who to contact",
+      "text": "Are concerned about the safety of your tap water"
+    },
+    {
+      "heading": "Know who to contact",
+      "text": "Notice a change in your water"
+    },
+    {
+      "heading": "Know who to contact",
+      "text": "A change in your water’s taste, color, or smell is not necessarily a health concern. However, sometimes these changes are a sign of a problem."
+    },
+    {
+      "heading": "Know who to contact",
+      "text": "If you want to test your water, talk to your health department. They can tell you what tests you can use to check for different germs or chemicals. Your health department or a state-certified laboratory can also help you test your water. Find a nearby state-certified laboratory by calling the Safe Drinking Water Hotline at (800) 426-4791 or checking the State Certified Drinking Water Laboratories list."
+    },
+    {
+      "heading": "Understand your water treatment options",
+      "text": "Not all tap water needs to be filtered at home. If you are considering a home water filter or another type of water treatment, understand your options."
+    },
+    {
+      "heading": "Understand your water treatment options",
+      "text": "Before going on a trip, learn how to make your water safe while traveling, camping, or hiking."
+    },
+    {
+      "heading": "Protect your water",
+      "text": "Protecting rivers, lakes, and other sources of water reduces the risk of unsafe levels of germs or chemicals in your tap water. Find tips on EPA's protecting source water page."
+    },
+    {
+      "heading": "Resources",
+      "text": "About Water and Healthier Drinks | CDC"
+    },
+    {
+      "heading": "Resources",
+      "text": "Information about Public Water Systems | U.S. EPA"
+    },
+    {
+      "heading": "Data",
+      "text": "Drinking Water Facts and Stats"
+    },
+    {
+      "heading": "Data",
+      "text": "Waterborne Outbreak Data—BEAM Dashboard"
+    },
+    {
+      "heading": "Data",
+      "text": "Waterborne Outbreaks Summary Reports"
+    },
+    {
+      "heading": "Data",
+      "text": "Drinking Water Contaminant Data"
+    },
+    {
+      "heading": "Data",
+      "text": "Data on Water Consumption"
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "a1c2c188a3943178bc3ea2517aadc0f20dd72be1fad390084b87fb07b1fce9ae",
+  "resolved_url": "https://www.cdc.gov/drinking-water/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:14.334259+00:00",
+  "html_sha256": "afccec146a3e37eb35fb70e07c074d68cfd22a839f75ee604fa9792b494d19db",
+  "chunks": [
+    {
+      "content": "Knowing where your drinking water comes from and how it has been treated can help you take steps to avoid getting sick. In the United States, 9 out of 10 people get their tap water from a public water system. The utilities that provide this water are required to meet safe water standards set by the U.S. Environmental Protection Agency (EPA). Utilities treat water to remove harmful germs and chemicals and meet safety standards. If you are served by a public water system, your utility must tell",
+      "section_title": "Overview",
+      "content_sha256": "d3cfc71bedcc5344b854d09bb42d5f62fc59e6f81c86e23f92229ac4a4ebd2c4",
+      "chunk_index": 0
+    },
+    {
+      "content": "you if your water quality does not meet EPA standards. If you get your water from a private well, you are responsible for making sure it is safe to drink. Learn how to test your water and who can help you.",
+      "section_title": "Overview",
+      "content_sha256": "fbe53515fdc6d73af56d5945043cc9d7dfdf03d1042e7cff137170c61977e129",
+      "chunk_index": 1
+    },
+    {
+      "content": "Most tap water in the United States comes from reservoirs, lakes, rivers, or water under the ground. We get water that is under the ground by drilling wells and pumping it out. Water usually gets to your tap through your local water utility or from a private well.",
+      "section_title": "Where tap water comes from",
+      "content_sha256": "e85230f13d98275c6c3a9c16c8ff02ca8a38d06d1a96ee86fc30e7c96ebd7060",
+      "chunk_index": 2
+    },
+    {
+      "content": "Harmful germs and chemicals can get into drinking water at the water's source or while the water is being piped to homes and businesses.",
+      "section_title": "Contamination",
+      "content_sha256": "53ef0e7fa3b21e89cccbd68eabbe159ad9b61d2c7fccd9e43b88f2890877d2d2",
+      "chunk_index": 3
+    },
+    {
+      "content": "Harmful germs or chemicals in drinking water cause a variety of mild to serious health issues. Symptoms depend on the type of germ or chemical in the unsafe water. For example, germs like Giardia or norovirus can cause diarrhea, whereas the chemical radon can cause lung cancer over time.",
+      "section_title": "Health effects",
+      "content_sha256": "69362466c3836527410cad7f2cd57d3d6c94f05ac830f684b435f470630bc0d3",
+      "chunk_index": 4
+    },
+    {
+      "content": "Anyone can get sick from drinking unsafe water. However, infants and young children are more likely to get sick than adults. You are more likely to get sick if you: Are pregnant Are 65 years or older Have a weakened immune system",
+      "section_title": "Who is at risk",
+      "content_sha256": "26afa10e2c6ac5b10753e714252e10f85bfd33021f747422c0b116f45c91c16f",
+      "chunk_index": 5
+    },
+    {
+      "content": "If you get tap water from a public water system, review the water quality report that your utility must provide every year. Learn how to read this report. Find your local report on EPA's webpage. If you get tap water from a private well, test your water at least once each year for harmful germs and chemicals.",
+      "section_title": "Understand your water quality",
+      "content_sha256": "5c73ab494fb85e23707b4b0ccad78496870557a3194d0bfe0dd5f11fa9076e0c",
+      "chunk_index": 6
+    },
+    {
+      "content": "Contact your health department if you: Think you got sick from water Are concerned about the safety of your tap water Notice a change in your water A change in your water’s taste, color, or smell is not necessarily a health concern. However, sometimes these changes are a sign of a problem. If you want to test your water, talk to your health department. They can tell you what tests you can use to check for different germs or chemicals. Your health department or a state-certified laboratory can",
+      "section_title": "Know who to contact",
+      "content_sha256": "570572994d839211b120ed0b3e2a5bfd0225c224b605db0f7b3e5d21302d1e63",
+      "chunk_index": 7
+    },
+    {
+      "content": "also help you test your water. Find a nearby state-certified laboratory by calling the Safe Drinking Water Hotline at (800) 426-4791 or checking the State Certified Drinking Water Laboratories list.",
+      "section_title": "Know who to contact",
+      "content_sha256": "26e8354c38d1072df438eaef20d9f1443ddf78e871eedb70bbe00d0b440ffd2a",
+      "chunk_index": 8
+    },
+    {
+      "content": "Not all tap water needs to be filtered at home. If you are considering a home water filter or another type of water treatment, understand your options. Before going on a trip, learn how to make your water safe while traveling, camping, or hiking.",
+      "section_title": "Understand your water treatment options",
+      "content_sha256": "4ca0f2e88af5708911727e38ebc0a6bcba5f7071019ec5f30b55ded2661cde16",
+      "chunk_index": 9
+    },
+    {
+      "content": "Protecting rivers, lakes, and other sources of water reduces the risk of unsafe levels of germs or chemicals in your tap water. Find tips on EPA's protecting source water page.",
+      "section_title": "Protect your water",
+      "content_sha256": "64e02364395fbfae7eac8c95070dd5f99013e55e420c8dfa81d7ddecebc75c84",
+      "chunk_index": 10
+    },
+    {
+      "content": "About Water and Healthier Drinks | CDC Information about Public Water Systems | U.S. EPA",
+      "section_title": "Resources",
+      "content_sha256": "2218dab32d303a80ace4955de3a5199195b695071a5d0509c61cab1867df73af",
+      "chunk_index": 11
+    },
+    {
+      "content": "Drinking Water Facts and Stats Waterborne Outbreak Data—BEAM Dashboard Waterborne Outbreaks Summary Reports Drinking Water Contaminant Data Data on Water Consumption",
+      "section_title": "Data",
+      "content_sha256": "229d8a60b30f280f56731fb97b99c23d43a6216896ee5032184f7fda06580772",
+      "chunk_index": 12
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "25ad8e87-fd43-52ab-a291-b2f03b56fe07"
+}

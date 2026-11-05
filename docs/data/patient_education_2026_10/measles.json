@@ -1,0 +1,158 @@
+{
+  "topic": "measles",
+  "source_url": "https://www.cdc.gov/measles/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "About Measles",
+  "sections": [
+    {
+      "heading": "For Healthcare Providers",
+      "text": "Some people think of measles as just a little rash and fever that clear up in a few days. But measles can cause serious health complications, especially in children younger than 5 years old."
+    },
+    {
+      "heading": "For Healthcare Providers",
+      "text": "Measles is highly contagious. If one person has it, up to 9 out of 10 people who come into close contact with that person will become infected if they are not protected."
+    },
+    {
+      "heading": "For Healthcare Providers",
+      "text": "The best protection against measles is MMR vaccine. MMR vaccine provides long-lasting protection against measles."
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Measles symptoms appear 7 to 14 days after contact with the virus. Common measles symptoms include:"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "High fever (may spike to more than 104° F)"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Cough"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Runny nose (coryza)"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Red, watery eyes (conjunctivitis or pink eye)"
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Rash"
+    },
+    {
+      "heading": "Complications",
+      "text": "Measles can cause serious health complications, especially in children younger than 5 years of age. Common complications are ear infections and diarrhea. Serious complications include pneumonia, encephalitis (swelling of the brain) and in some cases, death."
+    },
+    {
+      "heading": "Who is at risk",
+      "text": "Anyone who is not protected against measles is at risk."
+    },
+    {
+      "heading": "Who is at risk",
+      "text": "Measles was declared eliminated from the United States in 2000. However, since early 2025, U.S. measles cases have been increasing, and we've had several large outbreaks of more than 50 cases. Measles is also still common in many parts of the world. Every year, measles infections occur in the United States because unvaccinated travelers get measles while they are in other countries and then travel to the United States. These travelers are mostly Americans and sometimes international visitors."
+    },
+    {
+      "heading": "Who is at risk",
+      "text": "Measles can cause serious health complications in all age groups. However, some groups are at higher risk of experiencing severe complications from measles:"
+    },
+    {
+      "heading": "Who is at risk",
+      "text": "Children younger than 5 years of age"
+    },
+    {
+      "heading": "Who is at risk",
+      "text": "Adults older than 20 years of age"
+    },
+    {
+      "heading": "Who is at risk",
+      "text": "Pregnant women"
+    },
+    {
+      "heading": "Who is at risk",
+      "text": "People with weakened immune systems, such as from leukemia or HIV infection"
+    },
+    {
+      "heading": "How it spreads",
+      "text": "Measles is very contagious. It spreads through the air when an infected person coughs or sneezes. You can get measles just by being in a room where a person with measles has been. This can happen even up to 2 hours after that person has left."
+    },
+    {
+      "heading": "Prevention",
+      "text": "Protect yourself with the vaccine. The best way to protect against measles is with the measles, mumps, and rubella (MMR) vaccine. MMR is safe and effective – serious reactions are extremely rare. Two doses of MMR vaccine are about 97% effective at preventing measles; one dose is about 93% effective."
+    },
+    {
+      "heading": "Prevention",
+      "text": "Prevent measles and talk to your healthcare provider about the MMR vaccine, especially if planning to travel."
+    },
+    {
+      "heading": "Resources",
+      "text": "Measles Resources"
+    },
+    {
+      "heading": "Resources",
+      "text": "Healthcare Providers: Clinical Overview of Measles"
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "e818edb2bb2723cc8016d5d678496d98e2d29b4437b6925db1f963a8f72ef1a4",
+  "resolved_url": "https://www.cdc.gov/measles/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:12.818823+00:00",
+  "html_sha256": "be17ad20a37e423776076fb97e875acc5d5901700e9bc059700025dcb41ad629",
+  "chunks": [
+    {
+      "content": "Some people think of measles as just a little rash and fever that clear up in a few days. But measles can cause serious health complications, especially in children younger than 5 years old. Measles is highly contagious. If one person has it, up to 9 out of 10 people who come into close contact with that person will become infected if they are not protected. The best protection against measles is MMR vaccine. MMR vaccine provides long-lasting protection against measles.",
+      "section_title": "For Healthcare Providers",
+      "content_sha256": "3a00ea69658e7c1428ec7102046842babde7c09ecfa8a10926613e1d8dbabe49",
+      "chunk_index": 0
+    },
+    {
+      "content": "Measles symptoms appear 7 to 14 days after contact with the virus. Common measles symptoms include: High fever (may spike to more than 104° F) Cough Runny nose (coryza) Red, watery eyes (conjunctivitis or pink eye) Rash",
+      "section_title": "Signs and symptoms",
+      "content_sha256": "dc73cbdc8b78f9e8047b871ecb6ad29d7b3a5dd8313fa76f7298c40e6975e969",
+      "chunk_index": 1
+    },
+    {
+      "content": "Measles can cause serious health complications, especially in children younger than 5 years of age. Common complications are ear infections and diarrhea. Serious complications include pneumonia, encephalitis (swelling of the brain) and in some cases, death.",
+      "section_title": "Complications",
+      "content_sha256": "e563bbf421b58dae0a8af85d4fed66da09f457c9689885d7c20f7bc5ddae77d2",
+      "chunk_index": 2
+    },
+    {
+      "content": "Anyone who is not protected against measles is at risk. Measles was declared eliminated from the United States in 2000. However, since early 2025, U.S. measles cases have been increasing, and we've had several large outbreaks of more than 50 cases. Measles is also still common in many parts of the world. Every year, measles infections occur in the United States because unvaccinated travelers get measles while they are in other countries and then travel to the United States. These travelers are",
+      "section_title": "Who is at risk",
+      "content_sha256": "7b4cbf98875c5bec2b4b4b7345886578ef89e660f14b0afdf9ac80ade73af699",
+      "chunk_index": 3
+    },
+    {
+      "content": "mostly Americans and sometimes international visitors. Measles can cause serious health complications in all age groups. However, some groups are at higher risk of experiencing severe complications from measles: Children younger than 5 years of age Adults older than 20 years of age Pregnant women People with weakened immune systems, such as from leukemia or HIV infection",
+      "section_title": "Who is at risk",
+      "content_sha256": "880c3c233b7afe4dc08d447690e09c01647a32aeb914b6c7cd78813d4ec3317b",
+      "chunk_index": 4
+    },
+    {
+      "content": "Measles is very contagious. It spreads through the air when an infected person coughs or sneezes. You can get measles just by being in a room where a person with measles has been. This can happen even up to 2 hours after that person has left.",
+      "section_title": "How it spreads",
+      "content_sha256": "6d2ea011063013fe48917a212bfcd494729788294357f8938aca36d70f7cb4e1",
+      "chunk_index": 5
+    },
+    {
+      "content": "Protect yourself with the vaccine. The best way to protect against measles is with the measles, mumps, and rubella (MMR) vaccine. MMR is safe and effective – serious reactions are extremely rare. Two doses of MMR vaccine are about 97% effective at preventing measles; one dose is about 93% effective. Prevent measles and talk to your healthcare provider about the MMR vaccine, especially if planning to travel.",
+      "section_title": "Prevention",
+      "content_sha256": "a20ae1af96ecebe0fb77d69941ff76dd2ba87efc27627aba043f1acabfdfe048",
+      "chunk_index": 6
+    },
+    {
+      "content": "Measles Resources Healthcare Providers: Clinical Overview of Measles",
+      "section_title": "Resources",
+      "content_sha256": "19960af850a7f054a997dbf81ae6cfa3996b3e9f4ac5c593e03031ee596016b2",
+      "chunk_index": 7
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "15b5862a-a9ea-5ba3-9444-adc54954d4fd"
+}

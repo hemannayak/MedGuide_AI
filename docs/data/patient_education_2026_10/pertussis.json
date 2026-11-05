@@ -1,0 +1,260 @@
+{
+  "topic": "pertussis",
+  "source_url": "https://www.cdc.gov/pertussis/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "About Whooping Cough",
+  "sections": [
+    {
+      "heading": "What it is",
+      "text": "Whooping cough is a respiratory illness caused by a type of bacteria called Bordetella pertussis. The disease is only found in humans."
+    },
+    {
+      "heading": "What it is",
+      "text": "Whooping cough bacteria attach to the cilia (tiny, hair-like extensions) that line part of the upper respiratory system. The bacteria release toxins (poisons), which damage the cilia and cause airways to swell."
+    },
+    {
+      "heading": "Trends",
+      "text": "Whooping cough is an endemic (common) disease in the United States. There are peaks in reported cases of whooping cough every few years."
+    },
+    {
+      "heading": "Symptoms",
+      "text": "Symptoms of whooping cough can vary for people based on their age and if they've been vaccinated or not."
+    },
+    {
+      "heading": "Risk factors",
+      "text": "Age and underlying medical conditions can increase someone's risk for getting a severe case of whooping cough. It's especially important to prevent these people from getting sick."
+    },
+    {
+      "heading": "Age",
+      "text": "Babies younger than 1 year old are at greatest risk for getting whooping cough and having severe complications from it."
+    },
+    {
+      "heading": "Medical conditions",
+      "text": "People with pre-existing health conditions that may be worsened by whooping cough are at high risk for developing a severe infection. Some conditions that could be made worse by whooping cough include, but are not limited to:"
+    },
+    {
+      "heading": "Medical conditions",
+      "text": "Immunocompromising conditions"
+    },
+    {
+      "heading": "Medical conditions",
+      "text": "Moderate to severe medically treated asthma"
+    },
+    {
+      "heading": "How it spreads",
+      "text": "The bacteria that cause whooping cough spread easily from person to person through the air. When a person with whooping cough sneezes or coughs, they release small particles with the bacteria in them. Other people can then breathe in the bacteria."
+    },
+    {
+      "heading": "How it spreads",
+      "text": "These bacteria can spread when people spend a lot of time together or share breathing space."
+    },
+    {
+      "heading": "People can be contagious for weeks",
+      "text": "People can spread the bacteria from the start of symptoms and for at least 2 weeks after coughing begins."
+    },
+    {
+      "heading": "People can be contagious for weeks",
+      "text": "Taking antibiotics early in the illness may shorten the amount of time someone's contagious."
+    },
+    {
+      "heading": "People can unknowingly spread the bacteria",
+      "text": "Some people have mild symptoms and don't know they have whooping cough, but they can still spread the bacteria to others. Many babies who get whooping cough are infected by older siblings, parents, or caregivers who don't know they have it."
+    },
+    {
+      "heading": "Vaccination",
+      "text": "The best way to prevent whooping cough is to get vaccinated. CDC recommends whooping cough vaccination for everyone."
+    },
+    {
+      "heading": "Antibiotics",
+      "text": "Preventive antibiotics are also known as postexposure antimicrobial prophylaxis (PEP). These are medicines given to someone who has been exposed to harmful bacteria to help prevent them from getting sick. Some people should receive antibiotics to prevent them from getting sick if they have been around someone with whooping cough."
+    },
+    {
+      "heading": "Antibiotics",
+      "text": "If you've been exposed to someone with whooping cough, talk to a healthcare provider about preventive antibiotics. A healthcare provider or health department generally decides who should get preventive antibiotics."
+    },
+    {
+      "heading": "Good hygiene",
+      "text": "CDC recommends practicing good hygiene to help prevent the spread of bacteria and viruses that can cause many respiratory illnesses."
+    },
+    {
+      "heading": "Good hygiene",
+      "text": "Find information about handwashing and covering coughs and sneezes."
+    },
+    {
+      "heading": "Re-infection",
+      "text": "People who've had whooping cough have some immunity to future whooping cough infections. However, getting sick with whooping cough doesn't provide lifelong protection."
+    },
+    {
+      "heading": "During widespread community transmission",
+      "text": "When there is widespread community transmission, public health authorities focus on protecting those at highest risk of serious illness."
+    },
+    {
+      "heading": "During widespread community transmission",
+      "text": "Key strategies focus on vaccination and preventive antibiotics for these high-risk groups and people who are around them. A second goal is to protect all other people from getting whooping cough."
+    },
+    {
+      "heading": "Testing and diagnosis",
+      "text": "Whooping cough can be difficult to diagnose because the signs and symptoms are often similar to other respiratory illnesses. It can be helpful to know if you've been in contact with someone who has whooping cough."
+    },
+    {
+      "heading": "Testing and diagnosis",
+      "text": "Healthcare providers can diagnose whooping cough by doing a"
+    },
+    {
+      "heading": "Testing and diagnosis",
+      "text": "History of typical signs and symptoms"
+    },
+    {
+      "heading": "Testing and diagnosis",
+      "text": "Physical exam"
+    },
+    {
+      "heading": "Testing and diagnosis",
+      "text": "Laboratory test of a mucus sample from the back of the throat"
+    },
+    {
+      "heading": "Testing and diagnosis",
+      "text": "Blood test"
+    },
+    {
+      "heading": "Treatment and recovery",
+      "text": "It's very important to treat whooping cough early, before coughing fits begin. Healthcare providers generally treat whooping cough with antibiotics. Further treatment in the hospital may be required if symptoms are serious."
+    },
+    {
+      "heading": "Posters, fact sheets, and videos",
+      "text": "Communication and print resources about whooping cough"
+    },
+    {
+      "heading": "Preventive antibiotic use",
+      "text": "For health professionals: Postexposure antimicrobial prophylaxis"
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "5396c756537976ab330ea519314346cb668b01accf4e03080d026b39f86fe44c",
+  "resolved_url": "https://www.cdc.gov/pertussis/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:13.153447+00:00",
+  "html_sha256": "b7d75d9d1ad88e2d8e144be1160ab94e6bc33d8b1501cc09e198216c8b179a13",
+  "chunks": [
+    {
+      "content": "Whooping cough is a respiratory illness caused by a type of bacteria called Bordetella pertussis. The disease is only found in humans. Whooping cough bacteria attach to the cilia (tiny, hair-like extensions) that line part of the upper respiratory system. The bacteria release toxins (poisons), which damage the cilia and cause airways to swell.",
+      "section_title": "What it is",
+      "content_sha256": "7f8c4929b708ac387f5784aed93b85331060d5f0f42d64b0e0becca4f64079e1",
+      "chunk_index": 0
+    },
+    {
+      "content": "Whooping cough is an endemic (common) disease in the United States. There are peaks in reported cases of whooping cough every few years.",
+      "section_title": "Trends",
+      "content_sha256": "8031ff24498358c94014176065d49783a78211413c851cc2876cb9643d0c52f5",
+      "chunk_index": 1
+    },
+    {
+      "content": "Symptoms of whooping cough can vary for people based on their age and if they've been vaccinated or not.",
+      "section_title": "Symptoms",
+      "content_sha256": "93ad104cb0fa02700cfc30910ddad74073f49c196a2173f1fc005087bbb42084",
+      "chunk_index": 2
+    },
+    {
+      "content": "Age and underlying medical conditions can increase someone's risk for getting a severe case of whooping cough. It's especially important to prevent these people from getting sick.",
+      "section_title": "Risk factors",
+      "content_sha256": "55975b257020349cf7ceb42fffa8fc14e3f14eb94e7e01a1a52b46efda43b525",
+      "chunk_index": 3
+    },
+    {
+      "content": "Babies younger than 1 year old are at greatest risk for getting whooping cough and having severe complications from it.",
+      "section_title": "Age",
+      "content_sha256": "4fb962f74099c15285286f3e714720220ccb6239404b63247bda40abeb46346d",
+      "chunk_index": 4
+    },
+    {
+      "content": "People with pre-existing health conditions that may be worsened by whooping cough are at high risk for developing a severe infection. Some conditions that could be made worse by whooping cough include, but are not limited to: Immunocompromising conditions Moderate to severe medically treated asthma",
+      "section_title": "Medical conditions",
+      "content_sha256": "509e02893da257fbb7f8d3300aebb5fff8f857851f311fead40246fddf286e16",
+      "chunk_index": 5
+    },
+    {
+      "content": "The bacteria that cause whooping cough spread easily from person to person through the air. When a person with whooping cough sneezes or coughs, they release small particles with the bacteria in them. Other people can then breathe in the bacteria. These bacteria can spread when people spend a lot of time together or share breathing space.",
+      "section_title": "How it spreads",
+      "content_sha256": "38c66892bfa337c049a0f91c23574223826d9222af8864fa82017b74584178bb",
+      "chunk_index": 6
+    },
+    {
+      "content": "People can spread the bacteria from the start of symptoms and for at least 2 weeks after coughing begins. Taking antibiotics early in the illness may shorten the amount of time someone's contagious.",
+      "section_title": "People can be contagious for weeks",
+      "content_sha256": "d4d78d13067fbe4151016f0c6527c71581155b624ee600a6460a55079511a056",
+      "chunk_index": 7
+    },
+    {
+      "content": "Some people have mild symptoms and don't know they have whooping cough, but they can still spread the bacteria to others. Many babies who get whooping cough are infected by older siblings, parents, or caregivers who don't know they have it.",
+      "section_title": "People can unknowingly spread the bacteria",
+      "content_sha256": "618aa4896688fed7f4586aba5a4af7edb5ac337ea820f7ea7b1a9e5695d2a569",
+      "chunk_index": 8
+    },
+    {
+      "content": "The best way to prevent whooping cough is to get vaccinated. CDC recommends whooping cough vaccination for everyone.",
+      "section_title": "Vaccination",
+      "content_sha256": "98fc5f91ca5eff646edb8de4790c427078e18244935bd4c2d43d19f095f36d01",
+      "chunk_index": 9
+    },
+    {
+      "content": "Preventive antibiotics are also known as postexposure antimicrobial prophylaxis (PEP). These are medicines given to someone who has been exposed to harmful bacteria to help prevent them from getting sick. Some people should receive antibiotics to prevent them from getting sick if they have been around someone with whooping cough. If you've been exposed to someone with whooping cough, talk to a healthcare provider about preventive antibiotics. A healthcare provider or health department generally",
+      "section_title": "Antibiotics",
+      "content_sha256": "2303875acd4e26db169658809b8e29c14a67e03d1ed4fb34daeda9ac9c4df73a",
+      "chunk_index": 10
+    },
+    {
+      "content": "decides who should get preventive antibiotics.",
+      "section_title": "Antibiotics",
+      "content_sha256": "d1c92ca781eb1d3dd06e1d3395f784d4e46673a2646ec48db85ff65136d8738e",
+      "chunk_index": 11
+    },
+    {
+      "content": "CDC recommends practicing good hygiene to help prevent the spread of bacteria and viruses that can cause many respiratory illnesses. Find information about handwashing and covering coughs and sneezes.",
+      "section_title": "Good hygiene",
+      "content_sha256": "44facd5d44d29294308e0f3348bbfae0cf69ae98136c23751009a62661537fda",
+      "chunk_index": 12
+    },
+    {
+      "content": "People who've had whooping cough have some immunity to future whooping cough infections. However, getting sick with whooping cough doesn't provide lifelong protection.",
+      "section_title": "Re-infection",
+      "content_sha256": "054e17412d15c7621ee74eb402d1634b728273490fa32f6c22ce13eb0d7c06f0",
+      "chunk_index": 13
+    },
+    {
+      "content": "When there is widespread community transmission, public health authorities focus on protecting those at highest risk of serious illness. Key strategies focus on vaccination and preventive antibiotics for these high-risk groups and people who are around them. A second goal is to protect all other people from getting whooping cough.",
+      "section_title": "During widespread community transmission",
+      "content_sha256": "c18b3e307c1471339ffeda71533221c03f3ef3701549090e08a75f5a102a3d6f",
+      "chunk_index": 14
+    },
+    {
+      "content": "Whooping cough can be difficult to diagnose because the signs and symptoms are often similar to other respiratory illnesses. It can be helpful to know if you've been in contact with someone who has whooping cough. Healthcare providers can diagnose whooping cough by doing a History of typical signs and symptoms Physical exam Laboratory test of a mucus sample from the back of the throat Blood test",
+      "section_title": "Testing and diagnosis",
+      "content_sha256": "c5d2b15098e948a931236f189c6be1c6e60847e03aa4cbdc5bf5379cf8f54e42",
+      "chunk_index": 15
+    },
+    {
+      "content": "It's very important to treat whooping cough early, before coughing fits begin. Healthcare providers generally treat whooping cough with antibiotics. Further treatment in the hospital may be required if symptoms are serious.",
+      "section_title": "Treatment and recovery",
+      "content_sha256": "051d2476a509d32c33a3b30bbc92478c6b9beba63608307392d02dd8b7e17ab4",
+      "chunk_index": 16
+    },
+    {
+      "content": "Communication and print resources about whooping cough",
+      "section_title": "Posters, fact sheets, and videos",
+      "content_sha256": "fc600890c47f540fd8a2f34a192d3310188b5ba0989da9a32b17d23e29980482",
+      "chunk_index": 17
+    },
+    {
+      "content": "For health professionals: Postexposure antimicrobial prophylaxis",
+      "section_title": "Preventive antibiotic use",
+      "content_sha256": "a6cbff1b7770df5deb55ee0b9e4f81294286838d32bd532f063d4e558949ac6f",
+      "chunk_index": 18
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "fe1be448-3e84-59ef-b57c-38aaa36237ae"
+}

@@ -1,0 +1,82 @@
+{
+  "scope": "service_navigation",
+  "repeat_publication": {
+    "documents_added": 0,
+    "scopes": [
+      "service_navigation"
+    ]
+  },
+  "probes": [
+    {
+      "query": "How can people in distant hamlets find the village health day?",
+      "geography": "India",
+      "population_setting": "rural",
+      "elapsed_ms": 2238.94,
+      "matches": [
+        {
+          "document_id": "11f34f52-0a00-5c98-ae52-f6613befb3bb",
+          "chunk_id": "5fca8505-e360-4fa2-a87b-3617f0b19bf4",
+          "page": 18,
+          "similarity": 0.40621311194740395,
+          "source_url": "https://www.nhm.gov.in/images/pdf/communitisation/asha/ASHA_Induction_Module_English.pdf"
+        }
+      ]
+    },
+    {
+      "query": "Where can village families meet the ANM and Anganwadi worker?",
+      "geography": "India",
+      "population_setting": "rural",
+      "elapsed_ms": 10.05,
+      "matches": [
+        {
+          "document_id": "11f34f52-0a00-5c98-ae52-f6613befb3bb",
+          "chunk_id": "f0df02fb-4740-47d8-af51-3f9438bb18b0",
+          "page": 18,
+          "similarity": 0.5029267649491477,
+          "source_url": "https://www.nhm.gov.in/images/pdf/communitisation/asha/ASHA_Induction_Module_English.pdf"
+        },
+        {
+          "document_id": "11f34f52-0a00-5c98-ae52-f6613befb3bb",
+          "chunk_id": "5fca8505-e360-4fa2-a87b-3617f0b19bf4",
+          "page": 18,
+          "similarity": 0.4774237806475524,
+          "source_url": "https://www.nhm.gov.in/images/pdf/communitisation/asha/ASHA_Induction_Module_English.pdf"
+        }
+      ]
+    },
+    {
+      "query": "Village health day",
+      "geography": "India",
+      "population_setting": "urban",
+      "elapsed_ms": 7.83,
+      "matches": []
+    },
+    {
+      "query": "Village health day",
+      "geography": "Kerala",
+      "population_setting": "rural",
+      "elapsed_ms": 6.7,
+      "matches": []
+    }
+  ],
+  "document_status_counts": [
+    {
+      "review_status": "APPROVED_SURVEILLANCE",
+      "documents": 1
+    },
+    {
+      "review_status": "APPROVED_SERVICE_NAVIGATION",
+      "documents": 1
+    },
+    {
+      "review_status": "APPROVED",
+      "documents": 33
+    },
+    {
+      "review_status": "SUPERSEDED_SURVEILLANCE",
+      "documents": 1
+    }
+  ],
+  "care_access_not_in_surveillance": true,
+  "limitations": "Small English retrieval smoke test; not multilingual, clinical, or broad relevance evaluation."
+}

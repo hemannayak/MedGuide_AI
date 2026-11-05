@@ -1,0 +1,194 @@
+{
+  "topic": "handwashing",
+  "source_url": "https://www.cdc.gov/clean-hands/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "About Handwashing",
+  "sections": [
+    {
+      "heading": "Why it's important",
+      "text": "Washing hands can keep you healthy and prevent the spread of respiratory and diarrheal infections. Germs can spread from person to person or from surfaces to people when you:"
+    },
+    {
+      "heading": "Why it's important",
+      "text": "Touch your eyes, nose, and mouth with unwashed hands"
+    },
+    {
+      "heading": "Why it's important",
+      "text": "Prepare or eat food and drinks with unwashed hands"
+    },
+    {
+      "heading": "Why it's important",
+      "text": "Touch surfaces or objects that have germs on them"
+    },
+    {
+      "heading": "Why it's important",
+      "text": "Blow your nose, cough, or sneeze into hands and then touch other people's hands or common objects"
+    },
+    {
+      "heading": "Key times to wash hands",
+      "text": "You can help yourself and your loved ones stay healthy by washing your hands often, especially during these key times when you are likely to get and spread germs:"
+    },
+    {
+      "heading": "Key times to wash hands",
+      "text": "Before, during, and after preparing food"
+    },
+    {
+      "heading": "Key times to wash hands",
+      "text": "Before and after eating food"
+    },
+    {
+      "heading": "Key times to wash hands",
+      "text": "Before and after caring for someone at home who is sick with vomiting or diarrhea"
+    },
+    {
+      "heading": "Key times to wash hands",
+      "text": "Before and after treating a cut or wound"
+    },
+    {
+      "heading": "Key times to wash hands",
+      "text": "After using the toilet"
+    },
+    {
+      "heading": "Key times to wash hands",
+      "text": "After changing diapers or cleaning up a child who has used the toilet"
+    },
+    {
+      "heading": "Key times to wash hands",
+      "text": "After blowing your nose, coughing, or sneezing"
+    },
+    {
+      "heading": "Key times to wash hands",
+      "text": "After touching an animal, animal feed, or animal waste"
+    },
+    {
+      "heading": "Key times to wash hands",
+      "text": "After handling pet food or pet treats"
+    },
+    {
+      "heading": "Key times to wash hands",
+      "text": "After touching garbage"
+    },
+    {
+      "heading": "How it works",
+      "text": "Washing your hands is easy, and it’s one of the most effective ways to prevent the spread of germs. Follow these five steps every time."
+    },
+    {
+      "heading": "How it works",
+      "text": "Wet your hands with clean, running water (warm or cold), turn off the tap, and apply soap."
+    },
+    {
+      "heading": "How it works",
+      "text": "Lather your hands by rubbing them together with the soap. Lather the backs of your hands, between your fingers, and under your nails."
+    },
+    {
+      "heading": "How it works",
+      "text": "Scrub your hands for at least 20 seconds. Need a timer? Hum the “Happy Birthday” song from beginning to end twice."
+    },
+    {
+      "heading": "How it works",
+      "text": "Rinse your hands well under clean, running water."
+    },
+    {
+      "heading": "How it works",
+      "text": "Dry your hands using a clean towel or an air dryer."
+    },
+    {
+      "heading": "Use hand sanitizer when you can't use soap and water",
+      "text": "Washing hands with soap and water is the best way to get rid of germs in most situations. If soap and water are not readily available, you can use an alcohol-based hand sanitizer that contains at least 60% alcohol. You can tell if the sanitizer contains at least 60% alcohol by looking at the product label."
+    },
+    {
+      "heading": "What you can do",
+      "text": "CDC has health promotion materials to encourage kids and adults to make handwashing part of their everyday lives."
+    },
+    {
+      "heading": "What you can do",
+      "text": "Share social media graphics and messages."
+    },
+    {
+      "heading": "What you can do",
+      "text": "Print stickers and place clings on bathroom mirrors."
+    },
+    {
+      "heading": "What you can do",
+      "text": "Promote handwashing on or around Global Handwashing Day, celebrated each year on October 15."
+    },
+    {
+      "heading": "What you can do",
+      "text": "Distribute fact sheets to share information about hand hygiene for specific audiences."
+    },
+    {
+      "heading": "Resources",
+      "text": "Frequent Questions About Hand Hygiene"
+    },
+    {
+      "heading": "Resources",
+      "text": "Hand Hygiene in Healthcare Settings"
+    },
+    {
+      "heading": "Resources",
+      "text": "The Life is Better with Clean Hands Campaign"
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "601d3de642e7e1e0e5fc169f6bd933505a3873222f3b498c4ea2e2dca4b68edc",
+  "resolved_url": "https://www.cdc.gov/clean-hands/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:13.427587+00:00",
+  "html_sha256": "141f2ccf549cb87040c996121252047e00385a7f9b59dda1ade0d5b9d982749a",
+  "chunks": [
+    {
+      "content": "Washing hands can keep you healthy and prevent the spread of respiratory and diarrheal infections. Germs can spread from person to person or from surfaces to people when you: Touch your eyes, nose, and mouth with unwashed hands Prepare or eat food and drinks with unwashed hands Touch surfaces or objects that have germs on them Blow your nose, cough, or sneeze into hands and then touch other people's hands or common objects",
+      "section_title": "Why it's important",
+      "content_sha256": "3616594a5aa715c53a722cc1b273998696a6cb298d9ebd17fe98f1904bf94d4b",
+      "chunk_index": 0
+    },
+    {
+      "content": "You can help yourself and your loved ones stay healthy by washing your hands often, especially during these key times when you are likely to get and spread germs: Before, during, and after preparing food Before and after eating food Before and after caring for someone at home who is sick with vomiting or diarrhea Before and after treating a cut or wound After using the toilet After changing diapers or cleaning up a child who has used the toilet After blowing your nose, coughing, or sneezing",
+      "section_title": "Key times to wash hands",
+      "content_sha256": "e982f745191a9500896dc9427b895647826f7eb847a287deb885e8262265cfd1",
+      "chunk_index": 1
+    },
+    {
+      "content": "After touching an animal, animal feed, or animal waste After handling pet food or pet treats After touching garbage",
+      "section_title": "Key times to wash hands",
+      "content_sha256": "467b80ed84a96409008385ef9c4bef744943fb9533388b2ada102ece74c1390d",
+      "chunk_index": 2
+    },
+    {
+      "content": "Washing your hands is easy, and it’s one of the most effective ways to prevent the spread of germs. Follow these five steps every time. Wet your hands with clean, running water (warm or cold), turn off the tap, and apply soap. Lather your hands by rubbing them together with the soap. Lather the backs of your hands, between your fingers, and under your nails. Scrub your hands for at least 20 seconds. Need a timer? Hum the “Happy Birthday” song from beginning to end twice. Rinse your hands well",
+      "section_title": "How it works",
+      "content_sha256": "fa5a1a8f263a475c9a142a5b3f81c7bea5623484c56197407562d2716a30d3b5",
+      "chunk_index": 3
+    },
+    {
+      "content": "under clean, running water. Dry your hands using a clean towel or an air dryer.",
+      "section_title": "How it works",
+      "content_sha256": "e593ac7a12afd958479afb126a20a0428c4d378151ab813ba89da9985ec4d3af",
+      "chunk_index": 4
+    },
+    {
+      "content": "Washing hands with soap and water is the best way to get rid of germs in most situations. If soap and water are not readily available, you can use an alcohol-based hand sanitizer that contains at least 60% alcohol. You can tell if the sanitizer contains at least 60% alcohol by looking at the product label.",
+      "section_title": "Use hand sanitizer when you can't use soap and water",
+      "content_sha256": "7bea5ffacde14606e867a1eae70782905dbf0110816c9f60f9094a17c3fe0849",
+      "chunk_index": 5
+    },
+    {
+      "content": "CDC has health promotion materials to encourage kids and adults to make handwashing part of their everyday lives. Share social media graphics and messages. Print stickers and place clings on bathroom mirrors. Promote handwashing on or around Global Handwashing Day, celebrated each year on October 15. Distribute fact sheets to share information about hand hygiene for specific audiences.",
+      "section_title": "What you can do",
+      "content_sha256": "e6d590972919bb3460efca1b6f1dcac792feb9dab7021b56f7676c451187d1b1",
+      "chunk_index": 6
+    },
+    {
+      "content": "Frequent Questions About Hand Hygiene Hand Hygiene in Healthcare Settings The Life is Better with Clean Hands Campaign",
+      "section_title": "Resources",
+      "content_sha256": "aa1f55813b5c0ac93ddd667536a32157426ae23b39b9cf657d3521aba264e83b",
+      "chunk_index": 7
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "59148f92-2fa0-551b-a176-e6be79633df5"
+}

@@ -1,0 +1,100 @@
+{
+  "topic": "covid-19",
+  "source_url": "https://www.cdc.gov/covid/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "About COVID-19",
+  "sections": [
+    {
+      "heading": "About COVID-19",
+      "text": "COVID-19 most often causes respiratory symptoms that can feel much like a cold, the flu, or pneumonia. COVID-19 may attack more than your lungs and respiratory system. Other parts of your body may also be affected by the disease. Most people with COVID-19 have mild symptoms, but some people become severely ill."
+    },
+    {
+      "heading": "About COVID-19",
+      "text": "Some people, including those with minor or no symptoms, will develop Post-COVID Conditions – also called \"Long COVID.\""
+    },
+    {
+      "heading": "How COVID-19 spreads",
+      "text": "COVID-19 spreads when an infected person breathes out droplets and very small particles that contain the virus. Other people can breathe in these droplets and particles, or these droplets and particles can land on others' eyes, nose, or mouth. In some circumstances, these droplets may contaminate the surfaces they touch."
+    },
+    {
+      "heading": "How COVID-19 spreads",
+      "text": "Anyone infected with COVID-19 can spread it, even if they do NOT have symptoms. COVID-19 can even spread from people to animals in some situations."
+    },
+    {
+      "heading": "Risk factors for severe iIlness from COVID-19",
+      "text": "Some people are more likely than others to get very sick if they get COVID-19. This includes people who:"
+    },
+    {
+      "heading": "Risk factors for severe iIlness from COVID-19",
+      "text": "are older"
+    },
+    {
+      "heading": "Risk factors for severe iIlness from COVID-19",
+      "text": "are immunocompromised (have a weakened immune system)"
+    },
+    {
+      "heading": "Risk factors for severe iIlness from COVID-19",
+      "text": "have certain disabilities or"
+    },
+    {
+      "heading": "Risk factors for severe iIlness from COVID-19",
+      "text": "have underlying health conditions"
+    },
+    {
+      "heading": "Risk factors for severe iIlness from COVID-19",
+      "text": "Understanding your COVID-19 risk and the risks that might affect others can help you make decisions to protect yourself and others."
+    },
+    {
+      "heading": "About variants",
+      "text": "Viruses are constantly changing, including the virus that causes COVID-19. These changes occur over time and can lead to the emergence of variants that may have new characteristics, including different ways of spreading. Slowing the spread of the virus, by protecting yourself and others, can help slow new variants from developing."
+    },
+    {
+      "heading": "Prevention",
+      "text": "There are many actions you can take to help protect you, your household, and your community from COVID-19. CDC's Respiratory Virus Guidance provides actions you can take to lower the risk of COVID-19 transmission (catching and spreading COVID-19) and lower the risk of severe illness if you get sick."
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "2b29437e8842734955d56beca262ceed22c45147b814eab32671d798e401f27a",
+  "resolved_url": "https://www.cdc.gov/covid/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:09.379418+00:00",
+  "html_sha256": "5232e6717710e33728bb3410cc1c4f40f6a49255846c409ab3f92f3d3877715d",
+  "chunks": [
+    {
+      "content": "COVID-19 most often causes respiratory symptoms that can feel much like a cold, the flu, or pneumonia. COVID-19 may attack more than your lungs and respiratory system. Other parts of your body may also be affected by the disease. Most people with COVID-19 have mild symptoms, but some people become severely ill. Some people, including those with minor or no symptoms, will develop Post-COVID Conditions – also called \"Long COVID.\"",
+      "section_title": "About COVID-19",
+      "content_sha256": "eb1303f010d3bc340599b541d3e6df599f4180a571262f51f3b8a25222d4abf9",
+      "chunk_index": 0
+    },
+    {
+      "content": "COVID-19 spreads when an infected person breathes out droplets and very small particles that contain the virus. Other people can breathe in these droplets and particles, or these droplets and particles can land on others' eyes, nose, or mouth. In some circumstances, these droplets may contaminate the surfaces they touch. Anyone infected with COVID-19 can spread it, even if they do NOT have symptoms. COVID-19 can even spread from people to animals in some situations.",
+      "section_title": "How COVID-19 spreads",
+      "content_sha256": "4f51c8ee57ab848e30379354f1187e32f7a61ba6230fcaa05376ed2a6f2466af",
+      "chunk_index": 1
+    },
+    {
+      "content": "Some people are more likely than others to get very sick if they get COVID-19. This includes people who: are older are immunocompromised (have a weakened immune system) have certain disabilities or have underlying health conditions Understanding your COVID-19 risk and the risks that might affect others can help you make decisions to protect yourself and others.",
+      "section_title": "Risk factors for severe iIlness from COVID-19",
+      "content_sha256": "58dc8cd8f1cec9ef526c5928db9ad60644a9914bcd61d1f766f385ecee976e97",
+      "chunk_index": 2
+    },
+    {
+      "content": "Viruses are constantly changing, including the virus that causes COVID-19. These changes occur over time and can lead to the emergence of variants that may have new characteristics, including different ways of spreading. Slowing the spread of the virus, by protecting yourself and others, can help slow new variants from developing.",
+      "section_title": "About variants",
+      "content_sha256": "88f3b7d271361913b515136004ab6763c45b4b16ce7bcd4de0d9ada5b52c766d",
+      "chunk_index": 3
+    },
+    {
+      "content": "There are many actions you can take to help protect you, your household, and your community from COVID-19. CDC's Respiratory Virus Guidance provides actions you can take to lower the risk of COVID-19 transmission (catching and spreading COVID-19) and lower the risk of severe illness if you get sick.",
+      "section_title": "Prevention",
+      "content_sha256": "0f23ad2125caae1ff425e72e3a6fec4c83613041f429f270116147fb65aeb7ad",
+      "chunk_index": 4
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "9df39120-27c6-52a0-abed-9d8c7ac9079a"
+}

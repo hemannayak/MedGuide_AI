@@ -1,0 +1,456 @@
+{
+  "evaluated_at": "2026-10-23T16:33:59.418225+00:00",
+  "corpus": {
+    "documents": 33,
+    "chunks": 7107
+  },
+  "method": "Direct multilingual retrieval, 12 held-out topic probes; no LLM or translation bridge; not clinical accuracy or representative benchmark.",
+  "topic_hits_at_5": 11,
+  "cases": 12,
+  "results": [
+    {
+      "language": "en",
+      "query": "How does dengue spread from one person to another?",
+      "expected_topic": "dengue",
+      "topic_hit_at_5": true,
+      "latency_ms": 2481.03,
+      "hits": [
+        {
+          "title": "About Dengue",
+          "topic": "dengue",
+          "similarity": 0.6724,
+          "chunk_id": "535b7e26-6106-40a7-b41e-62bddf232a0d"
+        },
+        {
+          "title": "About Chikungunya Virus",
+          "topic": "chikungunya",
+          "similarity": 0.6274,
+          "chunk_id": "e2127493-ec92-43ad-a3a5-c21422e0d0f8"
+        },
+        {
+          "title": "About Dengue",
+          "topic": "dengue",
+          "similarity": 0.5819,
+          "chunk_id": "2adfa019-df4b-422d-be83-33f53a9837f5"
+        },
+        {
+          "title": "About Chikungunya Virus",
+          "topic": "chikungunya",
+          "similarity": 0.5644,
+          "chunk_id": "11edd714-43fc-43ac-88ad-0e6962a6013b"
+        },
+        {
+          "title": "About Dengue",
+          "topic": "dengue",
+          "similarity": 0.5485,
+          "chunk_id": "cd319ef6-1ecc-443d-a81d-c135fbc46a02"
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "query": "Can scabies spread through close skin contact?",
+      "expected_topic": "scabies",
+      "topic_hit_at_5": true,
+      "latency_ms": 110.5,
+      "hits": [
+        {
+          "title": "About Scabies",
+          "topic": "scabies",
+          "similarity": 0.772,
+          "chunk_id": "fabf49e4-ec71-47ef-9521-ebe8d345c5c7"
+        },
+        {
+          "title": "About Scabies",
+          "topic": "scabies",
+          "similarity": 0.7316,
+          "chunk_id": "54826dff-fd8c-48bc-8723-29d30ade5558"
+        },
+        {
+          "title": "About Scabies",
+          "topic": "scabies",
+          "similarity": 0.6823,
+          "chunk_id": "ab248fe9-93e9-4622-bd6a-3ca285669a1b"
+        },
+        {
+          "title": "About Scabies",
+          "topic": "scabies",
+          "similarity": 0.6588,
+          "chunk_id": "6049176b-4399-4653-bba2-ae3aea3f946c"
+        },
+        {
+          "title": "About Scabies",
+          "topic": "scabies",
+          "similarity": 0.6517,
+          "chunk_id": "75bacfde-7e26-4a3c-961e-d01718d3fb21"
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "query": "What causes ringworm on the skin?",
+      "expected_topic": "ringworm",
+      "topic_hit_at_5": true,
+      "latency_ms": 112.59,
+      "hits": [
+        {
+          "title": "Ringworm Basics",
+          "topic": "ringworm",
+          "similarity": 0.8396,
+          "chunk_id": "f414819d-6640-4f00-a816-884fcc153aec"
+        },
+        {
+          "title": "Ringworm Basics",
+          "topic": "ringworm",
+          "similarity": 0.7123,
+          "chunk_id": "d7055f52-1e2a-4d1e-a642-50554c480c0d"
+        },
+        {
+          "title": "Ringworm Basics",
+          "topic": "ringworm",
+          "similarity": 0.7115,
+          "chunk_id": "4f8ddc8e-5d15-4e33-9604-6784ab542307"
+        },
+        {
+          "title": "Ringworm Basics",
+          "topic": "ringworm",
+          "similarity": 0.6976,
+          "chunk_id": "9a3d1614-2a18-468d-aaad-91f66a923e99"
+        },
+        {
+          "title": "Ringworm Basics",
+          "topic": "ringworm",
+          "similarity": 0.6854,
+          "chunk_id": "bb8c0d3e-7354-4f8f-824e-ac77579cffb4"
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "query": "How do people catch hepatitis A?",
+      "expected_topic": "hepatitis-a",
+      "topic_hit_at_5": true,
+      "latency_ms": 110.5,
+      "hits": [
+        {
+          "title": "Hepatitis A Basics",
+          "topic": "hepatitis-a",
+          "similarity": 0.6462,
+          "chunk_id": "f83dfe08-e579-449f-aa16-3600a28f2c0b"
+        },
+        {
+          "title": "Hepatitis A Basics",
+          "topic": "hepatitis-a",
+          "similarity": 0.6107,
+          "chunk_id": "8f6ced3b-b935-4c0c-9cff-5ff7358d542b"
+        },
+        {
+          "title": "Hepatitis B Basics",
+          "topic": "hepatitis-b",
+          "similarity": 0.5808,
+          "chunk_id": "4d32df67-6c41-4e2f-83b5-76b896cf1876"
+        },
+        {
+          "title": "Hepatitis B Basics",
+          "topic": "hepatitis-b",
+          "similarity": 0.5755,
+          "chunk_id": "15878157-7303-4e7e-8643-2a737de086c6"
+        },
+        {
+          "title": "Hepatitis B Basics",
+          "topic": "hepatitis-b",
+          "similarity": 0.5694,
+          "chunk_id": "fe5ac02f-61ab-4bf1-adb5-cc5012b9270b"
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "query": "How does tuberculosis spread through the air?",
+      "expected_topic": "tuberculosis",
+      "topic_hit_at_5": true,
+      "latency_ms": 103.59,
+      "hits": [
+        {
+          "title": "About Tuberculosis",
+          "topic": "tuberculosis",
+          "similarity": 0.7824,
+          "chunk_id": "e4a1a2d0-3892-417d-9649-177a53e30278"
+        },
+        {
+          "title": "About Tuberculosis",
+          "topic": "tuberculosis",
+          "similarity": 0.6278,
+          "chunk_id": "71600227-7297-4ce4-a9eb-98f055ee05aa"
+        },
+        {
+          "title": "About Common Cold",
+          "topic": "common-cold",
+          "similarity": 0.6152,
+          "chunk_id": "3217cdc1-c594-45ea-8a1c-04431bd0dd4d"
+        },
+        {
+          "title": "About Tuberculosis",
+          "topic": "tuberculosis",
+          "similarity": 0.5941,
+          "chunk_id": "dce4e39e-499c-4bcc-8778-52415842334b"
+        },
+        {
+          "title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+          "topic": null,
+          "similarity": 0.5924,
+          "chunk_id": "577a8bbc-a6a3-4507-8206-d67d5843ecf0"
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "query": "What can I do to feel better with a common cold?",
+      "expected_topic": "common-cold-care",
+      "topic_hit_at_5": true,
+      "latency_ms": 186.23,
+      "hits": [
+        {
+          "title": "Manage Common Cold",
+          "topic": "common-cold-care",
+          "similarity": 0.6314,
+          "chunk_id": "dbcc4bd6-1687-4601-83a6-d34f59d57140"
+        },
+        {
+          "title": "About Common Cold",
+          "topic": "common-cold",
+          "similarity": 0.6241,
+          "chunk_id": "7652a2d0-c9ce-4cca-a2d3-c9b0f1bdaad5"
+        },
+        {
+          "title": "About Common Cold",
+          "topic": "common-cold",
+          "similarity": 0.5837,
+          "chunk_id": "bfd990d7-e571-4cdf-85e3-1109e042eec3"
+        },
+        {
+          "title": "About Common Cold",
+          "topic": "common-cold",
+          "similarity": 0.5781,
+          "chunk_id": "9e2c833f-a964-4ff5-8035-f4ebdf0c452c"
+        },
+        {
+          "title": "About Common Cold",
+          "topic": "common-cold",
+          "similarity": 0.5292,
+          "chunk_id": "3a8fc911-d7d6-44c6-8b41-499be57fa358"
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "query": "Why is safe drinking water important?",
+      "expected_topic": "drinking-water",
+      "topic_hit_at_5": true,
+      "latency_ms": 226.34,
+      "hits": [
+        {
+          "title": "About Drinking Water",
+          "topic": "drinking-water",
+          "similarity": 0.6759,
+          "chunk_id": "42d8df99-c1dc-405d-85e8-819afec2f2a3"
+        },
+        {
+          "title": "About Drinking Water",
+          "topic": "drinking-water",
+          "similarity": 0.5893,
+          "chunk_id": "01c8e5cb-4dca-4683-af11-7797ac3bd95c"
+        },
+        {
+          "title": "About Drinking Water",
+          "topic": "drinking-water",
+          "similarity": 0.5824,
+          "chunk_id": "777d2dc6-0059-49e4-962a-7eca16fee85c"
+        },
+        {
+          "title": "About Drinking Water",
+          "topic": "drinking-water",
+          "similarity": 0.5603,
+          "chunk_id": "4e628e90-2d6b-4b96-8859-221bf7c196b3"
+        },
+        {
+          "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+          "topic": null,
+          "similarity": 0.5511,
+          "chunk_id": "90dff88e-71b6-48fd-90ff-57fe97fd079b"
+        }
+      ]
+    },
+    {
+      "language": "en",
+      "query": "How can I wash my hands properly?",
+      "expected_topic": "handwashing",
+      "topic_hit_at_5": true,
+      "latency_ms": 194.18,
+      "hits": [
+        {
+          "title": "Hepatitis A Basics",
+          "topic": "hepatitis-a",
+          "similarity": 0.6692,
+          "chunk_id": "0bd31a51-6902-490f-bf07-fd57a07df8bb"
+        },
+        {
+          "title": "About Handwashing",
+          "topic": "handwashing",
+          "similarity": 0.6526,
+          "chunk_id": "2271f3ce-56fc-49bb-9a45-4546a8fdb98e"
+        },
+        {
+          "title": "About Handwashing",
+          "topic": "handwashing",
+          "similarity": 0.6384,
+          "chunk_id": "f297b6c6-f6ea-407c-9cec-b075c5696d0a"
+        },
+        {
+          "title": "About Handwashing",
+          "topic": "handwashing",
+          "similarity": 0.6251,
+          "chunk_id": "cb09baa3-65b1-4e9d-8f4f-c6214efa964b"
+        },
+        {
+          "title": "About Handwashing",
+          "topic": "handwashing",
+          "similarity": 0.5912,
+          "chunk_id": "e13f2bf3-ffe5-4513-8d91-6058921d83b7"
+        }
+      ]
+    },
+    {
+      "language": "hi",
+      "query": "डेंगू कैसे फैलता है?",
+      "expected_topic": "dengue",
+      "topic_hit_at_5": true,
+      "latency_ms": 227.33,
+      "hits": [
+        {
+          "title": "About Dengue",
+          "topic": "dengue",
+          "similarity": 0.6795,
+          "chunk_id": "535b7e26-6106-40a7-b41e-62bddf232a0d"
+        },
+        {
+          "title": "About Dengue",
+          "topic": "dengue",
+          "similarity": 0.6184,
+          "chunk_id": "2adfa019-df4b-422d-be83-33f53a9837f5"
+        },
+        {
+          "title": "About Chikungunya Virus",
+          "topic": "chikungunya",
+          "similarity": 0.6073,
+          "chunk_id": "e2127493-ec92-43ad-a3a5-c21422e0d0f8"
+        },
+        {
+          "title": "About Chikungunya Virus",
+          "topic": "chikungunya",
+          "similarity": 0.5684,
+          "chunk_id": "11edd714-43fc-43ac-88ad-0e6962a6013b"
+        },
+        {
+          "title": "About Dengue",
+          "topic": "dengue",
+          "similarity": 0.5676,
+          "chunk_id": "cd319ef6-1ecc-443d-a81d-c135fbc46a02"
+        }
+      ]
+    },
+    {
+      "language": "hi",
+      "query": "तपेदिक हवा से कैसे फैलता है?",
+      "expected_topic": "tuberculosis",
+      "topic_hit_at_5": true,
+      "latency_ms": 254.36,
+      "hits": [
+        {
+          "title": "About Tuberculosis",
+          "topic": "tuberculosis",
+          "similarity": 0.6489,
+          "chunk_id": "e4a1a2d0-3892-417d-9649-177a53e30278"
+        },
+        {
+          "title": "About Common Cold",
+          "topic": "common-cold",
+          "similarity": 0.5861,
+          "chunk_id": "3217cdc1-c594-45ea-8a1c-04431bd0dd4d"
+        },
+        {
+          "title": "WHO Guidelines for Malaria",
+          "topic": null,
+          "similarity": 0.5413,
+          "chunk_id": "148c0fa7-e333-458f-afad-b3e8fbd8d8cd"
+        },
+        {
+          "title": "WHO Guidelines for Malaria",
+          "topic": null,
+          "similarity": 0.5403,
+          "chunk_id": "c61d60ed-5164-40d3-9155-52854114925e"
+        },
+        {
+          "title": "About Influenza",
+          "topic": "influenza",
+          "similarity": 0.5384,
+          "chunk_id": "88fa2f7c-d808-41c6-88fb-9a30c46c4c2e"
+        }
+      ]
+    },
+    {
+      "language": "te",
+      "query": "డెంగ్యూ ఎలా వ్యాపిస్తుంది?",
+      "expected_topic": "dengue",
+      "topic_hit_at_5": false,
+      "latency_ms": 234.76,
+      "hits": [
+        {
+          "title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+          "topic": null,
+          "similarity": 0.521,
+          "chunk_id": "67f56a49-2b21-46bb-bbeb-2a0643a565ff"
+        },
+        {
+          "title": "About Tuberculosis",
+          "topic": "tuberculosis",
+          "similarity": 0.5198,
+          "chunk_id": "55139b75-d5b4-449f-ad6a-75c166665600"
+        },
+        {
+          "title": "WHO Guidelines for Malaria",
+          "topic": null,
+          "similarity": 0.5122,
+          "chunk_id": "32bd632e-ae27-468e-a46a-adc9a6f4b13c"
+        },
+        {
+          "title": "Standard Treatment Workflows of India: Paediatric Tuberculosis",
+          "topic": null,
+          "similarity": 0.5092,
+          "chunk_id": "99193c93-e2a5-4e32-8dfa-172ef4555fa8"
+        },
+        {
+          "title": "About COVID-19",
+          "topic": "covid-19",
+          "similarity": 0.5044,
+          "chunk_id": "da3c1f07-318a-4e3a-bd6d-5acbea0953c8"
+        }
+      ]
+    },
+    {
+      "language": "te",
+      "query": "చేతులు సబ్బుతో ఎలా కడుక్కోవాలి?",
+      "expected_topic": "handwashing",
+      "topic_hit_at_5": true,
+      "latency_ms": 181.34,
+      "hits": [
+        {
+          "title": "About Handwashing",
+          "topic": "handwashing",
+          "similarity": 0.4225,
+          "chunk_id": "f297b6c6-f6ea-407c-9cec-b075c5696d0a"
+        }
+      ]
+    }
+  ]
+}

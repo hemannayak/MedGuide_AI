@@ -1,0 +1,394 @@
+{
+  "topic": "hepatitis-b",
+  "source_url": "https://www.cdc.gov/hepatitis-b/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "Hepatitis B Basics",
+  "sections": [
+    {
+      "heading": "About Hepatitis B",
+      "text": "Hepatitis B is a vaccine-preventable liver infection caused by HBV. HBV is transmitted when blood, semen, or another body fluid from a person infected with the virus enters the body of someone who is uninfected."
+    },
+    {
+      "heading": "About Hepatitis B",
+      "text": "Hepatitis B can range from a mild, short-term, acute illness lasting a few weeks to a serious, long-term, chronic infection."
+    },
+    {
+      "heading": "Types",
+      "text": "The type of hepatitis B you have depends on how long you have had the virus in your body, the health of your liver, and other factors. A blood test will indicate which one you have."
+    },
+    {
+      "heading": "Acute hepatitis B",
+      "text": "Acute hepatitis B is a short-term illness that occurs within the first 6 months after exposure to HBV. Some people with acute hepatitis B have no symptoms or only a mild illness. For others, acute hepatitis B can cause a more severe illness that requires hospitalization."
+    },
+    {
+      "heading": "Fast facts about acute hepatitis B",
+      "text": "In 2023, 48% of all acute hepatitis B cases were people ages 40–59 years."
+    },
+    {
+      "heading": "Fast facts about acute hepatitis B",
+      "text": "The rate of newly reported acute hepatitis B cases remained relatively stable during 2023."
+    },
+    {
+      "heading": "Fast facts about acute hepatitis B",
+      "text": "Rates of acute hepatitis B were highest among non-Hispanic Black people."
+    },
+    {
+      "heading": "Fast facts about acute hepatitis B",
+      "text": "Rates of acute hepatitis B were highest in states in or near the Appalachian region."
+    },
+    {
+      "heading": "Chronic hepatitis B",
+      "text": "Acute hepatitis B can lead to a lifelong infection known as chronic hepatitis B. Left untreated, chronic hepatitis B can cause serious health problems, including liver damage, cirrhosis, liver cancer, and even death."
+    },
+    {
+      "heading": "Fast facts about chronic hepatitis B",
+      "text": "CDC estimates that about 640,000 adults in the US have chronic (long-term) hepatitis B."
+    },
+    {
+      "heading": "Fast facts about chronic hepatitis B",
+      "text": "In 2023, the highest rate of chronic hepatitis B was in non-Hispanic Asian/Pacific Islander (A/PI) people."
+    },
+    {
+      "heading": "Fast facts about chronic hepatitis B",
+      "text": "In 2023, the rate of newly reported chronic hepatitis B cases among non-Hispanic A/PI people was 9.9 times as high as the rate among non-Hispanic White people."
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Many people infected with hepatitis B virus won’t experience symptoms. If symptoms occur during acute infection, they often begin 90 days after exposure. Although the symptoms of acute HBV infection and chronic HBV infection may be similar, most people with chronic infection do not have symptoms until much later in life, often decades after exposure."
+    },
+    {
+      "heading": "Remember",
+      "text": "Symptoms of hepatitis B include:"
+    },
+    {
+      "heading": "Remember",
+      "text": "Dark urine or clay-colored stools"
+    },
+    {
+      "heading": "Remember",
+      "text": "Feeling tired"
+    },
+    {
+      "heading": "Remember",
+      "text": "Fever"
+    },
+    {
+      "heading": "Remember",
+      "text": "Joint pain"
+    },
+    {
+      "heading": "Remember",
+      "text": "Loss of appetite"
+    },
+    {
+      "heading": "Remember",
+      "text": "Nausea, stomach pain, throwing up"
+    },
+    {
+      "heading": "Remember",
+      "text": "Yellow skin or eyes (jaundice)"
+    },
+    {
+      "heading": "Remember",
+      "text": "Learn more about hepatitis B symptoms."
+    },
+    {
+      "heading": "How it spreads",
+      "text": "Hepatitis B is primarily spread when blood, semen, or certain other body fluids – even in microscopic amounts – from a person infected with HBV enter the body of someone who is not infected."
+    },
+    {
+      "heading": "How it spreads",
+      "text": "Although anyone can get hepatitis B, certain life circumstances, jobs, and behaviors can increase your risk."
+    },
+    {
+      "heading": "How it spreads",
+      "text": "Learn more about specific risk factors for hepatitis B."
+    },
+    {
+      "heading": "Prevention",
+      "text": "The best way to prevent hepatitis B is by getting vaccinated. You need to get all shots in the series to be fully protected."
+    },
+    {
+      "heading": "CDC recommends the following groups get vaccinated against hepatitis B:",
+      "text": "All infants."
+    },
+    {
+      "heading": "CDC recommends the following groups get vaccinated against hepatitis B:",
+      "text": "All children and adolescents younger than 19 who have not been vaccinated."
+    },
+    {
+      "heading": "CDC recommends the following groups get vaccinated against hepatitis B:",
+      "text": "Adults ages 19–59."
+    },
+    {
+      "heading": "CDC recommends the following groups get vaccinated against hepatitis B:",
+      "text": "Adults ages 60 and older at higher risk for hepatitis B."
+    },
+    {
+      "heading": "Screening, testing, and diagnosis",
+      "text": "CDC recommends all adults get screened for hepatitis B at least once in their lifetime through a blood test. There are also some people who should be tested more often, including:"
+    },
+    {
+      "heading": "Screening, testing, and diagnosis",
+      "text": "All pregnant women during each pregnancy."
+    },
+    {
+      "heading": "Screening, testing, and diagnosis",
+      "text": "Infants born to pregnant women with HBV infection."
+    },
+    {
+      "heading": "Screening, testing, and diagnosis",
+      "text": "People with ongoing risk for exposures."
+    },
+    {
+      "heading": "Screening, testing, and diagnosis",
+      "text": "Learn more about the types of tests used to diagnosis hepatitis B."
+    },
+    {
+      "heading": "Treatment and recovery",
+      "text": "If you are diagnosed with acute or chronic hepatitis B, find a doctor who specializes in infectious, digestive, or liver diseases. They will need to do regular tests to monitor how your liver is working."
+    },
+    {
+      "heading": "Treatment and recovery",
+      "text": "For people with acute hepatitis B and experiencing mild symptoms, health care providers usually recommend rest, adequate nutrition, and fluids. There are no medications for acute hepatitis B. There are some medications for chronic hepatitis B; they aren't a cure and are only helpful for some people with chronic hepatitis B."
+    },
+    {
+      "heading": "Treatment and recovery",
+      "text": "Learn more about treatment options for hepatitis B."
+    },
+    {
+      "heading": "Myths and misconceptions",
+      "text": "Hepatitis B is sometimes difficult to understand, especially how it spreads and how people recover. Here are a few misconceptions cleared up for you."
+    },
+    {
+      "heading": "\"If I don’t have symptoms, I’m not infected.\"",
+      "text": "Many people with hepatitis B do not have any symptoms."
+    },
+    {
+      "heading": "\"If I don’t have symptoms, I can’t spread the virus to others.\"",
+      "text": "You can still spread HBV to others even if you don’t have any symptoms."
+    },
+    {
+      "heading": "\"If I’ve been infected with HBV in the past, I can get it again.\"",
+      "text": "Most people infected with hepatitis B who do not clear the virus within 6 months are diagnosed with chronic hepatitis B and remain infected. They cannot be infected again."
+    },
+    {
+      "heading": "\"If I’ve been infected with HBV in the past, I can get it again.\"",
+      "text": "Some people — including people infected during childhood — can be infected for life if they never \"clear\" the virus from their bodies. These people are considered to have chronic hepatitis B and are at risk for severe liver disease."
+    },
+    {
+      "heading": "\"Hepatitis B can spread through saliva.\"",
+      "text": "Although HBV can be found in saliva, it is not spread through kissing or sharing utensils. It is also not spread through sneezing, coughing, hugging, breastfeeding, or food or water."
+    },
+    {
+      "heading": "What to expect long-term",
+      "text": "If you have chronic hepatitis B, it's important to find a doctor who understands the disease and can regularly monitor your liver. Chronic hepatitis B can cause serious health problems, so having someone in your corner is critical."
+    },
+    {
+      "heading": "What to expect long-term",
+      "text": "If you've recently been diagnosed with hepatitis B, be sure to:"
+    },
+    {
+      "heading": "What to expect long-term",
+      "text": "Get vaccinated against hepatitis A and tested for hepatitis C."
+    },
+    {
+      "heading": "What to expect long-term",
+      "text": "Consider testing for hepatitis D and human immunodeficiency virus (HIV)."
+    },
+    {
+      "heading": "What to expect long-term",
+      "text": "Limit alcohol consumption."
+    },
+    {
+      "heading": "What to expect long-term",
+      "text": "Follow a healthy diet and stay physically active."
+    },
+    {
+      "heading": "What to expect long-term",
+      "text": "Check with a doctor before taking any prescription pills, nutritional or herbal supplements, or over-the-counter medications, as these can potentially damage the liver."
+    },
+    {
+      "heading": "What CDC is doing",
+      "text": "To end the public health threat of viral hepatitis, CDC works with health care providers, health departments, and community-based organizations to improve access to viral hepatitis prevention, testing, treatment, and care services in the United States."
+    },
+    {
+      "heading": "What CDC is doing",
+      "text": "In 2022, CDC updated hepatitis B vaccination recommendations to encourage and promote universal hepatitis B vaccination in all adults ages 19–59 and adults over 60 with risk factors for hepatitis B."
+    },
+    {
+      "heading": "What CDC is doing",
+      "text": "In 2023, CDC updated hepatitis B screening and testing recommendations to encourage and promote universal hepatitis B screening and testing in all persons 18 and older at least once in their lifetime."
+    },
+    {
+      "heading": "Resources",
+      "text": "Hepatitis B Fact Sheet English Spanish"
+    },
+    {
+      "heading": "Resources",
+      "text": "Hepatitis B and Sexual Health English Spanish"
+    },
+    {
+      "heading": "Resources",
+      "text": "For more resources, visit hepatitis B patient resources."
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "cca2780bb49c6245b7103a094fd0251071d6e65614f3e00df818a3793e6f7b3f",
+  "resolved_url": "https://www.cdc.gov/hepatitis-b/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:16.030125+00:00",
+  "html_sha256": "b26f5e2e2dd18e0707590ea47f51a97c785c2c19e48d7142018a9b13bcd271b3",
+  "chunks": [
+    {
+      "content": "Hepatitis B is a vaccine-preventable liver infection caused by HBV. HBV is transmitted when blood, semen, or another body fluid from a person infected with the virus enters the body of someone who is uninfected. Hepatitis B can range from a mild, short-term, acute illness lasting a few weeks to a serious, long-term, chronic infection.",
+      "section_title": "About Hepatitis B",
+      "content_sha256": "dc958e6f67265e6ea464a424d1e197ad007af99dd942d745942acf8658dd04f4",
+      "chunk_index": 0
+    },
+    {
+      "content": "The type of hepatitis B you have depends on how long you have had the virus in your body, the health of your liver, and other factors. A blood test will indicate which one you have.",
+      "section_title": "Types",
+      "content_sha256": "657c89c04e9398d6603211160a6ffe807d9190eb1aa190469455ac8c934dc0c8",
+      "chunk_index": 1
+    },
+    {
+      "content": "Acute hepatitis B is a short-term illness that occurs within the first 6 months after exposure to HBV. Some people with acute hepatitis B have no symptoms or only a mild illness. For others, acute hepatitis B can cause a more severe illness that requires hospitalization.",
+      "section_title": "Acute hepatitis B",
+      "content_sha256": "a7f7a8b3899cc8ff7005a9a6c71daf9c3a9e1758b56b4e1010384b5503555d89",
+      "chunk_index": 2
+    },
+    {
+      "content": "In 2023, 48% of all acute hepatitis B cases were people ages 40–59 years. The rate of newly reported acute hepatitis B cases remained relatively stable during 2023. Rates of acute hepatitis B were highest among non-Hispanic Black people. Rates of acute hepatitis B were highest in states in or near the Appalachian region.",
+      "section_title": "Fast facts about acute hepatitis B",
+      "content_sha256": "17d90718ad87cd80bf82775040c580b8758ad367434c0a1ed528c3724afbf6a1",
+      "chunk_index": 3
+    },
+    {
+      "content": "Acute hepatitis B can lead to a lifelong infection known as chronic hepatitis B. Left untreated, chronic hepatitis B can cause serious health problems, including liver damage, cirrhosis, liver cancer, and even death.",
+      "section_title": "Chronic hepatitis B",
+      "content_sha256": "1a63f2b7b411d5558cffef2bd66491c5c497c880539f3fc695ab2187a8962cfb",
+      "chunk_index": 4
+    },
+    {
+      "content": "CDC estimates that about 640,000 adults in the US have chronic (long-term) hepatitis B. In 2023, the highest rate of chronic hepatitis B was in non-Hispanic Asian/Pacific Islander (A/PI) people. In 2023, the rate of newly reported chronic hepatitis B cases among non-Hispanic A/PI people was 9.9 times as high as the rate among non-Hispanic White people.",
+      "section_title": "Fast facts about chronic hepatitis B",
+      "content_sha256": "cc8d72dffcad84216709089d9b2fc6bee3cb5bfd53a1e086fced835839bb9c64",
+      "chunk_index": 5
+    },
+    {
+      "content": "Many people infected with hepatitis B virus won’t experience symptoms. If symptoms occur during acute infection, they often begin 90 days after exposure. Although the symptoms of acute HBV infection and chronic HBV infection may be similar, most people with chronic infection do not have symptoms until much later in life, often decades after exposure.",
+      "section_title": "Signs and symptoms",
+      "content_sha256": "33dbcb76de5e1598ba53e6eff55e372f0e53e1326b99397a62de981bbac3aeb6",
+      "chunk_index": 6
+    },
+    {
+      "content": "Symptoms of hepatitis B include: Dark urine or clay-colored stools Feeling tired Fever Joint pain Loss of appetite Nausea, stomach pain, throwing up Yellow skin or eyes (jaundice) Learn more about hepatitis B symptoms.",
+      "section_title": "Remember",
+      "content_sha256": "91649b0d68d7752f5f41bb57416ff893a75abb94d75f84e2509d5a64259150df",
+      "chunk_index": 7
+    },
+    {
+      "content": "Hepatitis B is primarily spread when blood, semen, or certain other body fluids – even in microscopic amounts – from a person infected with HBV enter the body of someone who is not infected. Although anyone can get hepatitis B, certain life circumstances, jobs, and behaviors can increase your risk. Learn more about specific risk factors for hepatitis B.",
+      "section_title": "How it spreads",
+      "content_sha256": "4208031276a5d803b156d0bcd75b0a3e203092e1945f14433aebe84dfc4c323d",
+      "chunk_index": 8
+    },
+    {
+      "content": "The best way to prevent hepatitis B is by getting vaccinated. You need to get all shots in the series to be fully protected.",
+      "section_title": "Prevention",
+      "content_sha256": "0016fb210fdac524385fc66475599203a096794927ef1e41f9ebacb912c39a58",
+      "chunk_index": 9
+    },
+    {
+      "content": "All infants. All children and adolescents younger than 19 who have not been vaccinated. Adults ages 19–59. Adults ages 60 and older at higher risk for hepatitis B.",
+      "section_title": "CDC recommends the following groups get vaccinated against hepatitis B:",
+      "content_sha256": "a0da9ff2b7b8a2d053b386409677f2acf12038cf57827cf14b9ce175a4b68358",
+      "chunk_index": 10
+    },
+    {
+      "content": "CDC recommends all adults get screened for hepatitis B at least once in their lifetime through a blood test. There are also some people who should be tested more often, including: All pregnant women during each pregnancy. Infants born to pregnant women with HBV infection. People with ongoing risk for exposures. Learn more about the types of tests used to diagnosis hepatitis B.",
+      "section_title": "Screening, testing, and diagnosis",
+      "content_sha256": "015a4239a4612e3b0fb9096df171e669f2ff2c9f981dcc64e216bbe7fd271b8a",
+      "chunk_index": 11
+    },
+    {
+      "content": "If you are diagnosed with acute or chronic hepatitis B, find a doctor who specializes in infectious, digestive, or liver diseases. They will need to do regular tests to monitor how your liver is working. For people with acute hepatitis B and experiencing mild symptoms, health care providers usually recommend rest, adequate nutrition, and fluids. There are no medications for acute hepatitis B. There are some medications for chronic hepatitis B; they aren't a cure and are only helpful for some",
+      "section_title": "Treatment and recovery",
+      "content_sha256": "e0f565d88459682a5e0db545ad4f21c99e7bb1a0cc05b39add8d7dc957c7712e",
+      "chunk_index": 12
+    },
+    {
+      "content": "people with chronic hepatitis B. Learn more about treatment options for hepatitis B.",
+      "section_title": "Treatment and recovery",
+      "content_sha256": "45320743e0ce30562c61f810c5a2af0890f2092482e365a5933b7c8508ead46d",
+      "chunk_index": 13
+    },
+    {
+      "content": "Hepatitis B is sometimes difficult to understand, especially how it spreads and how people recover. Here are a few misconceptions cleared up for you.",
+      "section_title": "Myths and misconceptions",
+      "content_sha256": "1540acbd222e9f41b89d30fc83acd0e46b63fa638d9c4dde056244f03b7cecb6",
+      "chunk_index": 14
+    },
+    {
+      "content": "Many people with hepatitis B do not have any symptoms.",
+      "section_title": "\"If I don’t have symptoms, I’m not infected.\"",
+      "content_sha256": "829c265278e8857086f77a261331c6475037f1850771673e79b62f4ae5c6eabe",
+      "chunk_index": 15
+    },
+    {
+      "content": "You can still spread HBV to others even if you don’t have any symptoms.",
+      "section_title": "\"If I don’t have symptoms, I can’t spread the virus to others.\"",
+      "content_sha256": "c319aa6e78ee4226e97dc0df2ec741e178f4822da9a6796b8d26386e70f6404a",
+      "chunk_index": 16
+    },
+    {
+      "content": "Most people infected with hepatitis B who do not clear the virus within 6 months are diagnosed with chronic hepatitis B and remain infected. They cannot be infected again. Some people — including people infected during childhood — can be infected for life if they never \"clear\" the virus from their bodies. These people are considered to have chronic hepatitis B and are at risk for severe liver disease.",
+      "section_title": "\"If I’ve been infected with HBV in the past, I can get it again.\"",
+      "content_sha256": "0f3b5e183def6019ab52ab0616230be37bba32f9200a8b961d63fcfd602e067d",
+      "chunk_index": 17
+    },
+    {
+      "content": "Although HBV can be found in saliva, it is not spread through kissing or sharing utensils. It is also not spread through sneezing, coughing, hugging, breastfeeding, or food or water.",
+      "section_title": "\"Hepatitis B can spread through saliva.\"",
+      "content_sha256": "744763b5e2803ec196b954c75adb7cf7a69778e040c472c82480a1f813d810c5",
+      "chunk_index": 18
+    },
+    {
+      "content": "If you have chronic hepatitis B, it's important to find a doctor who understands the disease and can regularly monitor your liver. Chronic hepatitis B can cause serious health problems, so having someone in your corner is critical. If you've recently been diagnosed with hepatitis B, be sure to: Get vaccinated against hepatitis A and tested for hepatitis C. Consider testing for hepatitis D and human immunodeficiency virus (HIV). Limit alcohol consumption. Follow a healthy diet and stay physically",
+      "section_title": "What to expect long-term",
+      "content_sha256": "edac34a8ebc963fd720167fca63c1309b7303fdcf1e62f14692e9435f58e136e",
+      "chunk_index": 19
+    },
+    {
+      "content": "active. Check with a doctor before taking any prescription pills, nutritional or herbal supplements, or over-the-counter medications, as these can potentially damage the liver.",
+      "section_title": "What to expect long-term",
+      "content_sha256": "42b3331bfa14799c0b20d5a27af211270533bc3641b6d499a4ca0b596b812ddc",
+      "chunk_index": 20
+    },
+    {
+      "content": "To end the public health threat of viral hepatitis, CDC works with health care providers, health departments, and community-based organizations to improve access to viral hepatitis prevention, testing, treatment, and care services in the United States. In 2022, CDC updated hepatitis B vaccination recommendations to encourage and promote universal hepatitis B vaccination in all adults ages 19–59 and adults over 60 with risk factors for hepatitis B. In 2023, CDC updated hepatitis B screening and",
+      "section_title": "What CDC is doing",
+      "content_sha256": "bf393c920952f8981b1d65af94adaf03bbea37eb951497fe97b9f439fc07c4da",
+      "chunk_index": 21
+    },
+    {
+      "content": "testing recommendations to encourage and promote universal hepatitis B screening and testing in all persons 18 and older at least once in their lifetime.",
+      "section_title": "What CDC is doing",
+      "content_sha256": "0209f393149de6d80be22706650ea2502efcab546aaa35f69ccf0e63e6b744c8",
+      "chunk_index": 22
+    },
+    {
+      "content": "Hepatitis B Fact Sheet English Spanish Hepatitis B and Sexual Health English Spanish For more resources, visit hepatitis B patient resources.",
+      "section_title": "Resources",
+      "content_sha256": "4a8410ffaee5d084a38111f4b378bbb5c2712ada65cd8189f4bb0f79d37832a2",
+      "chunk_index": 23
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "36a8ee97-e987-50f9-af55-4f1db0c21fde"
+}

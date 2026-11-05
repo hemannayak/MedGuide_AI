@@ -1,0 +1,206 @@
+{
+  "topic": "heat-illness",
+  "source_url": "https://www.cdc.gov/heat-health/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "About Heat and Your Health",
+  "sections": [
+    {
+      "heading": "Stay Cool",
+      "text": "If you are outside, especially for a long time, and the HeatRisk is red or above, you can:"
+    },
+    {
+      "heading": "Stay Cool",
+      "text": "Stay in the shade as much as possible."
+    },
+    {
+      "heading": "Stay Cool",
+      "text": "Take breaks when you can."
+    },
+    {
+      "heading": "Stay Cool",
+      "text": "Do outdoor activities during the coolest parts of the day or evening, if possible."
+    },
+    {
+      "heading": "Stay Cool",
+      "text": "When you are indoors, you can:"
+    },
+    {
+      "heading": "Stay Cool",
+      "text": "Use fans, but only if indoor temperatures are less than 90°F. In temperatures above 90°F, a fan can increase body temperature."
+    },
+    {
+      "heading": "Stay Cool",
+      "text": "Use air conditioning or find a location that has one by dialing 2-1-1, visiting the National Center for Healthy Housing's Cooling Centers by State page, or by contacting your local health department or emergency management agency."
+    },
+    {
+      "heading": "Stay Cool",
+      "text": "Check on your family, friends, and neighbors, especially if they have chronic medical problems or live alone. Check on pets."
+    },
+    {
+      "heading": "Stay Hydrated",
+      "text": "Drink plenty of fluids"
+    },
+    {
+      "heading": "Stay Hydrated",
+      "text": "Carry a water bottle. Drink and refill it throughout the day."
+    },
+    {
+      "heading": "Stay Hydrated",
+      "text": "Consider limiting beverages high in sugars and sodium, caffeine, and alcohol."
+    },
+    {
+      "heading": "Stay Hydrated",
+      "text": "Check your urine color. When it's light yellow or clear, it usually means you are drinking enough water."
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "If your body gets too hot, you can get sick. Know the symptoms of your body overheating and know when to seek medical care."
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Symptoms can include:"
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Muscle cramping"
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Unusually heavy sweating"
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Shortness of breath"
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Dizziness"
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Headaches"
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Weakness"
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Nausea"
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Check your local HeatRisk and Air Quality"
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Enter your zip code on the CDC HeatRisk Dashboard for the heat risk forecast in your area and take recommended actions to protect your health."
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Plus, check air quality levels – so you can plan your week with your health in mind."
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Have a plan for your medicine"
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Many medicines can make you dehydrated or overheated on hot days. Also, some medicines need to be kept out of hot places."
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Don't stop or change your medicines until you talk to your doctor."
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Heat can cause power outages. Have a plan for what to do with refrigerated medications and electronic medical devices."
+    },
+    {
+      "heading": "Know the Symptoms",
+      "text": "Store your medicines properly- some may need to be kept out of hot places."
+    },
+    {
+      "heading": "For Those at High Risk",
+      "text": "Although anyone at any time can suffer from heat-related illness, some people are at greater risk than others. Check on your family, friends, and neighbors, especially if they live alone or have chronic medical problems."
+    },
+    {
+      "heading": "For Those at High Risk",
+      "text": "Some groups may have to take additional action on hot days, including:"
+    },
+    {
+      "heading": "For Those at High Risk",
+      "text": "People, especially children, with asthma."
+    },
+    {
+      "heading": "For Those at High Risk",
+      "text": "People with heart disease."
+    },
+    {
+      "heading": "For Those at High Risk",
+      "text": "Pregnant women."
+    },
+    {
+      "heading": "For Those at High Risk",
+      "text": "People 65 years of age or older."
+    },
+    {
+      "heading": "For Those at High Risk",
+      "text": "People who are working or exercising outside in the heat."
+    },
+    {
+      "heading": "For Those at High Risk",
+      "text": "Infants and young children."
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "c5d906dbbd39fe4c49ba2d211da2547899b5f3c6999eb6ab7839330b5c9b3a64",
+  "resolved_url": "https://www.cdc.gov/heat-health/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:14.369939+00:00",
+  "html_sha256": "b8bef82be8b66b95e776233321f202ac1c095fb35410daccc2ad7624f2b1cf67",
+  "chunks": [
+    {
+      "content": "If you are outside, especially for a long time, and the HeatRisk is red or above, you can: Stay in the shade as much as possible. Take breaks when you can. Do outdoor activities during the coolest parts of the day or evening, if possible. When you are indoors, you can: Use fans, but only if indoor temperatures are less than 90°F. In temperatures above 90°F, a fan can increase body temperature. Use air conditioning or find a location that has one by dialing 2-1-1, visiting the National Center for",
+      "section_title": "Stay Cool",
+      "content_sha256": "0d6c48e96ec8b9a88b2c02b2bffb896318ddb188eb17705af21660b1a87f995e",
+      "chunk_index": 0
+    },
+    {
+      "content": "Healthy Housing's Cooling Centers by State page, or by contacting your local health department or emergency management agency. Check on your family, friends, and neighbors, especially if they have chronic medical problems or live alone. Check on pets.",
+      "section_title": "Stay Cool",
+      "content_sha256": "d13bbd9e7644473c3bc8b0795097c07bab606eb409f90098e1e36c9536be24f0",
+      "chunk_index": 1
+    },
+    {
+      "content": "Drink plenty of fluids Carry a water bottle. Drink and refill it throughout the day. Consider limiting beverages high in sugars and sodium, caffeine, and alcohol. Check your urine color. When it's light yellow or clear, it usually means you are drinking enough water.",
+      "section_title": "Stay Hydrated",
+      "content_sha256": "391b85698861814fb05ffb6b5112e72bd8b5d1da6680f9fc3afa80e317ff3748",
+      "chunk_index": 2
+    },
+    {
+      "content": "If your body gets too hot, you can get sick. Know the symptoms of your body overheating and know when to seek medical care. Symptoms can include: Muscle cramping Unusually heavy sweating Shortness of breath Dizziness Headaches Weakness Nausea Check your local HeatRisk and Air Quality Enter your zip code on the CDC HeatRisk Dashboard for the heat risk forecast in your area and take recommended actions to protect your health. Plus, check air quality levels – so you can plan your week with your",
+      "section_title": "Know the Symptoms",
+      "content_sha256": "985466fc08bb355e42f5d644d6bfb2b201721b28d45744e39d1bd1180fd4be3b",
+      "chunk_index": 3
+    },
+    {
+      "content": "health in mind. Have a plan for your medicine Many medicines can make you dehydrated or overheated on hot days. Also, some medicines need to be kept out of hot places. Don't stop or change your medicines until you talk to your doctor. Heat can cause power outages. Have a plan for what to do with refrigerated medications and electronic medical devices. Store your medicines properly- some may need to be kept out of hot places.",
+      "section_title": "Know the Symptoms",
+      "content_sha256": "6ac56757d790be144799fa17d5d029d1a02a8f58612eb602d124dd7d9ea4d6f1",
+      "chunk_index": 4
+    },
+    {
+      "content": "Although anyone at any time can suffer from heat-related illness, some people are at greater risk than others. Check on your family, friends, and neighbors, especially if they live alone or have chronic medical problems. Some groups may have to take additional action on hot days, including: People, especially children, with asthma. People with heart disease. Pregnant women. People 65 years of age or older. People who are working or exercising outside in the heat. Infants and young children.",
+      "section_title": "For Those at High Risk",
+      "content_sha256": "de4300921ce41d55cf69acc427bf91b1205883ab4095194e4769aa403d8da2d7",
+      "chunk_index": 5
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "1557aaa7-7c0a-50f6-aa12-cd047e6d0a35"
+}
