@@ -205,7 +205,7 @@ class SarvamTranslationGateway(TranslationGateway):
         base_url: str = SARVAM_TRANSLATE_URL,
         timeout_seconds: float = SARVAM_TIMEOUT_SECONDS,
     ):
-        self.api_key = api_key or os.getenv("SARVAM_API_KEY", "")
+        self.api_key = os.getenv("SARVAM_API_KEY", "") if api_key is None else api_key
         self.base_url = base_url
         self.timeout_seconds = timeout_seconds
 
@@ -326,11 +326,13 @@ def create_translation_gateway(
         elif os.getenv("SARVAM_API_KEY"):
             provider = "sarvam"
         else:
-            provider = "mock"
+            provider = "disabled"
 
     provider = provider.lower().strip()
 
     if provider == "mock":
+        if settings.APP_ENV != "test":
+            return DisabledTranslationGateway()
         return MockTranslationGateway()
     elif provider == "sarvam":
         return SarvamTranslationGateway(api_key=api_key)

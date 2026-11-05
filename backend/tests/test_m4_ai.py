@@ -128,8 +128,8 @@ def test_official_pdf_ingestion_and_pgvector_persistence(db_session: Session):
     assert chunks_count >= 500, f"Expected >= 500 chunks, got {chunks_count}"
 
 
-def test_corpus_completeness_four_documents(db_session: Session):
-    """Verify the final corpus contains exactly 4 official approved documents with full provenance metadata."""
+def test_original_corpus_preserved_after_expansion(db_session: Session):
+    """Verify the original four guidelines and provenance survive additive corpus expansion."""
     db_session.rollback()
 
     approved_docs = (
@@ -137,11 +137,6 @@ def test_corpus_completeness_four_documents(db_session: Session):
         .filter(MedicalDocument.review_status == "APPROVED")
         .all()
     )
-    assert len(approved_docs) == 4, (
-        f"Expected exactly 4 APPROVED MedicalDocuments, got {len(approved_docs)}. "
-        f"Titles: {[d.title for d in approved_docs]}"
-    )
-
     expected_titles = {
         "Guideline for the Pharmacological Treatment of Hypertension in Adults",
         "Standard Treatment Workflows of India: Paediatric Tuberculosis",
@@ -149,11 +144,13 @@ def test_corpus_completeness_four_documents(db_session: Session):
         "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
     }
     actual_titles = {d.title for d in approved_docs}
-    assert actual_titles == expected_titles, (
+    assert expected_titles <= actual_titles, (
         f"Title mismatch.\nExpected: {expected_titles}\nActual: {actual_titles}"
     )
 
     for doc in approved_docs:
+        if doc.title not in expected_titles:
+            continue
         # Fixtures supply years only and no edition/version. Require the original
         # metadata on chunks rather than inventing a day or a document version.
         assert doc.chunks and all(

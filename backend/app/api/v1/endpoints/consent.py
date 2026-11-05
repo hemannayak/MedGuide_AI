@@ -5,11 +5,29 @@ from sqlalchemy.orm import Session
 from app.api.deps import get_current_user, get_db
 from app.models.users import User
 from app.schemas.auth import StandardResponse
-from app.schemas.consent import ConsentGrantRequest, ConsentResponse, ConsentWithdrawRequest
+from app.schemas.consent import ConsentGrantRequest, ConsentResponse, ConsentWithdrawRequest, SpokenGuidanceChoice
+from app.models.consent import Consent
 from app.services.consent_service import get_patient_consents, grant_consent, withdraw_consent
 from app.services.patient_service import get_patient_profile_by_user
 
 router = APIRouter()
+
+
+@router.put("/spoken-guidance", response_model=StandardResponse)
+def spoken_guidance_choice(req: SpokenGuidanceChoice, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> Any:
+    """Account-scoped explicit choice; declining never creates an affirmative grant."""
+    profile = get_patient_profile_by_user(db, current_user)
+    from datetime import datetime, timezone
+    from app.services.audit_service import log_audit_event
+    record = Consent(patient_id=profile.id, consent_type="SPOKEN_GUIDANCE", version="1.0",
+                     status="GRANTED" if req.enabled else "DECLINED",
+                     granted_at=datetime.now(timezone.utc) if req.enabled else None)
+    db.add(record)
+    db.flush()
+    log_audit_event(db, "SPOKEN_GUIDANCE_CHOICE", "Consent", current_user.id, record.id, {"enabled": req.enabled})
+    db.commit()
+    db.refresh(record)
+    return StandardResponse(success=True, data=ConsentResponse.model_validate(record))
 
 
 @router.get(

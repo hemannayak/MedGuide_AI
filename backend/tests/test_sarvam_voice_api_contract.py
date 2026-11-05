@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 from fastapi import FastAPI, HTTPException
-from app.api.deps import require_speech_consent
+from app.api.deps import require_speech_consent, require_spoken_guidance_consent
 from app.api.v1.endpoints.speech import router
 from app.services.speech_service import SarvamSpeechGateway
 
@@ -17,6 +17,7 @@ def route_client():
     isolated_app.include_router(router, prefix='/api/v1/speech')
     # Test-only dependency replacement in a separate app; live gates unchanged.
     isolated_app.dependency_overrides[require_speech_consent] = lambda: None
+    isolated_app.dependency_overrides[require_spoken_guidance_consent] = lambda: None
     class RouteClient:
         def post(self, path, **kwargs):
             async def send():

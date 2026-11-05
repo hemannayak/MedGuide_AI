@@ -1,10 +1,11 @@
 from typing import Optional
+import os
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
 
 from app.schemas.speech import STTResponse, TTSRequest, TTSResponse
 from app.services.speech_service import NoSpeechRecognizedError, SpeechError, create_speech_gateway
 
-from app.api.deps import require_speech_consent
+from app.api.deps import require_speech_consent, require_spoken_guidance_consent
 from starlette.concurrency import run_in_threadpool
 
 router = APIRouter(dependencies=[Depends(require_speech_consent)])
@@ -45,7 +46,7 @@ async def speech_to_text(
         )
 
     try:
-        gateway = create_speech_gateway()
+        gateway = create_speech_gateway(provider=os.getenv('STT_PROVIDER') or None)
         response = await run_in_threadpool(gateway.stt,
             audio_bytes=content,
             filename=file.filename or "audio.wav",
@@ -68,6 +69,7 @@ async def speech_to_text(
 
 @router.post(
     "/tts",
+    dependencies=[Depends(require_spoken_guidance_consent)],
     response_model=TTSResponse,
     summary="Text-to-Speech Synthesis",
     description="Synthesize grounded medical guidance text into natural Indic spoken audio via Sarvam Bulbul or mock.",

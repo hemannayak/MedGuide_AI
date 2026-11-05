@@ -343,9 +343,8 @@ def test_sarvam_unavailable_graceful_fallback():
             translation_gateway=failing_gw,
         )
 
-        # Must not raise exception; must gracefully return local direct retrieval
-        assert len(chunks) == 1
-        assert chunks[0]["title"] == "Local Direct Chunk"
+        # Weak unrelated matches must not be used as medical evidence.
+        assert chunks == []
 
 
 # ---------------------------------------------------------------------------
@@ -366,9 +365,8 @@ def test_offline_disabled_translation_behavior():
             translation_gateway=disabled_gw,
         )
 
-        # Offline execution safely returns local direct results
-        assert len(chunks) == 1
-        assert chunks[0]["title"] == "Offline Local Chunk"
+        # Translation unavailability must not promote weak evidence.
+        assert chunks == []
 
 
 # ---------------------------------------------------------------------------

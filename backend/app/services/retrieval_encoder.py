@@ -2,7 +2,8 @@
 from pathlib import Path
 import numpy as np
 
-MODELS = {'intfloat/multilingual-e5-small': 384, 'BAAI/bge-m3': 1024}
+MODELS = {'intfloat/multilingual-e5-small': 384, 'BAAI/bge-m3': 1024,
+          'NeuML/pubmedbert-base-embeddings': 768}
 
 
 class CandidateEncoder:

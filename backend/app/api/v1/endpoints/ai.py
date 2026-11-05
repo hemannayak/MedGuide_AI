@@ -1,3 +1,4 @@
+from uuid import UUID
 from typing import Any
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
@@ -64,7 +65,7 @@ def list_conversations(
     summary="Get single conversation history",
 )
 def get_conversation(
-    conversation_id: str,
+    conversation_id: UUID,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> Any:

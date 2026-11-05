@@ -13,6 +13,9 @@ import logging
 import numpy as np
 
 logger = logging.getLogger(__name__)
+EMBEDDING_MODEL = 'sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2'
+# Pin the already verified local snapshot; never silently mix newer weights into the live index.
+EMBEDDING_REVISION = 'e8f8c211226b894fcb81acc59f3b34ba3efd5f42'
 
 # Multilingual embedding model singletons
 _embedding_model = None
@@ -32,16 +35,18 @@ def _load_onnx_embedding_engine():
         from huggingface_hub import hf_hub_download
 
         onnx_path = hf_hub_download(
-            repo_id="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+            repo_id=EMBEDDING_MODEL, revision=EMBEDDING_REVISION,
             filename="onnx/model.onnx",
         )
         tok_path = hf_hub_download(
-            repo_id="sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+            repo_id=EMBEDDING_MODEL, revision=EMBEDDING_REVISION,
             filename="tokenizer.json",
         )
 
         _onnx_session = ort.InferenceSession(onnx_path, providers=["CPUExecutionProvider"])
         _onnx_tokenizer = Tokenizer.from_file(tok_path)
+        # Verified pinned config.json maximum position count, not a new encoder.
+        _onnx_tokenizer.enable_truncation(max_length=512)
         logger.info("[KnowledgeService] Loaded ONNX embedding engine (MiniLM-L12-v2)")
         return _onnx_session, _onnx_tokenizer
     except Exception as e:
@@ -59,7 +64,7 @@ def get_embedding_model():
         try:
             from sentence_transformers import SentenceTransformer
             _embedding_model = SentenceTransformer(
-                "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+                EMBEDDING_MODEL, revision=EMBEDDING_REVISION,
                 cache_folder=str(Path(__file__).resolve().parents[2] / ".model-cache"),
             )
         except Exception:
@@ -68,12 +73,23 @@ def get_embedding_model():
     return _embedding_model
 
 
+def validate_embedding(vector) -> List[float]:
+    values = np.asarray(vector, dtype=np.float32)
+    if values.shape != (384,):
+        raise EmbeddingUnavailableError("Semantic embedding dimension mismatch")
+    if not np.all(np.isfinite(values)) or not np.any(values):
+        raise EmbeddingUnavailableError("Invalid semantic embedding")
+    return [float(x) for x in values]
+
+
 def generate_embedding(text: str) -> List[float]:
     """
     Generate 384-dimensional vector embedding for input text.
     Primary backend: ONNX Runtime (fast, portable, PyTorch-independent).
     Secondary backend: SentenceTransformer.
     """
+    if not isinstance(text, str) or not text.strip():
+        raise EmbeddingUnavailableError("Embedding requires nonempty text")
     # Primary: ONNX engine
     session, tokenizer = _load_onnx_embedding_engine()
     if session is not None and tokenizer is not None:
@@ -94,7 +110,7 @@ def generate_embedding(text: str) -> List[float]:
         sum_embeddings = np.sum(token_embeddings * input_mask_expanded, axis=1)
         sum_mask = np.clip(np.sum(input_mask_expanded, axis=1), a_min=1e-9, a_max=None)
         pooled = sum_embeddings / sum_mask
-        return [float(x) for x in pooled[0]]
+        return validate_embedding(pooled[0])
 
     # Secondary: SentenceTransformer
     model = get_embedding_model()
@@ -104,9 +120,7 @@ def generate_embedding(text: str) -> List[float]:
         except Exception:
             logger.error("Embedding encoding failed")
             raise EmbeddingUnavailableError("Semantic embedding service unavailable") from None
-        if len(embedding) != 384:
-            raise EmbeddingUnavailableError("Semantic embedding dimension mismatch")
-        return [float(x) for x in embedding]
+        return validate_embedding(embedding)
     raise EmbeddingUnavailableError("Semantic embedding service unavailable")
 
 
@@ -147,6 +161,8 @@ def chunk_extracted_pages(
     overlap: int = 50,
 ) -> List[Dict[str, Any]]:
     """Section-aware semantic chunking with exact provenance preservation."""
+    if chunk_size <= 0 or overlap < 0 or overlap >= chunk_size:
+        raise ValueError("Chunk overlap must be nonnegative and smaller than chunk size")
     chunks = []
     chunk_index = 0
 

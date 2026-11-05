@@ -144,6 +144,14 @@ LANGUAGE_CODE_MAP = {
 }
 
 
+def resolve_speech_locale(language: str) -> str:
+    value = (language or "").lower()
+    for code, locale in LANGUAGE_CODE_MAP.items():
+        if value in {code, locale.lower()}:
+            return locale
+    raise SpeechError("Choose English, Hindi or Telugu.")
+
+
 DEFAULT_SPEAKERS = {
     "te": "shubh",
     "hi": "shubh",
@@ -204,9 +212,9 @@ class SarvamSpeechGateway(SpeechGateway):
             raise SpeechError("httpx is required for SarvamSpeechGateway.")
 
         # Resolve Indic language tag
-        lang_tag = LANGUAGE_CODE_MAP.get(language_code.lower() if language_code else "", "unknown")
-        if language_code and "-IN" in language_code:
-            lang_tag = language_code
+        lang_tag = "unknown"
+        if language_code:
+            lang_tag = resolve_speech_locale(language_code)
 
         headers = {
             "api-subscription-key": self.api_key,
@@ -249,13 +257,13 @@ class SarvamSpeechGateway(SpeechGateway):
             raise
         except httpx.TimeoutException as e:
             logger.error(f"[SarvamSpeechGateway] STT timed out after {self.timeout_seconds}s")
-            raise SpeechError(f"Sarvam STT timed out: {e}") from e
+            raise SpeechError("Sarvam STT timed out") from None
         except httpx.HTTPError as e:
-            logger.error(f"[SarvamSpeechGateway] STT HTTP error: {e}")
-            raise SpeechError(f"Sarvam STT HTTP error: {e}") from e
+            logger.error("Sarvam STT HTTP request failed")
+            raise SpeechError("Sarvam STT request failed") from None
         except Exception as e:
-            logger.error(f"[SarvamSpeechGateway] STT failed: {e}")
-            raise SpeechError(f"Sarvam STT failed: {e}") from e
+            logger.error("Sarvam STT response processing failed")
+            raise SpeechError("Sarvam STT response processing failed") from None
 
     def tts(
         self,
@@ -274,9 +282,9 @@ class SarvamSpeechGateway(SpeechGateway):
         except ImportError:
             raise SpeechError("httpx is required for SarvamSpeechGateway.")
 
-        lang_code = language.lower() if language else "te"
-        lang_tag = LANGUAGE_CODE_MAP.get(lang_code, "te-IN")
-        resolved_speaker = speaker or DEFAULT_SPEAKERS.get(lang_code, "kavitha")
+        lang_tag = resolve_speech_locale(language)
+        lang_code = lang_tag.split("-")[0]
+        resolved_speaker = speaker or DEFAULT_SPEAKERS[lang_code]
 
         headers = {
             "api-subscription-key": self.api_key,
@@ -313,13 +321,13 @@ class SarvamSpeechGateway(SpeechGateway):
                 )
         except httpx.TimeoutException as e:
             logger.error(f"[SarvamSpeechGateway] TTS timed out after {self.timeout_seconds}s")
-            raise SpeechError(f"Sarvam TTS timed out: {e}") from e
+            raise SpeechError("Sarvam TTS timed out") from None
         except httpx.HTTPError as e:
-            logger.error(f"[SarvamSpeechGateway] TTS HTTP error: {e}")
-            raise SpeechError(f"Sarvam TTS HTTP error: {e}") from e
+            logger.error("Sarvam TTS HTTP request failed")
+            raise SpeechError("Sarvam TTS request failed") from None
         except Exception as e:
-            logger.error(f"[SarvamSpeechGateway] TTS failed: {e}")
-            raise SpeechError(f"Sarvam TTS failed: {e}") from e
+            logger.error("Sarvam TTS response processing failed")
+            raise SpeechError("Sarvam TTS response processing failed") from None
 
 
 # ---------------------------------------------------------------------------
@@ -355,7 +363,7 @@ def create_speech_gateway(
     """
     Create SpeechGateway based on environment or explicit parameter.
     Configuration:
-      SPEECH_PROVIDER: sarvam | mock | disabled (default: sarvam if SARVAM_API_KEY else mock)
+      SPEECH_PROVIDER: sarvam | mock | disabled (default: sarvam if SARVAM_API_KEY else disabled)
     """
     env_provider = os.getenv("SPEECH_PROVIDER")
     if provider is None:
@@ -374,6 +382,9 @@ def create_speech_gateway(
         return MockSpeechGateway()
     elif provider == "sarvam":
         return SarvamSpeechGateway(api_key=api_key)
+    elif provider == "whisper_cpp":
+        from app.services.local_speech import WhisperCppSpeechGateway
+        return WhisperCppSpeechGateway()
     elif provider in {"disabled", "none", "offline"}:
         return DisabledSpeechGateway()
     else:

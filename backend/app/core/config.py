@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Optional
 from dotenv import load_dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import model_validator
+from pydantic import Field, model_validator
 from sqlalchemy.engine import URL
 
 # Ensure .env is explicitly loaded into os.environ
@@ -20,8 +20,24 @@ class Settings(BaseSettings):
     APP_NAME: str = "MedGuide AI Backend"
     APP_ENV: str = "development"
     DEBUG: bool = True
+    # Opt-in until live streaming, clinical safety and deployment acceptance gates pass.
+    VOICE_STREAMING_ENABLED: bool = False
+    VOICE_MAX_SESSIONS: int = Field(default=4, ge=1, le=32)
+    # Server-only mail configuration. Never expose the credential to clients.
+    SMTP_HOST: str = 'smtp.gmail.com'
+    SMTP_PORT: int = 587
+    SMTP_USERNAME: str = 'viala.health@gmail.com'
+    SMTP_SENDER: str = 'viala.health@gmail.com'
+    SMTP_PASSWORD: str = Field(default='', repr=False)
     API_V1_PREFIX: str = "/api/v1"
-    CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
+    CORS_ORIGINS: list[str] = [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:8081",
+        "http://127.0.0.1:8081",
+        "http://192.168.1.15:8081",
+        "http://192.168.1.15:3000",
+    ]
 
     # Security Configuration
     SECRET_KEY: str = "change-this-in-production-super-secret-key-32bytes"
