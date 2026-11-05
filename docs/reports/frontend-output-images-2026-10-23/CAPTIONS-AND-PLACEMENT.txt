@@ -1,0 +1,44 @@
+MEDGUIDE AI — LAPTOP B FRONTEND REPORT SCREENSHOTS
+Captured 23 October 2026 from the existing Next.js frontend.
+
+IMPORTANT: All response/result screenshots use the existing MOCK adapter with synthetic sample scenarios. They demonstrate frontend rendering, not a real clinical assessment, live AI inference, measured latency, validated triage, or database execution. Retain this qualification in the report.
+
+Figure 7.1 — Section 7.8
+Next.js Chat Interface Showing Health-Question Intake and Suggested Prompts (Frontend Demonstration).
+File: Figure-7.1-chat-default-frontend-MOCK.png
+The existing app has suggested question buttons; it does not show the pasted guide's exact duration/severity chips on its chat screen. The supplemental symptom intake screen shows the actual duration and severity controls.
+
+Figure 7.2 — Sections 7.8 / 7.9
+Frontend Rendering of a Simulated Emergency Escalation Response (Mock Data).
+File: Figure-7.2-emergency-chat-frontend-MOCK.png
+Input: Sample scenario: severe crushing chest pain radiating to left arm and jaw.
+This shows the red chat response and existing 108/112 links. It does not establish that backend AI was bypassed or prove timing performance. Supplement-red-emergency-risk-badge-frontend-MOCK.png additionally shows the EMERGENCY badge on the symptom checker.
+
+Figure 7.3 — Sections 7.8 / 7.9
+Frontend Symptom Checker Displaying an Amber URGENT Result (Mock Data).
+File: Figure-7.3-amber-urgent-symptoms-frontend-MOCK.png
+Input: Sample scenario: high fever and persistent painful cough; duration: 4 days; severity: Quite a bit.
+The existing mock adapter uses fever plus duration > 3 days to produce URGENT. Four days were used rather than the pasted guide's three days. This is a demonstration of existing mock logic, not a clinical rule endorsement. Amber/green risk badges exist on the symptom checker, not the chat page.
+
+Figure 7.4 — Sections 7.8 / 7.9
+Frontend Symptom Checker Displaying a Green ROUTINE Result (Mock Data).
+File: Figure-7.4-green-routine-symptoms-frontend-MOCK.png
+Input: Sample scenario: mild runny nose and sneezing since yesterday, no fever; duration: 1 day; severity: A little.
+This is a default mock response, not an evaluated diagnosis or proof that home care is safe.
+
+Figure 7.5 — Section 7.10
+Expanded Source-Attribution Interface Showing Mock Reference Metadata (Frontend Demonstration).
+File: Figure-7.5-inline-evidence-frontend-MOCK-unverified-references.png
+The actual component expands source cards inline; it is not a modal. The titles, publisher labels, pages and URLs returned by the mock adapter are placeholders and have not been verified against actual publications. Do not caption this image as verified literature or real RAG evidence. Capture real retrieved source metadata from Laptop A when available if your report requires verified citations.
+
+SUPPLEMENTARY IMAGES
+Supplement-symptom-intake-frontend-MOCK.png — Actual symptom input controls: description, duration and severity.
+Supplement-red-emergency-risk-badge-frontend-MOCK.png — Actual red EMERGENCY badge and escalation layout, using a synthetic scenario.
+
+BACKEND PROOFS TO CAPTURE ON LAPTOP A
+Figure 5.1: Actual running FastAPI Swagger documentation (use the real endpoint names).
+Figure 5.2: Actual local Ollama output.
+Figure 8.2: Actual pgvector query and returned database rows.
+Architecture, ingestion, deployment, sequence and ER diagrams should be checked against the implemented system; they are not execution screenshots. No backend proof images were fabricated on Laptop B.
+
+No website source, report content, or backend implementation was changed for this capture task. MOCK mode was set only for the launched frontend process.

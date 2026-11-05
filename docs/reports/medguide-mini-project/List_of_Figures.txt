@@ -1,0 +1,11 @@
+LIST OF FIGURES
+
+Figure 4.1 System architecture and two-laptop responsibility boundary
+Figure 6.1 Chat safety and retrieval processing flow
+Figure 6.2 MedGuide public homepage and rural healthcare visual identity
+Figure 6.3 Website sign-in interface
+Figure 6.4 Website account creation interface
+Figure 6.5 Ask MedGuide workspace interface with sample interaction controls
+Figure 6.6 Hindi interface language preview with synthetic workspace data
+Figure 6.7 Responsive My information web workspace preview
+Figure 8.1 Principal relational entities and cardinalities

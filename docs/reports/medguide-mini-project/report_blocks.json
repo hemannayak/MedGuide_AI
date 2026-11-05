@@ -1,0 +1,797 @@
+[
+  [
+    "heading",
+    "2 LITERATURE REVIEW AND RELATED WORK"
+  ],
+  [
+    "paragraph",
+    "MedGuide AI combines accessible interaction, medical-source retrieval and explicit safety boundaries. The related work is therefore reviewed across retrieval-augmented generation, sentence embeddings, healthcare AI governance and local model execution. The literature motivates engineering choices; it does not establish the clinical validity of this project."
+  ],
+  [
+    "heading",
+    "2.1 Retrieval augmented generation"
+  ],
+  [
+    "paragraph",
+    "Lewis et al. [1] describe a generation architecture that combines a parametric language model with retrieved non-parametric knowledge. Their work demonstrates the value of retrieval for knowledge-intensive NLP tasks. For MedGuide, the relevant principle is that external evidence can be retrieved before an answer is generated, allowing the knowledge collection to be maintained separately from the model. The project adapts this principle to medical documents stored in PostgreSQL. Its evidence gate refuses a response when no acceptable chunk is retrieved. Retrieval can improve traceability, but it cannot guarantee that the retrieved passage is suitable for a particular patient or that every generated statement follows from the passage."
+  ],
+  [
+    "heading",
+    "2.2 Sentence embeddings and multilingual retrieval"
+  ],
+  [
+    "paragraph",
+    "Sentence-BERT [2] uses sentence-level representations for semantic comparison and retrieval. MiniLM [3] studies transformer compression through attention distillation. These are relevant foundations for a compact embedding component. The model card for paraphrase-multilingual-MiniLM-L12-v2 [4] identifies a 384-dimensional sentence representation and multilingual support. MedGuide selects this identifier in knowledge_service.py and checks the resulting vector length. The model must be downloaded and loaded successfully; encoding failure is treated as unavailable evidence rather than replaced by invented vectors. General multilingual model support is not proof of reliable Hindi or Telugu medical retrieval; language-specific testing remains necessary."
+  ],
+  [
+    "heading",
+    "2.3 Healthcare AI ethics and governance"
+  ],
+  [
+    "paragraph",
+    "WHO guidance on large multimodal models in health [5] discusses risks involving inaccurate outputs, bias, privacy and inappropriate reliance on AI. These considerations support MedGuide’s informational scope and professional-care boundary. The implementation includes refusal responses and deterministic checks before generation. Nevertheless, a rule list or prompt instruction is not a clinical safety certification. The project needs documented rule provenance, medical review and evaluation of false negatives, false positives and adversarial inputs before real patient use."
+  ],
+  [
+    "heading",
+    "2.4 Medical sources and provenance"
+  ],
+  [
+    "paragraph",
+    "The repository includes four medical PDFs and a source register: WHO hypertension guidance, WHO PEN material, WHO malaria guidance and an ICMR paediatric/extrapulmonary tuberculosis workflow. The hypertension guideline [6] is a primary publication; the PEN package [7] concerns essential noncommunicable disease interventions. Such materials are knowledge inputs, not evidence that MedGuide is endorsed by their publishers. Page numbers, section text, publisher and source URL are retained with chunks. Publication version, licence and document review must remain traceable throughout ingestion."
+  ],
+  [
+    "heading",
+    "2.5 Vector storage and local inference"
+  ],
+  [
+    "paragraph",
+    "The pgvector project [8] provides vector similarity search inside PostgreSQL. MedGuide uses its cosine-distance operator with 384-dimensional vectors, keeping source documents and chunks in the same relational system as application data. Ollama [9] provides a local model interface; its chat API accepts messages and returns generated content. MedGuide’s gateway supports Ollama, optional hosted inference and a mock provider. The configured Llama 3.2 3B candidate is an integration choice requiring hardware and language evaluation, not a final medically validated model."
+  ],
+  [
+    "table",
+    [
+      [
+        "Work or approach",
+        "Contribution",
+        "Application and limitation"
+      ],
+      [
+        "RAG [1]",
+        "Retrieval before generation",
+        "Traceable context; evidence quality still matters"
+      ],
+      [
+        "Sentence-BERT [2] and MiniLM [3]",
+        "Compact semantic representations",
+        "Candidate retrieval; medical and language evaluation needed"
+      ],
+      [
+        "WHO governance [5]",
+        "Human oversight and risk management",
+        "Scope limits and review; no certification implied"
+      ],
+      [
+        "pgvector [8]",
+        "Relational vector search",
+        "384-dimensional storage; similarity is not clinical confidence"
+      ],
+      [
+        "Ollama [9]",
+        "Local inference interface",
+        "Portable provider; memory and latency constraints"
+      ]
+    ]
+  ],
+  [
+    "heading",
+    "2.6 Gap addressed by MedGuide"
+  ],
+  [
+    "paragraph",
+    "The project targets the combination of rural accessibility, familiar-language interaction, visible evidence and a constrained informational role. The practical contribution is an integrated engineering prototype: a responsive interface, authenticated application routes, a relational care-data model and a retrieval/safety service boundary. Novel clinical performance, deployment effectiveness and user satisfaction have not been established. Comparisons with commercial symptom checkers or telemedicine platforms should be based on separately verified product evidence rather than assumptions about their language support, fees or capabilities."
+  ],
+  [
+    "heading",
+    "3 PURPOSE AND SCOPE"
+  ],
+  [
+    "heading",
+    "3.1 Purpose"
+  ],
+  [
+    "paragraph",
+    "The purpose is to provide an understandable first layer of healthcare information for rural and underserved communities. Distance, language and the difficulty of judging online information motivate a simple interface for asking questions, structuring symptoms and reviewing available evidence. The platform supports conversations with qualified healthcare professionals; it must not independently diagnose, prescribe or change treatment."
+  ],
+  [
+    "paragraph",
+    "The engineering objective is to demonstrate how frontend design, REST APIs, authentication, relational storage, document processing, multilingual embeddings and local inference can be composed with explicit safety boundaries. Development uses synthetic information and an auditable source collection. The mini-project emphasises text interaction and preliminary symptom workflows rather than a claim of complete clinical deployment."
+  ],
+  [
+    "heading",
+    "3.2 Scope"
+  ],
+  [
+    "table",
+    [
+      [
+        "Area",
+        "Mini-project scope",
+        "Boundary"
+      ],
+      [
+        "Patient web experience",
+        "Registration, sign-in, chat and symptom interfaces",
+        "Mock or live behaviour depends on API configuration"
+      ],
+      [
+        "Backend",
+        "FastAPI services, JWT, models and retrieval code",
+        "Laptop A infrastructure; inspected for documentation"
+      ],
+      [
+        "Medical knowledge",
+        "PDF extraction, provenance and embeddings",
+        "Four repository PDFs do not imply a measured corpus size"
+      ],
+      [
+        "Safety",
+        "Pattern checks, refusal and output checks",
+        "Not clinically validated; review required"
+      ],
+      [
+        "Languages",
+        "English, Hindi and Telugu interface/response scope",
+        "Language quality has not been clinically evaluated"
+      ],
+      [
+        "Mobile",
+        "Separate Expo UI source folder",
+        "APK/native execution not demonstrated in this report"
+      ],
+      [
+        "Future modules",
+        "OCR, speech, reminders and worker continuity",
+        "Do not treat unavailable services as completed"
+      ]
+    ]
+  ],
+  [
+    "paragraph",
+    "Laptop A is responsible for the server, database and AI infrastructure. Laptop B is responsible for user-facing interfaces. Both communicate through configurable API addresses. The separate mobile folder does not replace the Next.js website. Public website pages describe the product, while protected application screens support tasks. Extensive language expansion, autonomous decisions and real-world clinical deployment remain outside the approved mini-project boundary."
+  ],
+  [
+    "heading",
+    "4 METHODOLOGY"
+  ],
+  [
+    "heading",
+    "4.1 Requirement analysis"
+  ],
+  [
+    "paragraph",
+    "Requirements were organised around patient access, healthcare-worker involvement, safety, privacy and low digital literacy. Patient tasks include account access, symptom input, health questions, source inspection and review of personal information. Worker and administrative capabilities require role-based access and patient authorisation. Non-functional requirements include readable text, keyboard access, mobile touch targets, clear error states, low-bandwidth presentation and source traceability."
+  ],
+  [
+    "paragraph",
+    "A feature is considered implemented only to the extent supported by its code and verification evidence. UI previews, registered API modules and evaluated clinical behaviour are different levels of completion. Acceptance checks therefore cover input validation, request handling, loading, refusal, errors, navigation and session isolation, rather than assuming that an attractive screen proves its backend service is available."
+  ],
+  [
+    "heading",
+    "4.2 Design and prototyping"
+  ],
+  [
+    "paragraph",
+    "The web design uses warm cream surfaces, forest-green controls and restrained coral accents, with rural imagery in public pages. Reusable navigation, forms, device previews and informational components maintain visual consistency. The task-oriented workspace uses Home, Ask MedGuide and My information to reduce navigation burden. Separate mobile source code is intended to provide native layouts without altering the website."
+  ],
+  [
+    "figure",
+    "Figure 4.1 System architecture and two-laptop responsibility boundary"
+  ],
+  [
+    "heading",
+    "4.3 Development"
+  ],
+  [
+    "paragraph",
+    "FastAPI endpoints delegate work to services and receive SQLAlchemy sessions through dependencies. User accounts are associated with roles and patient profiles. Chat first resolves language and stores the patient message. A deterministic safety stage runs before retrieval. Routine queries are embedded, matched against approved documents and passed through an evidence gate. The local/optional/mock provider is hidden behind a gateway so the UI is not coupled to a model vendor."
+  ],
+  [
+    "paragraph",
+    "PDF ingestion uses pypdf page extraction. The first non-empty line is treated as a baseline section label. Text is split into 500-character windows with 50-character overlap, not a sophisticated semantic segmentation algorithm. Metadata includes page, section, URL, publisher and embedding model. Empty pages are skipped; scanned-image pages would require OCR outside this implementation."
+  ],
+  [
+    "heading",
+    "4.4 Testing and safety evaluation"
+  ],
+  [
+    "paragraph",
+    "Software checks include frontend session tests, route/markup checks, API-contract tests and backend test modules for language resolution, retrieval, evidence refusal, output validation and provider errors. A report-time frontend run on 14 October 2026 completed 57 tests: 56 passed, none failed and one was skipped. This is a software regression result. The skipped case does not demonstrate live service behaviour. Backend README validation totals are historical development records, not tests rerun during this report preparation."
+  ],
+  [
+    "table",
+    [
+      [
+        "Evaluation area",
+        "Verification approach",
+        "Status or limitation"
+      ],
+      [
+        "Session and routes",
+        "Existing node:test suite",
+        "56 passed and 1 skipped in report-time run"
+      ],
+      [
+        "Evidence failure",
+        "Embedding failure/refusal test modules",
+        "Code and tests present; no new backend run claimed"
+      ],
+      [
+        "Rule matching",
+        "Synthetic emergency and non-emergency cases",
+        "Engineering behaviour only; no clinical sensitivity measured"
+      ],
+      [
+        "Language quality",
+        "Separate English/Hindi/Telugu cases",
+        "No measured language-specific clinical accuracy"
+      ],
+      [
+        "Clinical usability",
+        "Supervised rural-user study",
+        "Not conducted in the evidence reviewed"
+      ],
+      [
+        "RAG relevance",
+        "Recall at k and answer attribution benchmark",
+        "Required; threshold 0.55 is provisional"
+      ]
+    ]
+  ],
+  [
+    "paragraph",
+    "Clinical evaluation should use an approved reference set with expert-labelled expected escalation and evidence. Recommended measurements include retrieval recall at k, citation entailment, refusal appropriateness, false-negative rate, latency and language-specific error analysis. These are evaluation methods, not achieved results. Negation, hypothetical statements, spelling variation and code-switching require special attention in deterministic matching."
+  ],
+  [
+    "heading",
+    "4.5 Deployment local and containerised"
+  ],
+  [
+    "paragraph",
+    "Local deployment starts PostgreSQL/pgvector and the API on Laptop A, with the Next.js interface on Laptop B. Environment configuration separates development URLs from application code. Database migrations must be applied before API use. Ollama generation requires a downloaded model and sufficient available memory. The repository inspected for this report does not supply a verified container deployment workflow; containerisation is therefore a deployment option rather than a completed result."
+  ],
+  [
+    "heading",
+    "4.6 Maintenance and future enhancements"
+  ],
+  [
+    "paragraph",
+    "Maintenance includes reviewing medical source versions, preserving provenance, calibrating retrieval thresholds, checking dependency advisories and regression-testing safety behaviour. Rule changes require documented references and review. Future work includes validated speech and OCR services, careful medication review, authorised worker follow-up, measured mobile usability and explicit offline synchronisation. No claim of full offline operation, healthcare compliance certification or production readiness follows from the current prototype."
+  ],
+  [
+    "heading",
+    "5 REQUIREMENTS AND INSTALLATION"
+  ],
+  [
+    "heading",
+    "5.1 System requirements"
+  ],
+  [
+    "paragraph",
+    "Laptop B needs a supported Node.js environment, a browser, source-control tools and enough disk space for frontend dependencies. Laptop A additionally needs Python, PostgreSQL with pgvector, model-cache storage and sufficient memory for the selected local model. A single fixed RAM minimum cannot guarantee LLM operation because model quantisation, context length and concurrent workloads affect memory. The backend README records a previous model generation failure due to insufficient available memory; hardware suitability must be checked on the actual machine."
+  ],
+  [
+    "heading",
+    "5.2 Software requirements"
+  ],
+  [
+    "table",
+    [
+      [
+        "Component",
+        "Repository selection",
+        "Purpose"
+      ],
+      [
+        "Web",
+        "Next.js 16.3.1, React 19.2.8, TypeScript",
+        "Responsive public and application UI"
+      ],
+      [
+        "Backend",
+        "FastAPI, Uvicorn, Pydantic",
+        "REST services and validation"
+      ],
+      [
+        "Storage",
+        "PostgreSQL, SQLAlchemy, Alembic, pgvector",
+        "Relational records and vectors"
+      ],
+      [
+        "AI",
+        "Sentence Transformers, HTTPX, Ollama gateway",
+        "Embeddings and configurable inference"
+      ],
+      [
+        "Documents",
+        "pypdf",
+        "PDF text extraction"
+      ],
+      [
+        "Security",
+        "bcrypt and PyJWT",
+        "Password hashing and token validation"
+      ],
+      [
+        "Tests",
+        "node:test and pytest",
+        "Frontend and backend regression checks"
+      ]
+    ]
+  ],
+  [
+    "paragraph",
+    "These versions describe the inspected project snapshot, not a recommendation to ignore security updates. Dependency ranges in the backend are not a validated lockfile. Compatibility and vulnerability checks must precede deployment. Actual secrets belong in ignored environment files; examples in this report use placeholders."
+  ],
+  [
+    "heading",
+    "5.3 Installation instructions"
+  ],
+  [
+    "heading",
+    "5.3.1 Installing Node.js and the Next.js frontend"
+  ],
+  [
+    "paragraph",
+    "Install a Node.js version compatible with the project. From the repository root, enter frontend, install dependencies and start the development server. Mock mode permits interface demonstration without a running backend. Real mode requires the correct API base URL and a disposable development database on Laptop A."
+  ],
+  [
+    "code",
+    "Frontend installation\ncd frontend\nnpm install\nnpm run dev\n# Frontend .env.local placeholders\nNEXT_PUBLIC_API_MODE=MOCK\nNEXT_PUBLIC_API_BASE_URL=http://LAPTOP_A_IP:8000/api/v1"
+  ],
+  [
+    "heading",
+    "5.3.2 Installing Python and the FastAPI environment"
+  ],
+  [
+    "paragraph",
+    "Create an isolated Python virtual environment on Laptop A, install the repository requirements and copy backend/.env.example to backend/.env. Configure PostgreSQL credentials and a newly generated JWT secret. The environment file must never be committed. The following commands use a Unix shell; on Windows use the Scripts activation and executable paths."
+  ],
+  [
+    "code",
+    "Python installation commands are provided in the accompanying Word report."
+  ],
+  [
+    "heading",
+    "5.3.3 Installing PostgreSQL with pgvector"
+  ],
+  [
+    "paragraph",
+    "Install PostgreSQL and the pgvector extension compatible with that installation [8]. Create an empty development database matching DATABASE_URL. Alembic applies the existing schema and vector extension; the database role needs the required extension permissions. Inspect migration completion separately from application liveness. A /api/v1/health response may be HTTP 200 while reporting database.status as disconnected."
+  ],
+  [
+    "heading",
+    "5.3.4 Configuring Ollama with Llama 3.2 3B"
+  ],
+  [
+    "paragraph",
+    "Install Ollama from its official distribution [9]. The repository example selects AI_PROVIDER=ollama and AI_MODEL=llama3.2:3b. Run ollama pull llama3.2:3b on Laptop A and keep the local server available at OLLAMA_BASE_URL. Use AI_PROVIDER=mock for foundation testing. The model identifier is a candidate; successful download alone does not establish safe or accurate health guidance. The README’s previous llama3:latest inventory is not evidence that the 3B candidate has been evaluated."
+  ],
+  [
+    "heading",
+    "5.4 Additional dependencies"
+  ],
+  [
+    "paragraph",
+    "HTTPX supplies provider requests, langdetect provides a language fallback, and Sentence Transformers loads the embedding model. Frontend libraries include React Aria, Motion and Lucide for interaction and accessibility. Medical PDF ingestion and model downloads are backend responsibilities. The separate Expo mobile prototype has its own package manifest and Node requirements; its dependencies must not be installed into the website."
+  ],
+  [
+    "heading",
+    "6 SOFTWARE DESIGN"
+  ],
+  [
+    "heading",
+    "6.1 Architecture and request flow"
+  ],
+  [
+    "paragraph",
+    "The design separates presentation, API contracts, business services, persistence and AI providers. Public pages communicate the project’s purpose. Protected routes support patient tasks. The frontend client centralises URL configuration and token headers; real authentication request/response differences are mapped in that layer. Backend ownership checks tie conversations and symptom records to the authenticated patient, rather than trusting a patient identifier supplied by the browser."
+  ],
+  [
+    "figure",
+    "Figure 6.1 Chat safety and retrieval processing flow"
+  ],
+  [
+    "heading",
+    "6.2 API design"
+  ],
+  [
+    "table",
+    [
+      [
+        "API prefix",
+        "Responsibility"
+      ],
+      [
+        "/api/v1/auth",
+        "Patient registration and login"
+      ],
+      [
+        "/api/v1/patients",
+        "Authenticated profile information"
+      ],
+      [
+        "/api/v1/symptoms",
+        "Record input and analyse a stored symptom record"
+      ],
+      [
+        "/api/v1/ai",
+        "Health companion and retrieval response"
+      ],
+      [
+        "/api/v1/medications and /timeline",
+        "Medication and chronology services"
+      ],
+      [
+        "/api/v1/alerts and /follow-ups",
+        "Escalation records and care continuity"
+      ],
+      [
+        "/api/v1/consent and /healthcare-workers",
+        "Consent and authorised worker workflows"
+      ]
+    ]
+  ],
+  [
+    "paragraph",
+    "The central router imports ten core modules. Speech and prescription-processing services are not registered there. Their interface references must not be counted as completed APIs. Request schemas, token verification and service ownership constraints must be reviewed together. UI route protection is only a presentation check; backend authorisation remains necessary."
+  ],
+  [
+    "heading",
+    "6.3 Safety and evidence design limitations"
+  ],
+  [
+    "paragraph",
+    "The symptom service uses keyword matching while the chat service uses a separate regular-expression list. These lists are not identical and need a common reviewed specification. A lack of matches cannot rule out danger. The current output validator rejects out-of-range citation IDs and selected unsafe phrases, but it does not check entailment or require a citation in every answer. The evidence sufficiency test currently accepts any non-empty retrieved chunk list. These engineering limitations must be considered before making clinical claims."
+  ],
+  [
+    "heading",
+    "6.4 User interface output"
+  ],
+  [
+    "paragraph",
+    "The following are actual saved project interface screenshots. They demonstrate layout and interaction design, not medical accuracy or live patient outcomes. Workspace screenshots show synthetic/sample data. The website authentication design is distinct from the separately initiated APK UI project."
+  ],
+  [
+    "figure",
+    "Figure 6.2 MedGuide public homepage and rural healthcare visual identity"
+  ],
+  [
+    "figure",
+    "Figure 6.3 Website sign-in interface"
+  ],
+  [
+    "figure",
+    "Figure 6.4 Website account creation interface"
+  ],
+  [
+    "figure",
+    "Figure 6.5 Ask MedGuide workspace interface with sample interaction controls"
+  ],
+  [
+    "figure",
+    "Figure 6.6 Hindi interface language preview with synthetic workspace data"
+  ],
+  [
+    "figure",
+    "Figure 6.7 Responsive My information web workspace preview"
+  ],
+  [
+    "heading",
+    "7 SOURCE CODE"
+  ],
+  [
+    "paragraph",
+    "The following listings are exact excerpts from the local repository snapshot based on commit adb3c28 with current working-tree changes, inspected on 14 October 2026. Each excerpt identifies its file and original line range. They illustrate the requested implementation modules without reproducing every project file. Comments inside source listings describe developer intent and should not be read as independent clinical validation."
+  ],
+  [
+    "heading",
+    "7.1 FastAPI main application"
+  ],
+  [
+    "paragraph",
+    "Application configuration, CORS and health routing are defined here. The health endpoint reports liveness and database state separately."
+  ],
+  [
+    "code",
+    "Listing 7.1  backend/app/main.py  lines 1 to 53\nfrom fastapi import APIRouter, FastAPI\nfrom fastapi.middleware.cors import CORSMiddleware\n\nfrom app.core.config import settings\nfrom app.db.session import check_database_connection\n\napp = FastAPI(\n    title=settings.APP_NAME,\n    description=\"MedGuide AI — Backend Application API\",\n    version=\"1.0.0\",\n    docs_url=\"/docs\",\n    redoc_url=\"/redoc\",\n    openapi_url=f\"{settings.API_V1_PREFIX}/openapi.json\",\n)\n\n# Configure CORS\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=settings.CORS_ORIGINS,\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n\nfrom app.api.v1.router import api_router\n\n# API v1 Health Check & Sub-Routers\napi_v1_router = APIRouter(prefix=settings.API_V1_PREFIX)\n\n\n@api_v1_router.get(\"/health\", tags=[\"Health Check\"])\ndef health_check():\n    \"\"\"Health check endpoint exposing application operational status and DB connection state.\"\"\"\n    db_status = check_database_connection()\n    return {\n        \"status\": \"ok\",\n        \"app_name\": settings.APP_NAME,\n        \"environment\": settings.APP_ENV,\n        \"api_version\": \"v1\",\n        \"database\": db_status,\n    }\n\n\n# Register v1 routers\napp.include_router(api_v1_router)\napp.include_router(api_router, prefix=settings.API_V1_PREFIX)\n\n\n\n@app.get(\"/\", include_in_schema=False)\ndef root():\n    \"\"\"Root endpoint redirecting info.\"\"\"\n    return {\"message\": f\"Welcome to {settings.APP_NAME}. API documentation at /docs\"}"
+  ],
+  [
+    "heading",
+    "7.2 Authentication service and JWT security"
+  ],
+  [
+    "paragraph",
+    "Passwords are hashed with bcrypt; tokens include subject, role and expiration. Production secret rotation, TLS and account-status enforcement require review."
+  ],
+  [
+    "code",
+    "Listing 7.2  backend/app/core/security.py  lines 11 to 61\ndef hash_password(password: str) -> str:\n    \"\"\"Hash a plaintext password securely using bcrypt.\"\"\"\n    pwd_bytes = password.encode(\"utf-8\")\n    salt = bcrypt.gensalt()\n    return bcrypt.hashpw(pwd_bytes, salt).decode(\"utf-8\")\n\n\ndef verify_password(plain_password: str, hashed_password: str) -> bool:\n    \"\"\"Verify a plaintext password against a stored bcrypt hash.\"\"\"\n    try:\n        return bcrypt.checkpw(\n            plain_password.encode(\"utf-8\"),\n            hashed_password.encode(\"utf-8\"),\n        )\n    except Exception:\n        return False\n\n\ndef create_access_token(\n    subject: Union[str, uuid.UUID],\n    role: str,\n    expires_delta: Optional[timedelta] = None,\n) -> str:\n    \"\"\"Create a signed JWT access token containing subject (user_id) and role.\"\"\"\n    if expires_delta:\n        expire = datetime.now(timezone.utc) + expires_delta\n    else:\n        expire = datetime.now(timezone.utc) + timedelta(\n            minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES\n        )\n\n    to_encode: Dict[str, Any] = {\n        \"sub\": str(subject),\n        \"role\": role,\n        \"exp\": expire,\n        \"iat\": datetime.now(timezone.utc),\n    }\n\n    encoded_jwt = jwt.encode(\n        to_encode,\n        settings.SECRET_KEY,\n        algorithm=settings.JWT_ALGORITHM,\n    )\n    return encoded_jwt\n\n\ndef decode_access_token(token: str) -> Optional[Dict[str, Any]]:\n    \"\"\"Decode and validate a JWT access token.\"\"\"\n    try:\n        payload = jwt.decode(\n            token,"
+  ],
+  [
+    "heading",
+    "7.2.1 Patient account service"
+  ],
+  [
+    "paragraph",
+    "Registration creates a patient user and associated profile. Duplicate identifiers are rejected. The role is selected server-side."
+  ],
+  [
+    "code",
+    "Listing 7.2.1  backend/app/services/auth_service.py  lines 12 to 52\ndef register_patient_user(db: Session, req: UserRegisterRequest) -> User:\n    \"\"\"Register a new patient account with associated patient profile.\"\"\"\n    existing_user = (\n        db.query(User)\n        .filter(User.login_identifier == req.login_identifier)\n        .first()\n    )\n    if existing_user:\n        raise HTTPException(\n            status_code=status.HTTP_409_CONFLICT,\n            detail=\"A user with this login identifier already exists\",\n        )\n\n    patient_role = db.query(Role).filter(Role.name == \"PATIENT\").first()\n    if not patient_role:\n        patient_role = Role(name=\"PATIENT\")\n        db.add(patient_role)\n        db.commit()\n        db.refresh(patient_role)\n\n    new_user = User(\n        role_id=patient_role.id,\n        login_identifier=req.login_identifier,\n        password_hash=hash_password(req.password),\n        status=\"ACTIVE\",\n    )\n    db.add(new_user)\n    db.commit()\n    db.refresh(new_user)\n\n    profile = PatientProfile(\n        user_id=new_user.id,\n        display_name=req.display_name,\n        preferred_language=req.preferred_language,\n    )\n    db.add(profile)\n    db.commit()\n\n    return new_user\n\n"
+  ],
+  [
+    "heading",
+    "7.3 Deterministic red-flag safety gate"
+  ],
+  [
+    "paragraph",
+    "This excerpt shows existing rule matching, not a medically validated decision rule. Negation and contextual statements are not fully handled."
+  ],
+  [
+    "code",
+    "Listing 7.3  backend/app/core/triage.py  lines 34 to 64\n) -> Tuple[str, List[str], str, bool]:\n    \"\"\"\n    Evaluates reported symptoms deterministically against red-flag clinical rules.\n\n    Returns:\n        Tuple of (risk_level, identified_red_flags, guidance_summary, escalation_required)\n    \"\"\"\n    text_lower = text_input.lower()\n    combined_symptoms = [s.lower() for s in (structured_symptoms or [])]\n    combined_text = \" \".join([text_lower] + combined_symptoms)\n\n    red_flags: List[str] = []\n    risk_level = \"ROUTINE\"\n    escalation_required = False\n\n    # Check emergency indicators\n    for kw in RED_FLAG_KEYWORDS[\"EMERGENCY\"]:\n        if kw in combined_text:\n            red_flags.append(f\"Emergency indicator: '{kw}' detected\")\n            risk_level = \"EMERGENCY\"\n            escalation_required = True\n\n    # Check urgent indicators if not emergency\n    if risk_level != \"EMERGENCY\":\n        for kw in RED_FLAG_KEYWORDS[\"URGENT\"]:\n            if kw in combined_text:\n                red_flags.append(f\"Urgent indicator: '{kw}' detected\")\n                risk_level = \"URGENT\"\n                escalation_required = True\n\n    if risk_level == \"EMERGENCY\":"
+  ],
+  [
+    "heading",
+    "7.4 Medical PDF extraction and chunking"
+  ],
+  [
+    "paragraph",
+    "Page extraction preserves page numbers. Chunking advances by character window minus overlap; its section-awareness is a baseline heuristic."
+  ],
+  [
+    "code",
+    "Listing 7.4  backend/app/services/knowledge_service.py  lines 54 to 113\n    if not pdf_path.endswith(\".pdf\"):\n        raise HTTPException(\n            status_code=status.HTTP_400_BAD_REQUEST,\n            detail=\"Ingestion restricted strictly to official PDF publications (.pdf)\",\n        )\n\n    reader = PdfReader(pdf_path)\n    extracted_pages = []\n\n    for idx, page in enumerate(reader.pages):\n        page_num = idx + 1\n        text = page.extract_text() or \"\"\n        text_clean = \" \".join(text.split())\n        if not text_clean:\n            continue\n\n        # Header detection baseline\n        lines = [line.strip() for line in text.split(\"\\n\") if line.strip()]\n        section_title = lines[0] if lines else f\"Page {page_num}\"\n\n        extracted_pages.append({\n            \"page_number\": page_num,\n            \"section_title\": section_title[:150],\n            \"text\": text_clean,\n        })\n\n    return extracted_pages\n\n\ndef chunk_extracted_pages(\n    pages: List[Dict[str, Any]],\n    chunk_size: int = 500,\n    overlap: int = 50,\n) -> List[Dict[str, Any]]:\n    \"\"\"Section-aware semantic chunking with exact provenance preservation.\"\"\"\n    chunks = []\n    chunk_index = 0\n\n    for page in pages:\n        page_num = page[\"page_number\"]\n        section_title = page[\"section_title\"]\n        text = page[\"text\"]\n\n        start = 0\n        while start < len(text):\n            end = start + chunk_size\n            chunk_text = text[start:end]\n\n            if len(chunk_text.strip()) > 30:\n                chunks.append({\n                    \"chunk_index\": chunk_index,\n                    \"page_number\": page_num,\n                    \"section_title\": section_title,\n                    \"text\": chunk_text.strip(),\n                })\n                chunk_index += 1\n\n            start += (chunk_size - overlap)\n\n    return chunks"
+  ],
+  [
+    "heading",
+    "7.5 Multilingual vector embedding generator"
+  ],
+  [
+    "paragraph",
+    "The semantic model is lazily loaded. Errors and vector-dimension mismatches fail closed instead of returning synthetic embeddings."
+  ],
+  [
+    "code",
+    "Listing 7.5  backend/app/services/knowledge_service.py  lines 17 to 51\nclass EmbeddingUnavailableError(RuntimeError):\n    \"\"\"Real semantic embeddings are unavailable; retrieval must fail closed.\"\"\"\n\n\ndef get_embedding_model():\n    \"\"\"Lazy load SentenceTransformer multilingual embedding model.\"\"\"\n    global _embedding_model\n    if _embedding_model is None:\n        try:\n            from sentence_transformers import SentenceTransformer\n            _embedding_model = SentenceTransformer(\n                \"sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2\",\n                cache_folder=str(Path(__file__).resolve().parents[2] / \".model-cache\"),\n            )\n        except Exception:\n            logger.error(\"Embedding model could not be loaded\")\n            raise EmbeddingUnavailableError(\"Semantic embedding service unavailable\") from None\n    return _embedding_model\n\n\ndef generate_embedding(text: str) -> List[float]:\n    \"\"\"Generate 384-dimensional vector embedding for input text.\"\"\"\n    model = get_embedding_model()\n    if model is not None:\n        try:\n            embedding = model.encode(text, convert_to_numpy=True).tolist()\n        except Exception:\n            logger.error(\"Embedding encoding failed\")\n            raise EmbeddingUnavailableError(\"Semantic embedding service unavailable\") from None\n        if len(embedding) != 384:\n            raise EmbeddingUnavailableError(\"Semantic embedding dimension mismatch\")\n        return [float(x) for x in embedding]\n    raise EmbeddingUnavailableError(\"Semantic embedding service unavailable\")\n\n"
+  ],
+  [
+    "heading",
+    "7.6 RAG retrieval and evidence gate"
+  ],
+  [
+    "paragraph",
+    "Cosine similarity search includes approved documents, followed by threshold filtering and context selection. The threshold is provisional."
+  ],
+  [
+    "code",
+    "Listing 7.6  backend/app/services/ai_service.py  lines 188 to 242\n    # similarity = 1 - distance\n    sql = text(\"\"\"\n        SELECT\n            kc.id AS chunk_id,\n            kc.document_id,\n            kc.content,\n            kc.metadata,\n            md.title,\n            md.publisher,\n            md.source_reference AS source_url,\n            md.language,\n            md.publication_date,\n            md.version,\n            1 - (kc.embedding <=> CAST(:embedding AS vector)) AS similarity\n        FROM knowledge_chunks kc\n        JOIN medical_documents md ON kc.document_id = md.id\n        WHERE md.review_status = 'APPROVED'\n        ORDER BY kc.embedding <=> CAST(:embedding AS vector)\n        LIMIT :limit\n    \"\"\")\n\n    rows = db.execute(\n        sql,\n        {\"embedding\": embedding_str, \"limit\": top_k_candidates},\n    ).fetchall()\n\n    # Filter by threshold and take top_k_context\n    filtered = [\n        {\n            \"chunk_id\": row.chunk_id,\n            \"document_id\": row.document_id,\n            \"content\": row.content,\n            \"metadata\": row.metadata or {},\n            \"title\": row.title,\n            \"publisher\": row.publisher,\n            \"source_url\": row.source_url,\n            \"language\": row.language,\n            \"publication_date\": str(row.publication_date) if row.publication_date else None,\n            \"similarity\": float(row.similarity),\n        }\n        for row in rows\n        if float(row.similarity) >= similarity_threshold\n    ]\n\n    # Sort descending by similarity, take top_k_context\n    filtered.sort(key=lambda x: x[\"similarity\"], reverse=True)\n    return filtered[:top_k_context]\n\n\n# ---------------------------------------------------------------------------\n# M4.3.2 — Evidence sufficiency gate\n# ---------------------------------------------------------------------------\ndef is_sufficient_evidence(chunks: List[Dict[str, Any]]) -> bool:\n    return len(chunks) > 0\n"
+  ],
+  [
+    "heading",
+    "7.6.1 Output validation"
+  ],
+  [
+    "paragraph",
+    "The validator checks citation ID range and unsafe phrases. It does not establish factual entailment or clinical correctness."
+  ],
+  [
+    "code",
+    "Listing 7.6.1  backend/app/services/ai_service.py  lines 399 to 431\n]\n_DANGEROUS_RE = [(re.compile(p, re.IGNORECASE), msg) for p, msg in _DANGEROUS_PATTERNS]\n\n\ndef validate_llm_output(\n    response_text: str,\n    chunks: List[Dict[str, Any]],\n) -> Tuple[bool, Optional[str]]:\n    \"\"\"\n    Validate LLM-generated response.\n    Returns (is_valid, failure_reason).\n    \"\"\"\n    # Check 1: Citation IDs in response don't exceed retrieved chunk count\n    cited_ids = set(int(x) for x in re.findall(r'\\[(\\d+)\\]', response_text))\n    valid_ids = set(range(1, len(chunks) + 1))\n    phantom = cited_ids - valid_ids\n    if phantom:\n        return False, f\"Phantom citation IDs detected: {phantom}\"\n\n    # Check 2: Dangerous medical patterns\n    for pattern_re, reason in _DANGEROUS_RE:\n        if pattern_re.search(response_text):\n            return False, reason\n\n    return True, None\n\n\n# ---------------------------------------------------------------------------\n# M4.3.2 — Refusal message builder\n# ---------------------------------------------------------------------------\ndef build_refusal_message(language: str, db: Session) -> str:\n    \"\"\"\n    Build localized refusal message with publisher list derived from active corpus."
+  ],
+  [
+    "heading",
+    "7.7 Symptom submission and triage service"
+  ],
+  [
+    "paragraph",
+    "Analysis looks up a record belonging to the authenticated patient and produces an alert when the current rules request escalation."
+  ],
+  [
+    "code",
+    "Listing 7.7  backend/app/services/symptom_service.py  lines 51 to 98\n\ndef analyze_symptom_record(\n    db: Session,\n    patient_profile: PatientProfile,\n    symptom_record_id: str,\n) -> SymptomAnalyzeResponse:\n    \"\"\"Execute deterministic safety triage evaluation on recorded symptoms.\"\"\"\n    record = (\n        db.query(SymptomRecord)\n        .filter(\n            SymptomRecord.id == symptom_record_id,\n            SymptomRecord.patient_id == patient_profile.id,\n        )\n        .first()\n    )\n    if not record:\n        raise HTTPException(\n            status_code=status.HTTP_404_NOT_FOUND,\n            detail=\"Symptom record not found\",\n        )\n\n    text_content = record.structured_data.get(\"text\", \"\")\n    risk_level, red_flags, guidance, escalation_required = evaluate_symptom_triage(\n        text_input=text_content\n    )\n\n    created_alert_id: Optional[str] = None\n    if escalation_required:\n        alert = Alert(\n            patient_id=patient_profile.id,\n            alert_type=\"TRIAGE_RED_FLAG\",\n            severity=risk_level,\n            source=\"TRIAGE_ENGINE\",\n            status=\"OPEN\",\n        )\n        db.add(alert)\n        db.commit()\n        db.refresh(alert)\n        created_alert_id = alert.id\n\n    return SymptomAnalyzeResponse(\n        symptom_record_id=record.id,\n        risk_level=risk_level,\n        red_flags=red_flags,\n        guidance=guidance,\n        escalation_required=escalation_required,\n        created_alert_id=created_alert_id,\n    )"
+  ],
+  [
+    "heading",
+    "7.8 Next.js chatbot user interface"
+  ],
+  [
+    "paragraph",
+    "The interface sends a request through the shared client and handles successful and failed responses. The selected provider determines live versus mock behaviour."
+  ],
+  [
+    "code",
+    "Listing 7.8  frontend/src/app/app/chat/page.tsx  lines 60 to 103\n\n    const timeStr = new Date().toLocaleTimeString([], { hour: \"2-digit\", minute: \"2-digit\" });\n\n    const userMsg: ChatMessage = {\n      id: generateMsgId(\"usr\"),\n      sender: \"user\",\n      text: textToSend,\n      timestamp: timeStr,\n    };\n\n    setMessages((prev) => [...prev, userMsg]);\n    setInputQuery(\"\");\n    setLoading(true);\n\n    try {\n      const res = await api.postAIChat({\n        message: textToSend,\n        language: language,\n        conversation_id: conversationId,\n      });\n\n      if (res.success && res.data) {\n        const aiData: AIChatResponse = res.data;\n        if (aiData.conversation_id) setConversationId(aiData.conversation_id);\n\n        const aiMsg: ChatMessage = {\n          id: generateMsgId(\"ai\"),\n          sender: \"ai\",\n          text: aiData.message,\n          responseType: aiData.response_type,\n          sources: aiData.sources,\n          redFlags: aiData.red_flags,\n          refusalTriggered: aiData.refusal_triggered,\n          disclaimer: aiData.disclaimer,\n          timestamp: new Date().toLocaleTimeString([], { hour: \"2-digit\", minute: \"2-digit\" }),\n        };\n        setMessages((prev) => [...prev, aiMsg]);\n      } else {\n        setMessages((prev) => [\n          ...prev,\n          {\n            id: generateMsgId(\"err\"),\n            sender: \"ai\",\n            text: tr(\"I was unable to process your request right now. Please try again.\"),"
+  ],
+  [
+    "heading",
+    "7.9 Symptom input and risk display"
+  ],
+  [
+    "paragraph",
+    "The component maintains form and request state. User input must not be interpreted as a confirmed diagnosis."
+  ],
+  [
+    "code",
+    "Listing 7.9  frontend/src/app/app/symptoms/page.tsx  lines 55 to 102\n\n      if (res.success && res.data) {\n        setTriageResult(res.data);\n        setPageState(\"result\");\n      } else {\n        setPageState(\"error\");\n      }\n    } catch {\n      setPageState(\"error\");\n    }\n  };\n\n  const handleReset = () => {\n    setDescription(\"\");\n    setDurationDays(\"\");\n    setSeverityScale(null);\n    setTriageResult(null);\n    setPageState(\"idle\");\n  };\n\n  return (\n    <div className=\"section-container py-10 max-w-4xl\">\n      {/* ── Page Header ─────────────────────────────────────────── */}\n      <div className=\"pb-6 mb-8 border-b border-[#161A24]/10 space-y-2\">\n        <h1 className=\"font-serif text-3xl sm:text-4xl text-[#161A24]\">\n          {t(\"symptoms.title\")}\n        </h1>\n        <p className=\"text-sm text-slate-500\">\n          {tr(\"4-step progressive symptom assessment to determine routine, urgent, or emergency care guidance.\")}</p>\n      </div>\n\n      {/* ── 4-Step Progressive Indicator Bar ─────────────────────── */}\n      <div className=\"grid grid-cols-4 gap-2 mb-8 text-center text-xs\">\n        <div className={`p-2.5 rounded-xl border transition-all ${\n          description.trim().length > 5\n            ? \"bg-teal-50 border-[#0F766E] text-[#0F766E] font-bold\"\n            : \"bg-white border-slate-200 text-slate-400\"\n        }`}>\n          <div className=\"text-[10px] uppercase\">01</div>\n          <div>{tr(\"Experience\")}</div>\n        </div>\n\n        <div className={`p-2.5 rounded-xl border transition-all ${\n          durationDays.trim() !== \"\"\n            ? \"bg-teal-50 border-[#0F766E] text-[#0F766E] font-bold\"\n            : \"bg-white border-slate-200 text-slate-400\"\n        }`}>\n          <div className=\"text-[10px] uppercase\">02</div>"
+  ],
+  [
+    "heading",
+    "7.10 Source citation and attribution component"
+  ],
+  [
+    "paragraph",
+    "Source details expand on request. Existing empty-source wording needs review because no citations must not imply that grounding was verified."
+  ],
+  [
+    "code",
+    "Listing 7.10  frontend/src/components/chat/med-evidence.tsx  lines 29 to 74\n        className=\"w-full flex items-center justify-between py-1.5 px-3 rounded-lg bg-amber-50/70 hover:bg-amber-50 border border-amber-200/80 text-[#1C1917] font-medium transition-colors\"\n        aria-expanded={expanded}\n      >\n        <div className=\"flex items-center gap-2\">\n          <BookOpen className=\"w-4 h-4 text-[#8C6D46] shrink-0\" />\n          <span>Source-backed guidance ({sources.length} clinical references)</span>\n        </div>\n        <div className=\"flex items-center gap-1 text-[#8C6D46] text-[11px] font-semibold\">\n          <span>{expanded ? \"Hide sources\" : \"View sources\"}</span>\n          {expanded ? <ChevronUp className=\"w-3.5 h-3.5\" /> : <ChevronDown className=\"w-3.5 h-3.5\" />}\n        </div>\n      </button>\n\n      {/* Expanded Details List */}\n      {expanded && (\n        <div className=\"mt-2.5 space-y-2 pl-1 animate-fade-in\">\n          {sources.map((src, idx) => (\n            <div\n              key={src.citation_id || idx}\n              className=\"p-3 rounded-xl bg-slate-50 border border-slate-200/80 text-slate-700 space-y-1\"\n            >\n              <div className=\"flex items-start justify-between gap-2 font-semibold text-slate-900 text-xs\">\n                <span>\n                  [{src.citation_id}] {src.title || \"Clinical Health Protocol\"}\n                </span>\n                {src.source_url && (\n                  <a\n                    href={src.source_url}\n                    target=\"_blank\"\n                    rel=\"noopener noreferrer\"\n                    className=\"text-[#8C6D46] hover:underline inline-flex items-center gap-0.5 shrink-0 text-[11px]\"\n                  >\n                    Link <ExternalLink className=\"w-3 h-3\" />\n                  </a>\n                )}\n              </div>\n              <div className=\"text-[11px] text-slate-500\">\n                <span>Publisher: {src.publisher || \"WHO / Ministry Guidelines\"}</span>\n                {src.section_title && <span> &bull; Section: {src.section_title}</span>}\n                {src.page_number && <span> &bull; Page {src.page_number}</span>}\n              </div>\n            </div>\n          ))}\n        </div>\n      )}\n    </div>"
+  ],
+  [
+    "heading",
+    "8 BACKEND DATABASE"
+  ],
+  [
+    "heading",
+    "8.1 PostgreSQL and pgvector configuration"
+  ],
+  [
+    "paragraph",
+    "SQLAlchemy uses the configured PostgreSQL URL and creates a request-scoped session. Alembic provides migrations. KnowledgeChunk declares Vector(384), while the retrieval query uses cosine distance. Referential constraints connect care records to patient profiles and knowledge chunks to their documents. The health probe checks connectivity, not completeness of schema, indexing or clinical knowledge ingestion."
+  ],
+  [
+    "figure",
+    "Figure 8.1 Principal relational entities and cardinalities"
+  ],
+  [
+    "heading",
+    "8.2 Users and patient profiles table"
+  ],
+  [
+    "table",
+    [
+      [
+        "Table",
+        "Key fields",
+        "Relationship"
+      ],
+      [
+        "users",
+        "id, role_id, login_identifier, password_hash, status",
+        "Role foreign key and unique login identifier"
+      ],
+      [
+        "patient_profiles",
+        "id, user_id, display_name, preferred_language, date_of_birth",
+        "Unique user_id; patient-owned care records"
+      ],
+      [
+        "roles",
+        "id, name",
+        "Patient, healthcare-worker and administrator role concepts"
+      ]
+    ]
+  ],
+  [
+    "paragraph",
+    "A patient profile stores demographic and language information separately from authentication credentials. Password hashes are never presentation fields. Optional data should only be collected when required, and authorisation must restrict access to the appropriate patient or authorised healthcare worker. The actual backend fields must be distinguished from frontend-only sample fields; for example, patient_profiles does not define every village, allergy or health-note field used in a preview."
+  ],
+  [
+    "heading",
+    "8.3 Symptom records table"
+  ],
+  [
+    "paragraph",
+    "symptom_records stores its patient foreign key, input source, raw input reference, structured JSON data and report timestamp. The symptom service also creates a timeline event and can create an alert during analysis. JSONB supports structured narrative metadata while patient identity and ownership remain relational. Repeated analysis and alert duplication deserve explicit idempotency tests before deployment."
+  ],
+  [
+    "heading",
+    "8.4 Conversations and messages table"
+  ],
+  [
+    "paragraph",
+    "conversations stores patient ownership, language, status and start/end timestamps. conversation_messages stores sender type, text, optional metadata and creation time. The chat service filters supplied conversation IDs by patient ownership. Only recent turns are added to prompt context; they are not treated as authoritative medical evidence. Retention and deletion policies must address the sensitivity of conversation text."
+  ],
+  [
+    "heading",
+    "8.5 Medical documents and knowledge chunks table"
+  ],
+  [
+    "table",
+    [
+      [
+        "Entity",
+        "Stored fields",
+        "Design purpose"
+      ],
+      [
+        "medical_documents",
+        "title, publisher, URL, publication date, version, language, review status",
+        "Document provenance and review lifecycle"
+      ],
+      [
+        "knowledge_chunks",
+        "document_id, chunk_index, content, embedding, metadata",
+        "Page/section-linked text and semantic retrieval"
+      ]
+    ]
+  ],
+  [
+    "paragraph",
+    "The schema permits licence, publication date and version metadata, but the current ingestion function does not populate all of those document-level fields supplied by the corpus manifest. The report therefore does not assume that every row has complete provenance. PDF filename and source-register claims should be verified against the document itself. Successful ingestion must be measured from database records rather than inferred from files being present."
+  ],
+  [
+    "code",
+    "Listing 8.1 KnowledgeChunk model and 384-dimensional vector field\n    id: Mapped[uuid.UUID] = uuid_pk()\n\n    document_id: Mapped[UUID] = mapped_column(\n        UUID(as_uuid=True),\n        ForeignKey(\"medical_documents.id\", ondelete=\"CASCADE\"),\n        nullable=False,\n        index=True,\n    )\n    chunk_index: Mapped[int] = mapped_column(Integer, nullable=False)\n    content: Mapped[str] = mapped_column(Text, nullable=False)\n    embedding: Mapped[Optional[List[float]]] = mapped_column(\n        Vector(384), nullable=True\n    )\n    metadata_: Mapped[Optional[Dict[str, Any]]] = mapped_column(\n        \"metadata\", JSONB, nullable=True\n    )\n    created_at: Mapped[datetime] = mapped_column(\n\n        DateTime(timezone=True),\n        default=lambda: datetime.now(timezone.utc),\n        nullable=False,\n    )\n\n    document: Mapped[\"MedicalDocument\"] = relationship(\"MedicalDocument\", back_populates=\"chunks\")"
+  ],
+  [
+    "heading",
+    "9 CONCLUSION"
+  ],
+  [
+    "paragraph",
+    "MedGuide AI demonstrates a structured engineering approach to rural healthcare information access. Its web interface, application routes and backend modules bring together authentication, patient-owned records, deterministic matching, document provenance and retrieval-assisted generation. The two-laptop separation keeps frontend development independent from database and model infrastructure, while configurable service layers prepare integration."
+  ],
+  [
+    "paragraph",
+    "The most important design decision is to place boundaries around generated healthcare content. Emergency paths bypass generative inference, unavailable embeddings fail closed, insufficient evidence produces refusal and responses can expose source metadata. These controls reduce specific engineering failure modes but do not eliminate hallucination, prove clinical safety or validate a diagnosis. Keyword rules, retrieval thresholds, multilingual handling and output validation need further expert review and systematic measurement."
+  ],
+  [
+    "paragraph",
+    "The current evidence supports the claim of an implemented software prototype and tested frontend behaviours. It does not support reported clinical accuracy, quantified rural health outcomes, a fixed verified chunk count, complete offline operation or an already validated APK. Next steps are retrieval calibration, traceable rule review, secure API integration, measured language quality, improved evidence messaging and supervised usability studies. Speech, OCR and care-continuity enhancements should follow the approved scope and human review requirements."
+  ],
+  [
+    "heading",
+    "10 REFERENCES"
+  ],
+  [
+    "paragraph",
+    "[1] Patrick Lewis et al. Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. NeurIPS, 2020. https://arxiv.org/abs/2005.11401 Accessed 14 October 2026."
+  ],
+  [
+    "paragraph",
+    "[2] Nils Reimers and Iryna Gurevych. Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks. EMNLP-IJCNLP, 2019. https://arxiv.org/abs/1908.10084 Accessed 14 October 2026."
+  ],
+  [
+    "paragraph",
+    "[3] Wenhui Wang et al. MiniLM: Deep Self-Attention Distillation for Task-Agnostic Compression of Pre-Trained Transformers. NeurIPS, 2020. https://arxiv.org/abs/2002.10957 Accessed 14 October 2026."
+  ],
+  [
+    "paragraph",
+    "[4] Sentence Transformers. paraphrase-multilingual-MiniLM-L12-v2 model card. https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 Accessed 14 October 2026."
+  ],
+  [
+    "paragraph",
+    "[5] World Health Organization. Ethics and governance of artificial intelligence for health: Guidance on large multi-modal models. 2024. https://www.who.int/publications/i/item/9789240084759 Accessed 14 October 2026."
+  ],
+  [
+    "paragraph",
+    "[6] World Health Organization. Guideline for the pharmacological treatment of hypertension in adults. 2021. https://www.who.int/publications/i/item/9789240033986 Accessed 14 October 2026."
+  ],
+  [
+    "paragraph",
+    "[7] World Health Organization. Package of essential noncommunicable disease interventions for primary health care. 2020. https://www.who.int/publications/i/item/9789240009226 Accessed 14 October 2026."
+  ],
+  [
+    "paragraph",
+    "[8] pgvector contributors. pgvector documentation and source repository. https://github.com/pgvector/pgvector Accessed 14 October 2026."
+  ],
+  [
+    "paragraph",
+    "[9] Ollama. Quickstart and chat API documentation. https://docs.ollama.com/api/chat Accessed 14 October 2026."
+  ],
+  [
+    "paragraph",
+    "[10] MedGuide AI project repository. Backend services, models, frontend components, tests and source register. Snapshot reviewed 14 October 2026. https://github.com/hemannayak/MedGuide_AI"
+  ]
+]
