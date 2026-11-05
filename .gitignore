@@ -61,3 +61,7 @@ mobile/live_*.png
 !mobile/live_front_clean.png
 !mobile/live_home_dashboard.png
 
+
+# Redundant zip packaging (unpacked folder is committed)
+Minor_Project_Outputs.zip
+
