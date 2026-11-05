@@ -23,7 +23,9 @@ export const MedButton: React.FC<MedButtonProps> = ({
   const baseClasses =
     "inline-flex items-center justify-center gap-2 transition-all cursor-pointer rounded-full box-border select-none active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100";
 
-  const fontClasses = "font-serif text-lg sm:text-xl font-normal tracking-tight";
+  const fontClasses = useSerif
+    ? "font-serif text-lg sm:text-xl font-normal tracking-tight"
+    : "font-sans text-lg sm:text-xl font-normal tracking-tight";
 
   const sizeClasses = {
     sm: "px-4 h-10 text-xs sm:text-sm min-w-[100px]",

@@ -51,7 +51,6 @@ const INPUT_MODES = [
 export const PhoneMockup: React.FC = () => {
   const [activeMode, setActiveMode] = useState<"text" | "voice" | "document">("text");
   const [inputValue, setInputValue] = useState("");
-  const [voiceActive, setVoiceActive] = useState(false);
 
   const handleSuggestion = (text: string) => {
     setInputValue(text);

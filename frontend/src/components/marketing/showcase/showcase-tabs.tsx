@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Volume2, Mic, Globe2, FileText } from "lucide-react";
+import { Volume2, Mic, FileText } from "lucide-react";
 import { motion } from "framer-motion";
 
 export type CapabilityTabId = "voice" | "speech" | "ocr";

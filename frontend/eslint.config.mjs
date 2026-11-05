@@ -14,6 +14,22 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "tests/**",
   ]),
+  {
+    rules: {
+      // Allow underscore-prefixed identifiers as intentionally unused
+      // (e.g. _text, _language in mock stubs that match a required signature).
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          "vars": "all",
+          "args": "all",
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_",
+          "caughtErrorsIgnorePattern": "^_"
+        }
+      ]
+    }
+  }
 ]);
 
 export default eslintConfig;

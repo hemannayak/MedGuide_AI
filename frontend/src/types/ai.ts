@@ -38,7 +38,7 @@ export interface AIChatResponse {
 
 export interface ConversationMessage {
   id: string;
-  sender_type: "user" | "ai" | "system";
+  sender_type: "PATIENT" | "AI_COMPANION" | "SYSTEM";
   content: string;
   metadata?: Record<string, unknown>;
   created_at: string;

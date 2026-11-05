@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Activity, FileText, Pill, Settings, LayoutDashboard, MessageSquare, UserRound, LogOut, Menu, X, ArrowUpRight, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import { EmergencyBanner } from "@/components/common/emergency-banner";
-import { clearSession } from "@/lib/auth/session";
+import { signOutSession } from "@/lib/auth/sign-out";
 import { isMockMode } from "@/lib/api/config";
 import { useLanguage, type Language } from "@/lib/i18n/context";
 import styles from "./workspace.module.css";
@@ -40,7 +40,7 @@ export function WorkspaceShell({children, mode = "patient"}:{children:ReactNode;
 
       <p className={styles.label}>{mode === "worker" ? "HEALTHCARE WORKER WORKSPACE" : "YOUR HEALTH WORKSPACE"}</p>
       <nav>{items.map(({href,label,Icon})=><Link key={href} href={href} aria-label={label} title={collapsed?label:undefined} aria-current={current?.href===href?'page':undefined} onClick={()=>setOpen(false)}><Icon size={19} aria-hidden="true"/><span>{label}</span></Link>)}</nav>
-      <div className={styles.sidebarBottom}><Link href="/app/emergency" aria-label="Emergency information" title={collapsed?"Emergency information":undefined}><ArrowUpRight size={18} aria-hidden="true"/><span>Emergency information</span></Link><Link href="/safety">Understand MedGuide’s limits</Link><button className={styles.collapseButton} type="button" aria-label={collapsed?"Expand sidebar":"Collapse sidebar"} aria-expanded={!collapsed} aria-controls="workspace-navigation" onClick={()=>setCollapsed(!collapsed)}>{collapsed?<PanelLeftOpen size={20}/>:<PanelLeftClose size={20}/>}</button><button aria-label="Sign out" title={collapsed?"Sign out":undefined} onClick={()=>{clearSession();router.replace('/login');}}><LogOut size={18} aria-hidden="true"/><span>Sign out</span></button></div>
+      <div className={styles.sidebarBottom}><Link href="/app/emergency" aria-label="Emergency information" title={collapsed?"Emergency information":undefined}><ArrowUpRight size={18} aria-hidden="true"/><span>Emergency information</span></Link><Link href="/safety">Understand MedGuide’s limits</Link><button className={styles.collapseButton} type="button" aria-label={collapsed?"Expand sidebar":"Collapse sidebar"} aria-expanded={!collapsed} aria-controls="workspace-navigation" onClick={()=>setCollapsed(!collapsed)}>{collapsed?<PanelLeftOpen size={20}/>:<PanelLeftClose size={20}/>}</button><button aria-label="Sign out" title={collapsed?"Sign out":undefined} onClick={async()=>{const revoked=await signOutSession();router.replace(revoked?"/login":"/login?signout=local-only");}}><LogOut size={18} aria-hidden="true"/><span>Sign out</span></button></div>
     </aside>
     <div className={styles.main}>
       <EmergencyBanner withinWorkspace />

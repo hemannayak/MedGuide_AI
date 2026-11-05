@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Play, Pause, ArrowRight, Volume2, ShieldCheck } from "lucide-react";
+import { Play, Pause, ArrowRight, ShieldCheck } from "lucide-react";
 import { VoiceWaveform } from "./voice-waveform";
 
 interface VoicePersona {

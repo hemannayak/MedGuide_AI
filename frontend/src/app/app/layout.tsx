@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { getSessionToken } from "@/lib/auth/session";
 import { useLanguage } from "@/lib/i18n/context";
 import { WorkspaceShell } from "@/components/workspace/workspace-shell";
-const subscribeHydration = () => () => {};
+// subscribeHydration kept as a no-op reference for future SSR hydration guard
 const subscribe = (callback: () => void) => { window.addEventListener("medguide-session", callback); window.addEventListener("storage", callback); return () => { window.removeEventListener("medguide-session", callback); window.removeEventListener("storage", callback); }; };
 export default function AppAuthLayout({ children }: {
     children: ReactNode;

@@ -1,5 +1,5 @@
 "use client";
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Form, Button } from "react-aria-components";
@@ -10,8 +10,7 @@ import { isMockMode } from "@/lib/api/config";
 import { saveSessionToken, safeReturnPath, safeWorkerReturnPath } from "@/lib/auth/session";
 import { useLanguage } from "@/lib/i18n/context";
 import { UserRole } from "@/types/user";
-import { readSampleProfile } from "@/lib/profile/setup";
-import { GoogleLoginButton } from "./social-login-button";
+// readSampleProfile and GoogleLoginButton reserved for future social-login integration
 import { AuthTextField } from "./auth-text-field";
 import { MarketingNavbar } from "@/components/marketing/homepage/hero-section";
 import { MarketingFooter } from "@/components/marketing/homepage/marketing-footer";
@@ -48,6 +47,12 @@ export function AuthExperience({ kind }: {
     const [remember, setRemember] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    useEffect(() => {
+      if (kind === "login" && new URLSearchParams(window.location.search).get("signout") === "local-only") {
+        // Schedule state update outside the synchronous effect body to avoid cascading renders.
+        queueMicrotask(() => setError("You are signed out on this device. We could not confirm server sign-out; the previous session may remain valid until it expires."));
+      }
+    }, [kind]);
     const [success, setSuccess] = useState(false);
     const [confirmError, setConfirmError] = useState("");
     const update = (key: keyof typeof values) => (value: string) => { setValues(v => ({ ...v, [key]: value })); setError(""); if (key === "confirm" || key === "password")
