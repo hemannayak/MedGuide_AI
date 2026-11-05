@@ -1,0 +1,33 @@
+@startuml
+!pragma layout smetana
+skinparam dpi 220
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam ArrowColor #44675F
+skinparam componentStyle rectangle
+skinparam rectangleBackgroundColor #E8F3EF
+skinparam databaseBackgroundColor #F6F1E8
+skinparam sequenceParticipantBackgroundColor #E8F3EF
+skinparam sequenceGroupBackgroundColor #FFFFFF
+title Proposed Docker mapping - NOT configured in this repository
+rectangle "Laptop browser" as Browser
+node "Conceptual internal Docker bridge\nNo compose.yml or Dockerfiles found" {
+ rectangle "frontend-app:3000\nProposed service name" as Front
+ rectangle "fastapi-backend:8000\nProposed service name" as API
+ database "postgres-pgvector:5432\nProposed service name" as PG
+ rectangle "ollama-service:11434\nProposed service name" as Ollama
+ Front --> API : REST requests
+ API --> PG : SQL / vector retrieval
+ API --> Ollama : Optional local generation
+}
+Browser --> Front : Browser access, published 3000
+note bottom
+Illustrative deployment design only; no containers were launched.
+Observed execution uses host processes on one laptop.
+Current application inference is configured for external Groq, not this proposed Ollama path.
+
+end note
+@enduml

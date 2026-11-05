@@ -1,0 +1,6 @@
+Command: ollama run llama3.2:3b "State your clinical role in one sentence." --nowordwrap
+
+I am not a licensed medical professional and do not have a clinical role. I can provide general information on health and wellness topics, but I should not be relied upon for personalized medical advice or treatment. If you have specific questions or concerns, please consult a qualified healthcare professional.
+
+
+Exit status: 0

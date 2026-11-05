@@ -1,0 +1,100 @@
+@startuml
+!pragma layout smetana
+skinparam dpi 220
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam ArrowColor #44675F
+skinparam componentStyle rectangle
+skinparam rectangleBackgroundColor #E8F3EF
+skinparam databaseBackgroundColor #F6F1E8
+skinparam sequenceParticipantBackgroundColor #E8F3EF
+skinparam sequenceGroupBackgroundColor #FFFFFF
+title Actual relational and vector schema - relevant subset
+hide circle
+skinparam linetype ortho
+entity "users" as users {
+ * id : UUID <<PK>>
+ * role_id : UUID <<FK>>
+ * login_identifier : VARCHAR(255)
+ * password_hash : VARCHAR(255)
+ * status : VARCHAR(50)
+   last_login_at : TIMESTAMP
+ * created_at : TIMESTAMP
+ * updated_at : TIMESTAMP
+}
+entity "patient_profiles" as patient_profiles {
+ * id : UUID <<PK>>
+ * user_id : UUID <<FK>>
+ * display_name : VARCHAR(255)
+   date_of_birth : DATE
+ * preferred_language : VARCHAR(10)
+   contact_reference : VARCHAR(255)
+ * created_at : TIMESTAMP
+ * updated_at : TIMESTAMP
+}
+users ||--o| patient_profiles : user_id
+entity "symptom_records" as symptom_records {
+ * id : UUID <<PK>>
+ * patient_id : UUID <<FK>>
+ * source : VARCHAR(50)
+   raw_input_reference : TEXT
+ * structured_data : JSONB
+ * reported_at : TIMESTAMP
+ * created_at : TIMESTAMP
+ * updated_at : TIMESTAMP
+}
+patient_profiles ||--o{ symptom_records : patient_id
+entity "conversations" as conversations {
+ * id : UUID <<PK>>
+ * patient_id : UUID <<FK>>
+ * language : VARCHAR(10)
+ * status : VARCHAR(50)
+ * started_at : TIMESTAMP
+   ended_at : TIMESTAMP
+}
+patient_profiles ||--o{ conversations : patient_id
+entity "conversation_messages" as conversation_messages {
+ * id : UUID <<PK>>
+ * conversation_id : UUID <<FK>>
+ * sender_type : VARCHAR(50)
+ * content : TEXT
+   metadata : JSONB
+ * created_at : TIMESTAMP
+}
+conversations ||--o{ conversation_messages : conversation_id
+entity "medical_documents" as medical_documents {
+ * id : UUID <<PK>>
+ * title : VARCHAR(255)
+ * publisher : VARCHAR(255)
+   source_reference : TEXT
+   publication_date : DATE
+   version : VARCHAR(50)
+ * language : VARCHAR(10)
+   topic : VARCHAR(100)
+   license : VARCHAR(100)
+ * review_status : VARCHAR(50)
+   last_reviewed_at : TIMESTAMP
+ * created_at : TIMESTAMP
+ * updated_at : TIMESTAMP
+}
+entity "knowledge_chunks" as knowledge_chunks {
+ * id : UUID <<PK>>
+ * document_id : UUID <<FK>>
+ * chunk_index : INTEGER
+ * content : TEXT
+   embedding : vector(384)
+   metadata : JSONB
+ * created_at : TIMESTAMP
+}
+medical_documents ||--o{ knowledge_chunks : document_id
+note bottom
+Relevant subset of 27 live tables. users.role_id references roles.id (outside subset).
+Guide names messages / medical_knowledge_chunks differ from actual table names.
+Document title/publisher are stored in medical_documents; section metadata is JSONB in knowledge_chunks.
+No real patient values are displayed.
+
+end note
+@enduml

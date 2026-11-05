@@ -1,0 +1,248 @@
+[
+  {
+    "file": "Architecture_and_Database_Diagrams\\Figure_1_1_System_Architecture.png",
+    "bytes": 324962,
+    "sha256": "84fcf3a2997a36695c270ee3f671f602533d5922bf530ed282e3fb445e5c386f",
+    "dimensions": [
+      2088,
+      2305
+    ]
+  },
+  {
+    "file": "Architecture_and_Database_Diagrams\\Figure_4_1_Ingestion_Vectorization_Pipeline.png",
+    "bytes": 129304,
+    "sha256": "82fb5c3a2240d1b03e8df7a4455d6a9a5eeaa413c3e596c47eb9ac25e37b75fe",
+    "dimensions": [
+      1668,
+      1749
+    ]
+  },
+  {
+    "file": "Architecture_and_Database_Diagrams\\Figure_4_2_Docker_Deployment_Architecture.png",
+    "bytes": 196006,
+    "sha256": "73500ff6513495a12b6c778dbf3b4ce81116d19baafca5be07f77e121ad29326",
+    "dimensions": [
+      1682,
+      1528
+    ]
+  },
+  {
+    "file": "Architecture_and_Database_Diagrams\\Figure_6_1_Component_Architecture.png",
+    "bytes": 314453,
+    "sha256": "457589af1aa3aaee09f8eae068760c70f144dd08bebe96bdf15be38580982400",
+    "dimensions": [
+      3132,
+      1861
+    ]
+  },
+  {
+    "file": "Architecture_and_Database_Diagrams\\Figure_6_2_UML_Sequence_Diagram.png",
+    "bytes": 446215,
+    "sha256": "c3192416eca81186ee640e8ae66440148d278021a9216a04b043a60f87eb106a",
+    "dimensions": [
+      4209,
+      3014
+    ]
+  },
+  {
+    "file": "Architecture_and_Database_Diagrams\\Figure_8_1_Database_ER_Diagram.png",
+    "bytes": 328639,
+    "sha256": "828d6af2b33adab12f6a53d9fd3262edd9dfc06688f0fda2a74190d3e8dab1f2",
+    "dimensions": [
+      3133,
+      2539
+    ]
+  },
+  {
+    "file": "Backend_Screenshots\\Figure_5_1_FastAPI_Swagger_Docs.png",
+    "bytes": 682845,
+    "sha256": "1a9ddf8f14b6a1cbe2d936e86b069cf7300c9c50be39e3a6c51da6a14a073887",
+    "dimensions": [
+      1264,
+      1979
+    ]
+  },
+  {
+    "file": "Backend_Screenshots\\Figure_5_2_Ollama_Model_Execution.png",
+    "bytes": 262590,
+    "sha256": "ec59a3f933ecb36accff806030c6b5551063b3c025807a0b0f8ad7d494ab177b",
+    "dimensions": [
+      1280,
+      720
+    ]
+  },
+  {
+    "file": "Backend_Screenshots\\Figure_8_2_Pgvector_Query_Output.png",
+    "bytes": 563737,
+    "sha256": "952b21a0800da239f556378c272af5e5aae1009407be349a650b24eaea5e647d",
+    "dimensions": [
+      1264,
+      948
+    ]
+  },
+  {
+    "file": "Editable_Diagram_Sources\\build_diagrams.py",
+    "bytes": 9169,
+    "sha256": "a4412d9d6fc8aab42443e11403556bd51bc094ac54e86c95dd30a544b47a2571"
+  },
+  {
+    "file": "Editable_Diagram_Sources\\Figure_1_1_System_Architecture.puml",
+    "bytes": 1821,
+    "sha256": "a4155b5f8b4750856b3ca45cf0ed9537f13fbcc6fb6086c961f2be5808ce0cfb"
+  },
+  {
+    "file": "Editable_Diagram_Sources\\Figure_4_1_Ingestion_Vectorization_Pipeline.puml",
+    "bytes": 1247,
+    "sha256": "603a7e01cb1640c90de80b236c020b493e3bd8d5b8cd3254395d75b15abf2438"
+  },
+  {
+    "file": "Editable_Diagram_Sources\\Figure_4_2_Docker_Deployment_Architecture.puml",
+    "bytes": 1328,
+    "sha256": "b02604820ab942923aed555589669d19a1aa8b0792f86013eaa01c7e02bc5abd"
+  },
+  {
+    "file": "Editable_Diagram_Sources\\Figure_6_1_Component_Architecture.puml",
+    "bytes": 1801,
+    "sha256": "fefdc4222935ef29d96459b13ed669e651a78073aca498cdf358a8551f3de7ad"
+  },
+  {
+    "file": "Editable_Diagram_Sources\\Figure_6_2_UML_Sequence_Diagram.puml",
+    "bytes": 2075,
+    "sha256": "b6f125a23239a787bbd0719e1b224a8d44c9ba1a166fc63557016a8cd99dfbf8"
+  },
+  {
+    "file": "Editable_Diagram_Sources\\Figure_8_1_Database_ER_Diagram.puml",
+    "bytes": 3024,
+    "sha256": "162ec3522bc4277989e3640f9abe7f4947af3779414113abaeff987ed0d38272"
+  },
+  {
+    "file": "Frontend_Screenshots\\Figure_7_1_Default_Chat_Interface.png",
+    "bytes": 419478,
+    "sha256": "e73e3b8f6c53352c4bbabc0f540d0e04e5e9460c256dc9f04588bca57d911407",
+    "dimensions": [
+      1528,
+      863
+    ]
+  },
+  {
+    "file": "Frontend_Screenshots\\Figure_7_2_Tier_1_Emergency.png",
+    "bytes": 488327,
+    "sha256": "beb200eb46f8247b0f962eb21c6f53a9f187d5489969266ab51781cbfccdfd82",
+    "dimensions": [
+      1524,
+      861
+    ]
+  },
+  {
+    "file": "Frontend_Screenshots\\Figure_7_3_Tier_2_Moderate_Risk.png",
+    "bytes": 417582,
+    "sha256": "7847a7913b2c502793c5ac78a0655596ad035eb3a688d12c1f6c58ed1e72d2e6",
+    "dimensions": [
+      1528,
+      863
+    ]
+  },
+  {
+    "file": "Frontend_Screenshots\\Figure_7_4_Tier_3_Home_Care.png",
+    "bytes": 414872,
+    "sha256": "d5fab0185c8d0bc6a0af7842fcee44ea199332e629b30af169db765861b2cc89",
+    "dimensions": [
+      1528,
+      863
+    ]
+  },
+  {
+    "file": "Frontend_Screenshots\\Figure_7_5_Verified_Medical_Sources.png",
+    "bytes": 494943,
+    "sha256": "1248f033d49e60bbc6a0fb51990a611eae390548220f9d3c31ca19940e3cbbde",
+    "dimensions": [
+      1528,
+      863
+    ]
+  },
+  {
+    "file": "README_and_Checklist\\build_proof_pages.py",
+    "bytes": 1372,
+    "sha256": "4786fad12a9ef00bc4b2a52caeb5e26b6ac3a065cef703d482ec66dce493cf7a"
+  },
+  {
+    "file": "README_and_Checklist\\capture_pgvector.py",
+    "bytes": 1353,
+    "sha256": "d7621ab9f43448390f074060d347512e36b4ab5c2c46d3d4ea153e4a8ab15460"
+  },
+  {
+    "file": "README_and_Checklist\\database_schema.json",
+    "bytes": 37676,
+    "sha256": "dfd7e691fc7c71efd45c8c2bd519b83fca8239e4776112d9fad55836f0a21ccd"
+  },
+  {
+    "file": "README_and_Checklist\\emergency_interception_proof.json",
+    "bytes": 328,
+    "sha256": "f033d3de391ee09fc0f3fb4bac87835a091ffce643ef04b8e77bba08026ef54c"
+  },
+  {
+    "file": "README_and_Checklist\\MASTER_CHECKLIST.csv",
+    "bytes": 8081,
+    "sha256": "fe07aad97ee88e1b6b597185a595267f186316bdeb549525d72553b72f676abd"
+  },
+  {
+    "file": "README_and_Checklist\\MASTER_CHECKLIST.json",
+    "bytes": 11842,
+    "sha256": "c569b65fd2ac29bae8dbc1e8901e65942507755daf2ea25b2c94cdb132d2e4b5"
+  },
+  {
+    "file": "README_and_Checklist\\MASTER_CHECKLIST.md",
+    "bytes": 10170,
+    "sha256": "264d3094ab78f19266c28e4285fe19150d050bfc529964cfadcfbee78081a874"
+  },
+  {
+    "file": "README_and_Checklist\\ollama_execution.txt",
+    "bytes": 426,
+    "sha256": "3880adee105e1682ac3114f54296853750b0b5c063c443a290c85f99784cf70e"
+  },
+  {
+    "file": "README_and_Checklist\\ollama_proof.html",
+    "bytes": 1382,
+    "sha256": "140268e1871475fa6a945004a16257e1883ef4bc5d32de36c16b389fcdbaa862"
+  },
+  {
+    "file": "README_and_Checklist\\openapi.json",
+    "bytes": 104046,
+    "sha256": "460d3bde3fff46cb3716357cd477387088e3ec1e71cd383a153231a709f75abe"
+  },
+  {
+    "file": "README_and_Checklist\\package_outputs.py",
+    "bytes": 10898,
+    "sha256": "09b69049ac12eff7c8a11d68b29c5343de621548728b20ffa1a6879a665a1174"
+  },
+  {
+    "file": "README_and_Checklist\\psql_execution.txt",
+    "bytes": 1559,
+    "sha256": "c91a03ef4cafd40587f5a60f0dc443e6c9cbb9230e5243f8df12111f311be65f"
+  },
+  {
+    "file": "README_and_Checklist\\psql_proof.html",
+    "bytes": 2575,
+    "sha256": "b16a357ca9d64e480e6e83d7560a0617c4edc0e0d514823ae4e6de1db8a135ae"
+  },
+  {
+    "file": "README_and_Checklist\\README.md",
+    "bytes": 11132,
+    "sha256": "b68f9dad6cd2328fa25d606440ed704555fe8e657e6590ac5b3dfb7606deb253"
+  },
+  {
+    "file": "README_and_Checklist\\synthetic_frontend_response_records.json",
+    "bytes": 2596,
+    "sha256": "d70f41482cac0feaeb10b23baae5a9052ac76c2d1115d0493ebdb7b05d50549f"
+  },
+  {
+    "file": "README_and_Checklist\\vector_query.sql",
+    "bytes": 8291,
+    "sha256": "b91de586bf2dbf3fb5de0a9c6b342c321f96a6beadb85e080e946a6f0747ec7e"
+  },
+  {
+    "file": "README_and_Checklist\\vector_retrieval_results.json",
+    "bytes": 1783,
+    "sha256": "0b969faef68955502cb271bfcab0c2ae1bb59076738d1e409e097184d4e14a74"
+  }
+]

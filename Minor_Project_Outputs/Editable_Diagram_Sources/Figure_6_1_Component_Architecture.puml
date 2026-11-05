@@ -1,0 +1,48 @@
+@startuml
+!pragma layout smetana
+skinparam dpi 220
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam ArrowColor #44675F
+skinparam componentStyle rectangle
+skinparam rectangleBackgroundColor #E8F3EF
+skinparam databaseBackgroundColor #F6F1E8
+skinparam sequenceParticipantBackgroundColor #E8F3EF
+skinparam sequenceGroupBackgroundColor #FFFFFF
+title Implemented software components and orchestration
+package "Next.js frontend" {
+ rectangle "AIChatPage\nText input, language, voice review" as UI
+ rectangle "MedEvidence\nExpandable retrieved citations" as Evidence
+ rectangle "ApiClient\nBearer session requests" as Client
+ UI --> Client
+ UI --> Evidence
+}
+package "FastAPI backend" {
+ rectangle "auth_service\nRegistration, login, JWT" as Auth
+ rectangle "ai endpoint\nPatient ownership + consent" as Endpoint
+ rectangle "ai_service.process_ai_chat_query\nDeterministic safety and orchestration" as AI
+ rectangle "knowledge_service.generate_embedding\nMiniLM multilingual encoder" as Embed
+ rectangle "retrieve_multilingual_chunks\nVector search and evidence gate" as Search
+ rectangle "AIGateway\nProvider selection and generation" as Gateway
+ Client --> Endpoint
+ Client --> Auth
+ Endpoint --> AI
+ AI --> Embed
+ AI --> Search
+ AI --> Gateway
+}
+database "PostgreSQL + pgvector\nAccounts, conversations, care, knowledge" as DB
+rectangle "Groq (current)\nOllama (optional local provider)" as LLM
+Search --> DB
+Auth --> DB
+AI --> DB : Save conversation messages
+Gateway --> LLM
+note bottom
+Guide's AuthService / SafetyGateService / VectorSearchService / AIService
+are conceptual responsibilities; actual module/function names are shown.
+
+end note
+@enduml

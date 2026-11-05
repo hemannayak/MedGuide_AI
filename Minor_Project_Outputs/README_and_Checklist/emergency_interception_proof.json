@@ -1,0 +1,8 @@
+{
+  "test": "Synthetic emergency executes before retrieval/generation",
+  "response_type": "EMERGENCY",
+  "retrieval_calls": 0,
+  "sources": 0,
+  "verified_by": "Service branch returns before gateway generation when emergency; retrieval mock would raise if reached",
+  "latency_claim": "No sub-15ms measurement claimed"
+}

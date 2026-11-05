@@ -1,0 +1,39 @@
+@startuml
+!pragma layout smetana
+skinparam dpi 220
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam ArrowColor #44675F
+skinparam componentStyle rectangle
+skinparam rectangleBackgroundColor #E8F3EF
+skinparam databaseBackgroundColor #F6F1E8
+skinparam sequenceParticipantBackgroundColor #E8F3EF
+skinparam sequenceGroupBackgroundColor #FFFFFF
+title Actual medical document ingestion and vectorization
+start
+:Official PDF with verified provenance
+Title, publisher and source reference;
+:pypdf page text extraction;
+:Normalize whitespace
+Preserve page and inferred section metadata;
+:Sliding character windows
+500 characters, 50-character overlap
+Page boundaries retained;
+:paraphrase-multilingual-MiniLM-L12-v2
+ONNX Runtime + attention-mask mean pooling
+SentenceTransformer fallback;
+:384-dimensional dense vectors;
+:PostgreSQL pgvector
+knowledge_chunks.embedding vector(384)
+FK document_id -> medical_documents.id;
+stop
+note right
+Guide specifies 600 tokens / 100 overlap and L6.
+Implementation uses character windows and L12.
+Existing index model metadata is absent; see retrieval audit.
+
+end note
+@enduml

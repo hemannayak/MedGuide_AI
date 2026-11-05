@@ -1,0 +1,1816 @@
+{
+  "alembic_version": {
+    "columns": [
+      {
+        "name": "version_num",
+        "type": "VARCHAR(32)",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "version_num"
+    ],
+    "fks": []
+  },
+  "medical_documents": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "title",
+        "type": "VARCHAR(255)",
+        "nullable": false
+      },
+      {
+        "name": "publisher",
+        "type": "VARCHAR(255)",
+        "nullable": false
+      },
+      {
+        "name": "source_reference",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "publication_date",
+        "type": "DATE",
+        "nullable": true
+      },
+      {
+        "name": "version",
+        "type": "VARCHAR(50)",
+        "nullable": true
+      },
+      {
+        "name": "language",
+        "type": "VARCHAR(10)",
+        "nullable": false
+      },
+      {
+        "name": "topic",
+        "type": "VARCHAR(100)",
+        "nullable": true
+      },
+      {
+        "name": "license",
+        "type": "VARCHAR(100)",
+        "nullable": true
+      },
+      {
+        "name": "review_status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "last_reviewed_at",
+        "type": "TIMESTAMP",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": []
+  },
+  "knowledge_chunks": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "document_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "chunk_index",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "content",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "embedding",
+        "type": "NULL",
+        "nullable": true
+      },
+      {
+        "name": "metadata",
+        "type": "JSONB",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "knowledge_chunks_document_id_fkey",
+        "constrained_columns": [
+          "document_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "medical_documents",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "roles": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "name",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": []
+  },
+  "users": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "role_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "login_identifier",
+        "type": "VARCHAR(255)",
+        "nullable": false
+      },
+      {
+        "name": "password_hash",
+        "type": "VARCHAR(255)",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "last_login_at",
+        "type": "TIMESTAMP",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "users_role_id_fkey",
+        "constrained_columns": [
+          "role_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "roles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "RESTRICT"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "audit_logs": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "actor_user_id",
+        "type": "UUID",
+        "nullable": true
+      },
+      {
+        "name": "action",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "resource_type",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "resource_id",
+        "type": "UUID",
+        "nullable": true
+      },
+      {
+        "name": "timestamp",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "metadata",
+        "type": "JSONB",
+        "nullable": true
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "audit_logs_actor_user_id_fkey",
+        "constrained_columns": [
+          "actor_user_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "SET NULL"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "healthcare_worker_profiles": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "user_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "name",
+        "type": "VARCHAR(255)",
+        "nullable": false
+      },
+      {
+        "name": "worker_type",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "organization",
+        "type": "VARCHAR(255)",
+        "nullable": true
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "healthcare_worker_profiles_user_id_fkey",
+        "constrained_columns": [
+          "user_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "patient_profiles": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "user_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "display_name",
+        "type": "VARCHAR(255)",
+        "nullable": false
+      },
+      {
+        "name": "date_of_birth",
+        "type": "DATE",
+        "nullable": true
+      },
+      {
+        "name": "preferred_language",
+        "type": "VARCHAR(10)",
+        "nullable": false
+      },
+      {
+        "name": "contact_reference",
+        "type": "VARCHAR(255)",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "patient_profiles_user_id_fkey",
+        "constrained_columns": [
+          "user_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "sync_operations": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "user_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "client_operation_id",
+        "type": "VARCHAR(255)",
+        "nullable": false
+      },
+      {
+        "name": "operation_type",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "entity_type",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "entity_id",
+        "type": "UUID",
+        "nullable": true
+      },
+      {
+        "name": "payload_reference",
+        "type": "JSONB",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "synced_at",
+        "type": "TIMESTAMP",
+        "nullable": true
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "retry_count",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "error_code",
+        "type": "VARCHAR(100)",
+        "nullable": true
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "sync_operations_user_id_fkey",
+        "constrained_columns": [
+          "user_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "users",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "alerts": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "patient_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "alert_type",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "severity",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "source",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "acknowledged_at",
+        "type": "TIMESTAMP",
+        "nullable": true
+      },
+      {
+        "name": "resolved_at",
+        "type": "TIMESTAMP",
+        "nullable": true
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "alerts_patient_id_fkey",
+        "constrained_columns": [
+          "patient_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "patient_profiles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "consents": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "patient_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "consent_type",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "version",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "granted_at",
+        "type": "TIMESTAMP",
+        "nullable": true
+      },
+      {
+        "name": "withdrawn_at",
+        "type": "TIMESTAMP",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "consents_patient_id_fkey",
+        "constrained_columns": [
+          "patient_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "patient_profiles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "conversations": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "patient_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "language",
+        "type": "VARCHAR(10)",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "started_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "ended_at",
+        "type": "TIMESTAMP",
+        "nullable": true
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "conversations_patient_id_fkey",
+        "constrained_columns": [
+          "patient_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "patient_profiles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "follow_ups": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "patient_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "healthcare_worker_id",
+        "type": "UUID",
+        "nullable": true
+      },
+      {
+        "name": "reason",
+        "type": "VARCHAR(255)",
+        "nullable": false
+      },
+      {
+        "name": "scheduled_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "notes",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "follow_ups_healthcare_worker_id_fkey",
+        "constrained_columns": [
+          "healthcare_worker_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "healthcare_worker_profiles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "SET NULL"
+        },
+        "comment": null
+      },
+      {
+        "name": "follow_ups_patient_id_fkey",
+        "constrained_columns": [
+          "patient_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "patient_profiles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "health_timeline_events": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "patient_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "event_type",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "reference_id",
+        "type": "UUID",
+        "nullable": true
+      },
+      {
+        "name": "event_time",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "metadata",
+        "type": "JSONB",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "health_timeline_events_patient_id_fkey",
+        "constrained_columns": [
+          "patient_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "patient_profiles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "prescriptions": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "patient_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "source",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "verification_status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "prescribed_date",
+        "type": "DATE",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "prescriptions_patient_id_fkey",
+        "constrained_columns": [
+          "patient_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "patient_profiles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "symptom_records": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "patient_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "source",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "raw_input_reference",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "structured_data",
+        "type": "JSONB",
+        "nullable": false
+      },
+      {
+        "name": "reported_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "symptom_records_patient_id_fkey",
+        "constrained_columns": [
+          "patient_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "patient_profiles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "conversation_messages": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "conversation_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "sender_type",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "content",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "metadata",
+        "type": "JSONB",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "conversation_messages_conversation_id_fkey",
+        "constrained_columns": [
+          "conversation_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "conversations",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "medications": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "patient_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "prescription_id",
+        "type": "UUID",
+        "nullable": true
+      },
+      {
+        "name": "medicine_name",
+        "type": "VARCHAR(255)",
+        "nullable": false
+      },
+      {
+        "name": "dosage",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "route",
+        "type": "VARCHAR(100)",
+        "nullable": true
+      },
+      {
+        "name": "instructions",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "verification_status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "medications_patient_id_fkey",
+        "constrained_columns": [
+          "patient_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "patient_profiles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      },
+      {
+        "name": "medications_prescription_id_fkey",
+        "constrained_columns": [
+          "prescription_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "prescriptions",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "SET NULL"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "prescription_images": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "prescription_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "storage_reference",
+        "type": "VARCHAR(512)",
+        "nullable": false
+      },
+      {
+        "name": "file_type",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "file_size",
+        "type": "BIGINT",
+        "nullable": false
+      },
+      {
+        "name": "checksum",
+        "type": "VARCHAR(64)",
+        "nullable": true
+      },
+      {
+        "name": "uploaded_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "prescription_images_prescription_id_fkey",
+        "constrained_columns": [
+          "prescription_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "prescriptions",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "medication_schedules": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "medication_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "frequency",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "schedule_data",
+        "type": "JSONB",
+        "nullable": false
+      },
+      {
+        "name": "start_date",
+        "type": "DATE",
+        "nullable": false
+      },
+      {
+        "name": "end_date",
+        "type": "DATE",
+        "nullable": true
+      },
+      {
+        "name": "timezone",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "medication_schedules_medication_id_fkey",
+        "constrained_columns": [
+          "medication_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "medications",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "ocr_results": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "prescription_image_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "engine",
+        "type": "VARCHAR(100)",
+        "nullable": false
+      },
+      {
+        "name": "model_version",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "raw_text",
+        "type": "TEXT",
+        "nullable": false
+      },
+      {
+        "name": "confidence",
+        "type": "DOUBLE PRECISION",
+        "nullable": true
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "processed_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "ocr_results_prescription_image_id_fkey",
+        "constrained_columns": [
+          "prescription_image_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "prescription_images",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "medication_adherences": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "medication_schedule_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "scheduled_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "recorded_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "source",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "medication_adherences_medication_schedule_id_fkey",
+        "constrained_columns": [
+          "medication_schedule_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "medication_schedules",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "patient_worker_accesses": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "healthcare_worker_profile_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "patient_profile_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "type": "VARCHAR(50)",
+        "nullable": false
+      },
+      {
+        "name": "granted_at",
+        "type": "TIMESTAMP",
+        "nullable": true
+      },
+      {
+        "name": "revoked_at",
+        "type": "TIMESTAMP",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "patient_worker_accesses_healthcare_worker_profile_id_fkey",
+        "constrained_columns": [
+          "healthcare_worker_profile_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "healthcare_worker_profiles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      },
+      {
+        "name": "patient_worker_accesses_patient_profile_id_fkey",
+        "constrained_columns": [
+          "patient_profile_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "patient_profiles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "patient_wellness": {
+    "columns": [
+      {
+        "name": "patient_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "gender",
+        "type": "VARCHAR(80)",
+        "nullable": true
+      },
+      {
+        "name": "emergency_contact",
+        "type": "VARCHAR(255)",
+        "nullable": true
+      },
+      {
+        "name": "healthcare_provider",
+        "type": "VARCHAR(255)",
+        "nullable": true
+      },
+      {
+        "name": "conditions",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "past_illnesses",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "surgeries",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "allergies",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "accessibility_needs",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "family_history",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "treatment_history",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "sleep_notes",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "activity_notes",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "dietary_preferences",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "vaccination_notes",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "lab_report_notes",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "health_goals",
+        "type": "TEXT",
+        "nullable": true
+      },
+      {
+        "name": "water_goal_ml",
+        "type": "INTEGER",
+        "nullable": true
+      },
+      {
+        "name": "step_goal",
+        "type": "INTEGER",
+        "nullable": true
+      },
+      {
+        "name": "large_controls",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "onboarding_step",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "onboarding_complete",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "health_notice_version",
+        "type": "VARCHAR(10)",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "patient_id"
+    ],
+    "fks": [
+      {
+        "name": "patient_wellness_patient_id_fkey",
+        "constrained_columns": [
+          "patient_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "patient_profiles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "wellness_entries": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "patient_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "operation_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "day",
+        "type": "DATE",
+        "nullable": false
+      },
+      {
+        "name": "kind",
+        "type": "VARCHAR(20)",
+        "nullable": false
+      },
+      {
+        "name": "amount",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "source",
+        "type": "VARCHAR(30)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "wellness_entries_patient_id_fkey",
+        "constrained_columns": [
+          "patient_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "patient_profiles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "patient_measurements": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "patient_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "operation_id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "kind",
+        "type": "VARCHAR(30)",
+        "nullable": false
+      },
+      {
+        "name": "value",
+        "type": "DOUBLE PRECISION",
+        "nullable": false
+      },
+      {
+        "name": "secondary_value",
+        "type": "DOUBLE PRECISION",
+        "nullable": true
+      },
+      {
+        "name": "unit",
+        "type": "VARCHAR(20)",
+        "nullable": false
+      },
+      {
+        "name": "measured_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "source",
+        "type": "VARCHAR(20)",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": [
+      {
+        "name": "patient_measurements_patient_id_fkey",
+        "constrained_columns": [
+          "patient_id"
+        ],
+        "referred_schema": null,
+        "referred_table": "patient_profiles",
+        "referred_columns": [
+          "id"
+        ],
+        "options": {
+          "ondelete": "CASCADE"
+        },
+        "comment": null
+      }
+    ]
+  },
+  "otp_records": {
+    "columns": [
+      {
+        "name": "id",
+        "type": "UUID",
+        "nullable": false
+      },
+      {
+        "name": "phone_number",
+        "type": "VARCHAR(32)",
+        "nullable": false
+      },
+      {
+        "name": "otp_hash",
+        "type": "VARCHAR(255)",
+        "nullable": false
+      },
+      {
+        "name": "purpose",
+        "type": "VARCHAR(32)",
+        "nullable": false
+      },
+      {
+        "name": "attempts",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "max_attempts",
+        "type": "INTEGER",
+        "nullable": false
+      },
+      {
+        "name": "resend_after",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "expires_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "is_verified",
+        "type": "BOOLEAN",
+        "nullable": false
+      },
+      {
+        "name": "consumed_at",
+        "type": "TIMESTAMP",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "type": "TIMESTAMP",
+        "nullable": false
+      }
+    ],
+    "pk": [
+      "id"
+    ],
+    "fks": []
+  }
+}
