@@ -1,0 +1,29 @@
+[
+  {
+    "id": "RURAL-ACCESS-01",
+    "title": "ASHA Induction Module, English",
+    "source_url": "https://www.nhm.gov.in/images/pdf/communitisation/asha/ASHA_Induction_Module_English.pdf",
+    "discovered_from": "https://www.nhm.gov.in/aboutnrhm/index1.php?lang=1&level=1&lid=226&sublinkid=150",
+    "scope": "service_navigation",
+    "review_status": "PENDING",
+    "intended_use": "Review village-level access and worker roles, excluding prescribing instructions"
+  },
+  {
+    "id": "RURAL-INFRA-01",
+    "title": "Health Dynamics of India, Infrastructure and Human Resources 2022-23",
+    "source_url": "https://www.mohfw.gov.in/sites/default/files/Health%20Dynamics%20of%20India%20%28Infrastructure%20%26%20Human%20Resources%29%202022-23_RE%20%281%29.pdf",
+    "discovered_from": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2100595&lang=2&reg=48",
+    "scope": "population_surveillance",
+    "review_status": "PENDING",
+    "intended_use": "Rural facility and workforce coverage; distinguish rural and urban tables"
+  },
+  {
+    "id": "RURAL-NFHS-06",
+    "title": "National Family Health Survey (NFHS-6) 2023-2024 Fact Sheets",
+    "source_url": "https://www.nfhsiips.in/nfhsuser/assets/National%20Family%20Health%20Survey%20%28NFHS-6%29%202023-2024%20Fact%20Sheets.pdf",
+    "discovered_from": "https://www.pib.gov.in/FactsheetDetails.aspx?Id=150905&lang=1&reg=35",
+    "scope": "population_surveillance",
+    "review_status": "PENDING",
+    "intended_use": "Review rural columns, denominators, survey dates and missing values before publication"
+  }
+]

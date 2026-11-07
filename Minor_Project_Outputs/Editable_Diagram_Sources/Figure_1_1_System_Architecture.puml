@@ -1,0 +1,41 @@
+@startuml
+!pragma layout smetana
+skinparam dpi 220
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam ArrowColor #44675F
+skinparam componentStyle rectangle
+skinparam rectangleBackgroundColor #E8F3EF
+skinparam databaseBackgroundColor #F6F1E8
+skinparam sequenceParticipantBackgroundColor #E8F3EF
+skinparam sequenceGroupBackgroundColor #FFFFFF
+title MedGuide AI implemented system architecture
+rectangle "Next.js 16 frontend :3000\nAuthenticated health companion" as UI
+rectangle "FastAPI :8000\nJWT authorization and account consent" as API
+rectangle "Deterministic safety gate\nDocumented red-flag patterns" as SG
+rectangle "Emergency response\nNo retrieval or LLM call" as ER #FBE7E7
+rectangle "Query embedding and retrieval\nMultilingual MiniLM-L12-v2, 384 dimensions" as RET
+database "PostgreSQL 18 + pgvector\nknowledge_chunks + medical_documents\nAccount and care records" as DB
+rectangle "Evidence sufficiency gate\nInsufficient evidence -> safe refusal" as EG
+rectangle "AI gateway\nCurrent configuration: Groq\nqwen/qwen3.8-27b" as AI
+rectangle "Ollama :11434\nOptional local provider\nSeparate CLI proof, not current app default" as OL
+UI --> API : Authenticated request
+API --> SG
+SG -right-> ER : Red flags
+ER --> API : Immediate escalation text
+SG --> RET : Non-emergency
+RET <--> DB : Cosine vector search
+RET --> EG : Retrieved evidence
+EG --> AI : Sufficient context
+AI ..> OL : Alternative provider
+AI --> API : Output validation and citations
+API --> UI : Response type + text + sources
+note bottom
+Verified against repository and runtime configuration on 23 October 2026.
+No claim of fully local inference for the current Groq configuration.
+
+end note
+@enduml

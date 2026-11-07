@@ -1,3 +1,4 @@
+import { Language } from '../lib/i18n';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Brand, Button, palette } from './brand-ui';
@@ -9,7 +10,7 @@ import { WalkthroughTip } from './walkthrough-tip';
 import { stopGuidance } from '../lib/audio-guide';
 type Destination = '/home' | '/chat' | '/care' | '/settings' | '/timeline' | '/prescriptions/upload' | '/profile' | '/symptoms';
 /** Keep daily tracking between the conversation actions and care shortcuts. */
-export function HomeView({ onNavigate, children, dailyDashboard, walkthrough=false, onWalkthroughDone }: { onNavigate: (route: Destination) => void; children?: ReactNode; dailyDashboard?: ReactNode; walkthrough?:boolean; onWalkthroughDone?:()=>Promise<void> }) {
+export function HomeView({ onNavigate, children, dailyDashboard, walkthrough=false, onWalkthroughDone, language='en' }: { onNavigate: (route: Destination) => void; children?: ReactNode; dailyDashboard?: ReactNode; walkthrough?:boolean; onWalkthroughDone?:()=>Promise<void>; language?:Language }) {
   const [tip,setTip]=useState<number|null>(walkthrough?0:null);
   const [previousWalkthrough,setPreviousWalkthrough]=useState(walkthrough);
   if(previousWalkthrough!==walkthrough){setPreviousWalkthrough(walkthrough);if(walkthrough)setTip(0);}
@@ -24,7 +25,7 @@ export function HomeView({ onNavigate, children, dailyDashboard, walkthrough=fal
     try{await onWalkthroughDone?.();setTip(null);}catch{setTourError('Could not save walkthrough completion. Check your connection and try Finish or Skip again.');}
     finally{closing.current=false;setSaving(false);}
   }
-  const guidance=(step:number)=>tip===step?<WalkthroughTip step={step} busy={saving} error={tourError} onChange={setTip} onClose={()=>void closeTour()}/>:null;
+  const guidance=(step:number)=>tip===step?<WalkthroughTip language={language} step={step} busy={saving} error={tourError} onChange={setTip} onClose={()=>void closeTour()}/>:null;
   const tourLayout=(step:number,y:number)=>{if(tip===step)scroll.current?.scrollTo({y:Math.max(0,y-12),animated:false});};
   return <FadeIn style={{ flex: 1, backgroundColor: palette.cream }}>
     <ScrollView ref={scroll} contentContainerStyle={styles.page}>

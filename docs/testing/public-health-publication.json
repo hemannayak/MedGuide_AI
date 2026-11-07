@@ -1,0 +1,28 @@
+{
+  "scope": "population_surveillance",
+  "active_documents": 1,
+  "versions": [
+    {
+      "id": "1cfc2b68-86b4-5811-ba9c-40e35699a238",
+      "title": "India: Health of the Nation's States \u2014 India State-Level Disease Burden Initiative (2017)",
+      "review_status": "SUPERSEDED_SURVEILLANCE",
+      "version": "aeb6a91b577708a9dc0524c920ecaec5",
+      "chunks": 3
+    },
+    {
+      "id": "53fe25c0-e7df-5dc5-bece-9d8453d26cdf",
+      "title": "India: Health of the Nation's States \u2014 India State-Level Disease Burden Initiative (2017)",
+      "review_status": "APPROVED_SURVEILLANCE",
+      "version": "1e593d6c63452e8f770829255cf97789",
+      "chunks": 3
+    }
+  ],
+  "reviewed_source": "IND-PH-17",
+  "approved_pdf_pages": [
+    21,
+    22
+  ],
+  "license_pdf_page": 2,
+  "review_scope": "Three selected narrative passages only; not complete-document or clinical approval",
+  "idempotent_rerun_documents_added": 0
+}

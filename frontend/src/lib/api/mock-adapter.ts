@@ -79,7 +79,7 @@ export class MockApiAdapter {
     await new Promise((res) => setTimeout(res, 1200));
 
     const msgLower = req.message.toLowerCase();
-    
+
     // Check for mock emergency triggers
     if (msgLower.includes("chest pain") || msgLower.includes("breathing difficulty") || msgLower.includes("severe pain")) {
       return {
@@ -193,7 +193,7 @@ export class MockApiAdapter {
     };
   }
 
-  static async speechTTS(text: string, language?: string): Promise<StandardResponse<{ audio_base64: string; format: string; duration_seconds: number; provider: string }>> {
+  static async speechTTS(_text: string, _language?: string): Promise<StandardResponse<{ audio_base64: string; format: string; duration_seconds: number; provider: string }>> {
     await new Promise((res) => setTimeout(res, 600));
     return {
       success: true,

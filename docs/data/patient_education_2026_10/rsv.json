@@ -1,0 +1,72 @@
+{
+  "topic": "rsv",
+  "source_url": "https://www.cdc.gov/rsv/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "About RSV",
+  "sections": [
+    {
+      "heading": "What is RSV?",
+      "text": "Respiratory syncytial virus, or RSV, is a common respiratory virus that infects the nose, throat, respiratory tract, and lungs. RSV symptoms are not specific, which makes it difficult to distinguish RSV from the common cold or other respiratory viruses (like the flu or COVID-19). RSV spreads in the fall and winter along with other respiratory viruses. It usually peaks in December and January."
+    },
+    {
+      "heading": "RSV can be dangerous for infants and older adults",
+      "text": "RSV does not usually cause severe illness in healthy adults and children. However, some people with RSV infection, especially infants younger than 6 months of age and adults who are older or have certain risk factors, can become very sick and may need to be hospitalized."
+    },
+    {
+      "heading": "RSV can be dangerous for infants and older adults",
+      "text": "RSV can also cause more severe illness such as bronchiolitis (inflammation of the small airways in the lungs) and pneumonia (infection of the lungs). It is the most common cause of bronchiolitis and pneumonia in children younger than 1 year of age."
+    },
+    {
+      "heading": "RSV can be dangerous for infants and older adults",
+      "text": "In the most severe cases, a person may require:"
+    },
+    {
+      "heading": "RSV can be dangerous for infants and older adults",
+      "text": "Additional oxygen,"
+    },
+    {
+      "heading": "RSV can be dangerous for infants and older adults",
+      "text": "IV fluids if they can't drink enough to stay hydrated, or"
+    },
+    {
+      "heading": "RSV can be dangerous for infants and older adults",
+      "text": "Intubation (have a breathing tube inserted through the mouth and into the windpipe) with mechanical ventilation (a machine to help a person breathe)."
+    },
+    {
+      "heading": "RSV can be dangerous for infants and older adults",
+      "text": "In most of these cases, hospitalization lasts only a few days."
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "9c6902fcebeea9eab2be09c3f3e4aa10605903e79ce69fcd5d4c5c6ded840fe0",
+  "resolved_url": "https://www.cdc.gov/rsv/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:09.423100+00:00",
+  "html_sha256": "37867d647d97e12a6f569aba15fb5051e0b1f42d2066fe3f8e96d7e35a2bae54",
+  "chunks": [
+    {
+      "content": "Respiratory syncytial virus, or RSV, is a common respiratory virus that infects the nose, throat, respiratory tract, and lungs. RSV symptoms are not specific, which makes it difficult to distinguish RSV from the common cold or other respiratory viruses (like the flu or COVID-19). RSV spreads in the fall and winter along with other respiratory viruses. It usually peaks in December and January.",
+      "section_title": "What is RSV?",
+      "content_sha256": "3e4f523cc5a1d795dad0ebd05b15d9476137e6cf9849279cabef02515af9a0e7",
+      "chunk_index": 0
+    },
+    {
+      "content": "RSV does not usually cause severe illness in healthy adults and children. However, some people with RSV infection, especially infants younger than 6 months of age and adults who are older or have certain risk factors, can become very sick and may need to be hospitalized. RSV can also cause more severe illness such as bronchiolitis (inflammation of the small airways in the lungs) and pneumonia (infection of the lungs). It is the most common cause of bronchiolitis and pneumonia in children younger",
+      "section_title": "RSV can be dangerous for infants and older adults",
+      "content_sha256": "af59fbb92b01714be192cccb8618b6dfb9bbfbc13e0d895918d21ace29256d5f",
+      "chunk_index": 1
+    },
+    {
+      "content": "than 1 year of age. In the most severe cases, a person may require: Additional oxygen, IV fluids if they can't drink enough to stay hydrated, or Intubation (have a breathing tube inserted through the mouth and into the windpipe) with mechanical ventilation (a machine to help a person breathe). In most of these cases, hospitalization lasts only a few days.",
+      "section_title": "RSV can be dangerous for infants and older adults",
+      "content_sha256": "443baea116549192d448196b15d2a96161fd7a194b477e36b7a5890073881193",
+      "chunk_index": 2
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "c6f7552c-0695-5405-af7b-9eb81557ecfc"
+}

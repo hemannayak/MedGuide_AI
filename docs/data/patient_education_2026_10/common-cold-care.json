@@ -1,0 +1,188 @@
+{
+  "topic": "common-cold-care",
+  "source_url": "https://www.cdc.gov/common-cold/treatment/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "Manage Common Cold",
+  "sections": [
+    {
+      "heading": "Overview",
+      "text": "Most people with cold symptoms (runny nose, cough, sore throat) will not require specific treatment. They can take steps to manage their symptoms and prevent spreading the virus. However, there are rare cases when a viral infection can lead to a bacterial infection, like pneumonia, which requires antibiotics."
+    },
+    {
+      "heading": "Fact",
+      "text": "If a healthcare provider diagnoses your illness as COVID-19 or flu, you may be eligible for antiviral treatment that can lessen symptoms and shorten the time you are sick. You should start COVID-19 treatment within 5-7 days after symptoms begin or within 2 days for flu treatment. Contact your healthcare provider promptly if you have symptoms and are at higher risk for complications from COVID-19 or flu. Treatment may reduce your risk of complications, including those that can result in hospitalization or death."
+    },
+    {
+      "heading": "Fact",
+      "text": "There are currently no antivirals that work against other respiratory viruses that cause cold symptoms."
+    },
+    {
+      "heading": "Manage symptoms",
+      "text": "In most cases, your cold symptoms will get better on their own with time."
+    },
+    {
+      "heading": "Adults",
+      "text": "Ask your healthcare provider or pharmacist about over-the-counter (OTC) medicines, such as pain relievers and fever reducers. These can lessen symptoms and help you feel better. Be sure to mention any other prescription or OTC medicines you are taking. Always use OTC medicines as directed. Remember, OTC medicines may provide temporary relief of symptoms, but will not cure your illness."
+    },
+    {
+      "heading": "Children",
+      "text": "OTC cough/cold medicines are not recommended for children younger than 6 years old and can result in serious and sometimes life-threatening side effects. But young children can have acetaminophen or ibuprofen for fever. Contact your healthcare provider about the correct dose and read and follow all directions."
+    },
+    {
+      "heading": "Children",
+      "text": "Below are ways you can feel better while your body fights off cold symptoms:"
+    },
+    {
+      "heading": "Children",
+      "text": "Get plenty of rest."
+    },
+    {
+      "heading": "Children",
+      "text": "Drink plenty of fluids."
+    },
+    {
+      "heading": "Children",
+      "text": "Use a clean humidifier or cool mist vaporizer."
+    },
+    {
+      "heading": "Children",
+      "text": "Use saline nasal spray or drops. For young children, use a rubber suction bulb to clear mucus."
+    },
+    {
+      "heading": "Children",
+      "text": "Breathe in steam from a bowl of hot water or shower. Sit with a young child in a bathroom with steam from a running shower."
+    },
+    {
+      "heading": "Children",
+      "text": "Use throat lozenges or cough drops. Do not give lozenges to children younger than 4 years old."
+    },
+    {
+      "heading": "Children",
+      "text": "Use honey to relieve cough for adults and children at least 1 year old. Babies younger than 1 year old should not be given honey."
+    },
+    {
+      "heading": "Children",
+      "text": "Get more information on preventing the spread of respiratory viruses when you are sick."
+    },
+    {
+      "heading": "When to seek medical care",
+      "text": "If you or your child has symptoms of a respiratory virus and is at higher risk of severe illness from COVID-19 or flu, contact your healthcare provider right away even if your illness is mild. You might be eligible for early antiviral treatments that work best when started soon after symptoms begin."
+    },
+    {
+      "heading": "For everyone:",
+      "text": "Seek medical care if you or your child has:"
+    },
+    {
+      "heading": "For everyone:",
+      "text": "Trouble breathing or fast breathing"
+    },
+    {
+      "heading": "For everyone:",
+      "text": "Dehydration"
+    },
+    {
+      "heading": "For everyone:",
+      "text": "Fever that lasts longer than 4 days"
+    },
+    {
+      "heading": "For everyone:",
+      "text": "Symptoms that last more than 10 days without getting better"
+    },
+    {
+      "heading": "For everyone:",
+      "text": "Symptoms, such as fever or cough, that improve then return or worsen"
+    },
+    {
+      "heading": "For everyone:",
+      "text": "Chronic medical conditions the get worse"
+    },
+    {
+      "heading": "For everyone:",
+      "text": "This list is not all-inclusive. Please see a healthcare provider for any symptom that is severe or concerning."
+    },
+    {
+      "heading": "Resources",
+      "text": "Download the Common Cold Fact Sheet for how to manage your symptoms and prevent getting sick."
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "8ae9b99c849821324664c00ce084676382c9a0ff79e52a6f5c533efb7376a21c",
+  "resolved_url": "https://www.cdc.gov/common-cold/treatment/index.html",
+  "retrieved_at": "2026-10-23T16:29:17.273786+00:00",
+  "html_sha256": "8608836a62b5034fd183c66f5572a49f6d3b905a5a453bba6a349f18ab1f0b59",
+  "chunks": [
+    {
+      "content": "Most people with cold symptoms (runny nose, cough, sore throat) will not require specific treatment. They can take steps to manage their symptoms and prevent spreading the virus. However, there are rare cases when a viral infection can lead to a bacterial infection, like pneumonia, which requires antibiotics.",
+      "section_title": "Overview",
+      "content_sha256": "1b75dd16a81787da021b4066541449fb50c9746436ef4599059a3176582e48f9",
+      "chunk_index": 0
+    },
+    {
+      "content": "If a healthcare provider diagnoses your illness as COVID-19 or flu, you may be eligible for antiviral treatment that can lessen symptoms and shorten the time you are sick. You should start COVID-19 treatment within 5-7 days after symptoms begin or within 2 days for flu treatment. Contact your healthcare provider promptly if you have symptoms and are at higher risk for complications from COVID-19 or flu. Treatment may reduce your risk of complications, including those that can result in",
+      "section_title": "Fact",
+      "content_sha256": "33bd58ca8b6b28020a84ec23a9804ea24e9f651e5e5855bcb0a9ea9d95668a45",
+      "chunk_index": 1
+    },
+    {
+      "content": "hospitalization or death. There are currently no antivirals that work against other respiratory viruses that cause cold symptoms.",
+      "section_title": "Fact",
+      "content_sha256": "35d4123697695f1c414df1abcd897dd5a94a1bb2ef97db2e40fd599ff15875f1",
+      "chunk_index": 2
+    },
+    {
+      "content": "In most cases, your cold symptoms will get better on their own with time.",
+      "section_title": "Manage symptoms",
+      "content_sha256": "acdd148a4e5e834c38d8881f83c885f68a1aae1e0b341112d0993c42ba000cd7",
+      "chunk_index": 3
+    },
+    {
+      "content": "Ask your healthcare provider or pharmacist about over-the-counter (OTC) medicines, such as pain relievers and fever reducers. These can lessen symptoms and help you feel better. Be sure to mention any other prescription or OTC medicines you are taking. Always use OTC medicines as directed. Remember, OTC medicines may provide temporary relief of symptoms, but will not cure your illness.",
+      "section_title": "Adults",
+      "content_sha256": "06e0ce7757d261a121071f9532e8678379ea98be6f0c8daa800c1e6798bed650",
+      "chunk_index": 4
+    },
+    {
+      "content": "OTC cough/cold medicines are not recommended for children younger than 6 years old and can result in serious and sometimes life-threatening side effects. But young children can have acetaminophen or ibuprofen for fever. Contact your healthcare provider about the correct dose and read and follow all directions. Below are ways you can feel better while your body fights off cold symptoms: Get plenty of rest. Drink plenty of fluids. Use a clean humidifier or cool mist vaporizer. Use saline nasal",
+      "section_title": "Children",
+      "content_sha256": "f33f05c218ee20cabe96f40f9f9e5564a70373624140dfcc6cded0695051a058",
+      "chunk_index": 5
+    },
+    {
+      "content": "spray or drops. For young children, use a rubber suction bulb to clear mucus. Breathe in steam from a bowl of hot water or shower. Sit with a young child in a bathroom with steam from a running shower. Use throat lozenges or cough drops. Do not give lozenges to children younger than 4 years old. Use honey to relieve cough for adults and children at least 1 year old. Babies younger than 1 year old should not be given honey. Get more information on preventing the spread of respiratory viruses when",
+      "section_title": "Children",
+      "content_sha256": "c0218d445a63cac8b6df4f4700e3648f563b6f66d8c03b1dd075e01c5549c726",
+      "chunk_index": 6
+    },
+    {
+      "content": "you are sick.",
+      "section_title": "Children",
+      "content_sha256": "cb647a896bd67fa8acb496cc62f290c957e598e5c925e0a2705a19f0a0157a94",
+      "chunk_index": 7
+    },
+    {
+      "content": "If you or your child has symptoms of a respiratory virus and is at higher risk of severe illness from COVID-19 or flu, contact your healthcare provider right away even if your illness is mild. You might be eligible for early antiviral treatments that work best when started soon after symptoms begin.",
+      "section_title": "When to seek medical care",
+      "content_sha256": "84451996591e8f1ec04458f34b29b3f42aea1f1ac8375bac00e9e223559bf90a",
+      "chunk_index": 8
+    },
+    {
+      "content": "Seek medical care if you or your child has: Trouble breathing or fast breathing Dehydration Fever that lasts longer than 4 days Symptoms that last more than 10 days without getting better Symptoms, such as fever or cough, that improve then return or worsen Chronic medical conditions the get worse This list is not all-inclusive. Please see a healthcare provider for any symptom that is severe or concerning.",
+      "section_title": "For everyone:",
+      "content_sha256": "53d67a9c574542d8a123d12e94c3f0f3694052d811d58447c00529b7801875ff",
+      "chunk_index": 9
+    },
+    {
+      "content": "Download the Common Cold Fact Sheet for how to manage your symptoms and prevent getting sick.",
+      "section_title": "Resources",
+      "content_sha256": "3156cd0999d26296bcd6cb0032708d091df5a34d9fce02984cbb7c73f020d920",
+      "chunk_index": 10
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "acdaabfe-6d86-5746-95c9-13933091c5e6"
+}

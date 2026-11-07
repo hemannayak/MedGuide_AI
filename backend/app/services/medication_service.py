@@ -86,6 +86,7 @@ def verify_medication(
     patient_profile: PatientProfile,
     medication_id: str,
     actor_user_id=None,
+    expected_updated_at=None,
 ) -> Medication:
     """
     Explicitly verify a PENDING medication, promoting it to VERIFIED status.
@@ -97,6 +98,11 @@ def verify_medication(
     Idempotent: returns the medication unchanged if already VERIFIED.
     """
     med = get_medication_by_id(db, patient_profile, medication_id)
+    db.refresh(med, with_for_update=True)
+    from app.models.audit import AuditLog
+    corrected = db.query(AuditLog.id).filter(AuditLog.resource_id == med.id, AuditLog.action == 'MEDICATION_OCR_CORRECTED').first() is not None
+    if (corrected and expected_updated_at is None) or (expected_updated_at is not None and med.updated_at != expected_updated_at):
+        raise HTTPException(409, 'Medication details changed. Reload and review the current details before confirming.')
 
     if not med.dosage or med.dosage == "Unspecified" or med.medicine_name == "Unknown Medicine":
         raise HTTPException(status_code=422, detail="Incomplete medication details require professional review before verification")

@@ -1,0 +1,11 @@
+{
+  "url": "https://www.cdc.gov/other/agencymaterials.html",
+  "script_http_status": 200,
+  "reviewed_via": "Official CDC policy page read with web research tool on 2026-10-23",
+  "conditions": [
+    "Text only; exclude explicit third-party copyright restrictions",
+    "Preserve substantive text",
+    "Attribute CDC, link free source, state no endorsement",
+    "No logos/images; no India-specific clinical approval claimed"
+  ]
+}

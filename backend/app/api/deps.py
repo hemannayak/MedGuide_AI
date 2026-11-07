@@ -8,6 +8,7 @@ from app.core.config import settings
 from app.core.security import decode_access_token
 from app.db.session import SessionLocal
 from app.models.users import User
+from app.services.session_service import is_token_revoked
 
 security_scheme = HTTPBearer(auto_error=False)
 
@@ -42,6 +43,10 @@ def get_current_user(
             detail="Invalid or expired authentication token",
             headers={"WWW-Authenticate": "Bearer"},
         )
+
+    if is_token_revoked(db, token):
+        raise HTTPException(status_code=401, detail="Session has been signed out",
+                            headers={"WWW-Authenticate": "Bearer"})
 
     user_id_str: str = payload.get("sub", "")
     try:
@@ -87,4 +92,13 @@ def require_speech_consent(current_user: User = Depends(get_current_user),
     from app.services.consent_service import require_patient_consent
     profile = get_patient_profile_by_user(db, current_user)
     require_patient_consent(db, profile, "SPEECH_PROCESSING")
+    return current_user
+
+
+def require_spoken_guidance_consent(current_user: User = Depends(require_speech_consent),
+                                    db: Session = Depends(get_db)) -> User:
+    from app.services.patient_service import get_patient_profile_by_user
+    from app.services.consent_service import require_patient_consent
+    profile = get_patient_profile_by_user(db, current_user)
+    require_patient_consent(db, profile, 'SPOKEN_GUIDANCE')
     return current_user

@@ -39,6 +39,7 @@ ai/models/*.pt
 ai/models/*.onnx
 
 # Coverage & Testing
+.g/
 coverage/
 .coverage
 htmlcov/
@@ -47,4 +48,20 @@ htmlcov/
 # Uploads & User Media (Prescription Images)
 uploads/
 backend/uploads/
+
+
+# Private recovery snapshots (never commit)
+.local-backups/
+
+# Temporary mobile device inspection dumps and screenshots
+mobile/window_dump*.xml
+mobile_current.png
+mobile_screen.png
+mobile/live_*.png
+!mobile/live_front_clean.png
+!mobile/live_home_dashboard.png
+
+
+# Redundant zip packaging (unpacked folder is committed)
+Minor_Project_Outputs.zip
 

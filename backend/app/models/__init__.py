@@ -41,7 +41,11 @@ __all__ = [
     "AuditLog",
     "SyncOperation",
     "PatientWorkerAccess",
+    "OTPRecord",
 ]
 
 
 from app.models.wellness import PatientWellness, WellnessEntry, PatientMeasurement
+from app.models.otp import OTPRecord
+from app.models.sessions import RevokedAccessToken
+

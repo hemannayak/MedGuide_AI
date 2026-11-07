@@ -1,0 +1,29 @@
+MedGuide AI | Actual read-only psql execution | 23 October 2026
+Command: psql -X -d medguide_ai_dev -v ON_ERROR_STOP=1 -f vector_query.sql
+Credentials supplied privately through environment; never printed.
+Query text: What is the initial management of hypertension in adults?
+Encoder: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 (384 dimensions)
+Prepared query (real embedding bound in vector_query.sql):
+SELECT md.title AS source_title, kc.metadata->>'section_title' AS section,
+  kc.metadata->>'page_number' AS page, 1-(kc.embedding <=> $1) AS similarity
+FROM knowledge_chunks kc JOIN medical_documents md ON md.id=kc.document_id
+WHERE kc.embedding IS NOT NULL
+ORDER BY kc.embedding <=> $1 ASC LIMIT 3;
+
+Pager usage is off.
+ current_database | pgvector_version 
+------------------+------------------
+ medguide_ai_dev  | 0.8.5
+(1 row)
+
+PREPARE
+                                       source_title                                       | section | page |     similarity     
+------------------------------------------------------------------------------------------+---------+------+--------------------
+ Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care | 263     | 273  | 0.8668233058360635
+ Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care | 262     | 272  | 0.8650897732705611
+ Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care | 257     | 267  | 0.8644826503728832
+(3 rows)
+
+
+
+Exit status: 0

@@ -1,100 +1,151 @@
 import { useEffect, useRef, useState } from 'react';
-import { KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import { router } from 'expo-router';
-import { Brand, Button, palette } from '../components/brand-ui';
-import { registerPatient, signIn } from '../lib/api';
+import { Brand, Button } from '../components/brand-ui';
+import { AuthCarousel } from '../components/auth-carousel';
 import { Language, t } from '../lib/i18n';
-import { speakGuidance, stopGuidance } from '../lib/audio-guide';
-import { RuralScene } from '../components/rural-scene';
-import { MedicalShieldSvg, DoctorConsultSvg } from '../components/illustrations';
+import { requestOtp, registerWithOtp } from '../lib/api';
 
 export default function Register() {
+  const [step, setStep] = useState<'DETAILS' | 'OTP'>('DETAILS');
   const [name, setName] = useState('');
-  const [identifier, setIdentifier] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmation, setConfirmation] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [otpCode, setOtpCode] = useState('');
   const [language, setLanguage] = useState<Language>('en');
-  const [accepted, setAccepted] = useState(false);
+  const [accepted, setAccepted] = useState(true);
   const [busy, setBusy] = useState(false);
-  const [created, setCreated] = useState(false);
   const [error, setError] = useState('');
-  const [speaking, setSpeaking] = useState(false);
-  const locked = useRef(false);
+  const [countdown, setCountdown] = useState(0);
+
   const active = useRef(true);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     active.current = true;
     return () => {
       active.current = false;
-      stopGuidance();
+      if (timerRef.current) clearInterval(timerRef.current);
     };
   }, []);
 
-  function handleLanguage(newLang: Language) {
-    setLanguage(newLang);
-    if (speaking) {
-      stopGuidance();
-      setSpeaking(false);
-    }
+  function startCountdown(seconds: number = 60) {
+    if (timerRef.current) clearInterval(timerRef.current);
+    setCountdown(seconds);
+    timerRef.current = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          if (timerRef.current) clearInterval(timerRef.current);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
   }
 
-  function handleAudioGuide() {
-    if (speaking) {
-      stopGuidance();
-      setSpeaking(false);
-    } else {
-      setSpeaking(true);
-      const text = `${t('registerBtn', language)}. ${t('audioRegister', language)}`;
-      speakGuidance(text, language, () => setSpeaking(true), () => setSpeaking(false));
-    }
-  }
+  const cleanPhone = phone.replace(/[^\d]/g, '');
+  const formattedPhone = cleanPhone.length === 10 ? `+91${cleanPhone}` : cleanPhone.startsWith('91') ? `+${cleanPhone}` : `+91${cleanPhone}`;
 
-  async function submit() {
-    if (locked.current || !accepted) return;
-    if (password !== confirmation) {
-      setError('Passwords do not match.');
+  // Step 1: Validate and request OTP
+  async function handleRequestOtp() {
+    setError('');
+    const trimmedName = name.trim();
+    if (!trimmedName || trimmedName.length > 80) {
+      setError('Please enter your full name (1 to 80 characters).');
       return;
     }
-    locked.current = true;
+    if (cleanPhone.length < 10) {
+      setError('Please enter a valid 10-digit mobile phone number.');
+      return;
+    }
+    if (!accepted) {
+      setError('Please agree to data processing terms to create an account.');
+      return;
+    }
+
     setBusy(true);
-    setError('');
     try {
-      await registerPatient(identifier, password, name, language);
-      try {
-        await signIn(identifier, password);
-      } catch {
-        // Fallback if network interruption occurs right after account creation
-      }
+      const result = await requestOtp(formattedPhone, 'REGISTER');
       if (active.current) {
-        setPassword('');
-        setConfirmation('');
-        setCreated(true);
+        setStep('OTP');
+        setOtpCode(result.dev_otp || '');
+        startCountdown(result.resend_after_seconds || 60);
       }
-    } catch (failure) {
+    } catch (err) {
       if (active.current) {
-        setError(
-          (failure instanceof Error ? failure.message : 'Account creation failed.') +
-            ' If the connection was interrupted, try signing in.'
-        );
+        setError(err instanceof Error ? err.message : 'Unable to send verification code. Please check your connection.');
       }
     } finally {
-      locked.current = false;
+      if (active.current) setBusy(false);
+    }
+  }
+
+  // Step 2: Verify OTP and Register
+  async function handleVerifyAndRegister() {
+    setError('');
+    const trimmedOtp = otpCode.trim();
+    if (trimmedOtp.length < 4) {
+      setError('Please enter the 6-digit verification code.');
+      return;
+    }
+
+    setBusy(true);
+    try {
+      await registerWithOtp(
+        formattedPhone,
+        trimmedOtp,
+        name.trim(),
+        language,
+        email.trim() || undefined
+      );
+      if (active.current) {
+        // Successfully registered and session established in SecureStore
+        // Navigate directly to permissions onboarding flow
+        router.replace('/permissions');
+      }
+    } catch (err) {
+      if (active.current) {
+        setError(err instanceof Error ? err.message : 'Verification failed. Please check the code or request a new one.');
+      }
+    } finally {
       if (active.current) setBusy(false);
     }
   }
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
-      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.page}>
-        {/* Header Row with Brand & Language Pills */}
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: '#f6f1e8' }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+        {/* Header */}
         <View style={styles.headerRow}>
+          <Pressable
+            onPress={() => (step === 'OTP' ? setStep('DETAILS') : router.back())}
+            style={styles.backBtn}
+            accessibilityRole="button"
+            accessibilityLabel="Back"
+          >
+            <Text style={styles.backBtnText}>←</Text>
+          </Pressable>
           <Brand />
           <View style={styles.langPills}>
             {(['en', 'hi', 'te'] as const).map(code => (
               <Pressable
                 key={code}
-                onPress={() => handleLanguage(code)}
+                onPress={() => setLanguage(code)}
                 style={[styles.langBtn, language === code && styles.langBtnActive]}
+                accessibilityRole="button"
+                accessibilityLabel={`Select ${code === 'en' ? 'English' : code === 'hi' ? 'Hindi' : 'Telugu'}`}
               >
                 <Text style={[styles.langText, language === code && styles.langTextActive]}>
                   {code === 'en' ? 'EN' : code === 'hi' ? 'हि' : 'తె'}
@@ -104,280 +155,369 @@ export default function Register() {
           </View>
         </View>
 
-        {/* Audio Guide Bar */}
-        <Pressable
-          onPress={handleAudioGuide}
-          style={[styles.audioBar, speaking && styles.audioBarActive]}
-          accessibilityRole="button"
-          accessibilityLabel="Read registration instructions aloud"
-        >
-          <Text style={styles.audioIcon}>{speaking ? '⏹' : '🔊'}</Text>
-          <Text style={[styles.audioText, speaking && styles.audioTextActive]}>
-            {speaking ? t('audioGuideStop', language) : `${t('audioGuideBtn', language)} · Audio Assistance`}
-          </Text>
-        </Pressable>
-
-        <RuralScene height={150} />
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-          <MedicalShieldSvg size={28} />
-          <Text style={styles.title}>{created ? 'Account created successfully' : t('registerBtn', language)}</Text>
-        </View>
-
-        {created ? (
-          <View style={styles.successCard}>
-            <DoctorConsultSvg size={54} />
-            <Text style={styles.successTitle}>Welcome, {name}!</Text>
-            <Text style={styles.body}>
-              Your MedGuide AI account is ready and your session is established. Next, review permissions to start using voice questions, activity tracking, and prescription scanning.
-            </Text>
-            <Button title="Continue to permissions →" onPress={() => router.replace('/permissions')} />
-            <Button variant="secondary" title="Go to sign in" onPress={() => router.replace('/')} />
-          </View>
-        ) : (
-          <View style={styles.card}>
-            <Text style={styles.label}>{t('displayNameLabel', language)}</Text>
-            <TextInput
-              style={styles.input}
-              accessibilityLabel={t('displayNameLabel', language)}
-              placeholder={t('displayNamePlaceholder', language)}
-              placeholderTextColor={palette.muted}
-              maxLength={80}
-              value={name}
-              onChangeText={setName}
-              editable={!busy}
-            />
-
-            <Text style={styles.label}>{t('identifierLabel', language)}</Text>
-            <TextInput
-              style={styles.input}
-              accessibilityLabel={t('identifierLabel', language)}
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholder={t('identifierPlaceholder', language)}
-              placeholderTextColor={palette.muted}
-              maxLength={254}
-              value={identifier}
-              onChangeText={setIdentifier}
-              editable={!busy}
-            />
-
-            <View style={styles.twoColumn}>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.label}>{t('passwordLabel', language)}</Text>
-                <TextInput
-                  style={styles.input}
-                  accessibilityLabel="Password"
-                  placeholder="Min 8 chars"
-                  placeholderTextColor={palette.muted}
-                  secureTextEntry
-                  maxLength={128}
-                  value={password}
-                  onChangeText={setPassword}
-                  editable={!busy}
-                />
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.label}>{t('confirmPasswordLabel', language)}</Text>
-                <TextInput
-                  style={styles.input}
-                  accessibilityLabel="Confirm password"
-                  placeholder="Re-enter"
-                  placeholderTextColor={palette.muted}
-                  secureTextEntry
-                  maxLength={128}
-                  value={confirmation}
-                  onChangeText={setConfirmation}
-                  editable={!busy}
-                />
-              </View>
-            </View>
-
-            {/* Terms and consent checkbox */}
-            <View style={styles.acceptRow}>
-              <Switch
-                accessibilityLabel="I agree to account data processing for this demonstration"
-                value={accepted}
-                onValueChange={setAccepted}
-                disabled={busy}
-              />
-              <Text style={styles.termsText}>{t('agreeTerms', language)}</Text>
-            </View>
-
-            {error ? (
-              <View style={styles.errorBox}>
-                <Text style={styles.errorText} accessibilityRole="alert">
-                  ⚠️ {error}
-                </Text>
-              </View>
-            ) : null}
-
-            <Button
-              title={busy ? 'Creating account…' : t('registerBtn', language)}
-              disabled={busy || !accepted || !name.trim() || !identifier.trim() || !password || !confirmation}
-              onPress={() => void submit()}
-            />
-
-            <Button
-              variant="quiet"
-              title={t('alreadyHaveAccount', language)}
-              disabled={busy}
-              onPress={() => router.replace('/')}
-            />
+        {/* Carousel Preview */}
+        {step === 'DETAILS' && (
+          <View style={styles.carouselContainer}>
+            <AuthCarousel language={language} height={140} />
           </View>
         )}
 
-        <Text style={styles.disclaimer}>{t('emergencyDisclaimer', language)}</Text>
+        {/* Form Card */}
+        <View style={styles.formCard}>
+          <View style={styles.titleRow}>
+            <Text style={styles.formTitle}>
+              {step === 'DETAILS' ? t('registerBtn', language) : 'Verify Mobile Number'}
+            </Text>
+            <Text style={styles.formSubtitle}>
+              {step === 'DETAILS'
+                ? 'Create your free MedGuide AI health companion account'
+                : 'Development phone verification only. No SMS delivery is connected.'}
+            </Text>
+          </View>
+
+          {error ? (
+            <View style={styles.errorBanner} accessible accessibilityRole="alert">
+              <Text style={styles.errorText}>⚠️ {error}</Text>
+            </View>
+          ) : null}
+
+          {step === 'DETAILS' ? (
+            /* STEP 1: Name, Mobile, Optional Email */
+            <View style={styles.inputsSection}>
+              <View style={styles.field}>
+                <Text style={styles.label}>{t('displayNameLabel', language)} *</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="e.g. Ramesh Kumar"
+                  placeholderTextColor="#8a9994"
+                  value={name}
+                  onChangeText={setName}
+                  autoCapitalize="words"
+                  accessibilityLabel="Full display name"
+                />
+              </View>
+
+              <View style={styles.field}>
+                <Text style={styles.label}>Mobile Phone Number *</Text>
+                <View style={styles.phoneRow}>
+                  <View style={styles.countryCodeBadge}>
+                    <Text style={styles.countryCodeText}>🇮🇳 +91</Text>
+                  </View>
+                  <TextInput
+                    style={[styles.input, styles.phoneInput]}
+                    placeholder="98765 43210"
+                    placeholderTextColor="#8a9994"
+                    value={phone}
+                    onChangeText={setPhone}
+                    keyboardType="phone-pad"
+                    maxLength={15}
+                    accessibilityLabel="Mobile phone number"
+                  />
+                </View>
+              </View>
+
+              <View style={styles.field}>
+                <Text style={styles.label}>Email Address (Optional)</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="name@example.com"
+                  placeholderTextColor="#8a9994"
+                  value={email}
+                  onChangeText={setEmail}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  accessibilityLabel="Optional email address"
+                />
+              </View>
+
+              <Pressable
+                onPress={() => setAccepted(!accepted)}
+                style={styles.consentRow}
+                accessibilityRole="checkbox"
+                accessibilityState={{ checked: accepted }}
+              >
+                <View style={[styles.checkbox, accepted && styles.checkboxActive]}>
+                  {accepted ? <Text style={styles.checkmark}>✓</Text> : null}
+                </View>
+                <Text style={styles.consentText}>
+                  I agree to preliminary health guidance terms and research demonstration processing.
+                </Text>
+              </Pressable>
+
+              <Button
+                title={busy ? 'Sending code...' : 'Send Verification Code →'}
+                onPress={handleRequestOtp}
+                disabled={busy}
+                accessibilityLabel="Send OTP verification code"
+              />
+            </View>
+          ) : (
+            /* STEP 2: OTP Verification */
+            <View style={styles.inputsSection}>
+              <View style={styles.field}>
+                <Text style={styles.label}>6-Digit Verification Code</Text>
+                <TextInput
+                  style={[styles.input, styles.otpInput]}
+                  placeholder="• • • • • •"
+                  placeholderTextColor="#8a9994"
+                  value={otpCode}
+                  onChangeText={setOtpCode}
+                  keyboardType="number-pad"
+                  maxLength={8}
+                  autoFocus
+                  accessibilityLabel="6-digit verification code"
+                />
+              </View>
+
+              <View style={styles.otpActionsRow}>
+                <Pressable onPress={() => setStep('DETAILS')} style={styles.editPhoneBtn}>
+                  <Text style={styles.editPhoneText}>Edit mobile number</Text>
+                </Pressable>
+                {countdown > 0 ? (
+                  <Text style={styles.countdownText}>Resend in {countdown}s</Text>
+                ) : (
+                  <Pressable onPress={handleRequestOtp} disabled={busy} style={styles.resendBtn}>
+                    <Text style={styles.resendText}>Resend code</Text>
+                  </Pressable>
+                )}
+              </View>
+
+              <Button
+                title={busy ? 'Verifying...' : 'Verify & Create Account →'}
+                onPress={handleVerifyAndRegister}
+                disabled={busy}
+                accessibilityLabel="Verify OTP and complete registration"
+              />
+            </View>
+          )}
+
+          <View style={styles.footerRow}>
+            <Text style={styles.footerPrompt}>Already have an account?</Text>
+            <Pressable onPress={() => router.replace('/')} style={styles.signInLink}>
+              <Text style={styles.signInLinkText}>Sign In</Text>
+            </Pressable>
+          </View>
+        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  page: {
-    flexGrow: 1,
-    backgroundColor: palette.cream,
-    paddingHorizontal: 18,
-    paddingVertical: 14,
-    gap: 12,
+  container: {
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    paddingBottom: 32,
+    backgroundColor: '#f6f1e8',
   },
   headerRow: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap:12,
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  backBtn: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: '#e6ded1',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  backBtnText: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#073d37',
   },
   langPills: {
     flexDirection: 'row',
-    backgroundColor: '#e6ebe2',
+    backgroundColor: '#e6ded1',
     borderRadius: 20,
     padding: 3,
     gap: 4,
   },
   langBtn: {
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-    borderRadius: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 16,
   },
   langBtnActive: {
-    backgroundColor: palette.ink,
+    backgroundColor: '#073d37',
   },
   langText: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: '700',
-    color: palette.ink,
+    color: '#073d37',
   },
   langTextActive: {
-    color: '#fff',
+    color: '#ffffff',
   },
-  audioBar: {
+  carouselContainer: {
+    marginBottom: 8,
+  },
+  formCard: {
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
+    padding: 20,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+  },
+  titleRow: {
+    marginBottom: 16,
+  },
+  formTitle: {
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#073d37',
+    letterSpacing: -0.3,
+  },
+  formSubtitle: {
+    fontSize: 13,
+    color: '#5a6b65',
+    marginTop: 4,
+  },
+  errorBanner: {
+    backgroundColor: '#fdeeed',
+    borderWidth: 1,
+    borderColor: '#f5c2be',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 14,
+  },
+  errorText: {
+    color: '#a32b24',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  inputsSection: {
+    gap: 14,
+  },
+  field: {
+    gap: 6,
+  },
+  label: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#073d37',
+  },
+  input: {
+    height: 48,
+    borderWidth: 1.5,
+    borderColor: '#cbd8d3',
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    fontSize: 15,
+    color: '#073d37',
+    backgroundColor: '#fafaf8',
+  },
+  phoneRow: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  countryCodeBadge: {
+    height: 48,
+    paddingHorizontal: 12,
+    borderWidth: 1.5,
+    borderColor: '#cbd8d3',
+    borderRadius: 12,
+    backgroundColor: '#f1f4f2',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  countryCodeText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#073d37',
+  },
+  phoneInput: {
+    flex: 1,
+  },
+  otpInput: {
+    fontSize: 22,
+    fontWeight: '800',
+    letterSpacing: 6,
+    textAlign: 'center',
+  },
+  consentRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+    marginVertical: 4,
+  },
+  checkbox: {
+    width: 22,
+    height: 22,
+    borderRadius: 6,
+    borderWidth: 2,
+    borderColor: '#073d37',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 1,
+  },
+  checkboxActive: {
+    backgroundColor: '#073d37',
+  },
+  checkmark: {
+    color: '#ffffff',
+    fontSize: 13,
+    fontWeight: '900',
+  },
+  consentText: {
+    flex: 1,
+    fontSize: 12,
+    lineHeight: 17,
+    color: '#495853',
+  },
+  otpActionsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 4,
+  },
+  editPhoneBtn: {
+    paddingVertical: 4,
+  },
+  editPhoneText: {
+    fontSize: 13,
+    color: '#073d37',
+    fontWeight: '600',
+    textDecorationLine: 'underline',
+  },
+  countdownText: {
+    fontSize: 13,
+    color: '#7b8c87',
+  },
+  resendBtn: {
+    paddingVertical: 4,
+  },
+  resendText: {
+    fontSize: 13,
+    color: '#246b60',
+    fontWeight: '700',
+  },
+  footerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#d2dcd0',
-    borderRadius: 12,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
+    marginTop: 18,
     gap: 6,
   },
-  audioBarActive: {
-    backgroundColor: '#feeceb',
-    borderColor: '#f5b5b0',
-  },
-  audioIcon: {
+  footerPrompt: {
     fontSize: 13,
+    color: '#5a6b65',
   },
-  audioText: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: palette.teal,
+  signInLink: {
+    paddingVertical: 2,
   },
-  audioTextActive: {
-    color: '#9b2631',
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '700',
-    color: palette.ink,
-  },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 16,
-    gap: 10,
-    borderWidth: 1,
-    borderColor: palette.line,
-  },
-  twoColumn: {
-    gap: 14,
-  },
-  label: {
-    fontSize: 12,
-    color: palette.ink,
-    fontWeight: '600',
-  },
-  input: {
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    minHeight: 46,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: palette.line,
-    backgroundColor: '#fafbf9',
-    color: palette.ink,
-    fontSize: 14,
-  },
-  acceptRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    paddingVertical: 4,
-  },
-  termsText: {
-    flex: 1,
-    fontSize: 11,
-    lineHeight: 16,
-    color: palette.muted,
-  },
-  errorBox: {
-    backgroundColor: '#feeceb',
-    padding: 8,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#f5b5b0',
-  },
-  errorText: {
-    fontSize: 12,
-    color: '#9b2631',
-  },
-  successCard: {
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 20,
-    alignItems: 'center',
-    gap: 12,
-    borderWidth: 1,
-    borderColor: palette.line,
-  },
-  successIcon: {
-    fontSize: 36,
-    color: palette.teal,
-  },
-  successTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: palette.ink,
-  },
-  body: {
-    color: palette.muted,
+  signInLinkText: {
     fontSize: 13,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
-  disclaimer: {
-    fontSize: 10,
-    lineHeight: 14,
-    color: palette.muted,
-    textAlign: 'center',
+    fontWeight: '700',
+    color: '#073d37',
+    textDecorationLine: 'underline',
   },
 });

@@ -1,0 +1,186 @@
+{
+  "topic": "diabetes",
+  "source_url": "https://www.cdc.gov/diabetes/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "Diabetes Basics",
+  "sections": [
+    {
+      "heading": "Overview",
+      "text": "Your body breaks down most of the food you eat into sugar (glucose) and releases it into your bloodstream. When your blood sugar goes up, it signals your pancreas to release insulin. Insulin acts like a key to let the blood sugar into your body's cells for use as energy."
+    },
+    {
+      "heading": "Overview",
+      "text": "With diabetes, your body doesn't make enough insulin or can't use it as well as it should. When there isn't enough insulin or cells stop responding to insulin, too much blood sugar stays in your bloodstream. Over time, that can cause serious health problems, such as heart disease, vision loss, and kidney disease."
+    },
+    {
+      "heading": "Overview",
+      "text": "There isn't a cure yet for diabetes, but losing weight, eating healthy food, and being active can really help. Other things you can do to help:"
+    },
+    {
+      "heading": "Overview",
+      "text": "Take medicine as prescribed."
+    },
+    {
+      "heading": "Overview",
+      "text": "Get diabetes self-management education and support."
+    },
+    {
+      "heading": "Overview",
+      "text": "Make and keep health care appointments."
+    },
+    {
+      "heading": "Type 1 diabetes",
+      "text": "Type 1 diabetes is thought to be caused by an autoimmune reaction (the body attacks itself by mistake). This reaction stops your body from making insulin. If you have type 1 diabetes, you’ll need to take insulin every day to survive."
+    },
+    {
+      "heading": "Type 1 diabetes",
+      "text": "People with type 1 diabetes in its early stages don’t have any symptoms. As type 1 progresses, symptoms can appear suddenly, in just a few weeks or months, and can be severe."
+    },
+    {
+      "heading": "Type 1 diabetes",
+      "text": "Currently, no one knows how to prevent type 1 diabetes, but if found early, type 1 can be treated to avoid or delay symptoms and serious complications."
+    },
+    {
+      "heading": "Type 1 diabetes",
+      "text": "Type 1 diabetes is usually diagnosed in children and young adults but can be diagnosed at any age."
+    },
+    {
+      "heading": "Type 2 diabetes",
+      "text": "With type 2 diabetes, your body doesn’t use insulin well and can’t keep blood sugar at normal levels. It develops over many years and is usually diagnosed in adults (but more and more in children, teens, and young adults). You may not notice any symptoms, so it's important to get your blood sugar tested if you're at risk."
+    },
+    {
+      "heading": "Gestational diabetes",
+      "text": "Gestational diabetes develops in pregnant women who have never had diabetes. If you have gestational diabetes, your baby could be at higher risk for health problems. Gestational diabetes usually goes away after your baby is born. However, it increases your risk for type 2 diabetes later in life. Your baby is more likely to have obesity as a child or teen and develop type 2 diabetes later in life."
+    },
+    {
+      "heading": "Type 2 diabetes and prediabetes",
+      "text": "In the United States, more than 2 in 5 adults have prediabetes. About 8 in 10 people with prediabetes don't know they have it. With prediabetes, blood sugar levels are higher than normal, but not high enough for a type 2 diabetes diagnosis. Prediabetes raises your risk for type 2 diabetes, heart disease, and stroke."
+    },
+    {
+      "heading": "Type 2 diabetes and prediabetes",
+      "text": "Prediabetes and type 2 diabetes can be prevented with lifestyle changes. These include losing weight if you're overweight, eating a healthy diet, and getting regular physical activity."
+    },
+    {
+      "heading": "Type 1 diabetes",
+      "text": "Currently, no one knows how to prevent type 1 diabetes, but in its early stages, type 1 can be treated to avoid or delay symptoms and serious complications."
+    },
+    {
+      "heading": "Gestational diabetes",
+      "text": "If you're at risk for gestational diabetes, you may be able to prevent it with lifestyle changes, including healthy eating and regular physical activity."
+    },
+    {
+      "heading": "Diabetes by the numbers",
+      "text": "In the United States:"
+    },
+    {
+      "heading": "Diabetes by the numbers",
+      "text": "More than 40 million Americans have diabetes, and more than 1 in 4 adults with diabetes don't know they have it."
+    },
+    {
+      "heading": "Diabetes by the numbers",
+      "text": "Diabetes is the seventh leading cause of death."
+    },
+    {
+      "heading": "Diabetes by the numbers",
+      "text": "Type 2 diabetes accounts for about 90% to 95% of all diagnosed cases of diabetes; type 1 diabetes accounts for about 5% to 10%."
+    },
+    {
+      "heading": "Diabetes by the numbers",
+      "text": "Diabetes is the No. 1 cause of kidney failure, lower-limb amputations, and adult blindness."
+    },
+    {
+      "heading": "Diabetes by the numbers",
+      "text": "In the last 20 years, the number of adults diagnosed with diabetes has more than doubled."
+    },
+    {
+      "heading": "Diabetes by the numbers",
+      "text": "Diabetes is the most costly health condition in the United States, accounting for 25% of all health care spending and costing $640 billion in 2021."
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "00a60c5d3c699730b94b4c8c64676866c6ef2d625ca11745fb64a3e4e8f23b07",
+  "resolved_url": "https://www.cdc.gov/diabetes/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:14.408239+00:00",
+  "html_sha256": "6a0da27e4fbc05e2e61ca5155608d1d2db3851f5f58ffe84851b0cbd24d1a750",
+  "chunks": [
+    {
+      "content": "Your body breaks down most of the food you eat into sugar (glucose) and releases it into your bloodstream. When your blood sugar goes up, it signals your pancreas to release insulin. Insulin acts like a key to let the blood sugar into your body's cells for use as energy. With diabetes, your body doesn't make enough insulin or can't use it as well as it should. When there isn't enough insulin or cells stop responding to insulin, too much blood sugar stays in your bloodstream. Over time, that can",
+      "section_title": "Overview",
+      "content_sha256": "c43f4f62b2008ecc55f865287202ee61d38a1fa532d381ff6c7dbcf21e36e4d7",
+      "chunk_index": 0
+    },
+    {
+      "content": "cause serious health problems, such as heart disease, vision loss, and kidney disease. There isn't a cure yet for diabetes, but losing weight, eating healthy food, and being active can really help. Other things you can do to help: Take medicine as prescribed. Get diabetes self-management education and support. Make and keep health care appointments.",
+      "section_title": "Overview",
+      "content_sha256": "65f728b42268e371f3af25dc6c8605892e54dbd22c94990d3fa5c19fb548fb54",
+      "chunk_index": 1
+    },
+    {
+      "content": "Type 1 diabetes is thought to be caused by an autoimmune reaction (the body attacks itself by mistake). This reaction stops your body from making insulin. If you have type 1 diabetes, you’ll need to take insulin every day to survive. People with type 1 diabetes in its early stages don’t have any symptoms. As type 1 progresses, symptoms can appear suddenly, in just a few weeks or months, and can be severe. Currently, no one knows how to prevent type 1 diabetes, but if found early, type 1 can be",
+      "section_title": "Type 1 diabetes",
+      "content_sha256": "0090b89748b3cdc60ba44636e2d4861f79e946e95caa5cffe0ac2d2357630f0e",
+      "chunk_index": 2
+    },
+    {
+      "content": "treated to avoid or delay symptoms and serious complications. Type 1 diabetes is usually diagnosed in children and young adults but can be diagnosed at any age.",
+      "section_title": "Type 1 diabetes",
+      "content_sha256": "7ba71a605bc2b0f8771aed69825241ea6301812a294c57a55978e3e2e78d5126",
+      "chunk_index": 3
+    },
+    {
+      "content": "With type 2 diabetes, your body doesn’t use insulin well and can’t keep blood sugar at normal levels. It develops over many years and is usually diagnosed in adults (but more and more in children, teens, and young adults). You may not notice any symptoms, so it's important to get your blood sugar tested if you're at risk.",
+      "section_title": "Type 2 diabetes",
+      "content_sha256": "a6b08315b0e8939b3d67525507fff2cefd71af51fc618c579ba01e6e17921e3e",
+      "chunk_index": 4
+    },
+    {
+      "content": "Gestational diabetes develops in pregnant women who have never had diabetes. If you have gestational diabetes, your baby could be at higher risk for health problems. Gestational diabetes usually goes away after your baby is born. However, it increases your risk for type 2 diabetes later in life. Your baby is more likely to have obesity as a child or teen and develop type 2 diabetes later in life.",
+      "section_title": "Gestational diabetes",
+      "content_sha256": "47cea8d885ada6e88e3546af6a0a582409d72149008c2064e9f702fe98f69e5f",
+      "chunk_index": 5
+    },
+    {
+      "content": "In the United States, more than 2 in 5 adults have prediabetes. About 8 in 10 people with prediabetes don't know they have it. With prediabetes, blood sugar levels are higher than normal, but not high enough for a type 2 diabetes diagnosis. Prediabetes raises your risk for type 2 diabetes, heart disease, and stroke. Prediabetes and type 2 diabetes can be prevented with lifestyle changes. These include losing weight if you're overweight, eating a healthy diet, and getting regular physical",
+      "section_title": "Type 2 diabetes and prediabetes",
+      "content_sha256": "8e4a4e055e139912b126eec809be0297e53a0a96b437ef8fbe561610f0b0f64d",
+      "chunk_index": 6
+    },
+    {
+      "content": "activity.",
+      "section_title": "Type 2 diabetes and prediabetes",
+      "content_sha256": "253bce4a731a187bf87d2425f233ed5b3387454fac3931a5ab45c9111df61fed",
+      "chunk_index": 7
+    },
+    {
+      "content": "Currently, no one knows how to prevent type 1 diabetes, but in its early stages, type 1 can be treated to avoid or delay symptoms and serious complications.",
+      "section_title": "Type 1 diabetes",
+      "content_sha256": "32390713f3f69e8ee4473b718e91026b30c63425652f166b473d1d48236ee68f",
+      "chunk_index": 8
+    },
+    {
+      "content": "If you're at risk for gestational diabetes, you may be able to prevent it with lifestyle changes, including healthy eating and regular physical activity.",
+      "section_title": "Gestational diabetes",
+      "content_sha256": "103ba404f5f148b110c271cf253c6f7a1061b401a6a6beb36114a84fd5844e0c",
+      "chunk_index": 9
+    },
+    {
+      "content": "In the United States: More than 40 million Americans have diabetes, and more than 1 in 4 adults with diabetes don't know they have it. Diabetes is the seventh leading cause of death. Type 2 diabetes accounts for about 90% to 95% of all diagnosed cases of diabetes; type 1 diabetes accounts for about 5% to 10%. Diabetes is the No. 1 cause of kidney failure, lower-limb amputations, and adult blindness. In the last 20 years, the number of adults diagnosed with diabetes has more than doubled.",
+      "section_title": "Diabetes by the numbers",
+      "content_sha256": "6f20679520a2c335ba70e672344a5c417cc50a79c07e104f2f32a75f9b662a97",
+      "chunk_index": 10
+    },
+    {
+      "content": "Diabetes is the most costly health condition in the United States, accounting for 25% of all health care spending and costing $640 billion in 2021.",
+      "section_title": "Diabetes by the numbers",
+      "content_sha256": "82a2629a3326a487898a4a85431985676080aa3e66a7bea451328e2ef9c86cd7",
+      "chunk_index": 11
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "bfe375f4-8e77-5898-a71a-a09167567750"
+}

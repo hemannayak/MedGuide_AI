@@ -1,16 +1,38 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { AppState, Linking, Platform, Text, TextInput, View, Switch } from 'react-native';
-import { Pedometer } from 'expo-sensors';
+import { AppState, Linking, Platform, Text, TextInput, View, Switch, UIManager } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import { HydrationSvg, FootstepsSvg } from './illustrations';
 import { Button, palette } from './brand-ui';
 import { readPending, writePending, clearPending } from '../lib/pending-wellness';
 import { hydrationLabel, liveStepTotal } from '../lib/daily-progress';
 import { Daily, Entry, entry, getDaily, localDay, sendEntry, Wellness } from '../lib/wellness';
+type PedometerSubscription = { remove: () => void };
+interface PedometerInterface {
+  isAvailableAsync: () => Promise<boolean>;
+  requestPermissionsAsync: () => Promise<{ granted: boolean; canAskAgain: boolean }>;
+  watchStepCount: (callback: (result: { steps: number }) => void) => PedometerSubscription;
+}
+
+let SafePedometer: PedometerInterface = {
+  isAvailableAsync: async () => false,
+  requestPermissionsAsync: async () => ({ granted: false, canAskAgain: false }),
+  watchStepCount: () => ({ remove: () => {} }),
+};
+
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const sensors = require('expo-sensors');
+  if (sensors && sensors.Pedometer) {
+    SafePedometer = sensors.Pedometer;
+  }
+} catch {
+  // ExponentPedometer native module not linked in this build
+}
 
 export function Ring({value,target,label,display}:{value:number;target:number|null;label:string;display?:string}) {
  const ratio=target?Math.min(1,value/target):0;const length=2*Math.PI*32;
- return <View accessible accessibilityRole="progressbar" accessibilityLabel={label} accessibilityValue={{text:display ?? `${value}${target?` of ${target}`:''}`}} style={{alignItems:'center',gap:6}}><View style={{width:68,height:68,alignItems:'center',justifyContent:'center'}}><Svg width={68} height={68} viewBox="0 0 80 80"><Circle cx={40} cy={40} r={32} stroke="#dce5dc" strokeWidth={7} fill="none"/><Circle cx={40} cy={40} r={32} stroke={palette.teal} strokeWidth={7} fill="none" strokeDasharray={`${length*ratio} ${length}`} transform="rotate(-90 40 40)"/></Svg><View style={{position:'absolute'}}>{label==='Water'?<HydrationSvg size={28} />:<FootstepsSvg size={28} />}</View></View><Text style={{fontSize:18,fontWeight:'700',color:palette.ink}}>{display ?? value}</Text><Text>{label}{!display && target?` / ${target}`:!display?' · set target':''}</Text></View>;
+ const useSvg = Platform.OS === 'web' || typeof UIManager === 'undefined' || Boolean(UIManager?.getViewManagerConfig?.('RNSVGCircle') || UIManager?.getViewManagerConfig?.('RCTRNSVGCircle'));
+ return <View accessible accessibilityRole="progressbar" accessibilityLabel={label} accessibilityValue={{text:display ?? `${value}${target?` of ${target}`:''}`}} style={{alignItems:'center',gap:6}}><View style={{width:68,height:68,alignItems:'center',justifyContent:'center'}}>{useSvg ? <Svg width={68} height={68} viewBox="0 0 80 80"><Circle cx={40} cy={40} r={32} stroke="#dce5dc" strokeWidth={7} fill="none"/><Circle cx={40} cy={40} r={32} stroke={palette.teal} strokeWidth={7} fill="none" strokeDasharray={`${length*ratio} ${length}`} transform="rotate(-90 40 40)"/></Svg> : <View style={{width:68,height:68,borderRadius:34,borderWidth:6,borderColor:ratio>=1?palette.teal:ratio>0?'#63988b':'#dce5dc',backgroundColor:'#ffffff',alignItems:'center',justifyContent:'center'}} /> }<View style={{position:'absolute'}}>{label==='Water'?<HydrationSvg size={28} />:<FootstepsSvg size={28} />}</View></View><Text style={{fontSize:18,fontWeight:'700',color:palette.ink}}>{display ?? value}</Text><Text>{label}{!display && target?` / ${target}`:!display?' · set target':''}</Text></View>;
 }
 export function DailyDashboard({settings,patientId}:{settings:Wellness;patientId:string}) {
  const [expanded,setExpanded]=useState(false);
@@ -21,7 +43,7 @@ export function DailyDashboard({settings,patientId}:{settings:Wellness;patientId
  const [pending,setPending]=useState<Entry|null>(null),[sessionAvailable,setSessionAvailable]=useState(false);
  const [tracking,setTracking]=useState(false);const [sessionSteps,setSessionSteps]=useState(0);
  const committedSession=useRef(0),syncTimer=useRef<ReturnType<typeof setTimeout>|null>(null),refreshVersion=useRef(0);
- const sensorPayload=useRef<Entry|null>(null),subscription=useRef<ReturnType<typeof Pedometer.watchStepCount>|null>(null),active=useRef(true),locked=useRef(false);
+ const sensorPayload=useRef<Entry|null>(null),subscription=useRef<PedometerSubscription|null>(null),active=useRef(true),locked=useRef(false);
  const refresh=useCallback(async()=>{const version=++refreshVersion.current;try{const d=await getDaily();if(active.current&&version===refreshVersion.current){setData(d);setSavedSessionSteps(committedSession.current);}}catch(e){if(active.current)setError(e instanceof Error?e.message:'Could not load daily records.');}},[]);
  const stop=useCallback((retain=true)=>{
    subscription.current?.remove();subscription.current=null;
@@ -43,10 +65,10 @@ export function DailyDashboard({settings,patientId}:{settings:Wellness;patientId
    if(!accepted){setError('Choose optional storage before enabling activity tracking.');return;}
    if(Platform.OS==='web'){setNotice('Step sensors are unavailable in this browser. Enter manual steps below.');return;}
    if(locked.current||tracking||pending)return;locked.current=true;setBusy(true);setError('');
-   try{if(!await Pedometer.isAvailableAsync())throw Error('No supported step sensor. Manual entry is available.');const p=await Pedometer.requestPermissionsAsync();if(!p.granted)throw Error(p.canAskAgain?'Activity access declined. Manual entry is available.':'Activity access blocked. Enable it in phone settings or use manual entry.');
+   try{if(!await SafePedometer.isAvailableAsync())throw Error('No supported step sensor. Manual entry is available.');const p=await SafePedometer.requestPermissionsAsync();if(!p.granted)throw Error(p.canAskAgain?'Activity access declined. Manual entry is available.':'Activity access blocked. Enable it in phone settings or use manual entry.');
      if(!active.current)return;
      committedSession.current=0;setSavedSessionSteps(0);setSessionAvailable(true);sensorPayload.current=entry('steps',0,'foreground_sensor');setSessionDay(localDay());setSessionSteps(0);setTracking(true);
-     subscription.current=Pedometer.watchStepCount(result=>{if(!active.current)return;const payload=sensorPayload.current;if(payload&&payload.day!==localDay()){stop();setNotice('A new day started. Save the prior session and start a new one.');return;}if(payload&&Number.isInteger(result.steps)&&result.steps>=0){payload.amount=Math.max(payload.amount,result.steps);setSessionSteps(payload.amount);if(!syncTimer.current){syncTimer.current=setTimeout(()=>{syncTimer.current=null;if(active.current&&sensorPayload.current&&!locked.current)void save({...sensorPayload.current});},5000);}}});
+     subscription.current=SafePedometer.watchStepCount(result=>{if(!active.current)return;const payload=sensorPayload.current;if(payload&&payload.day!==localDay()){stop();setNotice('A new day started. Save the prior session and start a new one.');return;}if(payload&&Number.isInteger(result.steps)&&result.steps>=0){payload.amount=Math.max(payload.amount,result.steps);setSessionSteps(payload.amount);if(!syncTimer.current){syncTimer.current=setTimeout(()=>{syncTimer.current=null;if(active.current&&sensorPayload.current&&!locked.current)void save({...sensorPayload.current});},5000);}}});
    }catch(e){setError(e instanceof Error?e.message:'Activity access failed.');}finally{locked.current=false;if(active.current)setBusy(false);}
  }
  const total=data?liveStepTotal(data.manual_steps,data.foreground_steps,sessionDay===data.day?sessionSteps:0,savedSessionSteps):0;

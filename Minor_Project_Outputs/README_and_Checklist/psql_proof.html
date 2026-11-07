@@ -1,0 +1,31 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>PostgreSQL pgvector CLI execution</title><style>
+body{margin:0;padding:24px;background:#f6f1e8;color:#173e37;font:16px/1.5 Arial,sans-serif}main{max-width:1400px;margin:auto;background:#fff;padding:26px;border:1px solid #c5d6cf;border-radius:16px}h1{font-size:28px;margin:0 0 10px}.label{font-weight:bold;color:#174d42}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.55 Consolas,monospace;background:#eef4f1;color:#172c29;padding:22px;border-radius:8px}footer{font-size:14px;color:#4c625b}</style><main><h1>PostgreSQL pgvector CLI execution</h1><p class="label">Actual local execution output · 23 October 2026 · Same laptop</p><p>This is a browser transcript view of real CLI output, not a terminal screenshot or a mock execution.</p><pre>MedGuide AI | Actual read-only psql execution | 23 October 2026
+Command: psql -X -d medguide_ai_dev -v ON_ERROR_STOP=1 -f vector_query.sql
+Credentials supplied privately through environment; never printed.
+Query text: What is the initial management of hypertension in adults?
+Encoder: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 (384 dimensions)
+Prepared query (real embedding bound in vector_query.sql):
+SELECT md.title AS source_title, kc.metadata-&gt;&gt;&#x27;section_title&#x27; AS section,
+  kc.metadata-&gt;&gt;&#x27;page_number&#x27; AS page, 1-(kc.embedding &lt;=&gt; $1) AS similarity
+FROM knowledge_chunks kc JOIN medical_documents md ON md.id=kc.document_id
+WHERE kc.embedding IS NOT NULL
+ORDER BY kc.embedding &lt;=&gt; $1 ASC LIMIT 3;
+
+Pager usage is off.
+ current_database | pgvector_version 
+------------------+------------------
+ medguide_ai_dev  | 0.8.5
+(1 row)
+
+PREPARE
+                                       source_title                                       | section | page |     similarity     
+------------------------------------------------------------------------------------------+---------+------+--------------------
+ Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care | 263     | 273  | 0.8668233058360635
+ Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care | 262     | 272  | 0.8650897732705611
+ Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care | 257     | 267  | 0.8644826503728832
+(3 rows)
+
+
+
+Exit status: 0
+</pre><footer>Raw output and reproducible commands are included in README_and_Checklist. No credentials or real patient data are shown.</footer></main></html>

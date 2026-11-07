@@ -25,6 +25,7 @@
     "plugins": [
       "expo-router",
       "expo-secure-store",
+      "expo-notifications",
       ["expo-image-picker", {"cameraPermission":"Allow MedGuide to take a prescription photo when you choose Take photo.","photosPermission":"Allow MedGuide to select a prescription image when you choose an image."}],
       [
         "expo-audio",

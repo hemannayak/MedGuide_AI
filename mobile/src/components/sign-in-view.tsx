@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -8,137 +9,184 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { Brand, Button, palette } from './brand-ui';
-import { Language, t } from '../lib/i18n';
-import { speakGuidance, stopGuidance } from '../lib/audio-guide';
-import {
-  DoctorConsultSvg,
-  PrescriptionScannerSvg,
-  MedicalShieldSvg,
-  VoiceMicWaveSvg,
-} from './illustrations';
+import { Button } from './brand-ui';
+import { AuthCarousel } from './auth-carousel';
+import { Language } from '../lib/i18n';
+import { loginWithOtp, requestOtp, signIn } from '../lib/api';
 
-type AuthMethod = 'phone' | 'email';
-
-type Props = {
-  identifier: string;
-  password: string;
-  busy: boolean;
-  error: string;
-  onIdentifierChange: (value: string) => void;
-  onPasswordChange: (value: string) => void;
-  onSubmit: () => void;
-  onRegister: () => void;
-  onBackToIntro?: () => void;
+interface SignInViewProps {
   currentLanguage?: Language;
   onLanguageChange?: (lang: Language) => void;
-};
+  onSubmit: () => void;
+  onRegister: () => void;
+  onBackToIntro: () => void;
+  identifier?: string;
+  password?: string;
+  busy?: boolean;
+  error?: string;
+  onIdentifierChange?: (val: string) => void;
+  onPasswordChange?: (val: string) => void;
+}
 
 export function SignInView({
-  identifier,
-  password,
-  busy,
-  error,
-  onIdentifierChange,
-  onPasswordChange,
+  currentLanguage = 'en',
+  onLanguageChange,
   onSubmit,
   onRegister,
   onBackToIntro,
-  currentLanguage = 'en',
-  onLanguageChange,
-}: Props) {
-  useEffect(() => () => stopGuidance(), []);
+}: SignInViewProps) {
   const [lang, setLang] = useState<Language>(currentLanguage);
-  const [speaking, setSpeaking] = useState(false);
-  const [authMethod, setAuthMethod] = useState<AuthMethod>('phone');
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const phoneCountry = '+91';
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [googleNotice, setGoogleNotice] = useState('');
+  const [authMode, setAuthMode] = useState<'PHONE_OTP' | 'EMAIL'>('PHONE_OTP');
+  
+  // Phone OTP state
+  const [phone, setPhone] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpCode, setOtpCode] = useState('');
+  const [countdown, setCountdown] = useState(0);
+
+  // Email state
+  const [emailIdentifier, setEmailIdentifier] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const [notice, setNotice] = useState('');
+
+  const active = useRef(true);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    active.current = true;
+    return () => {
+      active.current = false;
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
 
   function handleLanguage(newLang: Language) {
     setLang(newLang);
     onLanguageChange?.(newLang);
-    if (speaking) {
-      stopGuidance();
-      setSpeaking(false);
+  }
+
+  function startCountdown(seconds: number = 60) {
+    if (timerRef.current) clearInterval(timerRef.current);
+    setCountdown(seconds);
+    timerRef.current = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          if (timerRef.current) clearInterval(timerRef.current);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  }
+
+  const cleanPhone = phone.replace(/[^\d]/g, '');
+  const formattedPhone = cleanPhone.length === 10 ? `+91${cleanPhone}` : cleanPhone.startsWith('91') ? `+${cleanPhone}` : `+91${cleanPhone}`;
+
+  // Phone: Request OTP
+  async function handleSendOtp() {
+    setError('');
+    setNotice('');
+    if (cleanPhone.length < 10) {
+      setError('Please enter a valid 10-digit mobile number.');
+      return;
+    }
+
+    setBusy(true);
+    try {
+      const result = await requestOtp(formattedPhone, 'LOGIN');
+      if (active.current) {
+        setOtpSent(true);
+        setOtpCode(result.dev_otp || '');
+        setNotice(result.dev_otp ? 'Development test code only. No SMS was sent; do not use this flow as verified phone ownership.' : 'Phone delivery is not configured. Use password sign-in.');
+        startCountdown(result.resend_after_seconds || 60);
+      }
+    } catch (err) {
+      if (active.current) {
+        setError(err instanceof Error ? err.message : 'Unable to send code. Please check your mobile number or register.');
+      }
+    } finally {
+      if (active.current) setBusy(false);
     }
   }
 
-  function handleAudioGuide() {
-    if (speaking) {
-      stopGuidance();
-      setSpeaking(false);
-    } else {
-      setSpeaking(true);
-      const text = `${t('welcomeBack', lang)}. ${t('signInPrompt', lang)} ${t('audioSignIn', lang)}`;
-      speakGuidance(text, lang, () => setSpeaking(true), () => setSpeaking(false));
+  // Phone: Verify OTP & Sign In
+  async function handleVerifyOtpLogin() {
+    setError('');
+    setNotice('');
+    const code = otpCode.trim();
+    if (code.length < 4) {
+      setError('Please enter the 6-digit verification code.');
+      return;
+    }
+
+    setBusy(true);
+    try {
+      await loginWithOtp(formattedPhone, code);
+      if (active.current) {
+        onSubmit();
+      }
+    } catch (err) {
+      if (active.current) {
+        setError(err instanceof Error ? err.message : 'Invalid code. Please try again or request a new code.');
+      }
+    } finally {
+      if (active.current) setBusy(false);
     }
   }
 
-  const slides = [
-    {
-      title: t('slide1Title', lang),
-      desc: t('slide1Desc', lang),
-      tag: '01 · HEALTH UNDERSTANDING',
-      icon: <DoctorConsultSvg size={38} />,
-      bg: '#eaf4ee',
-    },
-    {
-      title: t('slide2Title', lang),
-      desc: t('slide2Desc', lang),
-      tag: '02 · PRESCRIPTIONS & DOSAGE',
-      icon: <PrescriptionScannerSvg size={38} color="#073d37" />,
-      bg: '#faeadc',
-    },
-    {
-      title: t('slide3Title', lang),
-      desc: t('slide3Desc', lang),
-      tag: '03 · UNIFIED HEALTH RECORDS',
-      icon: <MedicalShieldSvg size={38} color="#073d37" />,
-      bg: '#e6eee1',
-    },
-    {
-      title: t('slide4Title', lang),
-      desc: t('slide4Desc', lang),
-      tag: '04 · MULTILINGUAL CARE',
-      icon: <VoiceMicWaveSvg size={38} color="#073d37" />,
-      bg: '#e8f0fe',
-    },
-  ];
+  // Email: Sign In
+  async function handleEmailSignIn() {
+    setError('');
+    setNotice('');
+    const ident = emailIdentifier.trim();
+    if (!ident) {
+      setError('Please enter your email or username.');
+      return;
+    }
+    if (!password) {
+      setError('Please enter your password.');
+      return;
+    }
 
-  const activeSlide = slides[currentSlide];
-
-  function handlePhoneChange(val: string) {
-    const cleaned = val.replace(/[^0-9]/g, '');
-    setPhoneNumber(cleaned);
-    onIdentifierChange(cleaned ? `${phoneCountry}${cleaned}` : '');
+    setBusy(true);
+    try {
+      await signIn(ident, password);
+      if (active.current) {
+        onSubmit();
+      }
+    } catch (err) {
+      if (active.current) {
+        setError(err instanceof Error ? err.message : 'Invalid credentials. Please check your details.');
+      }
+    } finally {
+      if (active.current) setBusy(false);
+    }
   }
 
-  function handleGooglePress() {
-    setGoogleNotice(
-      'Google Sign-In is configured with OAuth backend federation. For this native device session, continue with your Phone number or Email credentials.'
-    );
+  function handleGoogleSignIn() {
+    setError('');
+    setNotice('Google sign-in is currently available for healthcare provider accounts. For patients, please use mobile OTP.');
   }
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
-      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.page}>
-        {/* Top Header: Brand & Language Switcher */}
-        <View style={styles.topRow}>
-          {onBackToIntro ? (
-            <Pressable
-              onPress={onBackToIntro}
-              style={styles.backBtn}
-              accessibilityRole="button"
-              accessibilityLabel="Back to intro"
-            >
-              <Text style={styles.backText}>← Intro</Text>
-            </Pressable>
-          ) : (
-            <Brand />
-          )}
-
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: '#f6f1e8' }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+        {/* Header */}
+        <View style={styles.headerRow}>
+          <Pressable
+            onPress={onBackToIntro}
+            style={styles.backBtn}
+            accessibilityRole="button"
+            accessibilityLabel="Back to intro"
+          >
+            <Text style={styles.backBtnText}>← Intro</Text>
+          </Pressable>
           <View style={styles.langPills}>
             {(['en', 'hi', 'te'] as const).map(code => (
               <Pressable
@@ -146,7 +194,7 @@ export function SignInView({
                 onPress={() => handleLanguage(code)}
                 style={[styles.langBtn, lang === code && styles.langBtnActive]}
                 accessibilityRole="button"
-                accessibilityLabel={`Language ${code}`}
+                accessibilityLabel={`Select ${code === 'en' ? 'English' : code === 'hi' ? 'Hindi' : 'Telugu'}`}
               >
                 <Text style={[styles.langText, lang === code && styles.langTextActive]}>
                   {code === 'en' ? 'EN' : code === 'hi' ? 'हि' : 'తె'}
@@ -156,508 +204,459 @@ export function SignInView({
           </View>
         </View>
 
-        {/* Audio Guide Bar for Rural Low-Literacy Accessibility */}
-        <Pressable
-          onPress={handleAudioGuide}
-          style={[styles.audioBar, speaking && styles.audioBarActive]}
-          accessibilityRole="button"
-          accessibilityLabel="Read sign in instructions aloud"
-        >
-          <Text style={styles.audioIcon}>{speaking ? '⏹' : '🔊'}</Text>
-          <Text style={[styles.audioText, speaking && styles.audioTextActive]}>
-            {speaking ? t('audioGuideStop', lang) : `${t('audioGuideBtn', lang)} · Screen Reader`}
-          </Text>
-        </Pressable>
-
-        {/* Horizontal Feature Carousel */}
-        <View style={[styles.carouselCard, { backgroundColor: activeSlide.bg }]}>
-          <View style={styles.carouselHeader}>
-            <View style={styles.carouselIcon}>{activeSlide.icon}</View>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.carouselTag}>{activeSlide.tag}</Text>
-              <Text style={styles.carouselTitle}>{activeSlide.title}</Text>
-            </View>
-          </View>
-          <Text style={styles.carouselDesc}>{activeSlide.desc}</Text>
-
-          {/* Dots Indicator & Navigation */}
-          <View style={styles.carouselFooter}>
-            <View style={styles.dotsRow}>
-              {slides.map((_, idx) => (
-                <Pressable
-                  key={idx}
-                  onPress={() => setCurrentSlide(idx)}
-                  style={[styles.dot, currentSlide === idx && styles.dotActive]}
-                  accessibilityRole="button"
-                  accessibilityLabel={`Slide ${idx + 1}`}
-                />
-              ))}
-            </View>
-            <Pressable
-              onPress={() => setCurrentSlide((currentSlide + 1) % slides.length)}
-              style={styles.carouselNextBtn}
-              accessibilityRole="button"
-              accessibilityLabel="Next slide"
-            >
-              <Text style={styles.carouselNextText}>Next ❯</Text>
-            </Pressable>
-          </View>
+        {/* 4-Slide Distinct Auth Carousel */}
+        <View style={styles.carouselContainer}>
+          <AuthCarousel language={lang} height={145} />
         </View>
 
-        {/* Authentication Options in Clear Hierarchy */}
-        <View style={styles.authContainer}>
-          <Text style={styles.sectionHeader}>Sign In to MedGuide AI</Text>
+        {/* Sign In Card */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Sign In to MedGuide AI</Text>
 
-          {/* Method Selector Tabs: Phone vs Email */}
-          <View style={styles.methodSelector}>
+          {/* Mode Switcher Tabs */}
+          <View style={styles.tabBar}>
             <Pressable
               onPress={() => {
-                setAuthMethod('phone');
-                onIdentifierChange(phoneNumber ? `${phoneCountry}${phoneNumber}` : '');
+                setAuthMode('PHONE_OTP');
+                setError('');
+                setNotice('');
               }}
-              style={[styles.methodTab, authMethod === 'phone' && styles.methodTabActive]}
-              accessibilityRole="button"
-              accessibilityLabel="Sign in with phone number"
+              style={[styles.tab, authMode === 'PHONE_OTP' && styles.tabActive]}
+              accessibilityRole="tab"
+              accessibilityState={{ selected: authMode === 'PHONE_OTP' }}
             >
-              <Text style={[styles.methodTabText, authMethod === 'phone' && styles.methodTabTextActive]}>
-                📱 Phone Number
+              <Text style={[styles.tabText, authMode === 'PHONE_OTP' && styles.tabTextActive]}>
+                📱 Phone (OTP)
               </Text>
             </Pressable>
 
             <Pressable
               onPress={() => {
-                setAuthMethod('email');
-                onIdentifierChange('');
+                setAuthMode('EMAIL');
+                setError('');
+                setNotice('');
               }}
-              style={[styles.methodTab, authMethod === 'email' && styles.methodTabActive]}
-              accessibilityRole="button"
-              accessibilityLabel="Sign in with email"
+              style={[styles.tab, authMode === 'EMAIL' && styles.tabActive]}
+              accessibilityRole="tab"
+              accessibilityState={{ selected: authMode === 'EMAIL' }}
             >
-              <Text style={[styles.methodTabText, authMethod === 'email' && styles.methodTabTextActive]}>
-                ✉ Email / Username
+              <Text style={[styles.tabText, authMode === 'EMAIL' && styles.tabTextActive]}>
+                ✉️ Email / Password
               </Text>
             </Pressable>
           </View>
 
-          {/* Inputs for selected method */}
-          {authMethod === 'phone' ? (
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Mobile Phone Number</Text>
-              <View style={styles.phoneRow}>
-                <View style={styles.countryCodeBadge}>
-                  <Text style={styles.countryCodeText}>{phoneCountry}</Text>
+          {error ? (
+            <View style={styles.errorBanner} accessible accessibilityRole="alert">
+              <Text style={styles.errorText}>⚠️ {error}</Text>
+            </View>
+          ) : null}
+
+          {notice ? (
+            <View style={styles.noticeBanner}>
+              <Text style={styles.noticeText}>ℹ️ {notice}</Text>
+            </View>
+          ) : null}
+
+          {authMode === 'PHONE_OTP' ? (
+            /* PHONE OTP AUTHENTICATION */
+            <View style={styles.fieldsContainer}>
+              <View style={styles.field}>
+                <Text style={styles.label}>Mobile Phone Number</Text>
+                <View style={styles.phoneRow}>
+                  <View style={styles.countryBadge}>
+                    <Text style={styles.countryText}>🇮🇳 +91</Text>
+                  </View>
+                  <TextInput
+                    style={[styles.input, styles.phoneInput]}
+                    placeholder="98765 43210"
+                    placeholderTextColor="#8a9994"
+                    value={phone}
+                    onChangeText={t => {
+                      setPhone(t);
+                      if (otpSent) setOtpSent(false);
+                    }}
+                    keyboardType="phone-pad"
+                    maxLength={15}
+                    editable={!busy}
+                    accessibilityLabel="Mobile phone number"
+                  />
                 </View>
-                <TextInput
-                  style={[styles.input, { flex: 1 }]}
-                  placeholderTextColor={palette.muted}
-                  accessibilityLabel="Phone Number"
-                  placeholder="98765 43210"
-                  keyboardType="phone-pad"
-                  maxLength={15}
-                  value={phoneNumber}
-                  onChangeText={handlePhoneChange}
-                  editable={!busy}
-                />
               </View>
+
+              {!otpSent ? (
+                <Button
+                  title={busy ? 'Sending OTP...' : 'Send Verification Code →'}
+                  onPress={handleSendOtp}
+                  disabled={busy}
+                  accessibilityLabel="Send OTP"
+                />
+              ) : (
+                <View style={styles.otpSection}>
+                  <View style={styles.field}>
+                    <Text style={styles.label}>Enter 6-Digit Code</Text>
+                    <TextInput
+                      style={[styles.input, styles.otpInput]}
+                      placeholder="• • • • • •"
+                      placeholderTextColor="#8a9994"
+                      value={otpCode}
+                      onChangeText={setOtpCode}
+                      keyboardType="number-pad"
+                      maxLength={8}
+                      autoFocus
+                      accessibilityLabel="Verification code"
+                    />
+                  </View>
+
+                  <View style={styles.otpTimerRow}>
+                    <Pressable onPress={() => setOtpSent(false)} style={styles.linkAction}>
+                      <Text style={styles.linkActionText}>Change number</Text>
+                    </Pressable>
+                    {countdown > 0 ? (
+                      <Text style={styles.countdownText}>Resend in {countdown}s</Text>
+                    ) : (
+                      <Pressable onPress={handleSendOtp} disabled={busy} style={styles.linkAction}>
+                        <Text style={styles.resendText}>Resend code</Text>
+                      </Pressable>
+                    )}
+                  </View>
+
+                  <Button
+                    title={busy ? 'Signing in...' : 'Verify & Sign In →'}
+                    onPress={handleVerifyOtpLogin}
+                    disabled={busy}
+                    accessibilityLabel="Verify and sign in"
+                  />
+                </View>
+              )}
             </View>
           ) : (
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>{t('identifierLabel', lang)}</Text>
-              <TextInput
-                style={styles.input}
-                placeholderTextColor={palette.muted}
-                accessibilityLabel={t('identifierLabel', lang)}
-                placeholder={t('identifierPlaceholder', lang)}
-                autoCapitalize="none"
-                autoCorrect={false}
-                value={identifier}
-                onChangeText={onIdentifierChange}
-                editable={!busy}
+            /* EMAIL & PASSWORD AUTHENTICATION */
+            <View style={styles.fieldsContainer}>
+              <View style={styles.field}>
+                <Text style={styles.label}>Email or Username</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter email or username"
+                  placeholderTextColor="#8a9994"
+                  value={emailIdentifier}
+                  onChangeText={setEmailIdentifier}
+                  autoCapitalize="none"
+                  accessibilityLabel="Email or username"
+                />
+              </View>
+
+              <View style={styles.field}>
+                <Text style={styles.label}>Password</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter password"
+                  placeholderTextColor="#8a9994"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
+                  accessibilityLabel="Password"
+                />
+              </View>
+
+              <Button
+                title={busy ? 'Signing in...' : 'Sign In →'}
+                onPress={handleEmailSignIn}
+                disabled={busy}
+                accessibilityLabel="Sign in with email and password"
               />
             </View>
           )}
 
-          {/* Password Input */}
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>{t('passwordLabel', lang)}</Text>
-            <TextInput
-              style={styles.input}
-              placeholderTextColor={palette.muted}
-              accessibilityLabel={t('passwordLabel', lang)}
-              placeholder={t('passwordPlaceholder', lang)}
-              secureTextEntry
-              value={password}
-              onChangeText={onPasswordChange}
-              editable={!busy}
-              onSubmitEditing={() => {
-                if (!busy && identifier.trim() && password) onSubmit();
-              }}
-            />
-          </View>
-
-          {/* Error / Alert Display */}
-          {error ? (
-            <View style={styles.errorBox}>
-              <Text style={styles.errorText} accessibilityRole="alert">
-                ⚠️ {error}
-              </Text>
-            </View>
-          ) : null}
-
-          {/* Submit Action */}
-          <Button
-            title={busy ? 'Signing in…' : `Sign in with ${authMethod === 'phone' ? 'Phone' : 'Email'}`}
-            disabled={busy || !identifier.trim() || !password}
-            onPress={onSubmit}
-          />
-
-          {/* Divider */}
+          {/* Social Google divider */}
           <View style={styles.dividerRow}>
             <View style={styles.dividerLine} />
             <Text style={styles.dividerText}>or continue with</Text>
             <View style={styles.dividerLine} />
           </View>
 
-          {/* 3. Continue with Google */}
           <Pressable
-            onPress={handleGooglePress}
-            style={({ pressed }) => [styles.googleButton, pressed && { opacity: 0.8 }]}
+            onPress={handleGoogleSignIn}
+            style={({ pressed }) => [styles.googleBtn, pressed && { opacity: 0.7 }]}
             accessibilityRole="button"
             accessibilityLabel="Continue with Google"
           >
             <Text style={styles.googleIcon}>G</Text>
-            <Text style={styles.googleText}>Continue with Google</Text>
+            <Text style={styles.googleBtnText}>Continue with Google</Text>
           </Pressable>
 
-          {googleNotice ? (
-            <View style={styles.infoBox}>
-              <Text style={styles.infoText}>ℹ {googleNotice}</Text>
-            </View>
-          ) : null}
+          {/* Sign up prompt */}
+          <View style={styles.footerRow}>
+            <Text style={styles.footerPrompt}>New to MedGuide AI?</Text>
+            <Pressable onPress={onRegister} style={styles.signUpLink}>
+              <Text style={styles.signUpLinkText}>Create an account →</Text>
+            </Pressable>
+          </View>
         </View>
-
-        {/* Prompt: New to MedGuide AI? Create an account */}
-        <View style={styles.registerPrompt}>
-          <Text style={styles.registerPromptText}>New to MedGuide AI?</Text>
-          <Pressable
-            onPress={onRegister}
-            accessibilityRole="button"
-            accessibilityLabel="Create an account"
-            style={({ pressed }) => pressed && { opacity: 0.7 }}
-          >
-            <Text style={styles.registerLink}>Create an account →</Text>
-          </Pressable>
-        </View>
-
-        {/* Healthcare Safety Notice */}
-        <Text style={styles.disclaimer}>{t('emergencyDisclaimer', lang)}</Text>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  page: {
-    flexGrow: 1,
-    paddingHorizontal: 18,
-    paddingVertical: 14,
-    backgroundColor: palette.cream,
-    gap: 12,
+  container: {
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    paddingBottom: 32,
+    backgroundColor: '#f6f1e8',
   },
-  topRow: {
+  headerRow: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap:12,
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: 8,
   },
   backBtn: {
-    paddingVertical: 6,
     paddingHorizontal: 12,
-    backgroundColor: '#e6ebe2',
-    borderRadius: 14,
+    paddingVertical: 6,
+    borderRadius: 20,
+    backgroundColor: '#e6ded1',
   },
-  backText: {
-    fontSize: 12,
+  backBtnText: {
+    fontSize: 13,
     fontWeight: '700',
-    color: palette.ink,
+    color: '#073d37',
   },
   langPills: {
     flexDirection: 'row',
-    backgroundColor: '#e6ebe2',
+    backgroundColor: '#e6ded1',
     borderRadius: 20,
     padding: 3,
     gap: 4,
   },
   langBtn: {
-    paddingVertical: 4,
+    minHeight:44,
+    justifyContent:'center',
     paddingHorizontal: 10,
-    borderRadius: 12,
+    paddingVertical: 5,
+    borderRadius: 16,
   },
   langBtnActive: {
-    backgroundColor: palette.ink,
+    backgroundColor: '#073d37',
   },
   langText: {
     fontSize: 12,
     fontWeight: '700',
-    color: palette.ink,
+    color: '#073d37',
   },
   langTextActive: {
-    color: '#fff',
+    color: '#ffffff',
   },
-  audioBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#d2dcd0',
-    borderRadius: 12,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    gap: 8,
+  carouselContainer: {
+    marginBottom: 6,
   },
-  audioBarActive: {
-    backgroundColor: '#feeceb',
-    borderColor: '#f5b5b0',
-  },
-  audioIcon: {
-    fontSize: 14,
-  },
-  audioText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: palette.teal,
-  },
-  audioTextActive: {
-    color: '#9b2631',
-  },
-  carouselCard: {
+  card: {
+    backgroundColor: '#ffffff',
     borderRadius: 20,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: palette.line,
-    gap: 8,
+    padding: 20,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
   },
-  carouselHeader: {
+  cardTitle: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#073d37',
+    marginBottom: 14,
+    letterSpacing: -0.2,
+  },
+  tabBar: {
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  carouselIcon: {
-    width: 44,
-    height: 44,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  carouselTag: {
-    fontSize: 10,
-    fontWeight: '700',
-    letterSpacing: 1.2,
-    color: palette.teal,
-  },
-  carouselTitle: {
-    fontSize: 17,
-    fontWeight: '700',
-    color: palette.ink,
-  },
-  carouselDesc: {
-    fontSize: 13,
-    lineHeight: 18,
-    color: palette.muted,
-  },
-  carouselFooter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(0,0,0,0.06)',
-  },
-  dotsRow: {
-    flexDirection: 'row',
-    gap: 6,
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: 'rgba(0,0,0,0.2)',
-  },
-  dotActive: {
-    width: 22,
-    backgroundColor: palette.teal,
-  },
-  carouselNextBtn: {
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-  },
-  carouselNextText: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: palette.teal,
-  },
-  authContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 22,
-    padding: 16,
-    gap: 12,
-    borderWidth: 1,
-    borderColor: palette.line,
-  },
-  sectionHeader: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: palette.ink,
-  },
-  methodSelector: {
-    flexDirection: 'row',
-    backgroundColor: '#f0f4ee',
-    borderRadius: 14,
+    backgroundColor: '#f1f4f2',
+    borderRadius: 12,
     padding: 3,
-    gap: 4,
+    marginBottom: 16,
   },
-  methodTab: {
+  tab: {
     flex: 1,
     paddingVertical: 8,
-    borderRadius: 11,
     alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: 10,
   },
-  methodTabActive: {
-    backgroundColor: '#fff',
+  tabActive: {
+    backgroundColor: '#ffffff',
+    elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
-    elevation: 2,
   },
-  methodTabText: {
-    fontSize: 12,
+  tabText: {
+    fontSize: 13,
     fontWeight: '600',
-    color: palette.muted,
+    color: '#63736e',
   },
-  methodTabTextActive: {
-    color: palette.ink,
+  tabTextActive: {
+    color: '#073d37',
     fontWeight: '700',
   },
-  inputGroup: {
-    gap: 4,
+  errorBanner: {
+    backgroundColor: '#fdeeed',
+    borderWidth: 1,
+    borderColor: '#f5c2be',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 12,
+  },
+  errorText: {
+    color: '#a32b24',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  noticeBanner: {
+    backgroundColor: '#eaf4f2',
+    borderWidth: 1,
+    borderColor: '#bcdbd5',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 12,
+  },
+  noticeText: {
+    color: '#073d37',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  fieldsContainer: {
+    gap: 12,
+  },
+  field: {
+    gap: 6,
   },
   label: {
-    fontSize: 12,
-    color: palette.ink,
-    fontWeight: '600',
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#073d37',
+  },
+  input: {
+    height: 48,
+    borderWidth: 1.5,
+    borderColor: '#cbd8d3',
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    fontSize: 15,
+    color: '#073d37',
+    backgroundColor: '#fafaf8',
   },
   phoneRow: {
     flexDirection: 'row',
-    gap: 8,
-    alignItems: 'center',
+    gap: 10,
   },
-  countryCodeBadge: {
-    backgroundColor: '#f0f4ee',
-    borderWidth: 1,
-    borderColor: palette.line,
-    borderRadius: 12,
+  countryBadge: {
+    height: 48,
     paddingHorizontal: 12,
-    minHeight: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  countryCodeText: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: palette.ink,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: palette.line,
+    borderWidth: 1.5,
+    borderColor: '#cbd8d3',
     borderRadius: 12,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    minHeight: 50,
-    color: palette.ink,
-    backgroundColor: '#fafbf9',
-    fontSize: 15,
+    backgroundColor: '#f1f4f2',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  errorBox: {
-    backgroundColor: '#feeceb',
-    padding: 10,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#f5b5b0',
+  countryText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#073d37',
   },
-  errorText: {
-    fontSize: 12,
-    color: '#9b2631',
+  phoneInput: {
+    flex: 1,
+  },
+  otpSection: {
+    gap: 12,
+    marginTop: 4,
+  },
+  otpInput: {
+    fontSize: 22,
+    fontWeight: '800',
+    letterSpacing: 6,
+    textAlign: 'center',
+  },
+  otpTimerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 2,
+  },
+  linkAction: {
+    paddingVertical: 2,
+  },
+  linkActionText: {
+    fontSize: 13,
+    color: '#073d37',
+    fontWeight: '600',
+    textDecorationLine: 'underline',
+  },
+  countdownText: {
+    fontSize: 13,
+    color: '#7b8c87',
+  },
+  resendText: {
+    fontSize: 13,
+    color: '#246b60',
+    fontWeight: '700',
   },
   dividerRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
-    marginVertical: 4,
+    marginVertical: 16,
+    gap: 10,
   },
   dividerLine: {
     flex: 1,
     height: 1,
-    backgroundColor: palette.line,
+    backgroundColor: '#e1e8e5',
   },
   dividerText: {
-    fontSize: 11,
-    color: palette.muted,
+    fontSize: 12,
+    color: '#8a9994',
+    fontWeight: '500',
   },
-  googleButton: {
+  googleBtn: {
+    height: 46,
+    borderWidth: 1.5,
+    borderColor: '#cbd8d3',
+    borderRadius: 12,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 10,
-    borderWidth: 1,
-    borderColor: palette.line,
-    borderRadius: 16,
-    paddingVertical: 12,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
   },
   googleIcon: {
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '800',
     color: '#4285F4',
   },
-  googleText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: palette.ink,
-  },
-  infoBox: {
-    backgroundColor: '#eaf4ee',
-    padding: 10,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#c6dfcf',
-  },
-  infoText: {
-    fontSize: 12,
-    color: palette.teal,
-    lineHeight: 16,
-  },
-  registerPrompt: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 6,
-    paddingVertical: 8,
-  },
-  registerPromptText: {
-    fontSize: 14,
-    color: palette.muted,
-  },
-  registerLink: {
+  googleBtnText: {
     fontSize: 14,
     fontWeight: '700',
-    color: palette.teal,
+    color: '#073d37',
   },
-  disclaimer: {
-    fontSize: 11,
-    lineHeight: 15,
-    color: palette.muted,
-    textAlign: 'center',
-    paddingTop: 2,
+  footerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 18,
+    gap: 6,
+  },
+  footerPrompt: {
+    fontSize: 13,
+    color: '#5a6b65',
+  },
+  signUpLink: {
+    paddingVertical: 2,
+  },
+  signUpLinkText: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#073d37',
+    textDecorationLine: 'underline',
   },
 });

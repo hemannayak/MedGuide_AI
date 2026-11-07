@@ -28,13 +28,19 @@ from app.services.speech_service import (
 def client():
     # These endpoint contract tests isolate speech processing after consent.
     # Authorization/withdrawal are exercised separately, never relaxed in app code.
-    from app.api.deps import require_speech_consent
+    from app.api.deps import require_speech_consent, require_spoken_guidance_consent
     previous = app.dependency_overrides.get(require_speech_consent)
+    previous_spoken = app.dependency_overrides.get(require_spoken_guidance_consent)
     app.dependency_overrides[require_speech_consent] = lambda: object()
+    app.dependency_overrides[require_spoken_guidance_consent] = lambda: object()
     try:
         with TestClient(app) as test_client:
             yield test_client
     finally:
+        if previous_spoken is None:
+            app.dependency_overrides.pop(require_spoken_guidance_consent, None)
+        else:
+            app.dependency_overrides[require_spoken_guidance_consent] = previous_spoken
         if previous is None:
             app.dependency_overrides.pop(require_speech_consent, None)
         else:

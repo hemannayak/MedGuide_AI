@@ -32,3 +32,7 @@ api_router.include_router(follow_ups.router, prefix="/follow-ups", tags=["Care F
 
 from app.api.v1.endpoints import wellness
 api_router.include_router(wellness.router, prefix='/wellness', tags=['Patient wellness'])
+from app.api.v1.endpoints import voice
+api_router.include_router(voice.router, prefix='/voice', tags=['Conversational Voice'])
+from app.api.v1.endpoints import public_health
+api_router.include_router(public_health.router, prefix='/public-health', tags=['Public Health Evidence'])

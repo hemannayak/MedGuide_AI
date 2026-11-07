@@ -1,0 +1,18 @@
+// Build-only Windows path workaround. Generated Android sources stay untouched.
+// CMake hashes long object paths when CMAKE_OBJECT_PATH_MAX is set explicitly.
+gradle.beforeProject { project ->
+    ['com.android.application', 'com.android.library'].each { pluginId ->
+    project.plugins.withId(pluginId) {
+        project.extensions.getByName('androidComponents').finalizeDsl { android ->
+            def workspace = gradle.rootProject.projectDir.parentFile.parentFile.canonicalFile
+            def staging = new File(workspace, '.g/cxx-' + project.name.replaceAll('[^A-Za-z0-9-]', '-')).canonicalFile
+            if (!staging.path.startsWith(workspace.path + File.separator)) {
+                throw new GradleException('Native staging must remain inside the workspace')
+            }
+            android.externalNativeBuild.cmake.buildStagingDirectory = staging
+            android.defaultConfig.externalNativeBuild.cmake.arguments.add('-DCMAKE_OBJECT_PATH_MAX=240')
+        }
+    }
+}
+}
+

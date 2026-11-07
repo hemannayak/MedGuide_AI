@@ -1,0 +1,168 @@
+{
+  "topic": "food-safety",
+  "source_url": "https://www.cdc.gov/food-safety/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "Food Safety Basics",
+  "sections": [
+    {
+      "heading": "Overview",
+      "text": "Foods can sometimes be contaminated with germs that can make you sick. You may swallow these germs when:"
+    },
+    {
+      "heading": "Overview",
+      "text": "Eating foods that aren't cooked properly"
+    },
+    {
+      "heading": "Overview",
+      "text": "Germs from food spread to your hands, surfaces, or other foods (called cross-contamination)"
+    },
+    {
+      "heading": "Overview",
+      "text": "Food is not refrigerated properly after cooking"
+    },
+    {
+      "heading": "Overview",
+      "text": "There are many different types of foodborne germs that can cause illness, hospitalization, and even death. Some examples include Salmonella, norovirus, and Campylobacter."
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Signs and symptoms of food poisoning depend on the type of germ you swallowed. The most common symptoms include diarrhea, stomach pain or cramps, nausea, vomiting, and fever."
+    },
+    {
+      "heading": "Riskier foods",
+      "text": "Some foods are more likely to contain harmful germs, including:"
+    },
+    {
+      "heading": "Riskier foods",
+      "text": "Raw or undercooked poultry, meat, seafood, or eggs"
+    },
+    {
+      "heading": "Riskier foods",
+      "text": "Raw or undercooked sprouts"
+    },
+    {
+      "heading": "Riskier foods",
+      "text": "Unwashed fruits and vegetables"
+    },
+    {
+      "heading": "Riskier foods",
+      "text": "Cut melon"
+    },
+    {
+      "heading": "Riskier foods",
+      "text": "Unpasteurized milk, juice, cider, or soft cheese"
+    },
+    {
+      "heading": "Riskier foods",
+      "text": "Raw dough or raw batter made with uncooked flour"
+    },
+    {
+      "heading": "People at risk",
+      "text": "Anyone can get food poisoning, but certain groups of people are more likely to get very sick from foodborne germs:"
+    },
+    {
+      "heading": "People at risk",
+      "text": "People 65 and older"
+    },
+    {
+      "heading": "People at risk",
+      "text": "Children under 5 years old"
+    },
+    {
+      "heading": "People at risk",
+      "text": "People with weakened immune systems"
+    },
+    {
+      "heading": "People at risk",
+      "text": "Pregnant women"
+    },
+    {
+      "heading": "Reducing risk",
+      "text": "The best ways to avoid food poisoning include:"
+    },
+    {
+      "heading": "Reducing risk",
+      "text": "Washing your hands and surfaces often, including rinsing fresh fruits and vegetables."
+    },
+    {
+      "heading": "Reducing risk",
+      "text": "Separating riskier foods, like raw meat and eggs, from other foods to avoid cross-contamination."
+    },
+    {
+      "heading": "Reducing risk",
+      "text": "Cooking food to the right temperature to kill germs."
+    },
+    {
+      "heading": "Reducing risk",
+      "text": "Refrigerating food promptly after cooking and thawing frozen food safely (not on the counter)."
+    },
+    {
+      "heading": "Reducing risk",
+      "text": "Choosing safer foods, especially if you're more likely to get sick from foodborne germs."
+    },
+    {
+      "heading": "Quick facts",
+      "text": "CDC estimates that each year 48 million people get sick from a foodborne illness, 128,000 are hospitalized, and 3,000 die."
+    },
+    {
+      "heading": "What CDC is doing",
+      "text": "CDC helps make food safer by working with partners to track and investigate foodborne illness, identify sources of illness, and determine the best ways to prevent foodborne illness."
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "3664321a105e1847dd40ada4a08e10620e3747c341e7ac7a5fba470b304cd012",
+  "resolved_url": "https://www.cdc.gov/food-safety/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:14.283391+00:00",
+  "html_sha256": "b648eae37e71c5ac3155e78042defaf501cb6477a01971f60e77ec28e93d555b",
+  "chunks": [
+    {
+      "content": "Foods can sometimes be contaminated with germs that can make you sick. You may swallow these germs when: Eating foods that aren't cooked properly Germs from food spread to your hands, surfaces, or other foods (called cross-contamination) Food is not refrigerated properly after cooking There are many different types of foodborne germs that can cause illness, hospitalization, and even death. Some examples include Salmonella, norovirus, and Campylobacter.",
+      "section_title": "Overview",
+      "content_sha256": "b0f9274ccec48bd0efb1b13ea34c139909f160b7a711f9a35f7b2f4eda7818a2",
+      "chunk_index": 0
+    },
+    {
+      "content": "Signs and symptoms of food poisoning depend on the type of germ you swallowed. The most common symptoms include diarrhea, stomach pain or cramps, nausea, vomiting, and fever.",
+      "section_title": "Signs and symptoms",
+      "content_sha256": "44146d1d462a0d962cc9fbb35ec8d96df1e96f7d8149042ade78b9f18e0fea04",
+      "chunk_index": 1
+    },
+    {
+      "content": "Some foods are more likely to contain harmful germs, including: Raw or undercooked poultry, meat, seafood, or eggs Raw or undercooked sprouts Unwashed fruits and vegetables Cut melon Unpasteurized milk, juice, cider, or soft cheese Raw dough or raw batter made with uncooked flour",
+      "section_title": "Riskier foods",
+      "content_sha256": "169d7f53088fd7ea45a70ffe710fbee4e82d5db3482f7560820373ae1fbe6fe9",
+      "chunk_index": 2
+    },
+    {
+      "content": "Anyone can get food poisoning, but certain groups of people are more likely to get very sick from foodborne germs: People 65 and older Children under 5 years old People with weakened immune systems Pregnant women",
+      "section_title": "People at risk",
+      "content_sha256": "66a6f295b94bcfab4fab12215f1a4c0e8d841d71f0193ad661f929e31e826d11",
+      "chunk_index": 3
+    },
+    {
+      "content": "The best ways to avoid food poisoning include: Washing your hands and surfaces often, including rinsing fresh fruits and vegetables. Separating riskier foods, like raw meat and eggs, from other foods to avoid cross-contamination. Cooking food to the right temperature to kill germs. Refrigerating food promptly after cooking and thawing frozen food safely (not on the counter). Choosing safer foods, especially if you're more likely to get sick from foodborne germs.",
+      "section_title": "Reducing risk",
+      "content_sha256": "e5331952c102f24758ebd8cfce252c265b0d2b65e2555f121f8afbd2d40e31cc",
+      "chunk_index": 4
+    },
+    {
+      "content": "CDC estimates that each year 48 million people get sick from a foodborne illness, 128,000 are hospitalized, and 3,000 die.",
+      "section_title": "Quick facts",
+      "content_sha256": "ba96c38f740e2ab2b47da6227c7a0497ebe4d842959012bc63489f7a6dab32ba",
+      "chunk_index": 5
+    },
+    {
+      "content": "CDC helps make food safer by working with partners to track and investigate foodborne illness, identify sources of illness, and determine the best ways to prevent foodborne illness.",
+      "section_title": "What CDC is doing",
+      "content_sha256": "7966189eaaed1e54356d1b304606469a3ae4767fbd81bd58f59cf38f692f3d27",
+      "chunk_index": 6
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "9f856b98-2245-5f3d-8a33-433caf6430af"
+}

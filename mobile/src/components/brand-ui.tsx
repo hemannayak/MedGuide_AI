@@ -9,8 +9,8 @@ export function Brand() {
   </View>;
 }
 
-export function Button({ title, onPress, disabled = false, variant = 'primary' }: { title: string; onPress: () => void; disabled?: boolean; variant?: 'primary' | 'secondary' | 'quiet' | 'danger' }) {
-  return <Pressable accessibilityRole="button" accessibilityLabel={title} accessibilityState={{ disabled }} disabled={disabled} onPress={onPress}
+export function Button({ title, onPress, disabled = false, variant = 'primary', accessibilityLabel }: { title: string; onPress: () => void; disabled?: boolean; variant?: 'primary' | 'secondary' | 'quiet' | 'danger'; accessibilityLabel?: string }) {
+  return <Pressable accessibilityRole="button" accessibilityLabel={accessibilityLabel ?? title} accessibilityState={{ disabled }} disabled={disabled} onPress={onPress}
     style={({ pressed }) => [styles.button, variant === 'secondary' && styles.secondary, variant === 'quiet' && styles.quiet, variant === 'danger' && styles.danger, disabled && styles.disabled, pressed && !disabled && styles.pressed]}>
     {({ pressed }) => <Text style={[styles.buttonText, (variant === 'secondary' || variant === 'quiet') && styles.secondaryText, pressed && !disabled && styles.buttonText, disabled && styles.disabledText]}>{title}</Text>}
   </Pressable>;

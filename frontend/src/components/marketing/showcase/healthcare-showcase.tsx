@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Mic, ShieldCheck, FileText, CheckCircle2, Zap, ArrowRight } from "lucide-react";
+import { Mic, ShieldCheck, FileText, CheckCircle2 } from "lucide-react";
 import { MedButton } from "@/components/ui/med-button";
 
 export const HealthcareShowcase: React.FC = () => {

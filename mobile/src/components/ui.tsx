@@ -8,10 +8,24 @@ import {
   KeyboardAvoidingView,
   Platform,
   View,
+  UIManager,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import Svg, { Path } from "react-native-svg";
+
+function hasNativeSvg(): boolean {
+  if (Platform.OS === 'web') return true;
+  if (typeof UIManager === 'undefined') return true;
+  try {
+    return Boolean(
+      UIManager?.getViewManagerConfig?.('RNSVGPath') ||
+      UIManager?.getViewManagerConfig?.('RCTRNSVGPath')
+    );
+  } catch {
+    return false;
+  }
+}
 export const colors = {
   forest: "#073d37",
   paper: "#fbf8f1",
@@ -61,6 +75,34 @@ export function Icon({
   );
 }
 export function Mark() {
+  if (!hasNativeSvg()) {
+    return (
+      <View
+        accessibilityLabel="MedGuide"
+        style={{
+          width: 34,
+          height: 34,
+          borderRadius: 8,
+          backgroundColor: colors.forest,
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "row",
+        }}
+      >
+        <Text style={{ color: "#ffffff", fontSize: 16, fontWeight: "900" }}>M</Text>
+        <View
+          style={{
+            width: 5,
+            height: 5,
+            borderRadius: 2.5,
+            backgroundColor: colors.coral,
+            marginLeft: 2,
+            marginTop: 4,
+          }}
+        />
+      </View>
+    );
+  }
   return (
     <Svg
       width={34}

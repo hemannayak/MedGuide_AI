@@ -1,0 +1,8 @@
+{
+  "source_migration_head": "e05e1105sessions",
+  "original_table_row_counts_preserved": true,
+  "verified_original_tables": 26,
+  "added_table": "revoked_access_tokens",
+  "backup_restored": true,
+  "scope": "No original table truncated or replaced; row-count comparison is not full content comparison"
+}

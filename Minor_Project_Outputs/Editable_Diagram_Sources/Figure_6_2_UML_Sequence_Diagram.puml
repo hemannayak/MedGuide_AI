@@ -1,0 +1,57 @@
+@startuml
+!pragma layout smetana
+skinparam dpi 220
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 17
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam ArrowColor #44675F
+skinparam componentStyle rectangle
+skinparam rectangleBackgroundColor #E8F3EF
+skinparam databaseBackgroundColor #F6F1E8
+skinparam sequenceParticipantBackgroundColor #E8F3EF
+skinparam sequenceGroupBackgroundColor #FFFFFF
+title Safety-first chat execution sequence
+actor User
+participant "Next.js frontend" as UI
+participant "FastAPI endpoint" as API
+participant "ai_service" as AI
+database "PostgreSQL / pgvector" as DB
+participant "Embedding model" as Embed
+participant "AI gateway / provider" as LLM
+User -> UI : Submit symptom narrative
+UI -> API : POST /api/v1/ai/chat + bearer token
+API -> API : Authenticate, get own profile\nNon-emergency requires AI consent
+API -> AI : process_ai_chat_query
+AI -> DB : Create/load conversation, save user message
+AI -> AI : Deterministic red-flag classification
+alt Emergency
+ AI -> DB : Save emergency response metadata
+ AI --> API : EMERGENCY, no retrieved sources
+ API --> UI : Immediate emergency response
+ UI --> User : Emergency information
+else Non-emergency
+ AI -> Embed : Generate genuine 384-dimensional query vector
+ Embed --> AI : Query embedding
+ AI -> DB : Cosine search over approved document chunks
+ DB --> AI : Evidence and source metadata
+ AI -> AI : Evidence sufficiency gate
+ alt Insufficient evidence
+  AI --> API : Safe REFUSAL, no invented guidance
+ else Sufficient evidence
+  AI -> LLM : Context-constrained prompt
+  LLM --> AI : Generated response
+  AI -> AI : Citation and safety validation
+  AI -> DB : Save response and metadata
+  AI --> API : Text + response type + citations
+ end
+ API --> UI : Response
+ UI --> User : Guidance or safe refusal + evidence inspector
+end
+note over API,LLM
+No sub-15 ms claim. Current gateway configuration is Groq;
+Ollama is an optional provider verified separately via CLI.
+
+end note
+@enduml

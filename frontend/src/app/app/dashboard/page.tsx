@@ -6,7 +6,7 @@ import { usePatientProfile } from "@/components/workspace/use-patient-profile";
 import { isMockMode } from "@/lib/api/config";
 import styles from "@/components/workspace/workspace.module.css";
 export default function PatientDashboardPage(){
- const { tr } = useLanguage();
+ useLanguage(); // tr is available for future i18n use
 
  const {profile,loading,error}=usePatientProfile();
  return <><div className={styles.welcome}><p className={styles.eyebrow}>A CLEARER STARTING POINT</p><h1>{loading?'Welcome to MedGuide':`Welcome${profile?.full_name?', '+profile.full_name.split(' ')[0]:''}.`}</h1><p>Your questions, documents, and medication information—in one calm workspace.</p>{isMockMode()&&profile&&<p>Showing a synthetic sample profile.</p>}</div>{error&&<p className={styles.notice} role="alert">{error}</p>}

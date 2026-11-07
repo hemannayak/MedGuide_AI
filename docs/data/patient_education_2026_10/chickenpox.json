@@ -1,0 +1,182 @@
+{
+  "topic": "chickenpox",
+  "source_url": "https://www.cdc.gov/chickenpox/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "About Chickenpox",
+  "sections": [
+    {
+      "heading": "What it is",
+      "text": "Chickenpox is very contagious. Symptoms include an itchy, blister-like rash in addition to other symptoms. Chickenpox illness usually lasts about 4 to 7 days. Children usually miss 5 to 6 days of school or childcare due to chickenpox."
+    },
+    {
+      "heading": "What it is",
+      "text": "For most people, getting chickenpox once provides immunity for life. A person can get chickenpox more than once, but it is uncommon."
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "The classic symptom of chickenpox is a rash that turns into itchy, fluid-filled blisters that eventually turn into scabs. The rash may first show up on the chest, back, and face, before it spreads to the rest of the body. A person with chickenpox may have as many as 500 blisters. It usually takes about 1 week for all of the blisters to become scabs."
+    },
+    {
+      "heading": "Signs and symptoms",
+      "text": "Some people who have been vaccinated against chickenpox can still get the disease. However, they usually have milder symptoms."
+    },
+    {
+      "heading": "Who is at risk",
+      "text": "Anyone who has not had chickenpox or gotten the chickenpox vaccine can get the disease."
+    },
+    {
+      "heading": "Who is at risk",
+      "text": "Some people who get chickenpox may have more severe symptoms and may be at higher risk for complications. Chickenpox can also be serious, even life-threatening, especially during pregnancy, in babies, adolescents, adults, and people with weakened immune systems. People with weakened immune systems have a lowered ability to fight germs and sickness."
+    },
+    {
+      "heading": "Contact with someone with chickenpox",
+      "text": "Chickenpox is a highly contagious disease caused by varicella-zoster virus (VZV). It mainly spreads from unvaccinated people with chickenpox to others who have never had the virus. Up to 90% of people who are not immune and close to someone with chickenpox will also get infected."
+    },
+    {
+      "heading": "Contact with someone with chickenpox",
+      "text": "A person with chickenpox is contagious 1 to 2 days before the rash begins, until all the chickenpox lesions have crusted (scabbed over)."
+    },
+    {
+      "heading": "Contact with someone with chickenpox",
+      "text": "If a vaccinated person gets the disease, they can still spread it to others. Vaccinated people who get chickenpox may develop lesions that do not crust. These people are contagious until no new lesions have appeared for 24 hours."
+    },
+    {
+      "heading": "Contact with someone with shingles",
+      "text": "VZV also causes shingles. After people recover from chickenpox, the virus remains dormant in the body. People get shingles when VZV reactivates in their bodies later in life."
+    },
+    {
+      "heading": "Contact with someone with shingles",
+      "text": "People who never had chickenpox or didn't get chickenpox vaccine can get infected with VZV from someone who has shingles. They will develop chickenpox, not shingles. These people can get the virus through:"
+    },
+    {
+      "heading": "Contact with someone with shingles",
+      "text": "Direct contact with the fluid from shingles rash blisters."
+    },
+    {
+      "heading": "Contact with someone with shingles",
+      "text": "Breathing in virus particles that come from the blisters."
+    },
+    {
+      "heading": "Contact with someone with shingles",
+      "text": "It takes about 2 weeks (10 to 21 days) after exposure to a person with chickenpox or shingles for someone to develop chickenpox."
+    },
+    {
+      "heading": "Prevention",
+      "text": "Protect yourself with the vaccine. The best way to prevent chickenpox is to get the chickenpox vaccine. Everyone—including children, adolescents, and adults—should get 2 doses of chickenpox vaccine if they have never had chickenpox or were never vaccinated. Most people who get the vaccine will not get chickenpox."
+    },
+    {
+      "heading": "Prevention",
+      "text": "The chickenpox vaccine prevents almost all cases of severe illness. Since the chickenpox vaccination program began in the United States, there has been over 97% decrease in chickenpox cases. Hospitalizations and deaths have become rare."
+    },
+    {
+      "heading": "Treatment and recovery",
+      "text": "There are several things that you can do at home to help relieve chickenpox symptoms and prevent skin infections."
+    },
+    {
+      "heading": "Treatment and recovery",
+      "text": "Your healthcare provider can advise you on treatment options. Antiviral medication is recommended for people with chickenpox who are more likely to develop dangerous illnesses."
+    },
+    {
+      "heading": "\"Chickenpox parties\"—Don't take the chance!",
+      "text": "In the past, some parents participated in \"chickenpox parties\" to intentionally expose their unvaccinated children to a child with chickenpox in hopes that they would get the disease."
+    },
+    {
+      "heading": "\"Chickenpox parties\"—Don't take the chance!",
+      "text": "CDC strongly recommends against hosting or participating in these events."
+    },
+    {
+      "heading": "\"Chickenpox parties\"—Don't take the chance!",
+      "text": "Chickenpox can be serious and can lead to severe complications and death, even in healthy children. There is no way to tell in advance how severe your child's symptoms will be. So, it is not worth taking the chance of exposing your child to someone with the disease."
+    },
+    {
+      "heading": "\"Chickenpox parties\"—Don't take the chance!",
+      "text": "The best way to protect infants and children against chickenpox is to get them vaccinated."
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "a1141c9c103baa0937b3f6e8977b2bd1264ea870ec9356729f5694514fff1f24",
+  "resolved_url": "https://www.cdc.gov/chickenpox/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:13.100533+00:00",
+  "html_sha256": "9f3680731fc6c89080985f16db0c0619c69d984f99be7e33a0dd210722f2454d",
+  "chunks": [
+    {
+      "content": "Chickenpox is very contagious. Symptoms include an itchy, blister-like rash in addition to other symptoms. Chickenpox illness usually lasts about 4 to 7 days. Children usually miss 5 to 6 days of school or childcare due to chickenpox. For most people, getting chickenpox once provides immunity for life. A person can get chickenpox more than once, but it is uncommon.",
+      "section_title": "What it is",
+      "content_sha256": "d53ae0476f4e89c62b03873586f97d9b953be097db777d9fdce0b429b382aaca",
+      "chunk_index": 0
+    },
+    {
+      "content": "The classic symptom of chickenpox is a rash that turns into itchy, fluid-filled blisters that eventually turn into scabs. The rash may first show up on the chest, back, and face, before it spreads to the rest of the body. A person with chickenpox may have as many as 500 blisters. It usually takes about 1 week for all of the blisters to become scabs. Some people who have been vaccinated against chickenpox can still get the disease. However, they usually have milder symptoms.",
+      "section_title": "Signs and symptoms",
+      "content_sha256": "fb6b71d626caa3ecb86559937f36325e142d3cc1286d135ef2b7c26b765ee83a",
+      "chunk_index": 1
+    },
+    {
+      "content": "Anyone who has not had chickenpox or gotten the chickenpox vaccine can get the disease. Some people who get chickenpox may have more severe symptoms and may be at higher risk for complications. Chickenpox can also be serious, even life-threatening, especially during pregnancy, in babies, adolescents, adults, and people with weakened immune systems. People with weakened immune systems have a lowered ability to fight germs and sickness.",
+      "section_title": "Who is at risk",
+      "content_sha256": "71534161924ea955442dbc668b28070f6400548142d266f7c9c6f493b486918a",
+      "chunk_index": 2
+    },
+    {
+      "content": "Chickenpox is a highly contagious disease caused by varicella-zoster virus (VZV). It mainly spreads from unvaccinated people with chickenpox to others who have never had the virus. Up to 90% of people who are not immune and close to someone with chickenpox will also get infected. A person with chickenpox is contagious 1 to 2 days before the rash begins, until all the chickenpox lesions have crusted (scabbed over). If a vaccinated person gets the disease, they can still spread it to others.",
+      "section_title": "Contact with someone with chickenpox",
+      "content_sha256": "098ff21b2bd73031d8dc8fbb4cc3ef22f53aa9fb8c4dc20d3084b21a243bb5c3",
+      "chunk_index": 3
+    },
+    {
+      "content": "Vaccinated people who get chickenpox may develop lesions that do not crust. These people are contagious until no new lesions have appeared for 24 hours.",
+      "section_title": "Contact with someone with chickenpox",
+      "content_sha256": "13eb0af29750a35773b7f004e4c83370b628be9de8149054aaa73492ce45eddd",
+      "chunk_index": 4
+    },
+    {
+      "content": "VZV also causes shingles. After people recover from chickenpox, the virus remains dormant in the body. People get shingles when VZV reactivates in their bodies later in life. People who never had chickenpox or didn't get chickenpox vaccine can get infected with VZV from someone who has shingles. They will develop chickenpox, not shingles. These people can get the virus through: Direct contact with the fluid from shingles rash blisters. Breathing in virus particles that come from the blisters. It",
+      "section_title": "Contact with someone with shingles",
+      "content_sha256": "3c7dea53c48a39cde6401d1a62a8d27bc0266e04e2f6e8a77817eb9e6609241b",
+      "chunk_index": 5
+    },
+    {
+      "content": "takes about 2 weeks (10 to 21 days) after exposure to a person with chickenpox or shingles for someone to develop chickenpox.",
+      "section_title": "Contact with someone with shingles",
+      "content_sha256": "a313ac3445a7a9179914c3f59dfbaac226598ea97ff053c227a2d9ce2d6f9be7",
+      "chunk_index": 6
+    },
+    {
+      "content": "Protect yourself with the vaccine. The best way to prevent chickenpox is to get the chickenpox vaccine. Everyone—including children, adolescents, and adults—should get 2 doses of chickenpox vaccine if they have never had chickenpox or were never vaccinated. Most people who get the vaccine will not get chickenpox. The chickenpox vaccine prevents almost all cases of severe illness. Since the chickenpox vaccination program began in the United States, there has been over 97% decrease in chickenpox",
+      "section_title": "Prevention",
+      "content_sha256": "cbe4eb573884d616ea594c3c75216322740c085118dd04b345aaf5a8f7b715b1",
+      "chunk_index": 7
+    },
+    {
+      "content": "cases. Hospitalizations and deaths have become rare.",
+      "section_title": "Prevention",
+      "content_sha256": "718f2b359e038dbd05d78a6ff1170a764f8f116472d5946341f1295fcba03683",
+      "chunk_index": 8
+    },
+    {
+      "content": "There are several things that you can do at home to help relieve chickenpox symptoms and prevent skin infections. Your healthcare provider can advise you on treatment options. Antiviral medication is recommended for people with chickenpox who are more likely to develop dangerous illnesses.",
+      "section_title": "Treatment and recovery",
+      "content_sha256": "99d3d0969e788e404e6fe02dc3398c79519e577c4d1b3161f094c6bfe80ced80",
+      "chunk_index": 9
+    },
+    {
+      "content": "In the past, some parents participated in \"chickenpox parties\" to intentionally expose their unvaccinated children to a child with chickenpox in hopes that they would get the disease. CDC strongly recommends against hosting or participating in these events. Chickenpox can be serious and can lead to severe complications and death, even in healthy children. There is no way to tell in advance how severe your child's symptoms will be. So, it is not worth taking the chance of exposing your child to",
+      "section_title": "\"Chickenpox parties\"—Don't take the chance!",
+      "content_sha256": "99264f925698bbefaa486fdab8c6865e241b0eb5a80aeddb6d6a38cadf4858fa",
+      "chunk_index": 10
+    },
+    {
+      "content": "someone with the disease. The best way to protect infants and children against chickenpox is to get them vaccinated.",
+      "section_title": "\"Chickenpox parties\"—Don't take the chance!",
+      "content_sha256": "b4be86236f3c6781042c2a05b12b0de4fc0806dd5be7b033674eb3f0eea0af49",
+      "chunk_index": 11
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "8275b73f-e105-54ae-a38d-0cbcaf9bb969"
+}

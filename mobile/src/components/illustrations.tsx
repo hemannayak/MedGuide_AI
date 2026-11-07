@@ -1,5 +1,6 @@
 import React from 'react';
-import Svg, { Circle, Defs, G, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
+import { Platform, Text, UIManager, View } from 'react-native';
+import Svg, { Circle, G, Path, Rect } from 'react-native-svg';
 
 export interface IllustrationProps {
   size?: number;
@@ -9,19 +10,62 @@ export interface IllustrationProps {
   secondaryColor?: string;
 }
 
+export const hasNativeSvg = (): boolean => {
+  if (Platform.OS === 'web') return true;
+  if (typeof UIManager === 'undefined') return true;
+  try {
+    return Boolean(
+      UIManager?.getViewManagerConfig?.('RNSVGPath') ||
+      UIManager?.getViewManagerConfig?.('RCTRNSVGPath')
+    );
+  } catch {
+    return false;
+  }
+};
+
+function FallbackBadge({
+  size = 48,
+  bg = '#e8f4f0',
+  border = '#246b60',
+  icon = '✚',
+  color = '#073d37',
+}: {
+  size?: number;
+  bg?: string;
+  border?: string;
+  icon?: string;
+  color?: string;
+}) {
+  return (
+    <View
+      style={{
+        width: size,
+        height: size,
+        borderRadius: size / 2,
+        backgroundColor: bg,
+        borderWidth: 1.5,
+        borderColor: border,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Text style={{ fontSize: size * 0.5, color, textAlign: 'center', includeFontPadding: false }}>
+        {icon}
+      </Text>
+    </View>
+  );
+}
+
 /** 1. Medical Shield with Cross — Security, Privacy, and Trust */
 export function MedicalShieldSvg({ size = 48, color = '#073d37', secondaryColor = '#246b60' }: IllustrationProps) {
+  if (!hasNativeSvg()) {
+    return <FallbackBadge size={size} bg="#e8f4f0" border={secondaryColor} icon="🛡️" color={color} />;
+  }
   return (
     <Svg width={size} height={size} viewBox="0 0 64 64" fill="none">
-      <Defs>
-        <LinearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <Stop offset="0%" stopColor={color} />
-          <Stop offset="100%" stopColor={secondaryColor} />
-        </LinearGradient>
-      </Defs>
       <Path
         d="M32 4L12 12V28C12 42.4 20.6 55.6 32 60C43.4 55.6 52 42.4 52 28V12L32 4Z"
-        fill="url(#shieldGrad)"
+        fill={color}
       />
       {/* Medical Cross */}
       <Rect x="28" y="20" width="8" height="24" rx="2" fill="#ffffff" />
@@ -32,6 +76,9 @@ export function MedicalShieldSvg({ size = 48, color = '#073d37', secondaryColor 
 
 /** 2. Doctor Consultation & Healthcare Stethoscope */
 export function DoctorConsultSvg({ size = 52, color = '#073d37', secondaryColor = '#e57a44' }: IllustrationProps) {
+  if (!hasNativeSvg()) {
+    return <FallbackBadge size={size} bg="#f1f5ee" border={secondaryColor} icon="🩺" color={color} />;
+  }
   return (
     <Svg width={size} height={size} viewBox="0 0 64 64" fill="none">
       {/* Friendly Chat Bubble */}
@@ -59,6 +106,9 @@ export function DoctorConsultSvg({ size = 52, color = '#073d37', secondaryColor 
 
 /** 3. Medicine Bottle & Dosage Capsules */
 export function MedicineBottleSvg({ size = 48, color = '#073d37', secondaryColor = '#e57a44' }: IllustrationProps) {
+  if (!hasNativeSvg()) {
+    return <FallbackBadge size={size} bg="#fef3ea" border={secondaryColor} icon="💊" color={color} />;
+  }
   return (
     <Svg width={size} height={size} viewBox="0 0 64 64" fill="none">
       {/* Bottle Cap */}
@@ -79,6 +129,9 @@ export function MedicineBottleSvg({ size = 48, color = '#073d37', secondaryColor
 
 /** 4. Voice Audio Mic with Soundwave Frequency */
 export function VoiceMicWaveSvg({ size = 52, color = '#073d37', secondaryColor = '#246b60' }: IllustrationProps) {
+  if (!hasNativeSvg()) {
+    return <FallbackBadge size={size} bg="#eaf4f2" border={secondaryColor} icon="🎙️" color={color} />;
+  }
   return (
     <Svg width={size} height={size} viewBox="0 0 64 64" fill="none">
       {/* Microphone Body */}
@@ -102,6 +155,9 @@ export function VoiceMicWaveSvg({ size = 52, color = '#073d37', secondaryColor =
 
 /** 5. Prescription Scanner & Camera Document OCR */
 export function PrescriptionScannerSvg({ size = 52, color = '#073d37', secondaryColor = '#246b60' }: IllustrationProps) {
+  if (!hasNativeSvg()) {
+    return <FallbackBadge size={size} bg="#f6f8f5" border={secondaryColor} icon="📋" color={color} />;
+  }
   return (
     <Svg width={size} height={size} viewBox="0 0 64 64" fill="none">
       {/* Document Sheet */}
@@ -129,6 +185,9 @@ export function PrescriptionScannerSvg({ size = 52, color = '#073d37', secondary
 
 /** 6. Rural Community Clinic & Sub-centre */
 export function RuralClinicSvg({ size = 54, color = '#073d37', secondaryColor = '#e57a44' }: IllustrationProps) {
+  if (!hasNativeSvg()) {
+    return <FallbackBadge size={size} bg="#fdeddd" border={secondaryColor} icon="🏥" color={color} />;
+  }
   return (
     <Svg width={size} height={size} viewBox="0 0 64 64" fill="none">
       {/* Sun / Hill background */}
@@ -150,6 +209,9 @@ export function RuralClinicSvg({ size = 54, color = '#073d37', secondaryColor = 
 
 /** 7. Smartwatch & Health Vitals (Future Scope Showcase) */
 export function SmartwatchVitalsSvg({ size = 50, color = '#073d37', secondaryColor = '#e57a44' }: IllustrationProps) {
+  if (!hasNativeSvg()) {
+    return <FallbackBadge size={size} bg="#edf7f1" border={secondaryColor} icon="⌚" color={color} />;
+  }
   return (
     <Svg width={size} height={size} viewBox="0 0 64 64" fill="none">
       {/* Watch Straps */}
@@ -159,7 +221,7 @@ export function SmartwatchVitalsSvg({ size = 50, color = '#073d37', secondaryCol
       <Rect x="17" y="14" width="30" height="36" rx="10" fill="#0f2620" stroke={color} strokeWidth="2.5" />
       {/* Screen Heartbeat ECG curve */}
       <Path
-        d="M21 32H27L29 24L33 40L35 30L37 34H43"
+        d="M21 32H27L29 24L33 40L35 30L35 34H43"
         stroke="#4ade80"
         strokeWidth="2.5"
         strokeLinecap="round"
@@ -172,10 +234,27 @@ export function SmartwatchVitalsSvg({ size = 50, color = '#073d37', secondaryCol
 }
 
 /** Recognizable hydration mark, with no embedded words or clinical claim. */
-export function HydrationSvg({size=40,color='#247e9a'}:IllustrationProps) {
- return <Svg width={size} height={size} viewBox="0 0 64 64" fill="none"><Path d="M32 5C26 16 13 29 13 40a19 19 0 0 0 38 0C51 29 38 16 32 5Z" fill="#dceff5" stroke={color} strokeWidth={3.5} strokeLinejoin="round"/><Path d="M22 39c0 7 4 11 10 12" stroke={color} strokeWidth={3.5} strokeLinecap="round"/></Svg>;
+export function HydrationSvg({ size = 40, color = '#247e9a' }: IllustrationProps) {
+  if (!hasNativeSvg()) {
+    return <FallbackBadge size={size} bg="#e0f2fe" border={color} icon="💧" color={color} />;
+  }
+  return (
+    <Svg width={size} height={size} viewBox="0 0 64 64" fill="none">
+      <Path d="M32 5C26 16 13 29 13 40a19 19 0 0 0 38 0C51 29 38 16 32 5Z" fill="#dceff5" stroke={color} strokeWidth={3.5} strokeLinejoin="round" />
+      <Path d="M22 39c0 7 4 11 10 12" stroke={color} strokeWidth={3.5} strokeLinecap="round" />
+    </Svg>
+  );
 }
+
 /** Pair of footprints, distinct from the hydration symbol. */
-export function FootstepsSvg({size=40,color='#42704d'}:IllustrationProps) {
- return <Svg width={size} height={size} viewBox="0 0 64 64" fill="none"><Path d="M22 9c-8 1-11 16-7 23 2 4 9 3 11-1 4-7 5-23-4-22Zm-4 30c-6 0-9 6-6 11 3 4 9 4 12-1 3-4 1-10-6-10Z" fill="#dcebd9" stroke={color} strokeWidth={3}/><Path d="M44 17c8 1 11 16 7 23-2 4-9 3-11-1-4-7-5-23 4-22Zm4 30c6 0 9 6 6 11-3 4-9 4-12-1-3-4-1-10 6-10Z" fill="#dcebd9" stroke={color} strokeWidth={3}/></Svg>;
+export function FootstepsSvg({ size = 40, color = '#42704d' }: IllustrationProps) {
+  if (!hasNativeSvg()) {
+    return <FallbackBadge size={size} bg="#dcfce7" border={color} icon="👣" color={color} />;
+  }
+  return (
+    <Svg width={size} height={size} viewBox="0 0 64 64" fill="none">
+      <Path d="M22 9c-8 1-11 16-7 23 2 4 9 3 11-1 4-7 5-23-4-22Zm-4 30c-6 0-9 6-6 11 3 4 9 4 12-1 3-4 1-10-6-10Z" fill="#dcebd9" stroke={color} strokeWidth={3} />
+      <Path d="M44 17c8 1 11 16 7 23-2 4-9 3-11-1-4-7-5-23 4-22Zm4 30c6 0 9 6 6 11-3 4-9 4-12-1-3-4-1-10 6-10Z" fill="#dcebd9" stroke={color} strokeWidth={3} />
+    </Svg>
+  );
 }

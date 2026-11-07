@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Brand, Button, palette } from '../components/brand-ui';
 import { MobileNav } from '../components/mobile-nav';
 import { router } from 'expo-router';
-import { FollowUp, getFollowUps, getMedications, getPrescriptions, Medication, Prescription } from '../lib/care';
+import { FollowUp, getProfile, getFollowUps, getMedications, getPrescriptions, Medication, Prescription } from '../lib/care';
 import { MedicineBottleSvg, PrescriptionScannerSvg, DoctorConsultSvg } from '../components/illustrations';
 import { Language, t } from '../lib/i18n';
-import { speakGuidance, stopGuidance } from '../lib/audio-guide';
+import { cacheEnabled, enableCareCache, loadCareResource } from '../lib/care-cache';
+import { scheduleCareReminders } from '../lib/notifications';
 
 export default function CareScreen() {
   const [medications, setMedications] = useState<Medication[]>([]);
@@ -16,16 +17,22 @@ export default function CareScreen() {
   const [busy, setBusy] = useState(true);
   const [revision, setRevision] = useState(0);
   const [lang, setLang] = useState<Language>('en');
-  const [speaking, setSpeaking] = useState(false);
+  const [offlineEnabled,setOfflineEnabled]=useState(false);
+  const [savedAt,setSavedAt]=useState<string|null>(null);
+  const [notice,setNotice]=useState('');
+  const [reminding,setReminding]=useState(false);
 
   useEffect(() => {
     let active = true;
-    Promise.all([getMedications(), getFollowUps(), getPrescriptions()])
-      .then(([meds, visits, documents]) => {
+    void getProfile().then(profile=>{if(active)setLang(profile.preferred_language);}).catch(()=>undefined);
+    void cacheEnabled().then(value=>{if(active)setOfflineEnabled(value);}).catch(()=>{if(active)setNotice('Offline storage is unavailable on this device.');});
+    loadCareResource('care',()=>Promise.all([getMedications(), getFollowUps(), getPrescriptions()]))
+      .then(({data:[meds, visits, documents],cachedAt,cacheWarning}) => {
         if (active) {
           setMedications(meds);
           setFollowUps(visits);
           setPrescriptions(documents);
+          setSavedAt(cachedAt);setNotice(cacheWarning||'');setError('');
         }
       })
       .catch(failure => {
@@ -36,38 +43,13 @@ export default function CareScreen() {
       });
     return () => {
       active = false;
-      stopGuidance();
     };
   }, [revision]);
-
-  function handleAudioGuide() {
-    if (speaking) {
-      stopGuidance();
-      setSpeaking(false);
-    } else {
-      setSpeaking(true);
-      const text = `Your Care Records. You have ${medications.length} medications, ${followUps.length} follow-up appointments, and ${prescriptions.length} prescriptions on file.`;
-      speakGuidance(text, lang, () => setSpeaking(true), () => setSpeaking(false));
-    }
-  }
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.page}>
         <Brand />
-
-        {/* Audio Guide Bar */}
-        <Pressable
-          onPress={handleAudioGuide}
-          style={[styles.audioBar, speaking && styles.audioBarActive]}
-          accessibilityRole="button"
-          accessibilityLabel="Read care records summary aloud"
-        >
-          <Text style={styles.audioIcon}>{speaking ? '⏹' : '🔊'}</Text>
-          <Text style={[styles.audioText, speaking && styles.audioTextActive]}>
-            {speaking ? t('audioGuideStop', lang) : `${t('audioGuideBtn', lang)} · Listen to Records`}
-          </Text>
-        </Pressable>
 
         {/* Header with Illustration */}
         <View style={styles.headerBox}>
@@ -79,6 +61,12 @@ export default function CareScreen() {
         </View>
 
         {/* Quick Action Buttons */}
+        <Text>Optional offline copies contain private health records. On the phone they use encrypted device storage; the browser keeps them only for this tab session. They are cleared on sign-out. Offline copies can be outdated.</Text>
+        <Button variant="secondary" title={offlineEnabled?'Remove offline copies':'Save records for offline viewing'} disabled={busy||reminding} onPress={()=>{setBusy(true);void enableCareCache(!offlineEnabled).then(()=>{setOfflineEnabled(!offlineEnabled);setRevision(value=>value+1);}).catch(()=>{setError('Offline storage could not be changed.');setBusy(false);});}}/>
+        {savedAt?<Text accessibilityRole="alert">Offline copy · last saved {new Date(savedAt).toLocaleString()}. Connect and refresh before relying on changes.</Text>:null}
+        {notice?<Text accessibilityLiveRegion="polite">{notice}</Text>:null}
+        <Button title="Refresh care records" disabled={busy||reminding} onPress={()=>{setBusy(true);setRevision(value=>value+1);}}/>
+        <Button variant="secondary" title={reminding?'Scheduling reminders…':'Enable reminders for today and tomorrow'} disabled={busy||reminding||Boolean(savedAt)||Boolean(error)} onPress={()=>{setReminding(true);setNotice('');void scheduleCareReminders(medications).then(count=>setNotice(`${count} reminder times scheduled for today and tomorrow. Device settings may delay delivery; reopen Care to refresh.`)).catch(e=>setNotice(e instanceof Error?e.message:'Reminders unavailable.')).finally(()=>setReminding(false));}}/>
         <View style={styles.actionRow}>
           <Button title="📷 Upload Prescription" onPress={() => router.push('/prescriptions/upload')} />
           <Button variant="secondary" title="📅 Health Timeline" onPress={() => router.push('/timeline')} />
@@ -97,7 +85,7 @@ export default function CareScreen() {
           <>
             {/* Medications Section */}
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Confirmed Medications</Text>
+              <Text style={styles.sectionTitle}>Medicines and review status</Text>
               <Text style={styles.badgeCount}>{medications.length}</Text>
             </View>
 
@@ -124,6 +112,7 @@ export default function CareScreen() {
                     </Text>
                   </View>
                   <Text style={styles.medDetail}>Dosage: {med.dosage || 'Not recorded'}</Text>
+                  {(med.schedules??[]).map(schedule=><Text key={schedule.id} style={styles.medDetail}>Saved schedule: {schedule.schedule_data.times.join(', ')} · {schedule.timezone} · {schedule.status}</Text>)}
                   {med.instructions ? (
                     <Text style={styles.medDetail}>Instructions: {med.instructions}</Text>
                   ) : null}
@@ -203,33 +192,6 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     gap: 12,
     paddingBottom: 90,
-  },
-  audioBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#d2dcd0',
-    borderRadius: 12,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-    gap: 6,
-  },
-  audioBarActive: {
-    backgroundColor: '#feeceb',
-    borderColor: '#f5b5b0',
-  },
-  audioIcon: {
-    fontSize: 13,
-  },
-  audioText: {
-    fontSize: 11,
-    fontWeight: '600',
-    color: palette.teal,
-  },
-  audioTextActive: {
-    color: '#9b2631',
   },
   headerBox: {
     flexDirection: 'row',

@@ -1,0 +1,43 @@
+{
+  "query": "What is the initial management of hypertension in adults?",
+  "model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "dimensions": 384,
+  "index_metadata": "embedding_model missing on all 6760 rows; three independent stored chunks re-encoded for empirical compatibility",
+  "compatibility": [
+    {
+      "chunk_id": "00016046-7bf1-4798-9d65-81c1ad836a3e",
+      "reencoded_cosine": 0.999999999999698
+    },
+    {
+      "chunk_id": "00022cc7-27c7-4f4e-ad13-0bdffcb2eabe",
+      "reencoded_cosine": 0.9999999999998013
+    },
+    {
+      "chunk_id": "00075f53-5e93-4683-89f5-66b76fe9310a",
+      "reencoded_cosine": 0.9999999999997816
+    }
+  ],
+  "sql": "SELECT md.title AS source_title, kc.metadata->>'section_title' AS section,\n  kc.metadata->>'page_number' AS page, 1-(kc.embedding <=> CAST(:embedding AS vector)) AS similarity\nFROM knowledge_chunks kc JOIN medical_documents md ON md.id=kc.document_id\nWHERE kc.embedding IS NOT NULL\nORDER BY kc.embedding <=> CAST(:embedding AS vector) ASC LIMIT 3",
+  "rows": [
+    {
+      "source_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "section": "263",
+      "page": "273",
+      "similarity": 0.8668233058360635
+    },
+    {
+      "source_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "section": "262",
+      "page": "272",
+      "similarity": 0.8650897732705611
+    },
+    {
+      "source_title": "Package of Essential Noncommunicable (PEN) Disease Interventions for Primary Health Care",
+      "section": "257",
+      "page": "267",
+      "similarity": 0.8644826503728832
+    }
+  ],
+  "target": 0.65,
+  "all_three_above_target": true
+}

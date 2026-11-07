@@ -1,0 +1,98 @@
+{
+  "topic": "chikungunya",
+  "source_url": "https://www.cdc.gov/chikungunya/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "About Chikungunya Virus",
+  "sections": [
+    {
+      "heading": "Overview",
+      "text": "Chikungunya is a disease caused by a virus spread by infected mosquitoes. Outbreaks of chikungunya virus have occurred in Africa, the Americas, Asia, Europe, and islands in the Indian and Pacific Oceans. There is a risk the virus can spread to unaffected areas by infected travelers."
+    },
+    {
+      "heading": "Symptoms",
+      "text": "The most common symptoms of chikungunya are fever and joint pain. Other symptoms can include headache, muscle pain, joint swelling, or rash."
+    },
+    {
+      "heading": "How it spreads",
+      "text": "Chikungunya virus spreads to people through the bites of infected mosquitoes. During the first week of illness, people sick with chikungunya can spread the virus to uninfected mosquitoes."
+    },
+    {
+      "heading": "Prevention",
+      "text": "The best way to prevent chikungunya is to protect yourself from mosquito bites. Vaccination is recommended for some travelers."
+    },
+    {
+      "heading": "Prevention",
+      "text": "If you have chikungunya, prevent mosquito bites for the first week of your illness to avoid spreading virus to uninfected mosquitoes."
+    },
+    {
+      "heading": "Testing and diagnosis",
+      "text": "See your healthcare provider if you have symptoms after visiting an area at risk for chikungunya virus."
+    },
+    {
+      "heading": "Treatment",
+      "text": "No medicines are available to treat chikungunya. Rest, fluids, and over-the-counter pain medicines can relieve some symptoms."
+    },
+    {
+      "heading": "Treatment",
+      "text": "Take medicine such as acetaminophen or paracetamol to reduce fever and pain."
+    },
+    {
+      "heading": "Treatment",
+      "text": "Do not take aspirin or other non-steroidal anti-inflammatory drugs (NSAIDS), such as ibuprofen, until dengue can be ruled out to reduce the risk of bleeding."
+    },
+    {
+      "heading": "Treatment",
+      "text": "For healthcare providers: Treatment and Prevention of Chikungunya Virus Disease"
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "7c190b2cc707e3c2ef42e623428dd9157c6dd20a576a7e93396e715060859fea",
+  "resolved_url": "https://www.cdc.gov/chikungunya/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:12.149324+00:00",
+  "html_sha256": "b5add309a72fd0ef40b2c3c8a44f8706155269837d893d65f49d3561e3c6b972",
+  "chunks": [
+    {
+      "content": "Chikungunya is a disease caused by a virus spread by infected mosquitoes. Outbreaks of chikungunya virus have occurred in Africa, the Americas, Asia, Europe, and islands in the Indian and Pacific Oceans. There is a risk the virus can spread to unaffected areas by infected travelers.",
+      "section_title": "Overview",
+      "content_sha256": "11b1cce37b92620a328fce008a7970ec050fe46e5389a8cbcea44be4196285b0",
+      "chunk_index": 0
+    },
+    {
+      "content": "The most common symptoms of chikungunya are fever and joint pain. Other symptoms can include headache, muscle pain, joint swelling, or rash.",
+      "section_title": "Symptoms",
+      "content_sha256": "24c7bf5724db57e5ba97c53e7869abe1f567975b7e23da718c318bbe44916827",
+      "chunk_index": 1
+    },
+    {
+      "content": "Chikungunya virus spreads to people through the bites of infected mosquitoes. During the first week of illness, people sick with chikungunya can spread the virus to uninfected mosquitoes.",
+      "section_title": "How it spreads",
+      "content_sha256": "81cec86e39ffa25ba4fba75362d8b67aae9bfbdf1a00d791c34bd5f31dde7417",
+      "chunk_index": 2
+    },
+    {
+      "content": "The best way to prevent chikungunya is to protect yourself from mosquito bites. Vaccination is recommended for some travelers. If you have chikungunya, prevent mosquito bites for the first week of your illness to avoid spreading virus to uninfected mosquitoes.",
+      "section_title": "Prevention",
+      "content_sha256": "8879220f3d6af32ccca6fd1bae61b21bc6246292662bc9d27bd6facfc84ea4ed",
+      "chunk_index": 3
+    },
+    {
+      "content": "See your healthcare provider if you have symptoms after visiting an area at risk for chikungunya virus.",
+      "section_title": "Testing and diagnosis",
+      "content_sha256": "7f71b8586e2153360322eba5a25f785ad6748ddf1aa5ea5cfab597b6f8203e69",
+      "chunk_index": 4
+    },
+    {
+      "content": "No medicines are available to treat chikungunya. Rest, fluids, and over-the-counter pain medicines can relieve some symptoms. Take medicine such as acetaminophen or paracetamol to reduce fever and pain. Do not take aspirin or other non-steroidal anti-inflammatory drugs (NSAIDS), such as ibuprofen, until dengue can be ruled out to reduce the risk of bleeding. For healthcare providers: Treatment and Prevention of Chikungunya Virus Disease",
+      "section_title": "Treatment",
+      "content_sha256": "a6b0ee2dab9ec112a3bc9a3527570243ddb615b20e1ac47955e934d395b00e65",
+      "chunk_index": 5
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "38379305-0890-53c2-bbcd-1ecfd77586f5"
+}

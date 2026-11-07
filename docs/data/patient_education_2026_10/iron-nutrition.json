@@ -1,0 +1,228 @@
+{
+  "topic": "iron-nutrition",
+  "source_url": "https://www.cdc.gov/infant-toddler-nutrition/vitamins-minerals/iron.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "Iron",
+  "sections": [
+    {
+      "heading": "Iron's role",
+      "text": "Iron is a mineral with many functions. It helps red blood cells carry oxygen through the body and helps in the production of muscle cells. It supports brain development and immune function. Overall, iron supports a child's ability to grow, pay attention, and learn."
+    },
+    {
+      "heading": "Iron's role",
+      "text": "Having enough iron can help prevent iron deficiency and iron deficiency anemia."
+    },
+    {
+      "heading": "Consequences of not getting enough iron",
+      "text": "Children who do not receive enough iron either from iron-rich foods or supplements can develop anemia. Anemia is when the body does not have enough red blood cells or their ability to carry oxygen is lowered."
+    },
+    {
+      "heading": "Consequences of not getting enough iron",
+      "text": "Anemia has many causes. In young children, one common cause is not enough iron. If children continue to get inadequate amounts of iron, this can lead to iron deficiency anemia. Infants and children with iron deficiency anemia may develop learning difficulties."
+    },
+    {
+      "heading": "When and how much iron children need",
+      "text": "All children need iron. It is important at all stages of your child's development. Babies fed only breast milk, only formula, or a mix of breast milk and formula have different iron needs."
+    },
+    {
+      "heading": "Breast milk",
+      "text": "Ask your child's doctor or nurse if your child needs iron supplements before 6 months old. Your doctor or nurse may advise using iron supplement drops. Once your child starts to eat foods around 6 months, it is important to give foods with enough iron to meet nutritional needs."
+    },
+    {
+      "heading": "Formula",
+      "text": "Your child's iron needs can be met by standard infant formulas for the first 12 months of life."
+    },
+    {
+      "heading": "Formula",
+      "text": "Choose a formula fortified with iron. Most commercial infant formulas sold in the United States contain iron. Standard infant formulas fortified with iron (12mg/L) will meet your growing child's needs."
+    },
+    {
+      "heading": "Formula",
+      "text": "Once your child starts to eat foods, introduce them to foods that contain iron."
+    },
+    {
+      "heading": "Mix of breast milk and formula",
+      "text": "If your child receives a mix of breast milk and formula, talk to their doctor or nurse about their iron needs at their next checkup. Once your child starts to eat foods, it is important to give foods with iron to meet nutritional needs."
+    },
+    {
+      "heading": "Did you know?",
+      "text": "Preterm babies may need extra iron beyond what they get from breast milk or infant formula. Talk to your child's doctor or nurse about your child's iron needs at his or her next checkup."
+    },
+    {
+      "heading": "Iron in solid foods",
+      "text": "When your child is about 6 months old, you can start giving them solid foods to your child. Make sure to choose foods that contain iron. Iron found in foods comes in two forms: heme and non-heme iron."
+    },
+    {
+      "heading": "Heme iron",
+      "text": "Heme iron is commonly found in animal products. The body absorbs it more easily than non-heme iron."
+    },
+    {
+      "heading": "Foods with heme iron",
+      "text": "Red meat, such as beef, pork, lamb, goat, or venison."
+    },
+    {
+      "heading": "Foods with heme iron",
+      "text": "Seafood such as fatty fish."
+    },
+    {
+      "heading": "Foods with heme iron",
+      "text": "Poultry, such as chicken or turkey."
+    },
+    {
+      "heading": "Foods with heme iron",
+      "text": "Eggs."
+    },
+    {
+      "heading": "Non-heme iron",
+      "text": "Non-heme iron is in plants and iron-fortified products. This type of iron is less easily absorbed by the body. Getting your baby enough iron from non-heme iron sources alone will require careful planning."
+    },
+    {
+      "heading": "Foods with non-heme iron",
+      "text": "Iron-fortified infant cereals."
+    },
+    {
+      "heading": "Foods with non-heme iron",
+      "text": "Tofu."
+    },
+    {
+      "heading": "Foods with non-heme iron",
+      "text": "Beans and lentils."
+    },
+    {
+      "heading": "Foods with non-heme iron",
+      "text": "Dark green leafy vegetables."
+    },
+    {
+      "heading": "Foods with non-heme iron",
+      "text": "Pairing non-heme iron sources with foods high in vitamin C can help your baby absorb needed iron to support development. Vitamin C-rich fruits and vegetables include:"
+    },
+    {
+      "heading": "Foods with non-heme iron",
+      "text": "Citrus fruits such as oranges."
+    },
+    {
+      "heading": "Foods with non-heme iron",
+      "text": "Vegetables such as broccoli or cabbage."
+    },
+    {
+      "heading": "Foods with non-heme iron",
+      "text": "Berries."
+    },
+    {
+      "heading": "Foods with non-heme iron",
+      "text": "Papaya."
+    },
+    {
+      "heading": "Foods with non-heme iron",
+      "text": "Tomatoes."
+    },
+    {
+      "heading": "Foods with non-heme iron",
+      "text": "Sweet potatoes."
+    },
+    {
+      "heading": "Did you know?",
+      "text": "Your child needs to be screened for anemia."
+    },
+    {
+      "heading": "Did you know?",
+      "text": "At around 12 months, your child's doctor or nurse will likely test to see if your baby has anemia. Anemia can occur among children who do not get enough iron. Talk to your child's doctor or nurse about anemia and iron at your baby's next checkup."
+    },
+    {
+      "heading": "Did you know?",
+      "text": "Making sure your child is getting enough iron is important. Some children may need more iron than others. Talk to your child's doctor or nurse about iron at your child's next checkup."
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "d2fd875b831836b3d30b8bf702a414be6aaa83083fd0249e45aa9908db83f29e",
+  "resolved_url": "https://www.cdc.gov/infant-toddler-nutrition/vitamins-minerals/iron.html",
+  "retrieved_at": "2026-10-23T16:29:17.006273+00:00",
+  "html_sha256": "c186fffb181e530e81336ef756384a09e68d3d775df2836aff1b21c4e22b57a9",
+  "chunks": [
+    {
+      "content": "Iron is a mineral with many functions. It helps red blood cells carry oxygen through the body and helps in the production of muscle cells. It supports brain development and immune function. Overall, iron supports a child's ability to grow, pay attention, and learn. Having enough iron can help prevent iron deficiency and iron deficiency anemia.",
+      "section_title": "Iron's role",
+      "content_sha256": "9dee27bba556c9d009a2d4169dd264b2f3363d1e04af4cf2656b12d7ae174716",
+      "chunk_index": 0
+    },
+    {
+      "content": "Children who do not receive enough iron either from iron-rich foods or supplements can develop anemia. Anemia is when the body does not have enough red blood cells or their ability to carry oxygen is lowered. Anemia has many causes. In young children, one common cause is not enough iron. If children continue to get inadequate amounts of iron, this can lead to iron deficiency anemia. Infants and children with iron deficiency anemia may develop learning difficulties.",
+      "section_title": "Consequences of not getting enough iron",
+      "content_sha256": "e43700df5aaa95dd33e645dccf6417aab9599e0285edeb9aa43a3e6021185507",
+      "chunk_index": 1
+    },
+    {
+      "content": "All children need iron. It is important at all stages of your child's development. Babies fed only breast milk, only formula, or a mix of breast milk and formula have different iron needs.",
+      "section_title": "When and how much iron children need",
+      "content_sha256": "8bdef90bb84df26ffea9cdc913ba31027419cabfc896969be40dca9f4813c2d0",
+      "chunk_index": 2
+    },
+    {
+      "content": "Ask your child's doctor or nurse if your child needs iron supplements before 6 months old. Your doctor or nurse may advise using iron supplement drops. Once your child starts to eat foods around 6 months, it is important to give foods with enough iron to meet nutritional needs.",
+      "section_title": "Breast milk",
+      "content_sha256": "37790455d778aea4d96f9891e5b180357889b83170e5533676028b9b4fe34f6b",
+      "chunk_index": 3
+    },
+    {
+      "content": "Your child's iron needs can be met by standard infant formulas for the first 12 months of life. Choose a formula fortified with iron. Most commercial infant formulas sold in the United States contain iron. Standard infant formulas fortified with iron (12mg/L) will meet your growing child's needs. Once your child starts to eat foods, introduce them to foods that contain iron.",
+      "section_title": "Formula",
+      "content_sha256": "2ffdbaf3fb3eddb68b92a2d1daf76436c0d09399ca43431eda474661d16dedee",
+      "chunk_index": 4
+    },
+    {
+      "content": "If your child receives a mix of breast milk and formula, talk to their doctor or nurse about their iron needs at their next checkup. Once your child starts to eat foods, it is important to give foods with iron to meet nutritional needs.",
+      "section_title": "Mix of breast milk and formula",
+      "content_sha256": "32e0ce7db3ab8913b87af8c8fa07cebf16b1cd94e72d89a0e24c168151c0f6df",
+      "chunk_index": 5
+    },
+    {
+      "content": "Preterm babies may need extra iron beyond what they get from breast milk or infant formula. Talk to your child's doctor or nurse about your child's iron needs at his or her next checkup.",
+      "section_title": "Did you know?",
+      "content_sha256": "96bb78915f2132cdf2f68b3850ea3f78f6aba8de925994286bffef3c51780a17",
+      "chunk_index": 6
+    },
+    {
+      "content": "When your child is about 6 months old, you can start giving them solid foods to your child. Make sure to choose foods that contain iron. Iron found in foods comes in two forms: heme and non-heme iron.",
+      "section_title": "Iron in solid foods",
+      "content_sha256": "819daeabf13f3ebe85968731658b3f65d0c3658c64ff31630855c97418152ee4",
+      "chunk_index": 7
+    },
+    {
+      "content": "Heme iron is commonly found in animal products. The body absorbs it more easily than non-heme iron.",
+      "section_title": "Heme iron",
+      "content_sha256": "2a550722aa1391d080aaf4b0085b0e8b513d9de391fb7d0d91c329692d502f9b",
+      "chunk_index": 8
+    },
+    {
+      "content": "Red meat, such as beef, pork, lamb, goat, or venison. Seafood such as fatty fish. Poultry, such as chicken or turkey. Eggs.",
+      "section_title": "Foods with heme iron",
+      "content_sha256": "d2978b96014e82f458e312e8ec524d840572c29a8fe5bb5cdea71083b7bdb8ac",
+      "chunk_index": 9
+    },
+    {
+      "content": "Non-heme iron is in plants and iron-fortified products. This type of iron is less easily absorbed by the body. Getting your baby enough iron from non-heme iron sources alone will require careful planning.",
+      "section_title": "Non-heme iron",
+      "content_sha256": "394f4043fea8d8c32f83df650b0f58461cfbf31d78cf1e30d9a7d65e0625e915",
+      "chunk_index": 10
+    },
+    {
+      "content": "Iron-fortified infant cereals. Tofu. Beans and lentils. Dark green leafy vegetables. Pairing non-heme iron sources with foods high in vitamin C can help your baby absorb needed iron to support development. Vitamin C-rich fruits and vegetables include: Citrus fruits such as oranges. Vegetables such as broccoli or cabbage. Berries. Papaya. Tomatoes. Sweet potatoes.",
+      "section_title": "Foods with non-heme iron",
+      "content_sha256": "4b5936985aa13c2b9318bac7b71b4aefed2d4923799b550546b5fc8f372c99fc",
+      "chunk_index": 11
+    },
+    {
+      "content": "Your child needs to be screened for anemia. At around 12 months, your child's doctor or nurse will likely test to see if your baby has anemia. Anemia can occur among children who do not get enough iron. Talk to your child's doctor or nurse about anemia and iron at your baby's next checkup. Making sure your child is getting enough iron is important. Some children may need more iron than others. Talk to your child's doctor or nurse about iron at your child's next checkup.",
+      "section_title": "Did you know?",
+      "content_sha256": "76dd37f30ea1f4a1aef63dc71b934f0296ea0ff1a611617d01c13f52c7bee3b4",
+      "chunk_index": 12
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "4cc3ae72-8dcc-50cc-8280-69bd2947c70f"
+}

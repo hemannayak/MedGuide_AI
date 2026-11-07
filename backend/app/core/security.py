@@ -41,6 +41,7 @@ def create_access_token(
 
     to_encode: Dict[str, Any] = {
         "sub": str(subject),
+        "jti": str(uuid.uuid4()),
         "role": role,
         "exp": expire,
         "iat": datetime.now(timezone.utc),

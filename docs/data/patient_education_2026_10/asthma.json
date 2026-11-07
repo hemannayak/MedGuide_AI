@@ -1,0 +1,192 @@
+{
+  "topic": "asthma",
+  "source_url": "https://www.cdc.gov/asthma/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "About Asthma",
+  "sections": [
+    {
+      "heading": "Symptoms",
+      "text": "Asthma causes wheezing, breathlessness, chest tightness, and coughing at night or early in the morning. If you have asthma, you have it all the time, but you will have asthma attacks only when something bothers your lungs."
+    },
+    {
+      "heading": "Symptoms",
+      "text": "An asthma attack may include coughing, chest tightness, wheezing, and trouble breathing. The attack happens in your body's airways, which are the paths that carry air to your lungs. As the air moves through your lungs, the airways become smaller, like the branches of a tree are smaller than the tree trunk. During an asthma attack, the sides of the airways in your lungs swell and the airways shrink. Less air gets in and out of your lungs, and mucous that your body makes clogs up the airways."
+    },
+    {
+      "heading": "Symptoms",
+      "text": "You can control your asthma by knowing the warning signs of an asthma attack, staying away from things that cause an attack, and following your doctor's advice."
+    },
+    {
+      "heading": "Diagnosis",
+      "text": "It can be hard to tell if someone has asthma, especially in children under age 5. A doctor can help you find out if you have asthma."
+    },
+    {
+      "heading": "Diagnosis",
+      "text": "During a checkup, a doctor may ask if you cough a lot, especially at night. He or she may also ask whether your breathing problems are worse after physical activity or at certain times of year. The doctor may ask about chest tightness, wheezing, and colds lasting more than 10 days. He or she may ask whether anyone in your family has or has had asthma, allergies, or other breathing problems. The doctor may ask about your home and whether you have missed school or work or have trouble doing certain things."
+    },
+    {
+      "heading": "Diagnosis",
+      "text": "The doctor may also do a breathing test, called spirometry, to find out how well your lungs are working. Spirometry tests how much air you breathe out after taking a very deep breath before and after you use asthma medicine."
+    },
+    {
+      "heading": "Symptom management",
+      "text": "Take your medicine exactly as your doctor tells you and stay away from things that can trigger an attack to control your asthma."
+    },
+    {
+      "heading": "Symptom management",
+      "text": "Everyone with asthma does not take the same medicine."
+    },
+    {
+      "heading": "Symptom management",
+      "text": "You can breathe in some medicines and take other medicines as a pill. Asthma medicines can be used in several ways -- as reliever therapy or as controller therapy. If you need to use your reliever medicine more and more, visit your doctor to see if you need a different medicine. Controller medicines help you have fewer and milder asthma attacks."
+    },
+    {
+      "heading": "Symptom management",
+      "text": "Asthma medicines can have side effects. Most side effects are mild and soon go away. Ask your doctor about the side effects of your medicines."
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Asthma information in other languages:"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Arabic"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Chinese"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "French"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "German"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Haitian"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Hindi"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Korean"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Mongolian"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Myanmar (Burmese)"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Portuguese"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Russian"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Somali"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Spanish"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Tagalog"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Urdu"
+    },
+    {
+      "heading": "Resources and tools",
+      "text": "Vietnamese"
+    },
+    {
+      "heading": "Checklist for home visitors",
+      "text": "A trained home visitor can help find common asthma triggers in homes and discuss ways to reduce and remove triggers. Removing asthma triggers in the home, along with proper medical care can improve health."
+    },
+    {
+      "heading": "Checklist for home visitors",
+      "text": "The checklist is organized into a Core Assessment plus two appendices (Dust Mite Module and Mold and Moisture Module). The Core Assessment can be used for all types of housing and climates, but the additional modules can be used if dust mites or mold/moisture issues are suspected by the trained home visitor. The suggested action items in this checklist are generally simple and low cost."
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "e0bf1f5e2d8e1e2670dc01f7fd30fa043ea580de6be6ed9f53a5274683a4e39b",
+  "resolved_url": "https://www.cdc.gov/asthma/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:14.446681+00:00",
+  "html_sha256": "c2c9bc04ba7dfd9926a9d6c5a982c3fd5a9aada073c631c72d079cffd5573bb3",
+  "chunks": [
+    {
+      "content": "Asthma causes wheezing, breathlessness, chest tightness, and coughing at night or early in the morning. If you have asthma, you have it all the time, but you will have asthma attacks only when something bothers your lungs. An asthma attack may include coughing, chest tightness, wheezing, and trouble breathing. The attack happens in your body's airways, which are the paths that carry air to your lungs. As the air moves through your lungs, the airways become smaller, like the branches of a tree",
+      "section_title": "Symptoms",
+      "content_sha256": "f445d5a9a33a6c985c98f8f34764b344fc1dfb9d894dcf25edbe5e1bed6409ac",
+      "chunk_index": 0
+    },
+    {
+      "content": "are smaller than the tree trunk. During an asthma attack, the sides of the airways in your lungs swell and the airways shrink. Less air gets in and out of your lungs, and mucous that your body makes clogs up the airways. You can control your asthma by knowing the warning signs of an asthma attack, staying away from things that cause an attack, and following your doctor's advice.",
+      "section_title": "Symptoms",
+      "content_sha256": "1a6f0ee1702456173ae90437e07f14010252e4822e4807f22eea5a7978ddcb73",
+      "chunk_index": 1
+    },
+    {
+      "content": "It can be hard to tell if someone has asthma, especially in children under age 5. A doctor can help you find out if you have asthma. During a checkup, a doctor may ask if you cough a lot, especially at night. He or she may also ask whether your breathing problems are worse after physical activity or at certain times of year. The doctor may ask about chest tightness, wheezing, and colds lasting more than 10 days. He or she may ask whether anyone in your family has or has had asthma, allergies, or",
+      "section_title": "Diagnosis",
+      "content_sha256": "26332e85709042ac55560f2dc0a8b1c18b4bcc51857ea1538b021f40aef7e596",
+      "chunk_index": 2
+    },
+    {
+      "content": "other breathing problems. The doctor may ask about your home and whether you have missed school or work or have trouble doing certain things. The doctor may also do a breathing test, called spirometry, to find out how well your lungs are working. Spirometry tests how much air you breathe out after taking a very deep breath before and after you use asthma medicine.",
+      "section_title": "Diagnosis",
+      "content_sha256": "d4e0b44dcc692a613c10611d57ed2accef1514c84b740848d88593c6b1214812",
+      "chunk_index": 3
+    },
+    {
+      "content": "Take your medicine exactly as your doctor tells you and stay away from things that can trigger an attack to control your asthma. Everyone with asthma does not take the same medicine. You can breathe in some medicines and take other medicines as a pill. Asthma medicines can be used in several ways -- as reliever therapy or as controller therapy. If you need to use your reliever medicine more and more, visit your doctor to see if you need a different medicine. Controller medicines help you have",
+      "section_title": "Symptom management",
+      "content_sha256": "6e9654f80ae936fdfdfbc57e948e457c175372ef2aab5f9b5f61144784f1a90b",
+      "chunk_index": 4
+    },
+    {
+      "content": "fewer and milder asthma attacks. Asthma medicines can have side effects. Most side effects are mild and soon go away. Ask your doctor about the side effects of your medicines.",
+      "section_title": "Symptom management",
+      "content_sha256": "bea186dcc2d476a29cb1b63f3f0b1fc7141dd905850a180a62a86f5e45592980",
+      "chunk_index": 5
+    },
+    {
+      "content": "Asthma information in other languages: Arabic Chinese French German Haitian Hindi Korean Mongolian Myanmar (Burmese) Portuguese Russian Somali Spanish Tagalog Urdu Vietnamese",
+      "section_title": "Resources and tools",
+      "content_sha256": "2c41cc17d6b2ad3ea54dc2eee11fc8f95945df951cc684e857ff31159f013ff3",
+      "chunk_index": 6
+    },
+    {
+      "content": "A trained home visitor can help find common asthma triggers in homes and discuss ways to reduce and remove triggers. Removing asthma triggers in the home, along with proper medical care can improve health. The checklist is organized into a Core Assessment plus two appendices (Dust Mite Module and Mold and Moisture Module). The Core Assessment can be used for all types of housing and climates, but the additional modules can be used if dust mites or mold/moisture issues are suspected by the",
+      "section_title": "Checklist for home visitors",
+      "content_sha256": "5566e7f2e857b080bfb073dcc099b826452b66d76879ca5db7992e7d215785bd",
+      "chunk_index": 7
+    },
+    {
+      "content": "trained home visitor. The suggested action items in this checklist are generally simple and low cost.",
+      "section_title": "Checklist for home visitors",
+      "content_sha256": "77dd2fb3c7c0a2027058310d047fd353cd9e22341db8cccbc41ba075483aa49d",
+      "chunk_index": 8
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "fcd044af-3a1f-5cfc-bc7e-867fe29ae293"
+}

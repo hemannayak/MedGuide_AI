@@ -1,0 +1,42 @@
+[
+  {
+    "source": {
+      "title": "ASHA Induction Module, English",
+      "publisher": "National Health Mission, Ministry of Health & Family Welfare, Government of India",
+      "source_url": "https://www.nhm.gov.in/images/pdf/communitisation/asha/ASHA_Induction_Module_English.pdf",
+      "geography": "India",
+      "population": "Village communities, including residents of distant hamlets and marginalised households",
+      "population_setting": "rural",
+      "population_setting_evidence": "PDF page 18 (printed page 16): Village Health and Nutrition Day; inclusion of distant hamlets and coordination with village committee members.",
+      "scope": "service_navigation",
+      "retrieved_at": "2026-11-03T13:24:18.180948+00:00",
+      "sha256": "563ddb0a4f23c16bed186e14c88d6c60e3f33fadcf7d4810175da41f391a794f",
+      "license": "NHM attributed reproduction policy; third-party material excluded",
+      "license_url": "https://www.nhm.gov.in/index4.php?lang=1&level=0&lid=13&linkid=8",
+      "reviewed_by": "MedGuide technical source review; not clinical validation",
+      "reviewed_on": "2026-11-03",
+      "publication_date_status": "Not established in the reviewed front matter; do not infer current programme availability",
+      "limitations": "Selected programme-navigation paragraphs only, not clinical instructions. Undated training document; local schedules and service availability require confirmation. No illustrations or third-party design reproduced. Not disease prevalence evidence.",
+      "extraction_review": "APPROVED",
+      "reuse_review": "APPROVED",
+      "contains_tables": false,
+      "commercial_use": false,
+      "noncommercial_only": false
+    },
+    "local_pdf": "C:\\Hemanth\\Projects\\MedGuide_AI\\backend\\.model-cache\\public-health-sources\\563ddb0a4f23c16bed186e14c88d6c60e3f33fadcf7d4810175da41f391a794f.pdf",
+    "passages": [
+      {
+        "page": 18,
+        "section_title": "Village Health and Nutrition Day: programme description",
+        "content": "It is a common platform for people to access services of the ANM, Male health worker and of the Anganwadi Worker (AWW). It is held at the Anganwadi Centre (AWC) once every month. The ANM gives immunisation to the children, provides antenatal care to pregnant women and provides counselling and contraceptive services to eligible couples. In addition, the ANM provides a basic level of curative care for minor illness with referral where needed. The VHND is an occasion for health communication on a number of key health issues. It should be attended by the members of PRI, particularly the women members, pregnant women, women with children under two, adolescent girls and general community members. ",
+        "verbatim_verified": true
+      },
+      {
+        "page": 18,
+        "section_title": "Including distant hamlets and confirming the service day",
+        "content": "Remember: As you prepare the list of people requiring services at VHND, make special effort to include individuals from families of new migrants, those living in distant hamlets, vulnerable persons because of poverty or otherwise marginalised. Coordinate with the AWW and the ANM to know in advance which day the VHND is scheduled so as to inform those who need these services and the community, especially the VHSNC members.",
+        "verbatim_verified": true
+      }
+    ]
+  }
+]

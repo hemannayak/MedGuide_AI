@@ -28,3 +28,13 @@ def test_bge_does_not_receive_e5_prefix_and_revision_is_required():
     assert model.encode.call_args.args[0] == ['SYN']
     with pytest.raises(ValueError):
         CandidateEncoder('BAAI/bge-m3','main',model)
+
+
+def test_biomedical_candidate_has_separate_768_dimension_space():
+    model = MagicMock(); model.encode.return_value = np.ones((1,768))
+    result = CandidateEncoder('NeuML/pubmedbert-base-embeddings','synthetic-revision',model).encode(['SYN biomedical passage'],query=False)
+    assert result.shape == (1,768)
+    assert model.encode.call_args.args[0] == ['SYN biomedical passage']
+    model.encode.return_value = np.ones((1,384))
+    with pytest.raises(ValueError):
+        CandidateEncoder('NeuML/pubmedbert-base-embeddings','synthetic-revision',model).encode(['SYN'],query=True)

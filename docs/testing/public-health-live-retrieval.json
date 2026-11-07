@@ -1,0 +1,45 @@
+[
+  {
+    "query": "How did life expectancy and disease burden differ between Indian states?",
+    "geography": "India",
+    "period_start": "1990-01-01",
+    "period_end": "2016-12-31",
+    "matches": 3,
+    "latency_ms": 1796.61,
+    "sources": [
+      {
+        "title": "India: Health of the Nation's States \u2014 India State-Level Disease Burden Initiative (2017)",
+        "page": 21,
+        "similarity": 0.7506414703164188
+      },
+      {
+        "title": "India: Health of the Nation's States \u2014 India State-Level Disease Burden Initiative (2017)",
+        "page": 21,
+        "similarity": 0.6923696728227032
+      },
+      {
+        "title": "India: Health of the Nation's States \u2014 India State-Level Disease Burden Initiative (2017)",
+        "page": 22,
+        "similarity": 0.4911115259432146
+      }
+    ]
+  },
+  {
+    "query": "How did life expectancy and disease burden differ between Indian states?",
+    "geography": "India",
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31",
+    "matches": 0,
+    "latency_ms": 8.82,
+    "sources": []
+  },
+  {
+    "query": "How did life expectancy and disease burden differ between Indian states?",
+    "geography": "Kerala",
+    "period_start": "1990-01-01",
+    "period_end": "2016-12-31",
+    "matches": 0,
+    "latency_ms": 8.34,
+    "sources": []
+  }
+]

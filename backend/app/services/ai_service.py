@@ -22,7 +22,7 @@ Conversation memory: last N=5 turns for conversational context.
 Medical facts always from RAG — never from conversation history.
 
 All thresholds configurable via environment variables:
-  RAG_SIMILARITY_THRESHOLD=0.55   (provisional; calibrate with dev benchmark)
+  RAG_SIMILARITY_THRESHOLD=0.40   (provisional; calibrate with dev benchmark)
   RAG_TOP_K_CANDIDATES=10
   RAG_TOP_K_CONTEXT=4
   CONVERSATION_HISTORY_TURNS=5
@@ -36,6 +36,7 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
+from fastapi import HTTPException
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
@@ -308,8 +309,7 @@ def retrieve_multilingual_chunks(
             - Merge direct and English candidates with weighted scoring (0.4 direct + 0.6 English),
               deduplicating by chunk_id and preserving full provenance metadata.
             - Rerank by combined score descending and return top_k_context.
-            - If translation is unavailable (offline mode, network failure), gracefully return
-              the direct retrieval candidates (Mode A fallback).
+            - If translation is unavailable (offline mode, network failure), return no evidence unless direct candidates meet the strong-match threshold.
     """
     lang_clean = (language or "en").lower().strip()
 
@@ -340,7 +340,7 @@ def retrieve_multilingual_chunks(
             f"[MultilingualRAG] Strong direct {lang_clean} retrieval "
             f"(top_sim={top_sim:.4f} >= {trigger_threshold}); using direct candidates."
         )
-        return direct_chunks[:top_k_context]
+        return [c for c in direct_chunks if c["similarity"] >= trigger_threshold][:top_k_context]
 
     # Step B: Weak retrieval -> invoke Option C Translation Bridge
     logger.info(
@@ -348,12 +348,14 @@ def retrieve_multilingual_chunks(
         f"(top_sim={top_sim:.4f} < {trigger_threshold}). Invoking translation bridge."
     )
 
-    gw = translation_gateway or create_translation_gateway()
+    # A weak cross-language match is not evidence when the bridge fails.
+    safe_direct = [c for c in direct_chunks if c["similarity"] >= trigger_threshold]
     try:
+        gw = translation_gateway or create_translation_gateway()
         en_query = gw.translate(query, source_language=lang_clean, target_language="en")
         if not en_query or not en_query.strip():
-            logger.warning("[MultilingualRAG] Empty translation received; falling back to direct retrieval.")
-            return direct_chunks[:top_k_context]
+            logger.warning("Translation returned no text; retaining only strong direct evidence")
+            return safe_direct[:top_k_context]
 
         en_chunks = retrieve_relevant_chunks(
             db=db,
@@ -383,13 +385,12 @@ def retrieve_multilingual_chunks(
 
     except TranslationError as e:
         logger.warning(
-            f"[MultilingualRAG] Translation bridge unavailable or failed ({e}). "
-            f"Failing closed to local direct retrieval (Mode A fallback)."
+            "Translation bridge unavailable; retaining only strong direct evidence"
         )
-        return direct_chunks[:top_k_context]
+        return safe_direct[:top_k_context]
     except Exception as e:
-        logger.error(f"[MultilingualRAG] Unexpected error in translation bridge: {e}")
-        return direct_chunks[:top_k_context]
+        logger.error("Translation bridge failed; retaining only strong direct evidence")
+        return safe_direct[:top_k_context]
 
 
 # ---------------------------------------------------------------------------
@@ -507,6 +508,8 @@ def build_grounded_prompt(
         )
         if section:
             block += f" | Section: {section[:80]}"
+        if meta.get('jurisdiction'):
+            block += f"\n    Applicability: {meta['jurisdiction']}. Do not transfer foreign service numbers, prescribing policy or local referral pathways to India."
         block += f"\n    URL: {chunk.get('source_url', 'N/A')}"
         block += f"\n    Content: {chunk['content'][:2400]}"
         context_blocks.append(block)
@@ -721,6 +724,8 @@ def process_ai_chat_query(
             )
             .first()
         )
+        if conversation is None:
+            raise HTTPException(status_code=404, detail="Conversation not found")
     if not conversation:
         conversation = Conversation(
             patient_id=patient_profile.id,
@@ -749,7 +754,7 @@ def process_ai_chat_query(
 
     if response_type == ResponseType.EMERGENCY:
         ai_response_text = build_emergency_response(language, red_flags)
-        _save_ai_message(db, conversation, ai_response_text, language, 0, True)
+        _save_ai_message(db, conversation, ai_response_text, language, 0, True, response_type=ResponseType.EMERGENCY)
         return AIChatResponse(
             conversation_id=conversation.id,
             message=ai_response_text,
@@ -762,7 +767,7 @@ def process_ai_chat_query(
 
     medication_boundary = missed_dose_boundary(req.message, language)
     if medication_boundary:
-        _save_ai_message(db, conversation, medication_boundary, language, 0, False)
+        _save_ai_message(db, conversation, medication_boundary, language, 0, False, response_type=ResponseType.MEDICATION_INFO)
         return AIChatResponse(
             conversation_id=conversation.id, message=medication_boundary,
             language=language, response_type=ResponseType.MEDICATION_INFO,
@@ -789,7 +794,7 @@ def process_ai_chat_query(
     # Step 6: Evidence sufficiency gate
     if not is_sufficient_evidence(chunks):
         refusal_text = build_refusal_message(language, db)
-        _save_ai_message(db, conversation, refusal_text, language, 0, False)
+        _save_ai_message(db, conversation, refusal_text, language, 0, False, response_type=ResponseType.REFUSAL)
         return AIChatResponse(
             conversation_id=conversation.id,
             message=refusal_text,
@@ -833,7 +838,8 @@ def process_ai_chat_query(
             "hi": "\u091c\u0935\u093e\u092c \u0915\u0940 \u0938\u0947\u0935\u093e \u0905\u092d\u0940 \u0909\u092a\u0932\u092c\u094d\u0927 \u0928\u0939\u0940\u0902 \u0939\u0948\u0964 \u092c\u093e\u0926 \u092e\u0947\u0902 \u092b\u093f\u0930 \u0915\u094b\u0936\u093f\u0936 \u0915\u0930\u0947\u0902\u0964 \u0905\u092d\u0940 \u092e\u0926\u0926 \u0915\u0947 \u0932\u093f\u090f \u0938\u094d\u0935\u093e\u0938\u094d\u0925\u094d\u092f \u0915\u0930\u094d\u092e\u091a\u093e\u0930\u0940 \u092f\u093e \u0921\u0949\u0915\u094d\u091f\u0930 \u0938\u0947 \u092c\u093e\u0924 \u0915\u0930\u0947\u0902\u0964",
             "te": "\u0c38\u0c2e\u0c3e\u0c27\u0c3e\u0c28\u0c02 \u0c38\u0c47\u0c35 \u0c2a\u0c4d\u0c30\u0c38\u0c4d\u0c24\u0c41\u0c24\u0c02 \u0c05\u0c02\u0c26\u0c41\u0c2c\u0c3e\u0c1f\u0c41\u0c32\u0c4b \u0c32\u0c47\u0c26\u0c41. \u0c24\u0c30\u0c4d\u0c35\u0c3e\u0c24 \u0c2e\u0c33\u0c4d\u0c32\u0c40 \u0c2a\u0c4d\u0c30\u0c2f\u0c24\u0c4d\u0c28\u0c3f\u0c02\u0c1a\u0c02\u0c21\u0c3f. \u0c38\u0c39\u0c3e\u0c2f\u0c02 \u0c15\u0c4b\u0c38\u0c02 \u0c06\u0c30\u0c4b\u0c17\u0c4d\u0c2f \u0c15\u0c3e\u0c30\u0c4d\u0c2f\u0c15\u0c30\u0c4d\u0c24 \u0c32\u0c47\u0c26\u0c3e \u0c35\u0c48\u0c26\u0c4d\u0c2f\u0c41\u0c21\u0c3f\u0c28\u0c3f \u0c38\u0c02\u0c2a\u0c4d\u0c30\u0c26\u0c3f\u0c02\u0c1a\u0c02\u0c21\u0c3f.",
         }.get(language, "The answer service is temporarily unavailable. Please try again later.")
-        _save_ai_message(db, conversation, refusal_text, language, len(chunks), False)
+        _save_ai_message(db, conversation, refusal_text, language, len(chunks), False,
+                         sources=build_citations(chunks), response_type=ResponseType.REFUSAL)
         return AIChatResponse(
             conversation_id=conversation.id,
             message=refusal_text,
@@ -868,7 +874,8 @@ def process_ai_chat_query(
     if declared_refusal or any(ind in lower_resp for ind in refusal_indicators):
         logger.info("[ai_service] LLM output detected as refusal. Overriding with localized refusal.")
         refusal_text = build_refusal_message(language, db)
-        _save_ai_message(db, conversation, refusal_text, language, len(chunks), False)
+        _save_ai_message(db, conversation, refusal_text, language, len(chunks), False,
+                         sources=build_citations(chunks), response_type=ResponseType.REFUSAL)
         return AIChatResponse(
             conversation_id=conversation.id,
             message=refusal_text,
@@ -884,7 +891,8 @@ def process_ai_chat_query(
     if not is_valid:
         logger.warning(f"[OutputValidator] Response failed validation: {failure_reason}")
         refusal_text = build_refusal_message(language, db)
-        _save_ai_message(db, conversation, refusal_text, language, len(chunks), False)
+        _save_ai_message(db, conversation, refusal_text, language, len(chunks), False,
+                         sources=build_citations(chunks), response_type=ResponseType.REFUSAL)
         return AIChatResponse(
             conversation_id=conversation.id,
             message=refusal_text,
@@ -897,7 +905,8 @@ def process_ai_chat_query(
 
     # Step 11: Build citations and return final grounded response
     citations = build_citations(chunks)
-    _save_ai_message(db, conversation, sanitized_response, language, len(chunks), False)
+    _save_ai_message(db, conversation, sanitized_response, language, len(chunks), False,
+                     sources=citations, response_type=response_type)
 
     return AIChatResponse(
         conversation_id=conversation.id,
@@ -917,6 +926,9 @@ def _save_ai_message(
     language: str,
     sources_count: int,
     is_emergency: bool,
+    *,
+    sources: Optional[List[SourceCitation]] = None,
+    response_type: Optional[ResponseType] = None,
 ) -> None:
     """Save AI companion response to conversation history."""
     ai_msg = ConversationMessage(
@@ -927,7 +939,10 @@ def _save_ai_message(
             "language": language,
             "sources_count": sources_count,
             "is_emergency": is_emergency,
-            "rag_grounded": sources_count > 0,
+            "rag_grounded": bool(sources) and response_type not in (None, ResponseType.REFUSAL, ResponseType.EMERGENCY),
+            "sources": [source.model_dump(mode="json") for source in (sources or [])],
+            "response_type": response_type.value if response_type else None,
+            "refusal_triggered": response_type == ResponseType.REFUSAL,
         },
     )
     db.add(ai_msg)

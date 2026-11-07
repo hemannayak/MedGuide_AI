@@ -1,0 +1,13 @@
+{
+  "sample": "Official public JFK audio; no patient data",
+  "language": "en",
+  "provider": "sarvam",
+  "real_realtime_stt": true,
+  "status": "FAILED",
+  "error_type": "SpeechError",
+  "event_types": [
+    "session.begin",
+    "vad.speech_start"
+  ],
+  "event_count": 2
+}

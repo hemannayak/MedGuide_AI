@@ -6,6 +6,7 @@ import { getTimeline, TimelineEvent } from '../lib/care';
 import { MedicalShieldSvg, MedicineBottleSvg, DoctorConsultSvg } from '../components/illustrations';
 import { playAudioGuide, stopAudioGuide } from '../lib/audio-guide';
 import { Language, t } from '../lib/i18n';
+import { loadCareResource } from '../lib/care-cache';
 
 export default function Timeline() {
   const [records, setRecords] = useState<TimelineEvent[]>([]);
@@ -15,6 +16,8 @@ export default function Timeline() {
   const [error, setError] = useState('');
   const [lang, setLang] = useState<Language>('en');
   const [playingAudio, setPlayingAudio] = useState(false);
+  const [cachedAt,setCachedAt]=useState<string|null>(null);
+  const [cacheWarning,setCacheWarning]=useState('');
   
   const active = useRef(true);
   const locked = useRef(false);
@@ -29,11 +32,14 @@ export default function Timeline() {
     setBusy(true);
     setError('');
     try {
-      const result = await getTimeline(nextPage);
+      const snapshot = await loadCareResource(`timeline-${nextPage}`,()=>getTimeline(nextPage));
+      const result=snapshot.data;
       if (active.current && current === generation.current) {
         setRecords(previous => [...new Map((replace ? result : [...previous, ...result]).map(item => [item.id, item])).values()]);
         setPage(nextPage);
         setMore(result.length === 20);
+        setCachedAt(snapshot.cachedAt);
+        setCacheWarning(snapshot.cacheWarning||'');
       }
     } catch (failure) {
       if (active.current && current === generation.current) {
@@ -86,6 +92,8 @@ export default function Timeline() {
   return (
     <ScrollView contentContainerStyle={styles.page}>
       <Brand />
+      {cachedAt?<Text accessibilityRole="alert">Offline copy · saved {new Date(cachedAt).toLocaleString()}. Connect and refresh for current records.</Text>:null}
+      {cacheWarning?<Text accessibilityRole="alert">{cacheWarning}</Text>:null}
 
       {/* Language switcher & audio accessibility */}
       <View style={styles.topBar}>
@@ -93,6 +101,9 @@ export default function Timeline() {
           {(['en', 'hi', 'te'] as const).map(code => (
             <Pressable
               key={code}
+              accessibilityRole="button"
+              accessibilityLabel={code==='en'?'English':code==='hi'?'Hindi':'Telugu'}
+              accessibilityState={{selected:lang===code}}
               onPress={() => setLang(code)}
               style={[styles.langChip, lang === code && styles.langChipActive]}
             >
@@ -104,6 +115,8 @@ export default function Timeline() {
         </View>
 
         <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={playingAudio?'Stop timeline instructions':'Listen to timeline instructions'}
           onPress={handleAudioGuide}
           style={[styles.audioBtn, playingAudio && styles.audioBtnPlaying]}
         >
@@ -118,7 +131,7 @@ export default function Timeline() {
           <Text style={styles.bannerEyebrow}>MEDGUIDE CARE TIMELINE</Text>
           <Text style={styles.title}>Your health history</Text>
           <Text style={styles.body}>
-            A verified chronological record of care milestones. These records assist health workers and do not replace formal diagnosis.
+            A chronological record of care milestones, including patient-reported information. These records assist health workers and do not replace formal diagnosis.
           </Text>
         </View>
         <MedicalShieldSvg width={52} height={52} />
@@ -182,7 +195,7 @@ const styles = StyleSheet.create({
   page: { flexGrow: 1, backgroundColor: palette.cream, padding: 18, gap: 14 },
   topBar: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   langPills: { flexDirection: 'row', gap: 6 },
-  langChip: { paddingHorizontal: 10, paddingVertical: 5, borderRadius: 12, backgroundColor: palette.white, borderWidth: 1, borderColor: palette.line },
+  langChip: { minHeight:44,justifyContent:'center',paddingHorizontal: 10, paddingVertical: 5, borderRadius: 12, backgroundColor: palette.white, borderWidth: 1, borderColor: palette.line },
   langChipActive: { backgroundColor: palette.ink, borderColor: palette.ink },
   langText: { fontSize: 11, fontWeight: '700', color: palette.muted },
   langTextActive: { color: palette.cream },

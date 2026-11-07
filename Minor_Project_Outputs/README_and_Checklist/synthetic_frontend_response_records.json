@@ -1,0 +1,62 @@
+[
+  {
+    "sender_type": "PATIENT",
+    "content": "Severe crushing chest pain radiating to the left arm and jaw.",
+    "metadata": null
+  },
+  {
+    "sender_type": "AI_COMPANION",
+    "content": "\u26a0\ufe0f IMPORTANT: The symptoms you described may require immediate medical attention. Please contact emergency medical services or go to your nearest hospital immediately. Do not delay seeking care. If in India, call 108 (national ambulance) or 112 (emergency).",
+    "metadata": {
+      "language": "en",
+      "is_emergency": true,
+      "rag_grounded": false,
+      "sources_count": 0
+    }
+  },
+  {
+    "sender_type": "PATIENT",
+    "content": "High fever of 102\u00b0F for 3 days with persistent painful cough.",
+    "metadata": null
+  },
+  {
+    "sender_type": "AI_COMPANION",
+    "content": "I understand that having a high fever and a painful cough for three days is concerning. The provided information does not contain specific guidance for treating a persistent cough or fever of this duration. It is important to see a healthcare professional for an accurate diagnosis and appropriate treatment. Please do not start or stop any medications without consulting a doctor.",
+    "metadata": {
+      "language": "en",
+      "is_emergency": false,
+      "rag_grounded": true,
+      "sources_count": 4
+    }
+  },
+  {
+    "sender_type": "PATIENT",
+    "content": "Severe crushing chest pain radiating to the left arm and jaw.",
+    "metadata": null
+  },
+  {
+    "sender_type": "AI_COMPANION",
+    "content": "\u26a0\ufe0f IMPORTANT: The symptoms you described may require immediate medical attention. Please contact emergency medical services or go to your nearest hospital immediately. Do not delay seeking care. If in India, call 108 (national ambulance) or 112 (emergency).",
+    "metadata": {
+      "language": "en",
+      "is_emergency": true,
+      "rag_grounded": false,
+      "sources_count": 0
+    }
+  },
+  {
+    "sender_type": "PATIENT",
+    "content": "Mild runny nose and sneezing since yesterday, no fever.",
+    "metadata": null
+  },
+  {
+    "sender_type": "AI_COMPANION",
+    "content": "I understand you are dealing with a mild runny nose and sneezing. The provided medical documents do not contain specific guidance for these symptoms. They focus on bacterial sore throats, malaria, and asthma. Please consult a healthcare professional for advice on your current condition.",
+    "metadata": {
+      "language": "en",
+      "is_emergency": false,
+      "rag_grounded": true,
+      "sources_count": 4
+    }
+  }
+]

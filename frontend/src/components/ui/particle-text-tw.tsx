@@ -134,7 +134,7 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [text, particleColor, backgroundColor]);
+  }, [text, particleColor, backgroundColor, isLowPower]);
 
   if (isLowPower) {
     return (

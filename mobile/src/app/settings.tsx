@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { Brand, Button, palette } from '../components/brand-ui';
@@ -6,20 +6,32 @@ import { signOut } from '../lib/api';
 import { MobileNav } from '../components/mobile-nav';
 import { Language, t } from '../lib/i18n';
 import { speakGuidance, stopGuidance } from '../lib/audio-guide';
-import { SmartwatchVitalsSvg, MedicalShieldSvg, RuralClinicSvg } from '../components/illustrations';
+import { SmartwatchVitalsSvg, RuralClinicSvg } from '../components/illustrations';
+import { getProfile, updatePreferredLanguage } from '../lib/care';
 
 export default function Settings() {
   const [lang, setLang] = useState<Language>('en');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [speaking, setSpeaking] = useState(false);
+  const mounted=useRef(true);
+  const languageRevision=useRef(0);
+  useEffect(()=>{
+    mounted.current=true;const revision=languageRevision.current;
+    void getProfile().then(profile=>{if(mounted.current&&languageRevision.current===revision)setLang(profile.preferred_language);}).catch(()=>{if(mounted.current)setError('Saved language could not load. You can retry selecting a language.');});
+    return()=>{mounted.current=false;stopGuidance();};
+  },[]);
 
-  function handleLanguage(newLang: Language) {
-    setLang(newLang);
+  async function handleLanguage(newLang: Language) {
+    if(busy)return;
+    languageRevision.current++;setBusy(true);setError('');
     if (speaking) {
       stopGuidance();
       setSpeaking(false);
     }
+    try{const profile=await updatePreferredLanguage(newLang);if(mounted.current)setLang(profile.preferred_language);}
+    catch{if(mounted.current)setError('Language could not save. Check your connection and try again.');}
+    finally{if(mounted.current)setBusy(false);}
   }
 
   function handleAudioGuide() {

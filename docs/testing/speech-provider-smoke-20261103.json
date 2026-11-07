@@ -1,0 +1,42 @@
+{
+  "evaluated_at": "2026-11-03T12:42:32.480684+00:00",
+  "method": "Synthetic TTS -> batch STT roundtrip; real provider; no patient recordings.",
+  "human_voice_quality_evaluated": false,
+  "regional_accent_wer_evaluated": false,
+  "realtime_stt_evaluated": false,
+  "results": [
+    {
+      "language": "en",
+      "synthetic_input": "Please tell me how to wash my hands.",
+      "first_audio_ms": 609.13,
+      "tts_total_ms": 845.49,
+      "audio_bytes": 14592,
+      "status": "COMPLETED",
+      "transcript": "Please tell me how to wash my hands.",
+      "stt_ms": 357.12,
+      "confidence": null
+    },
+    {
+      "language": "hi",
+      "synthetic_input": "कृपया मुझे बताइए कि हाथ कैसे धोने चाहिए।",
+      "first_audio_ms": 346.27,
+      "tts_total_ms": 599.45,
+      "audio_bytes": 19008,
+      "status": "COMPLETED",
+      "transcript": "कृपया मुझे बताइए कि हाथ कैसे धोने चाहिए?",
+      "stt_ms": 435.15,
+      "confidence": null
+    },
+    {
+      "language": "te",
+      "synthetic_input": "దయచేసి చేతులు ఎలా కడుక్కోవాలో చెప్పండి.",
+      "first_audio_ms": 338.29,
+      "tts_total_ms": 674.68,
+      "audio_bytes": 22656,
+      "status": "COMPLETED",
+      "transcript": "దయచేసి చేతులు ఎలా కడుక్కోవాలో చెప్పండి.",
+      "stt_ms": 719.93,
+      "confidence": null
+    }
+  ]
+}

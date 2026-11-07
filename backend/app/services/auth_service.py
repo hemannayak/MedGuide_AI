@@ -22,30 +22,27 @@ def register_patient_user(db: Session, req: UserRegisterRequest) -> User:
             detail="A user with this login identifier already exists",
         )
 
-    patient_role = db.query(Role).filter(Role.name == "PATIENT").first()
-    if not patient_role:
-        patient_role = Role(name="PATIENT")
-        db.add(patient_role)
+    # User and profile are one account-creation transaction. A profile failure
+    # must not leave an account that can authenticate without its patient record.
+    try:
+        patient_role = db.query(Role).filter(Role.name == "PATIENT").first()
+        if not patient_role:
+            patient_role = Role(name="PATIENT")
+            db.add(patient_role)
+            db.flush()
+        new_user = User(
+            role_id=patient_role.id, login_identifier=req.login_identifier,
+            password_hash=hash_password(req.password), status="ACTIVE",
+        )
+        db.add(new_user)
+        db.flush()
+        db.add(PatientProfile(user_id=new_user.id, display_name=req.display_name,
+                              preferred_language=req.preferred_language))
         db.commit()
-        db.refresh(patient_role)
-
-    new_user = User(
-        role_id=patient_role.id,
-        login_identifier=req.login_identifier,
-        password_hash=hash_password(req.password),
-        status="ACTIVE",
-    )
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-
-    profile = PatientProfile(
-        user_id=new_user.id,
-        display_name=req.display_name,
-        preferred_language=req.preferred_language,
-    )
-    db.add(profile)
-    db.commit()
+        db.refresh(new_user)
+    except Exception:
+        db.rollback()
+        raise
 
     return new_user
 
@@ -73,13 +70,20 @@ def authenticate_user(db: Session, login_identifier: str, password: str) -> Tupl
             action=ACTION_LOGIN_FAILURE,
             resource_type=RESOURCE_USER,
             actor_user_id=user.id if user else None,
-            metadata={"login_identifier": login_identifier},
+            metadata={
+                "reason": "INVALID_CREDENTIALS",
+                "login_identifier": login_identifier,
+            },
         )
         db.commit()
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid login credentials",
         )
+
+    if user.status != "ACTIVE":
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                            detail="Inactive or suspended user account")
 
     user.last_login_at = datetime.now(timezone.utc)
     log_audit_event(
@@ -88,7 +92,7 @@ def authenticate_user(db: Session, login_identifier: str, password: str) -> Tupl
         resource_type=RESOURCE_USER,
         actor_user_id=user.id,
         resource_id=user.id,
-        metadata={"login_identifier": user.login_identifier, "role": user.role.name},
+        metadata={"role": user.role.name},
     )
     db.commit()
 

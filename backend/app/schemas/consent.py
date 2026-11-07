@@ -5,9 +5,13 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class ConsentGrantRequest(BaseModel):
-    consent_type: Literal["AI_PROCESSING", "SPEECH_PROCESSING", "DATA_SHARING"]
+    consent_type: Literal["AI_PROCESSING", "SPEECH_PROCESSING", "DATA_SHARING", "SPOKEN_GUIDANCE"]
     version: Literal["1.0"] = "1.0"
     status: Literal["GRANTED"] = "GRANTED"
+
+
+class SpokenGuidanceChoice(BaseModel):
+    enabled: bool
 
 
 class ConsentWithdrawRequest(BaseModel):

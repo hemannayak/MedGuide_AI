@@ -1,0 +1,182 @@
+{
+  "topic": "malaria",
+  "source_url": "https://www.cdc.gov/malaria/about/index.html",
+  "publisher": "Centers for Disease Control and Prevention",
+  "jurisdiction": "United States; general education only, not India-specific treatment policy",
+  "reuse_basis": "https://www.cdc.gov/other/agencymaterials.html",
+  "reuse_status": "PUBLIC_DOMAIN_TEXT_WITH_ATTRIBUTION_AND_NONENDORSEMENT",
+  "clinical_review": "NOT_CLINICALLY_VALIDATED_FOR_INDIAN_DEPLOYMENT",
+  "indexed": true,
+  "title": "About Malaria",
+  "sections": [
+    {
+      "heading": "Overview",
+      "text": "Malaria is not endemic in the United States. This means it does not regularly occur or spread in the U.S. In a typical year, the U.S. reports about 2,000 cases of malaria. Most of these cases are in people who contract malaria while traveling to another country where malaria spreads and return to the U.S. On rare occasions, local transmission (spread) occurs because of an imported case of malaria. People do not spread malaria to other people, like the common cold or the flu. Also, malaria is not sexually transmitted."
+    },
+    {
+      "heading": "Symptoms",
+      "text": "Malaria symptoms range from very mild illness to severe disease and even death. Early symptoms can include:"
+    },
+    {
+      "heading": "Symptoms",
+      "text": "Fever and flu-like illness"
+    },
+    {
+      "heading": "Symptoms",
+      "text": "Chills"
+    },
+    {
+      "heading": "Symptoms",
+      "text": "Headache, muscle aches, and tiredness"
+    },
+    {
+      "heading": "Symptoms",
+      "text": "Nausea, vomiting, and diarrhea may also occur"
+    },
+    {
+      "heading": "Symptoms",
+      "text": "If not treated quickly, the infection can become severe."
+    },
+    {
+      "heading": "Symptoms",
+      "text": "Severe symptoms can include"
+    },
+    {
+      "heading": "Symptoms",
+      "text": "Kidney failure"
+    },
+    {
+      "heading": "Symptoms",
+      "text": "Seizures"
+    },
+    {
+      "heading": "Symptoms",
+      "text": "Mental confusion"
+    },
+    {
+      "heading": "Symptoms",
+      "text": "Coma"
+    },
+    {
+      "heading": "Causes and Risk",
+      "text": "Malaria is a disease caused by a parasite. Anopheles mosquitoes are the type of mosquito that transmit malaria from one person to another. Not all Anopheles mosquitoes have malaria, but if they bite a person with malaria, they can become infectious. Once they bite another person, this continues the cycle of spreading malaria from mosquito to people."
+    },
+    {
+      "heading": "Testing and diagnosis",
+      "text": "See a healthcare provider as soon as possible if"
+    },
+    {
+      "heading": "Testing and diagnosis",
+      "text": "You are experiencing any of the symptoms of malaria, and"
+    },
+    {
+      "heading": "Testing and diagnosis",
+      "text": "You have traveled in the last year to or from an area where malaria occurs."
+    },
+    {
+      "heading": "Testing and diagnosis",
+      "text": "Only a healthcare provider can diagnose malaria. A lab test will confirm malaria using a small sample of your blood."
+    },
+    {
+      "heading": "Treatment",
+      "text": "Prescription drugs can treat and cure malaria. The types of drugs and length of treatment depends on"
+    },
+    {
+      "heading": "Treatment",
+      "text": "The type of malaria,"
+    },
+    {
+      "heading": "Treatment",
+      "text": "Where (geographic location) the person was infected, and"
+    },
+    {
+      "heading": "Treatment",
+      "text": "How sick they are when treatment starts."
+    },
+    {
+      "heading": "Treatment",
+      "text": "Other important factors are age and whether the patient is pregnant."
+    },
+    {
+      "heading": "Prevention",
+      "text": "If traveling to an area where malaria spreads, talk with your healthcare provider about medications you can take to prevent malaria."
+    },
+    {
+      "heading": "Prevention",
+      "text": "Avoid areas with high mosquito activity, especially during late evening and at night. This is when Anopheles mosquitoes that spread malaria bite."
+    },
+    {
+      "heading": "Prevention",
+      "text": "Use a bug spray approved by the Environmental Protection Agency (EPA)."
+    },
+    {
+      "heading": "Prevention",
+      "text": "Wear loose-fitting, long-sleeved shirts and pants and socks."
+    },
+    {
+      "heading": "Prevention",
+      "text": "Keep windows and doors closed or covered with screens to keep mosquitoes out of your house."
+    },
+    {
+      "heading": "Prevention",
+      "text": "Repair broken screens on windows, doors, porches, and patios."
+    }
+  ],
+  "extractor": "cdc-sections-v1",
+  "content_sha256": "1844c1df172285e36888f177055f7fa76f43579a58d25de565a8e43a91a91480",
+  "resolved_url": "https://www.cdc.gov/malaria/about/index.html",
+  "retrieved_at": "2026-10-23T16:29:10.717850+00:00",
+  "html_sha256": "ce5bda243509b212144376d01d8eec1bd81eaeb765f3ff0563a9bb6138f73d42",
+  "chunks": [
+    {
+      "content": "Malaria is not endemic in the United States. This means it does not regularly occur or spread in the U.S. In a typical year, the U.S. reports about 2,000 cases of malaria. Most of these cases are in people who contract malaria while traveling to another country where malaria spreads and return to the U.S. On rare occasions, local transmission (spread) occurs because of an imported case of malaria. People do not spread malaria to other people, like the common cold or the flu. Also, malaria is not",
+      "section_title": "Overview",
+      "content_sha256": "3fb7f52f08c697cb00b0025845f5535687f315d70e60f02c67dc7b666d352984",
+      "chunk_index": 0
+    },
+    {
+      "content": "sexually transmitted.",
+      "section_title": "Overview",
+      "content_sha256": "ffe2a7893a220e2ed74c50791ffaa7c6836fc8efcab60227572aa51c43515f08",
+      "chunk_index": 1
+    },
+    {
+      "content": "Malaria symptoms range from very mild illness to severe disease and even death. Early symptoms can include: Fever and flu-like illness Chills Headache, muscle aches, and tiredness Nausea, vomiting, and diarrhea may also occur If not treated quickly, the infection can become severe. Severe symptoms can include Kidney failure Seizures Mental confusion Coma",
+      "section_title": "Symptoms",
+      "content_sha256": "3500b707d1d4e9f1e9d17b43355272fec3092d132c233081ed3dabf47cc2eaa4",
+      "chunk_index": 2
+    },
+    {
+      "content": "Malaria is a disease caused by a parasite. Anopheles mosquitoes are the type of mosquito that transmit malaria from one person to another. Not all Anopheles mosquitoes have malaria, but if they bite a person with malaria, they can become infectious. Once they bite another person, this continues the cycle of spreading malaria from mosquito to people.",
+      "section_title": "Causes and Risk",
+      "content_sha256": "ce3c11729acaf039f146b0a92785ab049f812c9e30b9bd26d1445ff502c6db60",
+      "chunk_index": 3
+    },
+    {
+      "content": "See a healthcare provider as soon as possible if You are experiencing any of the symptoms of malaria, and You have traveled in the last year to or from an area where malaria occurs. Only a healthcare provider can diagnose malaria. A lab test will confirm malaria using a small sample of your blood.",
+      "section_title": "Testing and diagnosis",
+      "content_sha256": "7348faca62412bfe4894a961e9df3597fcb832ab305b72c47d15c389d8e0a78c",
+      "chunk_index": 4
+    },
+    {
+      "content": "Prescription drugs can treat and cure malaria. The types of drugs and length of treatment depends on The type of malaria, Where (geographic location) the person was infected, and How sick they are when treatment starts. Other important factors are age and whether the patient is pregnant.",
+      "section_title": "Treatment",
+      "content_sha256": "63443f5fd82aefe8739de33598808bd5e40eb420cba6ae60611cf54efe070aa4",
+      "chunk_index": 5
+    },
+    {
+      "content": "If traveling to an area where malaria spreads, talk with your healthcare provider about medications you can take to prevent malaria. Avoid areas with high mosquito activity, especially during late evening and at night. This is when Anopheles mosquitoes that spread malaria bite. Use a bug spray approved by the Environmental Protection Agency (EPA). Wear loose-fitting, long-sleeved shirts and pants and socks. Keep windows and doors closed or covered with screens to keep mosquitoes out of your",
+      "section_title": "Prevention",
+      "content_sha256": "9f96df6005e799db9bbaa46ef0373849d3aaa119d8c21bcbe5dc36c07d4f4569",
+      "chunk_index": 6
+    },
+    {
+      "content": "house. Repair broken screens on windows, doors, porches, and patios.",
+      "section_title": "Prevention",
+      "content_sha256": "cc5309cfebb53bf1fe552e5740df75d48449ad76aad6dc5fdc5645d5ca765f01",
+      "chunk_index": 7
+    }
+  ],
+  "status": "TECHNICALLY_VERIFIED_EDUCATION_SOURCE",
+  "document_id": "7628f59f-e89f-59d8-827a-071d38c25286"
+}

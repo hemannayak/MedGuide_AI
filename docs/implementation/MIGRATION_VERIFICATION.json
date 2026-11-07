@@ -1,0 +1,14 @@
+[
+  {
+    "database": "medguide_restore_de7762b23c17",
+    "migration_head": "d05e1105otp",
+    "otp_rows": 4,
+    "user_rows": 1903
+  },
+  {
+    "database": "medguide_eval_f7c2012bedcd",
+    "migration_head": "d05e1105otp",
+    "otp_rows": 0,
+    "user_rows": 0
+  }
+]
