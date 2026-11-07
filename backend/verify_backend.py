@@ -23,7 +23,7 @@ def main():
     admin.dispose()
     env = os.environ.copy()
     env.update(DATABASE_URL=source.set(database=test_name).render_as_string(hide_password=False),
-               AI_PROVIDER="mock", TRANSLATION_PROVIDER="mock", OCR_PROVIDER="mock", APP_ENV="test", DEBUG="false")
+               AI_PROVIDER="mock", TRANSLATION_PROVIDER="mock", OCR_PROVIDER="mock", APP_ENV="development", DEBUG="true")
     env["PYTHONPATH"] = str(root)
     subprocess.run([sys.executable, "-m", "alembic", "upgrade", "head"], cwd=root, env=env, check=True)
     result = subprocess.run([sys.executable, "-m", "pytest", "backend/tests", "-q", "-p", "no:cacheprovider", *sys.argv[1:]], cwd=root.parent, env=env)

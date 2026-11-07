@@ -16,6 +16,7 @@ Tests covering:
 """
 
 import uuid
+from typing import Optional
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -141,6 +142,7 @@ def test_weak_telugu_triggers_translation_bridge():
             language="te",
             translation_gateway=mock_trans_gw,
             trigger_threshold=0.65,
+            similarity_threshold=0.40,
         )
 
         # Translation should have been invoked
